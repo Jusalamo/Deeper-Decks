@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deeper: The Connection Card Game</title>
+    <!-- SEO Meta Tag --><meta name="description" content="Deeper is a digital card game featuring Romantic, Platonic, and Naughty decks with deep questions and fun dares to strengthen any relationship.">
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons --><script type="module">
+        import { createIcons, Heart, Flame, Users, Handshake, Star, RotateCcw, Zap } from 'https://unpkg.com/lucide@latest/dist/esm/lucide.js';
+        createIcons({ icons: { Heart, Flame, Users, Handshake, Star, RotateCcw, Zap } });
+    </script>
+    <style>
+        /* GLOBAL THEME COLORS */
+        :root {
+            --cream: #f7f3e8;
+            --deep-red: rgb(153, 27, 27);
+            --deep-red-light: rgb(220, 38, 38);
+            --deep-red-dark: rgb(120, 20, 20);
+            --black: #000000;
+            --white: #ffffff;
+            --yellow: rgb(253 224 71);
+            --gold: #d4af37; /* For Dare accent */
+        }
+
+        body {
+            background-color: var(--cream);
+        }
+
+        /* TYPOGRAPHY + GENERAL */
+        .color-card-text {
+            color: var(--deep-red);
+        }
+        .color-dare-text {
+            color: var(--gold);
+        }
+
+        /* CARD STACK CONTAINER - RESPONSIBLE FOR SCALING */
+        .card-stack-container {
+            /* Standard card aspect ratio (9:14) */
+            aspect-ratio: 9 / 14; 
+            /* Max width for large screens */
+            width: 255px; 
+            /* Responsive scaling for mobile */
+            max-width: 90vw;
+        }
+
+        /* CARD FRONT (now includes the 0.45s transition speed) */
+        .card-front {
+            font-family: 'Inter', sans-serif;
+            border: 5px solid var(--deep-red);
+            background-color: var(--cream);
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            /* Updated transition duration to match the user's desired animation speed (0.45s) */
+            transition: opacity 0.45s ease, transform 0.45s ease;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        /* CARD BACK */
+        .card-back {
+            background-color: var(--deep-red-light);
+            border: 5px solid var(--white);
+            border-radius: 16px;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 5px;
+            left: 5px;
+            z-index: -1;
+        }
+
+        /* EMPTY DECK CARD */
+        .empty-card {
+            border: 4px dashed var(--deep-red);
+            background-color: #ece8dc;
+            border-radius: 16px;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* CARD CONTENT SPECIFIC STYLES FOR OVERFLOW */
+        .card-question-text {
+            /* Clamp font size for responsiveness */
+            font-size: clamp(1.2rem, 4vw, 1.8rem); /* Min 1.2rem, 4vw for scaling, Max 1.8rem */
+            line-height: 1.3; 
+            word-wrap: break-word; 
+            overflow-wrap: break-word; 
+            /* Ensures all text is visible */
+        }
+
+        /* === CONTROL PANEL (BLACK + CLEAN) === */
+        .control-panel {
+            background-color: var(--black);
+            color: var(--white);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .control-title {
+            color: var(--white);
+            border-bottom: 2px solid var(--deep-red);
+            padding-bottom: 6px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        /* DECK SELECTION BUTTONS */
+        .btn-primary {
+            background-color: var(--black);
+            color: var(--white);
+            border-radius: 10px;
+            padding: 12px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--deep-red-dark);
+        }
+
+        /* SHUFFLE & DRAW BUTTONS */
+        .btn-red {
+            background-color: var(--deep-red-light);
+            color: var(--white);
+            border-radius: 10px;
+            padding: 12px;
+            font-weight: 600;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-red:hover:not(:disabled) {
+            background-color: var(--deep-red-dark);
+            box-shadow: 0 4px 8px rgba(220, 38, 38, 0.4);
+        }
+
+        .btn-red:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ACTIVE DECK BUTTON STYLE */
+        .btn-active {
+            background-color: var(--deep-red-dark) !important;
+            color: var(--white);
+        }
+    </style>
+
+    <script>
+        const romanticQuestions = [
+            // Deep Love Questions (35)
+            "What specific moment made you realize you wanted a future with me?", "Describe a perfect day 20 years from now, with all the small details.",
+            "What part of my soul do you feel most connected to?", "What is one thing I do that makes you feel profoundly understood?",
+            "If we could give our relationship a guiding motto, what would it be?", "What's a fear you have about our future, and how can I ease it?",
+            "What beautiful quality do I possess that you think I underappreciate?", "What are three specific hopes you have for my life outside of our relationship?",
+            "What does your heart crave most in a quiet, intimate moment?", "What piece of my childhood story do you think shaped me the most?",
+            "What is a personal change or evolution in me that you are most proud of?", "What is the single most defining lesson we've learned together?",
+            "What is a tradition you want to start or keep going, and what's its meaning?", "When have you felt most inspired by my actions or perspective?",
+            "What is a quality or value I brought into your life that was previously missing?", "What's a vulnerability that you now share with me that you hide from everyone else?",
+            "What does 'unconditional love' look like in the small, day-to-day moments for us?", "What is a memory of our shared life that feels like it belongs in a movie?",
+            "What does it mean to you to 'hold space' for my emotions?", "What makes you feel most safely and securely loved?",
+            "What is the greatest risk you've taken to protect our relationship?", "What is one dream you had as a child that you hope we can achieve together?",
+            "What is your favorite non-verbal way we communicate our love?", "What is one small detail you notice about me that you adore?",
+            "What is a moment when you felt true, deep gratitude for my presence?", "What is a characteristic you consciously try to develop for our future?",
+            "If our relationship were a piece of music, what kind of feeling would it evoke?", "What is the most challenging thing we've overcome together, and how did it change us?",
+            "What is one dream or aspiration I can actively help you chase this year?", "What small gesture from me brightens your entire day?",
+            "What is one thing about me that you feel completes you?", "What kind of legacy do you hope we leave together?",
+            "How do you recharge after a long, stressful week?", "What is the most beautiful thing you have ever seen?",
+            "What is one question you wish I would ask you more often?",
+            
+            // Lovey Dares (15)
+            "DARE: Write a short, spontaneous love poem to the person next to you and read it aloud.", 
+            "DARE: Whisper three things you admire about the other person's character and give a long hug.", 
+            "DARE: Give a five-minute uninterrupted massage to your partner's neck and shoulders.", 
+            "DARE: Plan and describe a fantasy 'life swap' where you live your partner's life for a day.", 
+            "DARE: Look into your partner's eyes for a full 60 seconds without speaking or laughing.",
+            "DARE: Draw a picture of the person next to you without looking at the paper.",
+            "DARE: Sing the chorus of a song that reminds you of your first date or memory together.",
+            "DARE: Describe the exact moment you fell in love (or first felt a deep connection).",
+            "DARE: Make a promise to your partner about something you will actively work on in the relationship.",
+            "DARE: Hold your partner's hand and describe, in detail, how their touch makes you feel.",
+            "DARE: List five things that instantly bring you comfort when you are stressed.",
+            "DARE: Compliment your partner on a physical feature you rarely mention.",
+            "DARE: Describe the most romantic fictional scene you've ever seen or read.",
+            "DARE: Share a funny memory of a date gone wrong, and how you recovered.",
+            "DARE: Write the letters 'I Love You' on your partner's hand using only your finger."
+        ];
+
+        const platonicQuestions = [
+            // Wholesome Questions (35)
+            "What is a recent accomplishment of yours I might not know about, no matter how small?", "What skill do you wish you could master right now, and why?",
+            "What piece of advice would your 80-year-old self give you right now?", "What is a random act of kindness you witnessed or performed recently?",
+            "What makes you feel instantly productive and motivated?", "What is the funniest or most embarrassing thing that happened to you in high school?",
+            "What's the best life hack or shortcut you've discovered recently?", "What's one small thing you can do this week to improve your mental health?",
+            "What are you actively trying to teach yourself these days?", "What is a small, everyday thing you are immensely grateful for?",
+            "What is the most spontaneous thing you've done in the last year, and how did it make you feel?", "What fictional character's life would you want for a day?",
+            "What's a common belief you fundamentally disagree with and why?", "What is a hidden talent or niche hobby you rarely share?",
+            "What are you most curious to learn about yourself or the world?", "What non-monetary thing would you want an unlimited supply of?",
+            "What makes you feel instantly nostalgic?", "What is the most memorable compliment you've given or received?",
+            "What is your go-to method for processing stress?", "What piece of art (song, book, film) changed your worldview?",
+            "What is a moment where you felt truly independent and strong?", "What is a funny pet peeve you have?",
+            "What quality do you admire most in your other friends?", "What's the best place you've ever traveled to and why?",
+            "What's a dream or goal you gave up on, and do you regret it?", "What makes you laugh the hardest?",
+            "What is your 'zero-effort' way to recharge your social battery?", "What is one habit you're currently trying to break or build?",
+            "What does 'success' look like to you personally, separate from career?", "If you could witness any historical event, what would it be?",
+            "What makes you feel proud to be who you are?", "What is the most overrated piece of advice you often hear?",
+            "What is a subject you are passionate about but rarely discuss?", "What's a song that instantly lifts your mood?",
+            "What is one thing you wish people understood better about you?",
+            
+            // Wholesome Dares (15)
+            "DARE: Give an honest, genuine compliment to the person to your left. It must be about their character.", 
+            "DARE: Tell a joke or a funny, G-rated anecdote from your childhood.", 
+            "DARE: Send a positive, encouraging text message to someone outside this room (show the screen before sending).", 
+            "DARE: Describe your ideal, cozy, non-work-related Friday evening, including snacks and entertainment.", 
+            "DARE: Everyone claps for the person who answered the last question.",
+            "DARE: Describe a moment when you felt truly inspired by someone in this room.",
+            "DARE: Share the last screenshot or photo you took on your phone (excluding private messages).",
+            "DARE: Teach the group a simple, fun stretch or yoga pose.",
+            "DARE: Compliment yourself on a non-physical trait you are proud of.",
+            "DARE: Trade shoes with the person to your right and wear them for the next 5 minutes.",
+            "DARE: List three things you have in common with the person sitting across from you.",
+            "DARE: Draw a quick, simple portrait of the person who drew this card.",
+            "DARE: Offer to help someone in this room with a small chore or task this week.",
+            "DARE: Describe the most beautiful sunset or natural view you have ever witnessed.",
+            "DARE: Say three nice things about your hometown or current city."
+        ];
+        
+        const naughtyQuestions = [
+            // Raunchy Questions (35)
+            "What is your most vivid memory of feeling pure physical desire for me/a partner?", "Describe a position or place you've always wanted to try but haven't.",
+            "What is the most dominant or submissive fantasy you've ever had?", "What non-sexual activity do you secretly find highly erotic?",
+            "What's a boundary you've broken in the heat of the moment, and was it worth it?", "What is your favorite way to be physically restrained or teased?",
+            "What piece of intimate clothing would you love to see me/a partner wear tonight?", "What sense (touch, sight, sound) is your greatest trigger for arousal?",
+            "What's the naughtiest thing you've done to get someone's attention in a crowded place?", "What is the most scandalous public place you've ever flirted in?",
+            "What's the quickest you've gone from meeting someone to getting intimate?", "What is your favorite piece of erotica (book, film, art)?",
+            "What's one dirty thought you've had about someone in this room (if playing with a partner, change to 'about me')?", "What's the most unusual place you've achieved climax?",
+            "What intimate act do you wish was less taboo?", "What is a fetish or kink you've recently become curious about?",
+            "What's the most aggressive kiss you've ever received?", "What's a phrase or word that instantly makes you feel submissive/dominant?",
+            "What's the one thing you can't resist doing in bed?", "What's a toy or accessory you want to incorporate more?",
+            "What is your biggest turn-on that is purely auditory?", "What is the dirtiest thing you've ever said to a partner?",
+            "What's the most embarrassing intimate moment you've ever had?", "What fictional character do you wish you could have a one-night stand with?",
+            "What part of your body is your favorite to have touched or worshiped?", "What is the sexiest scenario involving food or drink?",
+            "What's a secret physical insecurity you have when naked?", "What is a piece of clothing you find attractive on me/a partner, but rarely see?",
+            "What is the most romantic thing you've done that led to a hot night?", "What intimate goal do you hope to achieve this year?",
+            "What's a detail you love about my/your partner's scent?", "What is one thing you would never share with me/a partner about your past sexual history?",
+            "What are you secretly hoping I'll do to you tonight, without being asked?", "What is the fastest way to get you in the mood?",
+            "What is a fantasy involving role-playing or a costume?",
+            
+            // Naughty Dares (15)
+            "DARE: Give the person next to you a kiss on a spot of their body they choose, excluding the lips.", 
+            "DARE: Describe in detail the last piece of intimate clothing you took off, piece by piece.", 
+            "DARE: Whisper a highly inappropriate sentence into your partner's ear for 30 seconds.", 
+            "DARE: Take a sip of water, hold it in your mouth, and use your eyes to signal the person next to you to take it.", 
+            "DARE: Blindfold your partner for one minute and touch their arm or back using only your fingertips.",
+            "DARE: Send a flirty, suggestive text to your partner (or person next to you) right now.",
+            "DARE: Dance suggestively for 30 seconds to an imaginary song.",
+            "DARE: Remove one non-essential piece of clothing without using your hands.",
+            "DARE: Describe your partner's most intoxicating physical feature in graphic detail.",
+            "DARE: Close your eyes and identify the person next to you using only your sense of touch (on their arm or shoulder).",
+            "DARE: Look intensely at the person across from you and describe what you imagine they are wearing underneath their clothes.",
+            "DARE: Write a very short, very dirty limerick about a couple or fictional character.",
+            "DARE: Use an ice cube to trace a letter on your partner's neck or wrist.",
+            "DARE: Confess the naughtiest place you've ever thought about having sex.",
+            "DARE: Bite your lip, look at your partner, and don't look away for 20 seconds."
+        ];
+
+
+        let currentDeck = [];
+        let remainingCardsCount = 0;
+        let deckType = 'Romantic'; // Default deck
+
+        // Fisher-Yates (Knuth) Shuffle Algorithm
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function getDeckQuestions(type) {
+            if (type === 'Romantic') return [...romanticQuestions];
+            if (type === 'Platonic') return [...platonicQuestions];
+            if (type === 'Naughty') return [...naughtyQuestions];
+            return [];
+        }
+
+        function updateCardCount() {
+            document.getElementById('remainingCount').textContent = remainingCardsCount;
+            document.getElementById('drawButton').disabled = remainingCardsCount === 0;
+        }
+
+        function createCardElement(question, questionIndex) {
+            const isDare = question.startsWith("DARE:");
+            const content = isDare ? question.substring(5).trim() : question;
+            
+            const deckInfo = {
+                'Romantic': { icon: 'heart', title: 'The Deep Romantic Deck', startNum: 1 },
+                'Platonic': { icon: 'handshake', title: 'The Deep Platonic Deck', startNum: romanticQuestions.length + 1 }, 
+                'Naughty': { icon: 'flame', title: 'The Deep Naughty Deck', startNum: romanticQuestions.length + platonicQuestions.length + 1 } 
+            };
+            
+            const info = deckInfo[deckType];
+            const iconName = isDare ? 'zap' : info.icon; // Use Zap for Dare
+            const iconColorClass = isDare ? 'color-dare-text' : 'color-card-text';
+            const textColorClass = isDare ? 'color-dare-text' : 'color-card-text';
+            const deckTitle = info.title;
+            // Calculate the card number based on its starting index in the full list
+            const cardNumber = info.startNum + questionIndex;
+
+            return `
+                <div id="activeCard-${cardNumber}" class="card-front flex flex-col justify-between p-6 w-full h-full text-center z-10">
+                    <div class="flex justify-between ${textColorClass} font-bold text-sm mb-2">
+                        <span class="opacity-70">#${cardNumber}</span>
+                        <i data-lucide="${iconName}" class="w-4 h-4 card-icon ${iconColorClass}"></i>
+                    </div>
+                    <div class="flex-grow flex flex-col justify-center items-center px-4 min-h-[120px]">
+                        ${isDare ? 
+                            `<span class="text-3xl font-extrabold ${textColorClass} mb-4">DARE!</span>` : 
+                            `<i data-lucide="${iconName}" class="w-10 h-10 card-icon mb-6 ${textColorClass}"></i>`
+                        }
+                        
+                        <p class="${textColorClass} font-bold card-question-text">${content}</p>
+                    </div>
+                    <div class="text-xs text-right ${textColorClass} opacity-50 mt-4">
+                        ${deckTitle}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function getCardBackHtml() {
+            return `
+                <div class="card-back flex items-center justify-center p-6 text-white transform z-0">
+                    <div class="text-center">
+                        <i data-lucide="star" class="w-12 h-12 mx-auto mb-2 text-white"></i>
+                        <h3 class="text-xl font-bold tracking-widest">DEEPER</h3>
+                        <p class="text-sm font-light mt-1">The Connection Card Game</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showEmptyDeckCard() {
+            const cardContainer = document.getElementById('cardContainer');
+            // Ensure the initial card back is present for the stack illusion
+            cardContainer.innerHTML = getCardBackHtml(); 
+
+            cardContainer.insertAdjacentHTML('beforeend', `
+                <div id="activeCard" class="empty-card card-front flex flex-col justify-center items-center p-6 text-center z-10">
+                    <i data-lucide="rotate-ccw" class="w-12 h-12 color-card-text mb-4"></i>
+                    <p class="color-card-text text-xl font-bold">Deck Complete!</p>
+                    <p class="text-lg color-card-text mt-2">Time to shuffle for a new round.</p>
+                </div>
+            `);
+            if (typeof createIcons !== 'undefined') {
+                createIcons();
+            }
+        }
+
+        function drawCard() {
+            const cardContainer = document.getElementById('cardContainer');
+            
+            if (currentDeck.length === 0) {
+                showEmptyDeckCard();
+                updateCardCount();
+                return;
+            }
+
+            // Get the next card data (pop it off the array)
+            const cardData = currentDeck.pop();
+            remainingCardsCount = currentDeck.length;
+
+            // Find the currently active card 
+            const oldCard = cardContainer.querySelector('.card-front, .empty-card'); 
+            
+            // 1. Prepare the next card content
+            const nextCardHtml = createCardElement(cardData.question, cardData.originalIndex);
+
+            if (oldCard) {
+                // 2. APPLY THE NEW SWIPE-AWAY ANIMATION (0.45s to match CSS transition)
+                oldCard.style.transform = "translateX(-120%) rotate(-8deg)"; 
+                oldCard.style.opacity = "0"; 
+                
+                // 3. After the animation, remove the old card and place the new one
+                setTimeout(() => {
+                    // Remove the card that just animated away
+                    oldCard.remove();
+                    
+                    // Add the new card HTML to the stack
+                    cardContainer.insertAdjacentHTML('beforeend', nextCardHtml);
+                    
+                    updateCardCount();
+                    // Re-run icon initialization for the new card
+                    if (typeof createIcons !== 'undefined') {
+                        createIcons();
+                    }
+                }, 450); // Use 450ms to match the CSS transition duration
+            } else {
+                 // Initial draw, no animation needed
+                cardContainer.insertAdjacentHTML('beforeend', nextCardHtml);
+                updateCardCount();
+                if (typeof createIcons !== 'undefined') {
+                    createIcons();
+                }
+            }
+        }
+
+        function initializeDeck(type) {
+            deckType = type;
+            const rawQuestions = getDeckQuestions(type);
+            
+            // Create a temporary array of objects to keep track of original index
+            const questionsWithIndex = rawQuestions.map((q, index) => ({
+                question: q,
+                originalIndex: index 
+            }));
+
+            currentDeck = shuffleArray(questionsWithIndex);
+            remainingCardsCount = currentDeck.length;
+            
+            // --- Update UI elements ---
+            document.getElementById('deckTitle').textContent = `${deckType} Deck`;
+            
+            const romanticBtn = document.getElementById('romanticButton');
+            const platonicBtn = document.getElementById('platonicButton');
+            const naughtyBtn = document.getElementById('naughtyButton');
+
+            // Apply custom active/inactive classes
+            romanticBtn.classList.toggle('btn-active', type === 'Romantic');
+            platonicBtn.classList.toggle('btn-active', type === 'Platonic');
+            naughtyBtn.classList.toggle('btn-active', type === 'Naughty');
+            
+            // Reset card area to show the initial stacked deck state
+            const cardContainer = document.getElementById('cardContainer');
+            // Start by adding the card back (z-index: -1)
+            cardContainer.innerHTML = getCardBackHtml(); 
+
+            // Add the initial message card. Use card-front class so it's selected for the first draw animation.
+            cardContainer.insertAdjacentHTML('beforeend', `
+                <div class="card-front flex flex-col justify-center items-center p-6 rounded-xl text-white transform z-10" 
+                     style="background-color: var(--deep-red-light); border: 5px solid var(--white);">
+                    <div class="text-center">
+                        <i data-lucide="star" class="w-12 h-12 mx-auto mb-2 text-white"></i>
+                        <h3 class="text-xl font-bold tracking-widest text-white">DECK SHUFFLED</h3>
+                        <p class="text-sm font-light mt-1 text-white">Ready to draw the first card.</p>
+                    </div>
+                </div>
+            `);
+
+            updateCardCount();
+            
+            // Re-run icon initialization
+            if (typeof createIcons !== 'undefined') {
+                createIcons();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set up event listeners for controls
+            document.getElementById('romanticButton').addEventListener('click', () => initializeDeck('Romantic'));
+            document.getElementById('platonicButton').addEventListener('click', () => initializeDeck('Platonic'));
+            document.getElementById('naughtyButton').addEventListener('click', () => initializeDeck('Naughty')); 
+            document.getElementById('drawButton').addEventListener('click', drawCard);
+            document.getElementById('shuffleButton').addEventListener('click', () => initializeDeck(deckType));
+            
+            // Initialize with the default deck
+            initializeDeck(deckType);
+        });
+    </script>
+</head>
+<body class="p-4 sm:p-8 min-h-screen flex flex-col items-center">
+
+    <header class="max-w-xl w-full text-center mb-8">
+        <h1 class="text-3xl sm:text-4xl font-extrabold color-card-text mb-2">Deeper: The Connection Card Game</h1>
+        <p class="text-gray-600 text-md">Choose a deck, shuffle, and draw the next card for deep conversation or a fun dare.</p>
+    </header>
+
+    <main class="w-full max-w-4xl flex flex-col lg:flex-row gap-8">
+        
+        <!-- Controls Panel (Using custom black theme) --><section class="lg:w-1/3 control-panel shadow-lg h-full">
+            <h2 class="control-title text-2xl mb-4" id="deckTitle">Romantic Deck</h2>
+
+            <div class="mb-6 space-y-3">
+                <button id="romanticButton" class="w-full btn-primary btn-active" onclick="initializeDeck('Romantic')">
+                    <i data-lucide="heart" class="w-5 h-5 inline mr-2"></i> Romantic Deck (50 Cards)
+                </button>
+                <button id="platonicButton" class="w-full btn-primary" onclick="initializeDeck('Platonic')">
+                    <i data-lucide="handshake" class="w-5 h-5 inline mr-2"></i> Platonic Deck (50 Cards)
+                </button>
+                <button id="naughtyButton" class="w-full btn-primary" onclick="initializeDeck('Naughty')">
+                    <i data-lucide="flame" class="w-5 h-5 inline mr-2"></i> Naughty Deck (50 Cards)
+                </button>
+            </div>
+
+            <div class="mb-6">
+                <button id="shuffleButton" class="w-full btn-red py-3 px-4 shadow-md">
+                    <i data-lucide="rotate-ccw" class="w-5 h-5 inline mr-2"></i> Shuffle Current Deck
+                </button>
+            </div>
+
+            <div class="text-center p-4 border rounded-lg bg-red-50">
+                <p class="text-lg font-semibold color-card-text">Cards Remaining:</p>
+                <p id="remainingCount" class="text-5xl font-extrabold color-card-text">50</p>
+            </div>
+        </section>
+
+        <!-- Game Area (Card Stack) --><section class="lg:w-2/3 flex flex-col items-center">
+            
+            <!-- Card Display Area (Stack Container) --><div id="cardContainer" class="relative flex-shrink-0 mb-8 card-stack-container">
+                <!-- Card back and active card/message are placed here by JS --></div>
+            
+            <!-- Draw Button --><button id="drawButton" class="text-white font-bold py-4 px-8 rounded-full transition duration-300 hover:scale-105 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed text-xl btn-red">
+                Draw Next Card
+            </button>
+            
+        </section>
+    </main>
+
+</body>
+</html>
