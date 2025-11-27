@@ -1,37 +1,55 @@
 # 🎴 Deeper-Decks: The Card Game
 
-> **PROPRIETARY SOFTWARE** - © 2025 Sogibuchukwu Azuwa. All Rights Reserved.
+> **PROPRIETARY SOFTWARE & INTELLECTUAL PROPERTY**  
+> © 2025 Sogibuchukwu Azuwa. All Rights Reserved.
 
-## 🔒 Important Notice
+## 🔒 STRICT INTELLECTUAL PROPERTY PROTECTION
 
-This software is **closed source** and **proprietary**. All rights are reserved.
+### PROTECTED ASSETS INCLUDE:
+- **Game Concept**: Digital card game for intimate connections
+- **Brand Name**: "Deeper-Decks" and associated branding
+- **Deck System**: Romantic, Platonic, Naughty, Girls' Night themes
+- **Game Mechanics**: Card drawing, shuffling, multi-deck switching
+- **Content**: 200+ proprietary questions and dares
+- **Design**: Dark theme UI, animations, user experience
+- **Business Model**: Freemium with premium deck access
 
-**You MAY NOT:**
-- Copy, modify, or distribute this software
-- Use the code for commercial purposes
-- Reverse engineer or create derivative works
-- Remove copyright notices
+### 🚫 STRICTLY PROHIBITED ACTIVITIES:
+- Copying, modifying, or distributing any part of this software
+- Using the concept, name, or mechanics for commercial purposes
+- Creating similar card-based intimate question games
+- Reverse engineering or extracting protected content
+- Using similar deck themes or question structures
 
-## 🎮 About the Game
+## 👨‍💻 DEVELOPER & COPYRIGHT HOLDER
+**Sogibuchukwu Azuwa**  
+Sole creator, copyright holder, and IP owner
 
-Deeper-Decks is an intimate card game featuring:
-- 4 unique decks (Romantic, Platonic, Naughty, Girls' Night)
-- Beautiful dark theme design
-- Smooth card animations
+## 🎮 ABOUT THE GAME
+
+Deeper-Decks revolutionizes digital connection games with:
+- 4 thematically distinct decks for different relationship contexts
+- Beautiful dark-themed interface with smooth animations
+- Progressive card revelation system
 - Real-time player statistics
+- Proprietary question and dare content
 
-## 👨‍💻 Developer
-**Sogibuchukwu Azuwa** - Sole creator and copyright holder
-
-## 🚀 Getting Started
+## 🚀 GETTING STARTED
 
 1. Open `index.html` in a modern web browser
-2. Choose your deck and start playing!
+2. Select from available decks
+3. Draw cards to reveal questions and dares
+4. Use to spark meaningful conversations
 
-## 📞 Contact
+## 📞 LICENSING & CONTACT
 
-For licensing or business inquiries: azuwasogi@gmail.com
+**For authorized use, licensing, or partnerships:**  
+Email: azuwasogi@gmail.com
+
+**For infringement reports:**  
+Please contact immediately with details
 
 ---
 
-*This software is protected by copyright law. Violators will be prosecuted.*
+*This software and concept are protected by copyright, trademark, and trade secret laws.  
+Violators will face severe legal consequences including statutory damages.*
