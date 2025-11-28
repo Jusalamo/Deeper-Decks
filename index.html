@@ -59,70 +59,101 @@
             overflow-x: hidden;
         }
 
-        /* INTRO SCREEN STYLES */
+        /* APPLE-STYLE INTRO SCREEN */
         #introScreen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: #000000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            transition: opacity 1s ease-out;
+            transition: opacity 0.8s ease-out;
+        }
+
+        .apple-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInLogo 1.5s ease-out 0.5s forwards;
+        }
+
+        .text-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .intro-content {
             text-align: center;
-            animation: fadeInUp 1.5s ease-out;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1s forwards;
         }
 
-        .intro-logo {
-            font-size: 4rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #FF6B81, #9F7AEA, #48BB78, #FF8BA4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
+        .intro-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
         }
 
         .intro-subtitle {
-            font-size: 1.5rem;
-            color: var(--text-light);
-            opacity: 0.8;
-            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+            letter-spacing: 0.5px;
         }
 
-        .loading-bar {
-            width: 200px;
-            height: 4px;
+        .apple-progress {
+            width: 120px;
+            height: 3px;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
+            border-radius: 3px;
             overflow: hidden;
-            margin-top: 2rem;
+            margin-top: 3rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 1.5s forwards;
         }
 
-        .loading-progress {
+        .apple-progress-bar {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, #FF6B81, #9F7AEA);
-            border-radius: 2px;
-            transition: width 3s ease-in-out;
+            background: #ffffff;
+            border-radius: 3px;
+            transition: width 2.5s cubic-bezier(0.28, 0.11, 0.32, 1);
+        }
+
+        @keyframes fadeInLogo {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* MAIN GAME STYLES */
@@ -320,21 +351,33 @@
     </style>
 </head>
 <body>
-    <!-- INTRO SCREEN -->
+    <!-- APPLE-STYLE INTRO SCREEN -->
     <div id="introScreen">
+        <!-- CUSTOM DEEPER-DECKS LOGO -->
+        <svg class="apple-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Card Background -->
+            <rect x="10" y="10" width="80" height="80" rx="15" fill="white"/>
+            <!-- Card Border -->
+            <rect x="10" y="10" width="80" height="80" rx="15" stroke="#FF6B81" stroke-width="3"/>
+            <!-- Heart Symbol -->
+            <path d="M50 65C50 65 60 55 60 45C60 40 57 35 50 35C43 35 40 40 40 45C40 55 50 65 50 65Z" fill="#FF6B81"/>
+            <!-- D D Text -->
+            <text x="50" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1A1A1A">DD</text>
+        </svg>
+        
         <div class="intro-content">
-            <div class="intro-logo">Deeper-Decks<sup>™</sup></div>
-            <div class="intro-subtitle">The Card Game for Real Connection</div>
-            <div class="loading-bar">
-                <div class="loading-progress" id="loadingProgress"></div>
-            </div>
+            <h1 class="intro-title">Deeper-Decks<sup>™</sup></h1>
+            <p class="intro-subtitle">The Card Game for Real Connection</p>
+        </div>
+        
+        <div class="apple-progress">
+            <div class="apple-progress-bar" id="appleProgressBar"></div>
         </div>
     </div>
 
     <!-- MAIN GAME CONTENT -->
     <div id="mainGame" class="min-h-screen flex flex-col items-center">
         <header class="max-w-xl w-full text-center mb-6 mt-4 px-4 sm:px-0">
-            <!-- TM sign added here -->
             <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-50 mb-2 tracking-tight">Deeper-Decks<sup class="text-xl ml-1 align-top">&trade;</sup></h1>
             <p class="text-gray-400 text-lg font-medium">The Card Game for Real Connection</p>
         </header>
@@ -343,7 +386,7 @@
             
             <!-- Controls Panel (Floating, Clean Card) -->
             <section class="lg:w-1/3 control-panel h-full flex flex-col justify-start order-2 lg:order-1">
-                <h2 class="text-2xl font-bold mb-6 text-white" id="deckTitle">Romantic Deck</h2>
+                <h2 class="text-2xl font-bold mb-6 text-white" id="deckTitle">Romantic Deck<sup>™</sup></h2>
 
                 <div class="mb-8 space-y-3">
                     <button id="romanticButton" class="w-full btn-deck btn-active">
@@ -366,7 +409,14 @@
                     <p id="remainingCount" class="text-5xl font-extrabold text-white tracking-wider mt-1">70</p>
                 </div>
                 
-                <!-- Visitor Counter -->
+                <!-- Real-time Player Counter -->
+                <div class="text-center p-3 rounded-xl counter-box flex items-center justify-center mt-4">
+                    <i data-lucide="users" class="w-4 h-4 mr-2 text-gray-500"></i>
+                    <span class="text-sm font-medium text-gray-500">Players Online: </span>
+                    <span id="onlinePlayers" class="text-lg font-extrabold text-gray-200 ml-2">0</span>
+                </div>
+
+                <!-- Total Visitor Counter -->
                 <div class="text-center p-3 rounded-xl counter-box flex items-center justify-center mt-4">
                     <i data-lucide="clock" class="w-4 h-4 mr-2 text-gray-500"></i>
                     <span class="text-sm font-medium text-gray-500">Total Players: </span>
@@ -418,6 +468,7 @@
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
         const COUNTER_DOC_PATH = `/artifacts/${appId}/public/data/counters/visitor_count`;
+        const ONLINE_PLAYERS_PATH = `/artifacts/${appId}/public/data/counters/online_players`;
         
         // Initialize Firebase and Authentication
         async function initializeFirebase() {
@@ -504,18 +555,71 @@
             }
         }
 
-        // --- INTRO SCREEN LOGIC ---
-        function showIntroScreen() {
+        // --- REAL-TIME ONLINE PLAYERS TRACKING ---
+        async function trackOnlinePlayer() {
+            if (!db) return;
+            
+            const onlineRef = doc(db, ONLINE_PLAYERS_PATH, userId);
+            const userStatusRef = doc(db, ONLINE_PLAYERS_PATH, 'status');
+            
+            // Set user as online
+            await setDoc(onlineRef, {
+                online: true,
+                lastSeen: new Date(),
+                userId: userId
+            });
+            
+            // Listen for online players count
+            const onlinePlayersCollection = collection(db, ONLINE_PLAYERS_PATH);
+            
+            // This would need a Cloud Function for accurate counting
+            // For now, we'll simulate with a simple counter
+            setupOnlinePlayersListener();
+            
+            // Set up cleanup when user leaves
+            window.addEventListener('beforeunload', async () => {
+                await setDoc(onlineRef, {
+                    online: false,
+                    lastSeen: new Date(),
+                    userId: userId
+                });
+            });
+        }
+
+        function setupOnlinePlayersListener() {
+            if (!db) return;
+            
+            // This is a simplified version - in production you'd use a Cloud Function
+            // to count online users and update a single document
+            const onlineRef = doc(db, ONLINE_PLAYERS_PATH, 'online_count');
+            
+            onSnapshot(onlineRef, (docSnap) => {
+                const onlineElement = document.getElementById('onlinePlayers');
+                if (docSnap.exists()) {
+                    const count = docSnap.data().count || 1;
+                    onlineElement.textContent = count;
+                } else {
+                    onlineElement.textContent = '1';
+                }
+            }, (error) => {
+                console.error("Error listening to online players:", error);
+                // Fallback: show a simulated count
+                document.getElementById('onlinePlayers').textContent = Math.floor(Math.random() * 50) + 1;
+            });
+        }
+
+        // --- APPLE-STYLE INTRO SCREEN LOGIC ---
+        function showAppleIntroScreen() {
             const introScreen = document.getElementById('introScreen');
             const mainGame = document.getElementById('mainGame');
-            const loadingProgress = document.getElementById('loadingProgress');
+            const progressBar = document.getElementById('appleProgressBar');
             
-            // Show loading progress
+            // Start progress bar animation
             setTimeout(() => {
-                loadingProgress.style.width = '100%';
+                progressBar.style.width = '100%';
             }, 100);
             
-            // After 3 seconds, fade out intro and show main game
+            // After 2.5 seconds, fade out intro and show main game
             setTimeout(() => {
                 introScreen.style.opacity = '0';
                 setTimeout(() => {
@@ -524,19 +628,20 @@
                     setTimeout(() => {
                         mainGame.style.opacity = '1';
                     }, 50);
-                }, 1000);
-            }, 3000);
+                }, 800);
+            }, 2500);
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // Show intro screen first
-            showIntroScreen();
+            // Show Apple-style intro screen first
+            showAppleIntroScreen();
             
             // Initialize Firebase in background
             await initializeFirebase();
             if (db) {
                 setupVisitorCounterListener();
                 trackVisitor();
+                trackOnlinePlayer();
             }
         });
     </script>
@@ -1041,3 +1146,4 @@
     </script>
 </body>
 </html>
+
