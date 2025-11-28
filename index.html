@@ -9,6 +9,8 @@
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Mona Sans Font -->
+    <link href="https://fonts.cdnfonts.com/css/mona-sans" rel="stylesheet">
     <!-- 
       PROPRIETARY SOFTWARE - STRICTLY CONFIDENTIAL
       DEEPER-DECKS™ CARD GAME
@@ -48,6 +50,23 @@
             --text-dark: #1A1A1A;
             --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
             --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.5); /* Strong shadow in dark mode */
+            
+            /* Rainbow animation properties */
+            --bg-position: 100;
+            --color-white: hsl(0, 0%, 100%);
+            --color-cyan: hsl(180, 100%, 50%);
+            --color-blue: hsl(240, 100%, 50%);
+            --color-purple: hsl(270, 100%, 50%);
+            --color-pink: hsl(330, 40%, 70%);
+            --color-red: hsl(0, 100%, 50%);
+            --color-yellow: hsl(60, 100%, 50%);
+            --color-lime: hsl(90, 100%, 75%);
+        }
+
+        @property --bg-position {
+            syntax: "<number>";
+            inherits: true;
+            initial-value: 100;
         }
 
         body {
@@ -59,7 +78,7 @@
             overflow-x: hidden;
         }
 
-        /* APPLE-STYLE INTRO SCREEN */
+        /* RAINBOW INTRO SCREEN */
         #introScreen {
             position: fixed;
             top: 0;
@@ -75,68 +94,75 @@
             transition: opacity 0.8s ease-out;
         }
 
-        .apple-logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeInLogo 1.5s ease-out 0.5s forwards;
-        }
-
-        .text-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .intro-content {
-            text-align: center;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 1s forwards;
-        }
-
-        .intro-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: -0.5px;
-            margin-bottom: 0.5rem;
+        .rainbow-logo {
+            font-family: 'Mona Sans', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(
+                to right,
+                var(--color-white),
+                var(--color-white),
+                var(--color-cyan),
+                var(--color-blue),
+                var(--color-purple),
+                var(--color-pink),
+                var(--color-red),
+                var(--color-yellow),
+                var(--color-lime),
+                var(--color-white),
+                var(--color-white)
+            ) no-repeat calc(var(--bg-position) * 1%) 0% / 900%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+            animation: rainbowSlide 3s ease-in-out forwards;
         }
 
         .intro-subtitle {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             color: rgba(255, 255, 255, 0.7);
             font-weight: 400;
             letter-spacing: 0.5px;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.5s forwards;
         }
 
-        .apple-progress {
-            width: 120px;
-            height: 3px;
+        .rainbow-progress {
+            width: 200px;
+            height: 4px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 3px;
             overflow: hidden;
-            margin-top: 3rem;
             opacity: 0;
             animation: fadeIn 0.5s ease-out 1.5s forwards;
         }
 
-        .apple-progress-bar {
+        .rainbow-progress-bar {
             width: 0%;
             height: 100%;
-            background: #ffffff;
+            background: linear-gradient(
+                to right,
+                var(--color-cyan),
+                var(--color-blue),
+                var(--color-purple),
+                var(--color-pink),
+                var(--color-red),
+                var(--color-yellow),
+                var(--color-lime)
+            );
             border-radius: 3px;
             transition: width 2.5s cubic-bezier(0.28, 0.11, 0.32, 1);
         }
 
-        @keyframes fadeInLogo {
+        @keyframes rainbowSlide {
             from {
-                opacity: 0;
-                transform: scale(0.8);
+                --bg-position: 100;
             }
             to {
-                opacity: 1;
-                transform: scale(1);
+                --bg-position: 0;
             }
         }
 
@@ -346,32 +372,20 @@
             header {
                 margin-top: 1rem;
             }
+            .rainbow-logo {
+                font-size: 2.5rem;
+            }
         }
 
     </style>
 </head>
 <body>
-    <!-- APPLE-STYLE INTRO SCREEN -->
+    <!-- RAINBOW INTRO SCREEN -->
     <div id="introScreen">
-        <!-- CUSTOM DEEPER-DECKS LOGO -->
-        <svg class="apple-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Card Background -->
-            <rect x="10" y="10" width="80" height="80" rx="15" fill="white"/>
-            <!-- Card Border -->
-            <rect x="10" y="10" width="80" height="80" rx="15" stroke="#FF6B81" stroke-width="3"/>
-            <!-- Heart Symbol -->
-            <path d="M50 65C50 65 60 55 60 45C60 40 57 35 50 35C43 35 40 40 40 45C40 55 50 65 50 65Z" fill="#FF6B81"/>
-            <!-- D D Text -->
-            <text x="50" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1A1A1A">DD</text>
-        </svg>
-        
-        <div class="intro-content">
-            <h1 class="intro-title">Deeper-Decks<sup>™</sup></h1>
-            <p class="intro-subtitle">The Card Game for Real Connection</p>
-        </div>
-        
-        <div class="apple-progress">
-            <div class="apple-progress-bar" id="appleProgressBar"></div>
+        <div class="rainbow-logo">Deeper-Decks<sup>™</sup></div>
+        <div class="intro-subtitle">The Card Game for Real Connection</div>
+        <div class="rainbow-progress">
+            <div class="rainbow-progress-bar" id="rainbowProgressBar"></div>
         </div>
     </div>
 
@@ -407,20 +421,6 @@
                 <div class="text-center p-5 rounded-xl counter-box">
                     <p class="text-base font-semibold text-gray-400">Cards Remaining</p>
                     <p id="remainingCount" class="text-5xl font-extrabold text-white tracking-wider mt-1">70</p>
-                </div>
-                
-                <!-- Real-time Player Counter -->
-                <div class="text-center p-3 rounded-xl counter-box flex items-center justify-center mt-4">
-                    <i data-lucide="users" class="w-4 h-4 mr-2 text-gray-500"></i>
-                    <span class="text-sm font-medium text-gray-500">Players Online: </span>
-                    <span id="onlinePlayers" class="text-lg font-extrabold text-gray-200 ml-2">0</span>
-                </div>
-
-                <!-- Total Visitor Counter -->
-                <div class="text-center p-3 rounded-xl counter-box flex items-center justify-center mt-4">
-                    <i data-lucide="clock" class="w-4 h-4 mr-2 text-gray-500"></i>
-                    <span class="text-sm font-medium text-gray-500">Total Players: </span>
-                    <span id="visitorCount" class="text-lg font-extrabold text-gray-200 ml-2">...</span>
                 </div>
             </section>
 
@@ -468,7 +468,6 @@
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
         const COUNTER_DOC_PATH = `/artifacts/${appId}/public/data/counters/visitor_count`;
-        const ONLINE_PLAYERS_PATH = `/artifacts/${appId}/public/data/counters/online_players`;
         
         // Initialize Firebase and Authentication
         async function initializeFirebase() {
@@ -521,13 +520,14 @@
                 const counterElement = document.getElementById('visitorCount');
                 if (docSnap.exists()) {
                     const count = docSnap.data().count;
-                    counterElement.textContent = count.toLocaleString();
-                } else {
+                    if (counterElement) {
+                        counterElement.textContent = count.toLocaleString();
+                    }
+                } else if (counterElement) {
                     counterElement.textContent = '0';
                 }
             }, (error) => {
                 console.error("Error listening to visitor count:", error);
-                document.getElementById('visitorCount').textContent = 'Error';
             });
         }
 
@@ -555,71 +555,18 @@
             }
         }
 
-        // --- REAL-TIME ONLINE PLAYERS TRACKING ---
-        async function trackOnlinePlayer() {
-            if (!db) return;
-            
-            const onlineRef = doc(db, ONLINE_PLAYERS_PATH, userId);
-            const userStatusRef = doc(db, ONLINE_PLAYERS_PATH, 'status');
-            
-            // Set user as online
-            await setDoc(onlineRef, {
-                online: true,
-                lastSeen: new Date(),
-                userId: userId
-            });
-            
-            // Listen for online players count
-            const onlinePlayersCollection = collection(db, ONLINE_PLAYERS_PATH);
-            
-            // This would need a Cloud Function for accurate counting
-            // For now, we'll simulate with a simple counter
-            setupOnlinePlayersListener();
-            
-            // Set up cleanup when user leaves
-            window.addEventListener('beforeunload', async () => {
-                await setDoc(onlineRef, {
-                    online: false,
-                    lastSeen: new Date(),
-                    userId: userId
-                });
-            });
-        }
-
-        function setupOnlinePlayersListener() {
-            if (!db) return;
-            
-            // This is a simplified version - in production you'd use a Cloud Function
-            // to count online users and update a single document
-            const onlineRef = doc(db, ONLINE_PLAYERS_PATH, 'online_count');
-            
-            onSnapshot(onlineRef, (docSnap) => {
-                const onlineElement = document.getElementById('onlinePlayers');
-                if (docSnap.exists()) {
-                    const count = docSnap.data().count || 1;
-                    onlineElement.textContent = count;
-                } else {
-                    onlineElement.textContent = '1';
-                }
-            }, (error) => {
-                console.error("Error listening to online players:", error);
-                // Fallback: show a simulated count
-                document.getElementById('onlinePlayers').textContent = Math.floor(Math.random() * 50) + 1;
-            });
-        }
-
-        // --- APPLE-STYLE INTRO SCREEN LOGIC ---
-        function showAppleIntroScreen() {
+        // --- RAINBOW INTRO SCREEN LOGIC ---
+        function showRainbowIntroScreen() {
             const introScreen = document.getElementById('introScreen');
             const mainGame = document.getElementById('mainGame');
-            const progressBar = document.getElementById('appleProgressBar');
+            const progressBar = document.getElementById('rainbowProgressBar');
             
             // Start progress bar animation
             setTimeout(() => {
                 progressBar.style.width = '100%';
             }, 100);
             
-            // After 2.5 seconds, fade out intro and show main game
+            // After 3 seconds, fade out intro and show main game
             setTimeout(() => {
                 introScreen.style.opacity = '0';
                 setTimeout(() => {
@@ -629,56 +576,87 @@
                         mainGame.style.opacity = '1';
                     }, 50);
                 }, 800);
-            }, 2500);
+            }, 3000);
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // Show Apple-style intro screen first
-            showAppleIntroScreen();
+            // Show rainbow intro screen first
+            showRainbowIntroScreen();
             
             // Initialize Firebase in background
             await initializeFirebase();
             if (db) {
                 setupVisitorCounterListener();
                 trackVisitor();
-                trackOnlinePlayer();
             }
         });
     </script>
 
     <script>
-        // --- DECK CONTENT (REFINED) ---
-        // All decks now have exactly 70 unique cards
+        // --- DECK CONTENT (COMPLETE 70 CARDS EACH) ---
 
         const romanticQuestions = [
-            // More Intimate and Personal Questions (50)
-            "What is a core wound from your past that I've unknowingly helped you heal?", "Describe a moment you felt completely seen by me, and what that moment revealed about your own self-perception.",
-            "What is a personal truth about yourself that you only feel safe sharing with me?", "What unique piece of my personality do you feel is essential for your own happiness?",
-            "What are three specific emotional risks you want us to take together in the next year?", "In what specific ways do you feel our relationship has fundamentally changed your life trajectory?",
-            "What is the deepest fear you have about love, and how does our relationship specifically address it?", "Describe the feeling of coming home to me after a long absence. What senses are engaged?",
-            "What is one ambition or desire I possess that you feel passionately obligated to help me fulfill?", "What is a characteristic of mine that you want our children (or future selves) to inherit?",
-            "What is the most beautiful, non-physical burden you've shared with me, and how did I handle it?", "If we wrote a book about our relationship, what would be the title of the most important chapter?",
-            "What does your internal monologue sound like when you are feeling insecure, and how can I interrupt it?", "What is a spontaneous moment of intimacy we've shared that you re-watch in your mind?",
-            "What part of your personal identity do you feel most comfortable exploring when you are alone with me?", "What is the most profound gift our partnership has given you that money could never buy?",
-            "What aspect of yourself do you see reflected in my eyes that you love?", "What is one thing I do that gives you an immediate, visceral feeling of safety?",
-            "What does our unique language of love sound like to you (inside jokes, specific phrases, etc.)?", "If you could instantly solve one recurring disagreement between us, which one would it be and why?",
-            "What is one way our love has given you the courage to let go of a past grievance?", "What does 'home' truly mean to you, and how have we built it together?",
-            "What are two qualities you see in me that you want to cultivate more in yourself?", "What is the kindest, most intentional thing I've ever done for your family or friends?",
-            "What is a boundary you wish you had set earlier in your life, and how does that affect our relationship now?", "What is one thing I do that perfectly aligns with your deepest need for comfort?",
-            "When do you feel most authentically yourself: when we are together or when you are alone?", "What is one goal you are pursuing solely for your own sense of fulfillment, and how can I support it without interfering?",
-            "What is the most private dream you hold that you hope we can witness together?", "How does the way I handle conflict make you feel about our long-term stability?",
-            "What is a habit I have that you initially found annoying but now secretly adore?", "What is the biggest lesson I've taught you about patience or forgiveness?",
-            "Describe the moment you felt most spiritually connected to me.", "What part of my struggle or ambition makes you feel the most protective of me?",
-            "What are you most excited to teach me or learn from me in the coming decade?", "What is a vulnerability of mine that makes you feel strong and needed?",
-            "What is one quality you wish you could see yourself possess more of, and why do you think I see it in you?", "What is the most honest truth I've ever told you, and how did it change things?",
-            "How has our relationship helped you define or redefine success in your own life?", "What is a small, quiet moment we shared that you regard as intensely intimate?",
-            "What is the most profound thing you've learned about the nature of compromise from me?", "What is one secret promise you've made to yourself about our relationship?",
-            "What part of my pain do you carry with empathy, and how do you process it?", "What makes you feel like the most important person in the world to me?",
-            "What is the most surprising way our humor aligns?", "What quality do you believe makes us a truly resilient couple?",
-            "What is one piece of art or music that you feel perfectly encapsulates our love?", "What does our personal version of true partnership look like?",
-            "What is the most important story you want to pass down about our time together?", "What is a memory that makes you realize how far we've truly come?",
+            // Romantic Questions (50)
+            "What is a core wound from your past that I've unknowingly helped you heal?", 
+            "Describe a moment you felt completely seen by me, and what that moment revealed about your own self-perception.",
+            "What is a personal truth about yourself that you only feel safe sharing with me?", 
+            "What unique piece of my personality do you feel is essential for your own happiness?",
+            "What are three specific emotional risks you want us to take together in the next year?", 
+            "In what specific ways do you feel our relationship has fundamentally changed your life trajectory?",
+            "What is the deepest fear you have about love, and how does our relationship specifically address it?", 
+            "Describe the feeling of coming home to me after a long absence. What senses are engaged?",
+            "What is one ambition or desire I possess that you feel passionately obligated to help me fulfill?", 
+            "What is a characteristic of mine that you want our children (or future selves) to inherit?",
+            "What is the most beautiful, non-physical burden you've shared with me, and how did I handle it?", 
+            "If we wrote a book about our relationship, what would be the title of the most important chapter?",
+            "What does your internal monologue sound like when you are feeling insecure, and how can I interrupt it?", 
+            "What is a spontaneous moment of intimacy we've shared that you re-watch in your mind?",
+            "What part of your personal identity do you feel most comfortable exploring when you are alone with me?", 
+            "What is the most profound gift our partnership has given you that money could never buy?",
+            "What aspect of yourself do you see reflected in my eyes that you love?", 
+            "What is one thing I do that gives you an immediate, visceral feeling of safety?",
+            "What does our unique language of love sound like to you (inside jokes, specific phrases, etc.)?", 
+            "If you could instantly solve one recurring disagreement between us, which one would it be and why?",
+            "What is one way our love has given you the courage to let go of a past grievance?", 
+            "What does 'home' truly mean to you, and how have we built it together?",
+            "What are two qualities you see in me that you want to cultivate more in yourself?", 
+            "What is the kindest, most intentional thing I've ever done for your family or friends?",
+            "What is a boundary you wish you had set earlier in your life, and how does that affect our relationship now?", 
+            "What is one thing I do that perfectly aligns with your deepest need for comfort?",
+            "When do you feel most authentically yourself: when we are together or when you are alone?", 
+            "What is one goal you are pursuing solely for your own sense of fulfillment, and how can I support it without interfering?",
+            "What is the most private dream you hold that you hope we can witness together?", 
+            "How does the way I handle conflict make you feel about our long-term stability?",
+            "What is a habit I have that you initially found annoying but now secretly adore?", 
+            "What is the biggest lesson I've taught you about patience or forgiveness?",
+            "Describe the moment you felt most spiritually connected to me.", 
+            "What part of my struggle or ambition makes you feel the most protective of me?",
+            "What are you most excited to teach me or learn from me in the coming decade?", 
+            "What is a vulnerability of mine that makes you feel strong and needed?",
+            "What is one quality you wish you could see yourself possess more of, and why do you think I see it in you?", 
+            "What is the most honest truth I've ever told you, and how did it change things?",
+            "How has our relationship helped you define or redefine success in your own life?", 
+            "What is a small, quiet moment we shared that you regard as intensely intimate?",
+            "What is the most profound thing you've learned about the nature of compromise from me?", 
+            "What is one secret promise you've made to yourself about our relationship?",
+            "What part of my pain do you carry with empathy, and how do you process it?", 
+            "What makes you feel like the most important person in the world to me?",
+            "What is the most surprising way our humor aligns?", 
+            "What quality do you believe makes us a truly resilient couple?",
+            "What is one piece of art or music that you feel perfectly encapsulates our love?", 
+            "What does our personal version of true partnership look like?",
+            "What is the most important story you want to pass down about our time together?", 
+            "What is a memory that makes you realize how far we've truly come?",
+            "What is one thing you've learned about yourself through loving me?", 
+            "Describe the moment you knew you were ready to build a future with me.",
+            "What is a childhood dream of yours that our relationship has helped revive?", 
+            "How has your definition of love evolved since we've been together?",
+            "What is a fear you've overcome because of our relationship?", 
+            "Describe the most romantic gesture you've ever imagined but never shared.",
+            "What part of your personality feels most celebrated when you're with me?", 
+            "If we could relive one day from our relationship, which would it be and why?",
 
-            // Lovey Dares (20 - More Intimate/Personal)
+            // Romantic Dares (20)
             "DARE: Exchange phones and read the last five non-work texts/emails you sent, then discuss the context and emotion behind them.", 
             "DARE: Guide your partner through a 60-second mindfulness exercise, focusing on a shared happy memory. Describe the memory in detail.", 
             "DARE: Write down three things you are currently worried about regarding your career or family, and have your partner commit to listening without offering solutions for two minutes.", 
@@ -702,32 +680,67 @@
         ];
 
         const platonicQuestions = [
-            // Funnier, More Fun-Oriented, and Reasonable Questions (50)
-            "What is the most ridiculous, unverified conspiracy theory you find secretly entertaining?", "If you were a type of cheese, what would you be and why?",
-            "What's the absolute worst job you've ever had, and what's the funniest disaster that happened there?", "What piece of highly niche information do you know that is completely useless in daily life?",
-            "What is the strangest food combination you secretly enjoy?", "If you had to change your name to the last thing you ate, what would your name be?",
-            "What is a mundane task you are surprisingly terrible at (e.g., folding laundry, parking)?", "What's your ultimate 'comfort show' that you've rewatched dozens of times?",
-            "What is the most awkward text message mix-up you've ever had?", "What is the most aggressively 'okay' meal you could possibly eat?",
-            "What is a simple, common word you realized you were pronouncing wrong for years?", "If you could instantly swap places with any fictional side character for a week, who would it be?",
-            "What's a minor superpower you'd actually use every day (e.g., instant tie-tying)?", "What's the silliest hill you've ever chosen to die on in an argument?",
-            "What's a hilarious memory involving public transportation or travel gone wrong?", "What is one fashion trend you desperately hope never returns?",
-            "What is the most unbelievable piece of 'adulting' advice you wish someone had given you?", "What is your best, most dramatic story about an interaction with a Karen/Kevin?",
-            "What's the funniest, most over-the-top reaction you've had to minor inconvenience?", "What is the weirdest thing you collect or keep hidden in your house?",
-            "What is a piece of technology you miss, even though it was terrible?", "If you had to become best friends with a random celebrity, who would cause the most chaos in your life?",
-            "What's your go-to strategy for avoiding unwanted social interaction?", "What is a common courtesy you often forget or fail at?",
-            "What's a phrase or saying that instantly tells you a person is insufferable?", "What's the most embarrassing thing you've asked a customer service representative?",
-            "What is a song you know all the lyrics to but are embarrassed to admit?", "What's the most creative excuse you've used to get out of an obligation?",
-            "What is one product you'd love to see invented purely for convenience?", "What's the best piece of accidental eavesdropping you've ever done?",
-            "What is a random skill you learned specifically to impress someone?", "What's the weirdest thing you've found in a borrowed item (car, jacket, book)?",
-            "What's the most dramatic thing you've seen someone do at a party?", "What is your default, awkward response when someone compliments you?",
-            "What is the pettiest thing you've ever done to get revenge (minor things only!)?", "What is one thing you are completely convinced you are better at than 90% of people?",
-            "What's the most useless advice you've been given about money?", "What animal do you think has the funniest walk, and can you demonstrate it?",
-            "What's the most questionable purchase you've ever seen someone else make?", "What is a childhood food you still secretly enjoy as an adult?",
-            "What's the most recent item you lost that you're surprisingly upset about?", "What is the funniest thing you have ever misinterpreted or misunderstood?",
-            "What's the most niche social media account you follow?", "What's a popular opinion you disagree with, even though you know it's fine?",
-            "What is one piece of furniture you hate, and why do you still own it?", "What's the most intense moment of 'imposter syndrome' you've recently felt?",
+            // Platonic Questions (50)
+            "What is the most ridiculous, unverified conspiracy theory you find secretly entertaining?", 
+            "If you were a type of cheese, what would you be and why?",
+            "What's the absolute worst job you've ever had, and what's the funniest disaster that happened there?", 
+            "What piece of highly niche information do you know that is completely useless in daily life?",
+            "What is the strangest food combination you secretly enjoy?", 
+            "If you had to change your name to the last thing you ate, what would your name be?",
+            "What is a mundane task you are surprisingly terrible at (e.g., folding laundry, parking)?", 
+            "What's your ultimate 'comfort show' that you've rewatched dozens of times?",
+            "What is the most awkward text message mix-up you've ever had?", 
+            "What is the most aggressively 'okay' meal you could possibly eat?",
+            "What is a simple, common word you realized you were pronouncing wrong for years?", 
+            "If you could instantly swap places with any fictional side character for a week, who would it be?",
+            "What's a minor superpower you'd actually use every day (e.g., instant tie-tying)?", 
+            "What's the silliest hill you've ever chosen to die on in an argument?",
+            "What's a hilarious memory involving public transportation or travel gone wrong?", 
+            "What is one fashion trend you desperately hope never returns?",
+            "What is the most unbelievable piece of 'adulting' advice you wish someone had given you?", 
+            "What is your best, most dramatic story about an interaction with a Karen/Kevin?",
+            "What's the funniest, most over-the-top reaction you've had to minor inconvenience?", 
+            "What is the weirdest thing you collect or keep hidden in your house?",
+            "What is a piece of technology you miss, even though it was terrible?", 
+            "If you had to become best friends with a random celebrity, who would cause the most chaos in your life?",
+            "What's your go-to strategy for avoiding unwanted social interaction?", 
+            "What is a common courtesy you often forget or fail at?",
+            "What's a phrase or saying that instantly tells you a person is insufferable?", 
+            "What's the most embarrassing thing you've asked a customer service representative?",
+            "What is a song you know all the lyrics to but are embarrassed to admit?", 
+            "What's the most creative excuse you've used to get out of an obligation?",
+            "What is one product you'd love to see invented purely for convenience?", 
+            "What's the best piece of accidental eavesdropping you've ever done?",
+            "What is a random skill you learned specifically to impress someone?", 
+            "What's the weirdest thing you've found in a borrowed item (car, jacket, book)?",
+            "What's the most dramatic thing you've seen someone do at a party?", 
+            "What is your default, awkward response when someone compliments you?",
+            "What is the pettiest thing you've ever done to get revenge (minor things only!)?", 
+            "What is one thing you are completely convinced you are better at than 90% of people?",
+            "What's the most useless advice you've been given about money?", 
+            "What animal do you think has the funniest walk, and can you demonstrate it?",
+            "What's the most questionable purchase you've ever seen someone else make?", 
+            "What is a childhood food you still secretly enjoy as an adult?",
+            "What's the most recent item you lost that you're surprisingly upset about?", 
+            "What is the funniest thing you have ever misinterpreted or misunderstood?",
+            "What's the most niche social media account you follow?", 
+            "What's a popular opinion you disagree with, even though you know it's fine?",
+            "What is one piece of furniture you hate, and why do you still own it?", 
+            "What's the most intense moment of 'imposter syndrome' you've recently felt?",
+            "What's the funniest autocorrect fail you've ever sent?", 
+            "What's your most ridiculous childhood fear that still kind of haunts you?",
+            "What's the most dramatic way you've ever overreacted to something small?", 
+            "What's your signature 'I'm about to do something stupid' tell?",
+            "What's the most ridiculous thing you've ever convinced someone was true?", 
+            "What's your funniest 'I can't believe I just said that' moment?",
+            "What's the most embarrassing fashion trend you ever participated in?", 
+            "What's your go-to dance move when no one's watching?",
+            "What's the weirdest dream you've had that felt incredibly real?", 
+            "What's your most memorable 'I should have known better' moment?",
+            "What's the funniest thing you've ever done to avoid small talk?", 
+            "What's your signature party trick that always fails spectacularly?",
 
-            // Fun-Oriented Dares (20 - Funnier/More Public)
+            // Platonic Dares (20)
             "DARE: Create a 30-second commercial jingle for a mundane object in the room (e.g., a pen or remote).", 
             "DARE: Spend the next 5 minutes of the conversation only speaking in questions, or lose the next turn.", 
             "DARE: Use the first noun and the last adjective from the question before this one to create a fictional band name, and list two songs.", 
@@ -751,34 +764,66 @@
         ];
 
         const girlsNightQuestions = [
-            // Girls' Night Questions (50 - More fun and funny)
-            "What's the most ridiculous thing you've ever done to impress a crush?", "If your love life was a TikTok trend, what would it be called?",
-            "What's your go-to karaoke song that you secretly slay at?", "What's the funniest dating app message you've ever received?",
-            "What's your signature dance move and when do you break it out?", "What's the most dramatic thing you've ever done over a bad haircut?",
-            "What's your guilty pleasure reality TV show and why is it so addictive?", "What's the funniest thing that's ever happened to you on a girls' trip?",
-            "What's your most embarrassing 'I thought they were flirting but they were just being nice' story?", "What's the wildest rumor you've ever heard about yourself?",
-            "What's your ultimate 'get ready' hype song that makes you feel like a queen?", "What's the funniest backhanded compliment you've ever received?",
-            "What's your most ridiculous purchase that you don't regret at all?", "What's the most dramatic friendship breakup you've ever witnessed?",
-            "What's your secret talent that would surprise everyone here?", "What's the funniest thing you've ever cried over?",
-            "What's your most memorable 'should have listened to my friends' moment?", "What's the wildest thing you've done for the perfect Instagram photo?",
-            "What's your funniest 'I can't believe I used to wear that' fashion moment?", "What's the most ridiculous thing you've convinced someone was true?",
-            "What's your signature cocktail and what does it say about your personality?", "What's the funniest autocorrect fail you've ever sent?",
-            "What's your most dramatic reaction to seeing an ex in public?", "What's the wildest thing you've ever done for free food?",
-            "What's your go-to 'I need to vent' friend and why are they the chosen one?", "What's the funniest thing you've ever done while tipsy?",
-            "What's your most ridiculous celebrity crush and why does it make sense?", "What's the wildest conspiracy theory you and your friends have come up with?",
-            "What's your funniest 'I'm definitely getting away with this' moment?", "What's the most dramatic text message you've ever sent?",
-            "What's your signature party trick that always gets attention?", "What's the funniest thing you've ever stolen (accidentally or on purpose)?",
-            "What's your most memorable 'I should not have said that out loud' moment?", "What's the wildest thing you've done to avoid social interaction?",
-            "What's your funniest 'I thought I was being smooth' story?", "What's the most ridiculous self-care ritual you've tried?",
-            "What's your signature 'I'm about to cause chaos' look?", "What's the funniest group chat name you've ever been in?",
-            "What's your most dramatic reaction to spoiling a TV show ending?", "What's the wildest thing you've done for a sale item?",
-            "What's your funniest 'that was definitely not my fault' story?", "What's the most ridiculous thing you've Googled at 3 AM?",
-            "What's your signature 'I'm pretending to know what I'm doing' move?", "What's the funniest thing you've ever argued about with a friend?",
-            "What's your most dramatic 'I'm never drinking again' moment?", "What's the wildest thing you've done for a compliment?",
-            "What's your funniest 'I can't believe I got away with that' story?", "What's the most ridiculous dating advice you've ever received?",
+            // Girls' Night Questions (50)
+            "What's the most ridiculous thing you've ever done to impress a crush?", 
+            "If your love life was a TikTok trend, what would it be called?",
+            "What's your go-to karaoke song that you secretly slay at?", 
+            "What's the funniest dating app message you've ever received?",
+            "What's your signature dance move and when do you break it out?", 
+            "What's the most dramatic thing you've ever done over a bad haircut?",
+            "What's your guilty pleasure reality TV show and why is it so addictive?", 
+            "What's the funniest thing that's ever happened to you on a girls' trip?",
+            "What's your most embarrassing 'I thought they were flirting but they were just being nice' story?", 
+            "What's the wildest rumor you've ever heard about yourself?",
+            "What's your ultimate 'get ready' hype song that makes you feel like a queen?", 
+            "What's the funniest backhanded compliment you've ever received?",
+            "What's your most ridiculous purchase that you don't regret at all?", 
+            "What's the most dramatic friendship breakup you've ever witnessed?",
+            "What's your secret talent that would surprise everyone here?", 
+            "What's the funniest thing you've ever cried over?",
+            "What's your most memorable 'should have listened to my friends' moment?", 
+            "What's the wildest thing you've done for the perfect Instagram photo?",
+            "What's your funniest 'I can't believe I used to wear that' fashion moment?", 
+            "What's the most ridiculous thing you've convinced someone was true?",
+            "What's your signature cocktail and what does it say about your personality?", 
+            "What's the funniest autocorrect fail you've ever sent?",
+            "What's your most dramatic reaction to seeing an ex in public?", 
+            "What's the wildest thing you've ever done for free food?",
+            "What's your go-to 'I need to vent' friend and why are they the chosen one?", 
+            "What's the funniest thing you've ever done while tipsy?",
+            "What's your most ridiculous celebrity crush and why does it make sense?", 
+            "What's the wildest conspiracy theory you and your friends have come up with?",
+            "What's your funniest 'I'm definitely getting away with this' moment?", 
+            "What's the most dramatic text message you've ever sent?",
+            "What's your signature party trick that always gets attention?", 
+            "What's the funniest thing you've ever stolen (accidentally or on purpose)?",
+            "What's your most memorable 'I should not have said that out loud' moment?", 
+            "What's the wildest thing you've done to avoid social interaction?",
+            "What's your funniest 'I thought I was being smooth' story?", 
+            "What's the most ridiculous self-care ritual you've tried?",
+            "What's your signature 'I'm about to cause chaos' look?", 
+            "What's the funniest group chat name you've ever been in?",
+            "What's your most dramatic reaction to spoiling a TV show ending?", 
+            "What's the wildest thing you've done for a sale item?",
+            "What's your funniest 'that was definitely not my fault' story?", 
+            "What's the most ridiculous thing you've Googled at 3 AM?",
+            "What's your signature 'I'm pretending to know what I'm doing' move?", 
+            "What's the funniest thing you've ever argued about with a friend?",
+            "What's your most dramatic 'I'm never drinking again' moment?", 
+            "What's the wildest thing you've done for a compliment?",
+            "What's your funniest 'I can't believe I got away with that' story?", 
+            "What's the most ridiculous dating advice you've ever received?",
             "What's your signature 'emergency snack' that you always have on hand?",
+            "What's the most dramatic way you've ever celebrated a small victory?", 
+            "What's your funniest 'I thought I was being romantic but it was cringe' moment?",
+            "What's the wildest thing you've done to get a discount?", 
+            "What's your most memorable 'I can't believe we survived that' story with friends?",
+            "What's the funniest thing you've ever worn thinking it was fashionable?", 
+            "What's your go-to karaoke song when you're feeling extra confident?",
+            "What's the most ridiculous beauty treatment you've ever tried?", 
+            "What's your signature 'I'm about to tell a lie' tell?",
 
-            // Girls' Night Dares (20 - More fun and funny)
+            // Girls' Night Dares (20)
             "DARE: Do your best impression of a famous TikTok dance for 15 seconds.", 
             "DARE: Create a dramatic reenactment of your most embarrassing middle school moment.", 
             "DARE: Text your most recent ex something completely random and read the response to the group.", 
@@ -802,33 +847,65 @@
         ];
 
         const naughtyQuestions = [
-            // More Naughty and Raunchy Questions (50)
-            "What piece of dirty talk immediately makes you melt, and what scenario do you imagine it in?", "Describe the exact moment you realized you wanted to completely dominate/submit to a specific person.",
-            "What's the most intense physical hunger you've ever felt for someone, and where did it hit you?", "What non-sexual piece of clothing or uniform do you find intensely erotic?",
-            "What's the most public you've ever come to getting caught, and what was the thrill?", "What part of my/your partner's body do you worship the most when they aren't looking?",
-            "What is a boundary you secretly fantasize about pushing or having pushed in the bedroom?", "Describe a fantasy involving two non-human elements (e.g., silk, rain, a forbidden room).",
-            "What's the sexiest scenario involving an element of surprise or deception?", "What's the most explicit thing you've ever confessed to me/a partner via text message?",
-            "What's one intimate act you initially hated but have come to secretly crave?", "Describe the specific sensation (e.g., pressure, heat, movement) that makes you lose control.",
-            "What is a dirty secret you've kept from me/a partner about your past intimate life?", "What kind of clothing would you put on me/a partner to make them look completely vulnerable and inviting?",
-            "What's the most aggressive, possessive thing you've said or heard during an intimate moment?", "What's the most explicit piece of fanfiction or erotica you've ever read?",
-            "What is a kink or fetish that you've only explored in your mind but want to try in reality?", "What fictional character's touch do you imagine would be the most intoxicating?",
-            "What's the most intense physical challenge or game you've incorporated into sex?", "What is one thing I could do or say right now that would guarantee an explosive reaction later?",
-            "What's your most vivid, sensual memory involving scent or taste?", "Describe the feeling of being completely exposed and totally desired.",
-            "What is one piece of equipment you want to introduce to our intimate life, and why?", "What is the dirtiest, most inappropriate phrase you've screamed in your head during a polite conversation?",
-            "What is the most vulnerable and yet most arousing thing you've ever done in front of me/a partner?", "Describe a scenario where you are completely at the mercy of my/a partner's desires.",
-            "What part of the body (excluding genitals) do you find the most erogenous to touch?", "What's the biggest turn-on that has absolutely nothing to do with sex?",
-            "What is a fantasy involving an element of power exchange that deeply excites you?", "What's the most embarrassing intimate accident that somehow turned into a good story?",
-            "What's a piece of suggestive art or media that instantly gets you in the mood?", "What's the fastest you've moved from 'thinking' about sex to 'doing' sex?",
-            "What kind of sensory deprivation (blindfolds, silence) turns you on the most?", "What's the most intense role-playing scenario you've ever considered?",
-            "What is one thing I/a partner could wear that is pure temptation?", "What's the most spontaneous thing you've done to initiate intimacy?",
-            "What is a hidden talent you have for prolonging pleasure?", "What's the dirtiest word or phrase in another language that you know?",
-            "What's a fantasy involving voyeurism or exhibitionism?", "What's the most physical risk you've taken for a moment of intense pleasure?",
-            "What is a sound that your partner makes that instantly makes you want them?", "What is the most arousing place on your body to be kissed, and why?",
-            "What's one thing you want me/a partner to be completely selfish about in bed tonight?", "What's the most scandalous location you've imagined having sex?",
-            "What's your favorite way to be teased when you desperately want release?", "What is the greatest intimate lesson you've learned from a past mistake?",
-            "What's the biggest lie you've told to cover up a previous intimate encounter?", "What is the most non-traditional way you've ever achieved climax?",
+            // Naughty Questions (50)
+            "What piece of dirty talk immediately makes you melt, and what scenario do you imagine it in?", 
+            "Describe the exact moment you realized you wanted to completely dominate/submit to a specific person.",
+            "What's the most intense physical hunger you've ever felt for someone, and where did it hit you?", 
+            "What non-sexual piece of clothing or uniform do you find intensely erotic?",
+            "What's the most public you've ever come to getting caught, and what was the thrill?", 
+            "What part of my/your partner's body do you worship the most when they aren't looking?",
+            "What is a boundary you secretly fantasize about pushing or having pushed in the bedroom?", 
+            "Describe a fantasy involving two non-human elements (e.g., silk, rain, a forbidden room).",
+            "What's the sexiest scenario involving an element of surprise or deception?", 
+            "What's the most explicit thing you've ever confessed to me/a partner via text message?",
+            "What's one intimate act you initially hated but have come to secretly crave?", 
+            "Describe the specific sensation (e.g., pressure, heat, movement) that makes you lose control.",
+            "What is a dirty secret you've kept from me/a partner about your past intimate life?", 
+            "What kind of clothing would you put on me/a partner to make them look completely vulnerable and inviting?",
+            "What's the most aggressive, possessive thing you've said or heard during an intimate moment?", 
+            "What's the most explicit piece of fanfiction or erotica you've ever read?",
+            "What is a kink or fetish that you've only explored in your mind but want to try in reality?", 
+            "What fictional character's touch do you imagine would be the most intoxicating?",
+            "What's the most intense physical challenge or game you've incorporated into sex?", 
+            "What is one thing I could do or say right now that would guarantee an explosive reaction later?",
+            "What's your most vivid, sensual memory involving scent or taste?", 
+            "Describe the feeling of being completely exposed and totally desired.",
+            "What is one piece of equipment you want to introduce to our intimate life, and why?", 
+            "What is the dirtiest, most inappropriate phrase you've screamed in your head during a polite conversation?",
+            "What is the most vulnerable and yet most arousing thing you've ever done in front of me/a partner?", 
+            "Describe a scenario where you are completely at the mercy of my/a partner's desires.",
+            "What part of the body (excluding genitals) do you find the most erogenous to touch?", 
+            "What's the biggest turn-on that has absolutely nothing to do with sex?",
+            "What is a fantasy involving an element of power exchange that deeply excites you?", 
+            "What's the most embarrassing intimate accident that somehow turned into a good story?",
+            "What's a piece of suggestive art or media that instantly gets you in the mood?", 
+            "What's the fastest you've moved from 'thinking' about sex to 'doing' sex?",
+            "What kind of sensory deprivation (blindfolds, silence) turns you on the most?", 
+            "What's the most intense role-playing scenario you've ever considered?",
+            "What is one thing I/a partner could wear that is pure temptation?", 
+            "What's the most spontaneous thing you've done to initiate intimacy?",
+            "What is a hidden talent you have for prolonging pleasure?", 
+            "What's the dirtiest word or phrase in another language that you know?",
+            "What's a fantasy involving voyeurism or exhibitionism?", 
+            "What's the most physical risk you've taken for a moment of intense pleasure?",
+            "What is a sound that your partner makes that instantly makes you want them?", 
+            "What is the most arousing place on your body to be kissed, and why?",
+            "What's one thing you want me/a partner to be completely selfish about in bed tonight?", 
+            "What's the most scandalous location you've imagined having sex?",
+            "What's your favorite way to be teased when you desperately want release?", 
+            "What is the greatest intimate lesson you've learned from a past mistake?",
+            "What's the biggest lie you've told to cover up a previous intimate encounter?", 
+            "What is the most non-traditional way you've ever achieved climax?",
+            "What's the most intense eye contact you've ever maintained during intimacy?", 
+            "Describe a fantasy where you have complete control over the pace and rhythm.",
+            "What's the sexiest non-physical trait someone can possess?", 
+            "What's the most daring place you've ever been intimate?",
+            "What's a fantasy you've never shared because it feels too vulnerable?", 
+            "Describe the perfect morning after a night of incredible intimacy.",
+            "What's the most creative place you've ever considered for intimacy?", 
+            "What intimate skill would you most like to master?",
 
-            // Naughty Dares (20 - More Raunchy)
+            // Naughty Dares (20)
             "DARE: Send a text to your partner (or person next to you) that would require an immediate, urgent, and private reply.", 
             "DARE: Blindfold your partner for one minute and use only your tongue to trace a letter on their neck or arm.", 
             "DARE: Whisper a specific, new, and highly inappropriate nickname you'll call your partner/neighbor tonight, and use it for the rest of the game.", 
@@ -855,7 +932,6 @@
         let currentDeck = [];
         let remainingCardsCount = 0;
         let deckType = 'romantic'; // Default deck
-        let countdownInterval = null; // Global interval for dares
         
         // --- Game Logic ---
         function shuffleArray(array) {
@@ -894,47 +970,6 @@
              return DECK_PROPERTIES[type] || {};
         }
 
-        // --- Countdown Logic for Dares ---
-        function stopCountdown() {
-            if (countdownInterval) {
-                clearInterval(countdownInterval);
-                countdownInterval = null;
-            }
-            const timerElement = document.getElementById('dareTimer');
-            if (timerElement) {
-                // Remove any time-up state, hide icon
-                timerElement.classList.add('hidden');
-                timerElement.innerHTML = '';
-            }
-        }
-
-        function startCountdown(durationSeconds) {
-            stopCountdown(); 
-            let timeRemaining = durationSeconds;
-            const timerElement = document.getElementById('dareTimer');
-            
-            if (timerElement) {
-                timerElement.classList.remove('hidden');
-                
-                const updateTimer = () => {
-                    if (timeRemaining <= 0) {
-                        stopCountdown();
-                        // Display the "TIME UP!" message
-                        timerElement.innerHTML = `<i data-lucide="clock" class="w-4 h-4 mr-1 text-red-600"></i> <span class="text-red-600 font-extrabold">TIME UP!</span>`;
-                    } else {
-                        const seconds = timeRemaining % 60;
-                        // Display remaining time
-                        timerElement.innerHTML = `<i data-lucide="clock" class="w-4 h-4 mr-1 text-gray-700"></i> ${seconds}s Remaining`;
-                        timeRemaining--;
-                    }
-                    window.createIcons(); // Re-render icons after update
-                };
-
-                updateTimer();
-                countdownInterval = setInterval(updateTimer, 1000);
-            }
-        }
-
         function createCardElement(question, questionIndex) {
             const isDare = question.startsWith("DARE:");
             const content = isDare ? question.substring(5).trim() : question;
@@ -945,11 +980,6 @@
             const deckTitle = info.title;
             const deckColor = info.colorVar;
             const cardNumber = questionIndex + 1;
-            
-            // Countdown element, only visible for Dares (initially hidden)
-            const countdownHTML = isDare 
-                ? `<span id="dareTimer" class="font-bold ml-4 flex items-center"></span>` 
-                : `<span id="dareTimer" class="hidden"></span>`;
 
             return `
                 <div id="activeCard-${cardNumber}" class="card-front flex flex-col justify-between p-8 sm:p-12 w-full h-full text-center z-10">
@@ -969,11 +999,8 @@
                     </div>
 
                     <!-- Footer -->
-                    <div class="text-xs text-right text-gray-500 mt-6 pt-3 border-t border-gray-100 flex justify-between items-center">
-                        <span>${deckTitle}</span>
-                         <div class="flex items-center text-gray-700">
-                            ${countdownHTML}
-                        </div>
+                    <div class="text-xs text-right text-gray-500 mt-6 pt-3 border-t border-gray-100">
+                        ${deckTitle}
                     </div>
                 </div>
             `;
@@ -996,7 +1023,6 @@
 
         function showEmptyDeckCard() {
             const cardContainer = document.getElementById('cardContainer');
-            stopCountdown();
             cardContainer.innerHTML = getCardBackHtml(); 
             const deckColor = getDeckInfo(deckType).colorVar;
 
@@ -1011,7 +1037,6 @@
         }
 
         function drawCard() {
-            stopCountdown(); // Stop any existing timer before drawing a new card
             const cardContainer = document.getElementById('cardContainer');
             
             if (currentDeck.length === 0) {
@@ -1024,7 +1049,6 @@
             remainingCardsCount = currentDeck.length;
             const oldCard = cardContainer.querySelector('.card-front, .empty-card'); 
             const nextCardHtml = createCardElement(cardData.question, cardData.originalIndex);
-            const isDare = cardData.question.startsWith("DARE:");
 
             if (oldCard) {
                 // Apply the slide-to-back animation class
@@ -1036,10 +1060,6 @@
                     // Add the new card HTML to the stack
                     cardContainer.insertAdjacentHTML('beforeend', nextCardHtml);
                     
-                    if (isDare) {
-                        startCountdown(30); // Start 30s countdown for Dares
-                    }
-                    
                     updateCardCount();
                     window.createIcons();
                 }, 400); 
@@ -1047,17 +1067,12 @@
                  // Initial draw (no old card to remove/animate)
                 cardContainer.insertAdjacentHTML('beforeend', nextCardHtml);
                 
-                if (isDare) {
-                    startCountdown(30); // Start 30s countdown for Dares
-                }
-                
                 updateCardCount();
                 window.createIcons();
             }
         }
 
         function initializeDeck(type) {
-            stopCountdown();
             // Normalize deck type to lowercase for internal use and consistent lookups
             deckType = type.toLowerCase();
             
@@ -1146,4 +1161,3 @@
     </script>
 </body>
 </html>
-
