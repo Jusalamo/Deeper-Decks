@@ -1020,7 +1020,7 @@
                     <!-- Subtle pattern or logo on the back -->
                     <div class="text-center opacity-70">
                         <i data-lucide="lightbulb" class="w-10 h-10 mx-auto mb-3" style="color: ${deckColor};"></i>
-                        <h3 class="text-2xl font-bold tracking-wider text-white">DEEPER-DECKS<sup>™</sup></h3>
+                        <h3 class="text-2xl font-bold tracking-tight text-white font-['Mona_Sans']">Deeper-Decks</h3>
                         <p class="text-sm font-medium mt-1 text-gray-400">The Card Game</p>
                     </div>
                 </div>
@@ -1101,13 +1101,14 @@
             document.querySelectorAll('.btn-deck').forEach(btn => {
                 btn.classList.remove('btn-active');
                 btn.style.backgroundColor = 'var(--surface-dark)'; // Reset background to dark surface
+                btn.style.color = 'var(--text-light)'; // Reset text color
                 
                 const deckId = btn.id.replace('Button', '');
-                const deckInfo = getDeckInfo(deckId); // Use normalized lookup here
+                const deckInfo = getDeckInfo(deckId);
                 
                 const icon = btn.querySelector('i');
                 if (icon && deckInfo.colorVar) {
-                    icon.style.color = deckInfo.colorVar; // Reset icon color to its deck's color
+                    icon.style.color = deckInfo.colorVar; // Reset icon to deck color
                 }
             });
 
@@ -1116,7 +1117,8 @@
             activeButton.classList.add('btn-active');
             activeButton.style.backgroundColor = info.colorVar;
             
-            // Set active icon color to white
+            // Set active button text and icon to white for better contrast
+            activeButton.style.color = 'white';
             const activeIcon = activeButton.querySelector('i');
             if (activeIcon) {
                 activeIcon.style.color = 'white';
@@ -1135,7 +1137,7 @@
                      style="background-color: ${info.colorVar};">
                     <div class="text-center text-white">
                         <i data-lucide="star" class="w-10 h-10 mx-auto mb-4"></i>
-                        <h3 class="text-3xl font-bold tracking-widest text-white">DEEPER-DECKS<sup>™</sup></h3>
+                        <h3 class="text-3xl font-bold tracking-widest text-white">Deeper-Decks</h3>
                         <p class="text-md font-medium mt-2 text-white">${deckCardCount} Cards Ready</p>
                     </div>
                 </div>
@@ -1167,6 +1169,7 @@
     </script>
 </body>
 </html>
+
 
 
 
