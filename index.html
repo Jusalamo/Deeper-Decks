@@ -372,7 +372,10 @@
             header {
                 margin-top: 1rem;
             }
-            .rainbow-logo {
+            /* Remove the .rainbow-logo mobile styles since we're not using that class anymore */
+            
+            /* Add mobile styles for the main header */
+            #introScreen header h1 {
                 font-size: 2.5rem;
                 font-weight: 900;
             }
@@ -383,8 +386,10 @@
 <body>
     <!-- RAINBOW INTRO SCREEN -->
     <div id="introScreen">
-        <div class="rainbow-logo">Deeper-Decks<sup>™</sup></div>
-        <div class="intro-subtitle">The Card Game for Real Connection</div>
+        <header class="max-w-xl w-full text-center mb-6 px-4 sm:px-0">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-50 mb-2 tracking-tight">Deeper-Decks™</h1>
+            <div class="intro-subtitle">The Card Game for Real Connection</div>
+        </header>
         <div class="rainbow-progress">
             <div class="rainbow-progress-bar" id="rainbowProgressBar"></div>
         </div>
@@ -1162,6 +1167,7 @@
     </script>
 </body>
 </html>
+
 
 
 
