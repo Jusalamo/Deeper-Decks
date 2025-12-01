@@ -955,7 +955,7 @@
             'naughty': { icon: 'flame', title: 'Naughty Deck™', colorVar: 'var(--color-naughty)' },
             'girlsnight': { icon: 'users-2', title: 'Girls\' Night Deck™', colorVar: 'var(--color-girls)' }
         };
-
+        
         // Helper to get the correct questions array
         function getDeckQuestions(type) {
             if (type === 'romantic') return [...romanticQuestions];
@@ -964,18 +964,18 @@
             if (type === 'girlsnight') return [...girlsNightQuestions];
             return [];
         }
-
+        
         function updateCardCount() {
             document.getElementById('remainingCount').textContent = remainingCardsCount;
             document.getElementById('drawButton').disabled = remainingCardsCount === 0;
-            document.getElementById('shuffleButton').disabled = remainingCardsCount === 70;
+            document.getElementById('shuffleButton').disabled = remainingCardsCount === 90; // Updated from 70 to 90
         }
         
         // Helper to get the correct colors based on deck type
         function getDeckInfo(type) {
              return DECK_PROPERTIES[type] || {};
         }
-
+        
         function createCardElement(question, questionIndex) {
             const isDare = question.startsWith("DARE:");
             const content = isDare ? question.substring(5).trim() : question;
@@ -986,7 +986,7 @@
             const deckTitle = info.title;
             const deckColor = info.colorVar;
             const cardNumber = questionIndex + 1;
-
+        
             return `
                 <div id="activeCard-${cardNumber}" class="card-front flex flex-col justify-between p-8 sm:p-12 w-full h-full text-center z-10">
                     
@@ -998,12 +998,12 @@
                             ${isDare ? `DARE` : `QUESTION`}
                         </div>
                     </div>
-
+        
                     <!-- Main Content - GUARANTEED FIT AREA -->
                     <div class="card-content-area px-0 min-h-[140px]">
                         <p class="card-question-text text-gray-900">${content}</p>
                     </div>
-
+        
                     <!-- Footer -->
                     <div class="text-xs text-right text-gray-500 mt-6 pt-3 border-t border-gray-100">
                         ${deckTitle}
@@ -1026,12 +1026,12 @@
                 </div>
             `;
         }
-
+        
         function showEmptyDeckCard() {
             const cardContainer = document.getElementById('cardContainer');
             cardContainer.innerHTML = getCardBackHtml(); 
             const deckColor = getDeckInfo(deckType).colorVar;
-
+        
             cardContainer.insertAdjacentHTML('beforeend', `
                 <div id="activeCard" class="empty-card card-front flex flex-col justify-center items-center p-6 text-center z-10">
                     <i data-lucide="rotate-ccw" class="w-12 h-12 mb-4" style="color: ${deckColor};"></i>
@@ -1041,7 +1041,7 @@
             `);
             window.createIcons();
         }
-
+        
         function drawCard() {
             const cardContainer = document.getElementById('cardContainer');
             
@@ -1050,12 +1050,12 @@
                 updateCardCount();
                 return;
             }
-
+        
             const cardData = currentDeck.pop();
             remainingCardsCount = currentDeck.length;
             const oldCard = cardContainer.querySelector('.card-front, .empty-card'); 
             const nextCardHtml = createCardElement(cardData.question, cardData.originalIndex);
-
+        
             if (oldCard) {
                 // Apply the slide-to-back animation class
                 oldCard.classList.add('card-slide-out'); 
@@ -1077,7 +1077,7 @@
                 window.createIcons();
             }
         }
-
+        
         function initializeDeck(type) {
             // Normalize deck type to lowercase for internal use and consistent lookups
             deckType = type.toLowerCase();
@@ -1089,11 +1089,11 @@
                 question: q,
                 originalIndex: index 
             }));
-
+        
             currentDeck = shuffleArray(questionsWithIndex);
             remainingCardsCount = currentDeck.length;
             const deckCardCount = rawQuestions.length;
-
+        
             // --- Update UI elements ---
             document.getElementById('deckTitle').textContent = `${info.title}`;
             
@@ -1111,7 +1111,7 @@
                     icon.style.color = deckInfo.colorVar; // Reset icon to deck color
                 }
             });
-
+        
             // Apply active class and color to the selected button
             const activeButton = document.getElementById(`${deckType}Button`);
             activeButton.classList.add('btn-active');
@@ -1127,7 +1127,7 @@
             // Apply shuffle animation and reset card area
             const cardContainer = document.getElementById('cardContainer');
             cardContainer.classList.add('shuffling');
-
+        
             // Reset card area to show the initial stacked deck state
             cardContainer.innerHTML = getCardBackHtml(); 
             
@@ -1138,20 +1138,20 @@
                     <div class="text-center text-white">
                         <i data-lucide="star" class="w-10 h-10 mx-auto mb-4"></i>
                         <h3 class="text-3xl font-bold tracking-widest text-white">Deeper-Decks</h3>
-                        <p class="text-md font-medium mt-2 text-white">${deckCardCount} Cards Ready</p>
+                        <p class="text-md font-medium mt-2 text-white">90 Cards Ready</p>
                     </div>
                 </div>
             `);
-
+        
             updateCardCount();
             window.createIcons();
-
+        
             // Remove shuffle animation after 1 second
             setTimeout(() => {
                 cardContainer.classList.remove('shuffling');
             }, 1000);
         }
-
+        
         document.addEventListener('DOMContentLoaded', () => {
             // Set up event listeners for controls
             document.getElementById('romanticButton').addEventListener('click', () => initializeDeck('romantic'));
@@ -1169,6 +1169,7 @@
     </script>
 </body>
 </html>
+
 
 
 
