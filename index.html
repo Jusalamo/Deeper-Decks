@@ -38,9 +38,9 @@
         /* DARK MODE THEME */
         :root {
             /* Theme colors */
-            --color-romantic: #FF6B81; /* Soft Red/Pink */
+            --color-romantic: #FF1F40; /* Soft Red/Pink */
             --color-platonic: #48BB78; /* Vibrant Green */
-            --color-naughty: #9F7AEA; /* Deep Purple */
+            --color-naughty: #6F38E0; /* Deep Purple */
             --color-girls: #FF8BA4; /* Hotter Pink */
             
             --bg-dark: #121212; /* True Black background for site */
@@ -96,7 +96,7 @@
 
         .rainbow-logo {
             font-family: 'Mona Sans', sans-serif;
-            font-size: 2.25rem;
+            font-size: 3rem;
             font-weight: 900;
             background: linear-gradient(
                 to right,
@@ -121,7 +121,7 @@
         }
 
         .intro-subtitle {
-            font-size: 1.3rem;
+            font-size: 1.125rem;
             color: rgba(255, 255, 255, 0.7);
             font-weight: 400;
             letter-spacing: 0.5px;
@@ -269,6 +269,84 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
+        /* Player name badge on card */
+        .player-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Player setup modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: var(--surface-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .player-input {
+            background: var(--bg-dark);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .player-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .player-item {
+            background: var(--bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-remove {
+            background: rgba(255, 107, 129, 0.2);
+            color: var(--color-romantic);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .btn-remove:hover {
+            background: rgba(255, 107, 129, 0.3);
+        }
+
         /* CONTROL PANEL (Dark/Glass-like) */
         .control-panel {
             background: var(--surface-dark);
@@ -372,12 +450,11 @@
             header {
                 margin-top: 1rem;
             }
-            /* Remove the .rainbow-logo mobile styles since we're not using that class anymore */
-            
-            /* Add mobile styles for the main header */
-            #introScreen header h1 {
+            .rainbow-logo {
                 font-size: 2.5rem;
-                font-weight: 900;
+            }
+            .intro-subtitle {
+                font-size: 1rem;
             }
         }
 
@@ -387,7 +464,7 @@
     <!-- RAINBOW INTRO SCREEN -->
     <div id="introScreen">
         <header class="max-w-xl w-full text-center mb-6 px-4 sm:px-0">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-50 mb-2 tracking-tight">Deeper-Decks™</h1>
+            <h1 class="rainbow-logo">Deeper-Decks™</h1>
             <div class="intro-subtitle">The Card Game for Real Connection</div>
         </header>
         <div class="rainbow-progress">
@@ -395,11 +472,47 @@
         </div>
     </div>
 
+    <!-- PLAYER SETUP MODAL -->
+    <div id="playerModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2 class="text-3xl font-bold text-white mb-2 text-center font-['Mona_Sans']">Deeper-Decks™</h2>
+            <p class="text-gray-400 text-center mb-6">Add players to get started</p>
+            
+            <div class="mb-6">
+                <div class="flex gap-2 mb-4">
+                    <input 
+                        type="text" 
+                        id="playerNameInput" 
+                        class="player-input flex-1" 
+                        placeholder="Enter player name"
+                        maxlength="20"
+                    />
+                    <button id="addPlayerBtn" class="btn-action px-6">Add</button>
+                </div>
+                
+                <div id="playersList" class="space-y-2 mb-4">
+                    <!-- Player items will be added here -->
+                </div>
+                
+                <p class="text-sm text-gray-400 text-center mb-4">
+                    <span id="playerCount">0</span> players added (minimum 2)
+                </p>
+            </div>
+            
+            <button id="startGameBtn" class="btn-action w-full text-lg py-3" disabled>
+                Start Playing
+            </button>
+        </div>
+    </div>
+
     <!-- MAIN GAME CONTENT -->
     <div id="mainGame" class="min-h-screen flex flex-col items-center">
         <header class="max-w-xl w-full text-center mb-6 mt-4 px-4 sm:px-0">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-50 mb-2 tracking-tight">Deeper-Decks<sup class="text-xl ml-1 align-top">&trade;</sup></h1>
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-50 mb-2 tracking-tight font-['Mona_Sans']">Deeper-Decks<sup class="text-xl ml-1 align-top">&trade;</sup></h1>
             <p class="text-gray-400 text-lg font-medium">The Card Game for Real Connection</p>
+            <button id="managePlayers" class="mt-3 text-sm text-gray-400 hover:text-gray-200 transition-colors">
+                <i data-lucide="users" class="w-4 h-4 inline -mt-0.5"></i> Manage Players
+            </button>
         </header>
 
         <main class="w-full max-w-6xl flex flex-col lg:flex-row gap-8 px-4 sm:px-6">
@@ -426,7 +539,7 @@
                 <!-- Cards Remaining Counter -->
                 <div class="text-center p-5 rounded-xl counter-box">
                     <p class="text-base font-semibold text-gray-400">Cards Remaining</p>
-                    <p id="remainingCount" class="text-5xl font-extrabold text-white tracking-wider mt-1">70</p>
+                    <p id="remainingCount" class="text-5xl font-extrabold text-white tracking-wider mt-1">90</p>
                 </div>
             </section>
 
@@ -460,10 +573,10 @@
         import { getFirestore, doc, onSnapshot, updateDoc, increment, setDoc, collection, getDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
         // Lucide Icons Load and Initialization
-        import { createIcons, Heart, Flame, Users, Handshake, Star, RotateCcw, Zap, Users2, Clock, Lightbulb } from 'https://unpkg.com/lucide@latest/dist/esm/lucide.js';
+        import { createIcons, Heart, Flame, Users, Handshake, Star, RotateCcw, Zap, Users2, Clock, Lightbulb, User } from 'https://unpkg.com/lucide@latest/dist/esm/lucide.js';
         
         // Expose createIcons globally for use outside the module script for dynamic card content
-        window.createIcons = () => createIcons({ icons: { Heart, Flame, Users, Handshake, Star, RotateCcw, Zap, Users2, Clock, Lightbulb } });
+        window.createIcons = () => createIcons({ icons: { Heart, Flame, Users, Handshake, Star, RotateCcw, Zap, Users2, Clock, Lightbulb, User } });
         
         // --- GLOBAL FIREBASE VARIABLES & SETUP ---
         let db;
@@ -572,15 +685,12 @@
                 progressBar.style.width = '100%';
             }, 100);
             
-            // After 3 seconds, fade out intro and show main game
+            // After 3 seconds, fade out intro and show player setup
             setTimeout(() => {
                 introScreen.style.opacity = '0';
                 setTimeout(() => {
                     introScreen.style.display = 'none';
-                    mainGame.style.display = 'block';
-                    setTimeout(() => {
-                        mainGame.style.opacity = '1';
-                    }, 50);
+                    showPlayerModal();
                 }, 800);
             }, 3000);
         }
@@ -989,6 +1099,63 @@
         let currentDeck = [];
         let remainingCardsCount = 0;
         let deckType = 'romantic'; // Default deck
+        let players = [];
+        let currentPlayerIndex = 0;
+        
+        // --- Player Management ---
+        function addPlayer(name) {
+            if (name && !players.includes(name)) {
+                players.push(name);
+                updatePlayersList();
+                updatePlayerCount();
+                document.getElementById('playerNameInput').value = '';
+            }
+        }
+
+        function removePlayer(name) {
+            players = players.filter(p => p !== name);
+            updatePlayersList();
+            updatePlayerCount();
+        }
+
+        function updatePlayersList() {
+            const list = document.getElementById('playersList');
+            if (players.length === 0) {
+                list.innerHTML = '<p class="text-gray-500 text-center py-4">No players added yet</p>';
+            } else {
+                list.innerHTML = players.map(player => `
+                    <div class="player-item">
+                        <span class="text-white font-medium">${player}</span>
+                        <button class="btn-remove" onclick="removePlayer('${player}')">Remove</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updatePlayerCount() {
+            document.getElementById('playerCount').textContent = players.length;
+            document.getElementById('startGameBtn').disabled = players.length < 2;
+        }
+
+        function showPlayerModal() {
+            document.getElementById('playerModal').style.display = 'flex';
+        }
+
+        function hidePlayerModal() {
+            document.getElementById('playerModal').style.display = 'none';
+        }
+
+        function getCurrentPlayer() {
+            if (players.length === 0) return null;
+            return players[currentPlayerIndex % players.length];
+        }
+
+        function advanceToNextPlayer() {
+            currentPlayerIndex++;
+        }
+
+        // Make removePlayer globally accessible
+        window.removePlayer = removePlayer;
         
         // --- Game Logic ---
         function shuffleArray(array) {
@@ -1037,18 +1204,29 @@
             const deckTitle = info.title;
             const deckColor = info.colorVar;
             const cardNumber = questionIndex + 1;
+            const currentPlayer = getCurrentPlayer();
         
             return `
                 <div id="activeCard-${cardNumber}" class="card-front flex flex-col justify-between p-8 sm:p-12 w-full h-full text-center z-10">
                     
                     <!-- Card Header (ID, Type Chip, and Icon) -->
-                    <div class="flex justify-between items-center mb-6">
+                    <div class="flex justify-between items-center mb-4">
                         <span class="font-light text-base opacity-70">#${cardNumber}</span>
                         <div class="card-header-chip text-white" style="background-color: ${deckColor};">
                             <i data-lucide="${iconName}" class="w-4 h-4 inline -mt-0.5 mr-1"></i>
                             ${isDare ? `DARE` : `QUESTION`}
                         </div>
                     </div>
+
+                    ${currentPlayer ? `
+                    <!-- Player Badge -->
+                    <div class="flex justify-center mb-4">
+                        <div class="player-badge" style="background-color: ${deckColor};">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                            <span>${currentPlayer}</span>
+                        </div>
+                    </div>
+                    ` : ''}
         
                     <!-- Main Content - GUARANTEED FIT AREA -->
                     <div class="card-content-area px-0 min-h-[140px]">
@@ -1072,7 +1250,7 @@
                     <div class="text-center opacity-70">
                         <i data-lucide="lightbulb" class="w-10 h-10 mx-auto mb-3" style="color: ${deckColor};"></i>
                         <h3 class="text-2xl font-bold tracking-tight text-white font-['Mona_Sans']">Deeper-Decks</h3>
-                        <p class="text-sm font-medium mt-1 text-gray-400">The Card Game</p>
+                        <p class="text-sm font-medium mt-1 text-gray-400">The Card Game                        </p>
                     </div>
                 </div>
             `;
@@ -1119,6 +1297,11 @@
                     
                     updateCardCount();
                     window.createIcons();
+                    
+                    // Advance to next player
+                    if (players.length > 0) {
+                        advanceToNextPlayer();
+                    }
                 }, 400); 
             } else {
                  // Initial draw (no old card to remove/animate)
@@ -1126,6 +1309,11 @@
                 
                 updateCardCount();
                 window.createIcons();
+                
+                // Advance to next player
+                if (players.length > 0) {
+                    advanceToNextPlayer();
+                }
             }
         }
         
@@ -1190,6 +1378,7 @@
                         <i data-lucide="star" class="w-10 h-10 mx-auto mb-4"></i>
                         <h3 class="text-3xl font-bold tracking-widest text-white">Deeper-Decks</h3>
                         <p class="text-md font-medium mt-2 text-white">90 Cards Ready</p>
+                        ${players.length > 0 ? `<p class="text-sm mt-2 opacity-90">${players.length} players joined</p>` : ''}
                     </div>
                 </div>
             `);
@@ -1203,7 +1392,44 @@
             }, 1000);
         }
         
+        // --- Player Modal Event Handlers ---
         document.addEventListener('DOMContentLoaded', () => {
+            // Add player button
+            document.getElementById('addPlayerBtn').addEventListener('click', () => {
+                const input = document.getElementById('playerNameInput');
+                const name = input.value.trim();
+                if (name) {
+                    addPlayer(name);
+                }
+            });
+            
+            // Enter key in player input
+            document.getElementById('playerNameInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const name = e.target.value.trim();
+                    if (name) {
+                        addPlayer(name);
+                    }
+                }
+            });
+            
+            // Start game button
+            document.getElementById('startGameBtn').addEventListener('click', () => {
+                if (players.length >= 2) {
+                    hidePlayerModal();
+                    document.getElementById('mainGame').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('mainGame').style.opacity = '1';
+                        initializeDeck('romantic');
+                    }, 50);
+                }
+            });
+            
+            // Manage players button
+            document.getElementById('managePlayers').addEventListener('click', () => {
+                showPlayerModal();
+            });
+            
             // Set up event listeners for controls
             document.getElementById('romanticButton').addEventListener('click', () => initializeDeck('romantic'));
             document.getElementById('platonicButton').addEventListener('click', () => initializeDeck('platonic'));
@@ -1212,19 +1438,13 @@
             document.getElementById('drawButton').addEventListener('click', drawCard);
             document.getElementById('shuffleButton').addEventListener('click', () => initializeDeck(deckType));
             
-            // Initialize with the default deck (after intro screen)
-            setTimeout(() => {
-                initializeDeck(deckType);
-            }, 3500);
+            // Add default players for quick start
+            addPlayer('Player 1');
+            addPlayer('Player 2');
+            
+            // Initialize icons
+            window.createIcons();
         });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
