@@ -19,735 +19,754 @@
     <link href="https://fonts.cdnfonts.com/css/mona-sans" rel="stylesheet">
     
     <style>
-        /* LIGHT MODE THEME - Updated as requested */
-        :root {
-            /* Theme colors - kept the same */
-            --color-romantic: #FF1F40; /* Soft Red/Pink */
-            --color-platonic: #48BB78; /* Vibrant Green */
-            --color-naughty: #6F38E0; /* Deep Purple */
-            --color-girls: #FF8BA4; /* Hotter Pink */
-            
-            /* Updated colors for light theme */
-            --bg-light: #FAFAFA; /* Dim white background for site */
-            --surface-light: #F0F0F0; /* Light grey for panels */
-            --modal-dark: #2A2A2A; /* Dark grey for modals */
-            --card-white: #FFFFFF;
-            --text-dark: #1A1A1A; /* Dark text for light background */
-            --text-light: #FFFFFF; /* Light text for dark modals */
-            --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-            --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.1); /* Softer shadow in light mode */
-            --shadow-stack: 0 10px 30px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1); /* Stack shadow */
-            
-            /* Rainbow animation properties */
+    /* LIGHT MODE THEME - Updated as requested */
+    :root {
+        /* Theme colors - kept the same */
+        --color-romantic: #FF1F40; /* Soft Red/Pink */
+        --color-platonic: #48BB78; /* Vibrant Green */
+        --color-naughty: #6F38E0; /* Deep Purple */
+        --color-girls: #FF8BA4; /* Hotter Pink */
+        
+        /* Updated colors for light theme */
+        --bg-light: #FAFAFA; /* Dim white background for site */
+        --surface-light: #F0F0F0; /* Light grey for panels */
+        --modal-dark: #2A2A2A; /* Dark grey for modals */
+        --card-white: #FFFFFF;
+        --text-dark: #1A1A1A; /* Dark text for light background */
+        --text-light: #FFFFFF; /* Light text for dark modals */
+        --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.1); /* Softer shadow in light mode */
+        --shadow-stack: 0 10px 30px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1); /* Stack shadow */
+        
+        /* Rainbow animation properties */
+        --bg-position: 100;
+        --color-white: hsl(0, 0%, 100%);
+        --color-cyan: hsl(180, 100%, 50%);
+        --color-blue: hsl(240, 100%, 50%);
+        --color-purple: hsl(270, 100%, 50%);
+        --color-pink: hsl(330, 40%, 70%);
+        --color-red: hsl(0, 100%, 50%);
+        --color-yellow: hsl(60, 100%, 50%);
+        --color-lime: hsl(90, 100%, 75%);
+    }
+
+    @property --bg-position {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 100;
+    }
+
+    body {
+        background-color: var(--bg-light);
+        font-family: 'Inter', sans-serif;
+        color: var(--text-dark);
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* SIDEBAR MENU STYLES */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 3000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        backdrop-filter: blur(4px);
+    }
+
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .sidebar-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 320px;
+        height: 100%;
+        background: var(--modal-dark);
+        z-index: 3001;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 24px;
+        overflow-y: auto;
+        box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .sidebar-menu.active {
+        right: 0;
+    }
+
+    .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-title {
+        font-size: 1.5rem;
+        font-weight: 900 !important; /* Enforced bold weight */
+        color: var(--text-light);
+        font-family: 'Mona Sans', sans-serif !important;
+    }
+
+    .close-sidebar {
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+    }
+
+    .close-sidebar:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        color: var(--text-light);
+        border: none;
+        width: 100%;
+        text-align: left;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .sidebar-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-2px);
+    }
+
+    .sidebar-item i {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Hamburger Menu Button */
+    .hamburger-menu {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 2000;
+        background: var(--modal-dark);
+        border: none;
+        border-radius: 12px;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .hamburger-menu:hover {
+        transform: scale(1.05);
+    }
+
+    .hamburger-line {
+        width: 20px;
+        height: 2px;
+        background: var(--text-light);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .hamburger-menu.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .hamburger-menu.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger-menu.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* RAINBOW INTRO SCREEN - Faster loading */
+    #introScreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 4000;
+        transition: opacity 0.6s ease-out;
+    }
+
+    .rainbow-logo {
+        font-family: 'Mona Sans', sans-serif !important;
+        font-size: 3rem;
+        font-weight: 900 !important; /* Enforced bold weight */
+        background: linear-gradient(
+            to right,
+            var(--color-white),
+            var(--color-white),
+            var(--color-cyan),
+            var(--color-blue),
+            var(--color-purple),
+            var(--color-pink),
+            var(--color-red),
+            var(--color-yellow),
+            var(--color-lime),
+            var(--color-white),
+            var(--color-white)
+        ) no-repeat calc(var(--bg-position) * 1%) 0% / 900%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -1px;
+        margin-bottom: 1rem;
+        animation: rainbowSlide 2s ease-in-out forwards;
+    }
+
+    .intro-subtitle {
+        font-size: 1.125rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        margin-bottom: 3rem;
+        opacity: 0;
+        animation: fadeInUp 0.8s ease-out 0.8s forwards;
+    }
+
+    .rainbow-progress {
+        width: 200px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+        overflow: hidden;
+        opacity: 0;
+        animation: fadeIn 0.4s ease-out 0.8s forwards;
+    }
+
+    .rainbow-progress-bar {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(
+            to right,
+            var(--color-cyan),
+            var(--color-blue),
+            var(--color-purple),
+            var(--color-pink),
+            var(--color-red),
+            var(--color-yellow),
+            var(--color-lime)
+        );
+        border-radius: 3px;
+        transition: width 1.5s cubic-bezier(0.28, 0.11, 0.32, 1);
+    }
+
+    @keyframes rainbowSlide {
+        from {
             --bg-position: 100;
-            --color-white: hsl(0, 0%, 100%);
-            --color-cyan: hsl(180, 100%, 50%);
-            --color-blue: hsl(240, 100%, 50%);
-            --color-purple: hsl(270, 100%, 50%);
-            --color-pink: hsl(330, 40%, 70%);
-            --color-red: hsl(0, 100%, 50%);
-            --color-yellow: hsl(60, 100%, 50%);
-            --color-lime: hsl(90, 100%, 75%);
         }
-
-        @property --bg-position {
-            syntax: "<number>";
-            inherits: true;
-            initial-value: 100;
+        to {
+            --bg-position: 0;
         }
+    }
 
-        body {
-            background-color: var(--bg-light);
-            font-family: 'Inter', sans-serif;
-            color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* SIDEBAR MENU STYLES */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 3000;
+    @keyframes fadeInUp {
+        from {
             opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            backdrop-filter: blur(4px);
+            transform: translateY(20px);
         }
-
-        .sidebar-overlay.active {
+        to {
             opacity: 1;
-            visibility: visible;
-        }
-
-        .sidebar-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 320px;
-            height: 100%;
-            background: var(--modal-dark);
-            z-index: 3001;
-            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 24px;
-            overflow-y: auto;
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar-menu.active {
-            right: 0;
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 32px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .sidebar-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-light);
-            font-family: 'Mona Sans', sans-serif;
-        }
-
-        .close-sidebar {
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: background-color 0.2s;
-        }
-
-        .close-sidebar:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: var(--text-light);
-            border: none;
-            width: 100%;
-            text-align: left;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .sidebar-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(-2px);
-        }
-
-        .sidebar-item i {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Hamburger Menu Button */
-        .hamburger-menu {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 2000;
-            background: var(--modal-dark);
-            border: none;
-            border-radius: 12px;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .hamburger-menu:hover {
-            transform: scale(1.05);
-        }
-
-        .hamburger-line {
-            width: 20px;
-            height: 2px;
-            background: var(--text-light);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger-menu.active .hamburger-line:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger-menu.active .hamburger-line:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger-menu.active .hamburger-line:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        /* RAINBOW INTRO SCREEN - Faster loading */
-        #introScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 4000;
-            transition: opacity 0.6s ease-out;
-        }
-
-        .rainbow-logo {
-            font-family: 'Mona Sans', sans-serif;
-            font-size: 3rem;
-            font-weight: 900 !important; /* Enforced bold weight */
-            background: linear-gradient(
-                to right,
-                var(--color-white),
-                var(--color-white),
-                var(--color-cyan),
-                var(--color-blue),
-                var(--color-purple),
-                var(--color-pink),
-                var(--color-red),
-                var(--color-yellow),
-                var(--color-lime),
-                var(--color-white),
-                var(--color-white)
-            ) no-repeat calc(var(--bg-position) * 1%) 0% / 900%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -1px;
-            margin-bottom: 1rem;
-            animation: rainbowSlide 2s ease-in-out forwards;
-        }
-
-        .intro-subtitle {
-            font-size: 1.125rem;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            margin-bottom: 3rem;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out 0.8s forwards;
-        }
-
-        .rainbow-progress {
-            width: 200px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeIn 0.4s ease-out 0.8s forwards;
-        }
-
-        .rainbow-progress-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(
-                to right,
-                var(--color-cyan),
-                var(--color-blue),
-                var(--color-purple),
-                var(--color-pink),
-                var(--color-red),
-                var(--color-yellow),
-                var(--color-lime)
-            );
-            border-radius: 3px;
-            transition: width 1.5s cubic-bezier(0.28, 0.11, 0.32, 1);
-        }
-
-        @keyframes rainbowSlide {
-            from {
-                --bg-position: 100;
-            }
-            to {
-                --bg-position: 0;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* MAIN GAME STYLES */
-        #mainGame {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease-in;
-            padding: 1rem;
-            width: 100%;
-            min-height: 100vh;
-        }
-
-        /* CARD STACK CONTAINER - Updated with stacked shadow effect */
-        .card-stack-container {
-            aspect-ratio: 9 / 14; 
-            width: 350px;
-            max-width: 90vw;
-            position: relative;
-        }
-
-        /* Card stack shadow effect */
-        .card-stack-shadow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 10px;
-            left: 0;
-            border-radius: 20px;
-            box-shadow: var(--shadow-stack);
-            z-index: -2;
-            opacity: 0.4;
-        }
-
-        /* CARD FRONT */
-        .card-front {
-            background-color: var(--card-white);
-            color: var(--text-dark);
-            border-radius: 20px;
-            box-shadow: var(--shadow-card);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            will-change: transform, opacity;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            cursor: pointer; /* Make it obvious it's swipeable */
-            user-select: none; /* Prevent text selection during swipe */
-            -webkit-user-select: none;
-        }
-
-        /* CARD BACK */
-        .card-back {
-            background: linear-gradient(135deg, #2A2A2A 0%, #1F1F1F 100%);
-            border-radius: 20px;
-            box-shadow: var(--shadow-card);
-            position: absolute;
-            width: 98%;
-            height: 98%;
-            top: 1%;
-            left: 1%;
-            z-index: -1;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* NEW ANIMATION CLASS: Slide out for swiping */
-        .card-slide-out-left {
-            transform: translateX(-150%) rotate(-15deg) !important;
-            opacity: 0 !important;
-        }
-
-        .card-slide-out-right {
-            transform: translateX(150%) rotate(15deg) !important;
-            opacity: 0 !important;
-        }
-
-        /* EMPTY DECK CARD */
-        .empty-card {
-            border: 3px dashed var(--text-dark);
-            background-color: var(--card-white);
-        }
-        
-        /* CARD CONTENT */
-        .card-content-area {
-            flex-grow: 1; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .card-question-text {
-            font-size: clamp(1.2rem, 5vw, 2.1rem); 
-            line-height: 1.3; 
-            font-weight: 700; 
-            text-shadow: 0 0 1px rgba(0, 0, 0, 0.1); 
-        }
-
-        /* CARD HEADER / DECK INFO */
-        .card-header-chip {
-            border-radius: 9999px;
-            padding: 6px 14px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            opacity: 0.95;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Player name badge on card */
-        .player-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 999px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* MODAL STYLES - Updated with dark grey background */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-content {
-            background: var(--modal-dark); /* Dark grey for modals */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 32px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            color: var(--text-light); /* Light text on dark modal */
-        }
-
-        /* Deck selection modal specific */
-        .deck-modal-content {
-            max-width: 600px;
-        }
-
-        .deck-option {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid transparent;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .deck-option:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .deck-option.active {
-            border-color: currentColor;
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        /* Player setup modal */
-        .player-input {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: var(--text-light);
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        .player-input:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        .player-item {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-light);
-        }
-
-        .btn-remove {
-            background: rgba(255, 107, 129, 0.2);
-            color: var(--color-romantic);
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 0.875rem;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-remove:hover {
-            background: rgba(255, 107, 129, 0.3);
-        }
-
-        /* CONTROL PANEL (Light theme) */
-        .control-panel {
-            background: var(--surface-light);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: var(--shadow-subtle);
-            align-self: flex-start;
-            color: var(--text-dark);
-        }
-        
-        /* DECK SELECTION BUTTONS */
-        .btn-deck {
-            background-color: var(--surface-light);
-            color: var(--text-dark);
-            border-radius: 12px;
-            padding: 12px 18px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-deck:hover {
-            background-color: #E0E0E0;
-        }
-
-        /* ACTIVE DECK BUTTON STYLE */
-        .btn-active {
-            color: white !important;
-            font-weight: 600 !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* ACTION BUTTON (Draw/Shuffle) */
-        .btn-action {
-            background-color: var(--modal-dark);
-            color: var(--text-light);
-            border-radius: 14px;
-            padding: 16px 24px;
-            font-weight: 700;
-            transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s;
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-action:hover:not(:disabled) {
-            background-color: #3A3A3A;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-action:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
             transform: translateY(0);
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
         }
-        
-        .btn-shuffle {
-            background-color: var(--surface-light);
-            color: var(--text-dark);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* MAIN GAME STYLES */
+    #mainGame {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s ease-in;
+        padding: 1rem;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    /* CARD STACK CONTAINER - Updated with stacked shadow effect */
+    .card-stack-container {
+        aspect-ratio: 9 / 14; 
+        width: 350px;
+        max-width: 90vw;
+        position: relative;
+    }
+
+    /* Card stack shadow effect */
+    .card-stack-shadow {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 10px;
+        left: 0;
+        border-radius: 20px;
+        box-shadow: var(--shadow-stack);
+        z-index: -2;
+        opacity: 0.4;
+    }
+
+    /* CARD FRONT */
+    .card-front {
+        background-color: var(--card-white);
+        color: var(--text-dark);
+        border-radius: 20px;
+        box-shadow: var(--shadow-card);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        will-change: transform, opacity;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        cursor: pointer; /* Make it obvious it's swipeable */
+        user-select: none; /* Prevent text selection during swipe */
+        -webkit-user-select: none;
+    }
+
+    /* CARD BACK */
+    .card-back {
+        background: linear-gradient(135deg, #2A2A2A 0%, #1F1F1F 100%);
+        border-radius: 20px;
+        box-shadow: var(--shadow-card);
+        position: absolute;
+        width: 98%;
+        height: 98%;
+        top: 1%;
+        left: 1%;
+        z-index: -1;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* NEW ANIMATION CLASS: Slide out for swiping */
+    .card-slide-out-left {
+        transform: translateX(-150%) rotate(-15deg) !important;
+        opacity: 0 !important;
+    }
+
+    .card-slide-out-right {
+        transform: translateX(150%) rotate(15deg) !important;
+        opacity: 0 !important;
+    }
+
+    /* EMPTY DECK CARD */
+    .empty-card {
+        border: 3px dashed var(--text-dark);
+        background-color: var(--card-white);
+    }
+    
+    /* CARD CONTENT */
+    .card-content-area {
+        flex-grow: 1; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .card-question-text {
+        font-size: clamp(1.2rem, 5vw, 2.1rem); 
+        line-height: 1.3; 
+        font-weight: 700; 
+        text-shadow: 0 0 1px rgba(0, 0, 0, 0.1); 
+    }
+
+    /* CARD HEADER / DECK INFO */
+    .card-header-chip {
+        border-radius: 9999px;
+        padding: 6px 14px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        opacity: 0.95;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Player name badge on card */
+    .player-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* MODAL STYLES - Updated with dark grey background */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        backdrop-filter: blur(4px);
+    }
+
+    .modal-content {
+        background: var(--modal-dark); /* Dark grey for modals */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 32px;
+        max-width: 500px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        color: var(--text-light); /* Light text on dark modal */
+    }
+
+    /* Deck selection modal specific */
+    .deck-modal-content {
+        max-width: 600px;
+    }
+
+    .deck-option {
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid transparent;
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .deck-option:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .deck-option.active {
+        border-color: currentColor;
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Player setup modal */
+    .player-input {
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 12px 16px;
+        color: var(--text-light);
+        font-size: 1rem;
+        transition: border-color 0.2s;
+    }
+
+    .player-input:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .player-item {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--text-light);
+    }
+
+    .btn-remove {
+        background: rgba(255, 107, 129, 0.2);
+        color: var(--color-romantic);
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 0.875rem;
+        transition: all 0.2s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-remove:hover {
+        background: rgba(255, 107, 129, 0.3);
+    }
+
+    /* CONTROL PANEL (Light theme) */
+    .control-panel {
+        background: var(--surface-light);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: var(--shadow-subtle);
+        align-self: flex-start;
+        color: var(--text-dark);
+    }
+    
+    /* DECK SELECTION BUTTONS */
+    .btn-deck {
+        background-color: var(--surface-light);
+        color: var(--text-dark);
+        border-radius: 12px;
+        padding: 12px 18px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-deck:hover {
+        background-color: #E0E0E0;
+    }
+
+    /* ACTIVE DECK BUTTON STYLE */
+    .btn-active {
+        color: white !important;
+        font-weight: 600 !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* ACTION BUTTON (Draw/Shuffle) */
+    .btn-action {
+        background-color: var(--modal-dark);
+        color: var(--text-light);
+        border-radius: 14px;
+        padding: 16px 24px;
+        font-weight: 700;
+        transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s;
+        box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-action:hover:not(:disabled) {
+        background-color: #3A3A3A;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-action:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        transform: translateY(0);
+        box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-shuffle {
+        background-color: var(--surface-light);
+        color: var(--text-dark);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
+        margin-top: 1rem;
+    }
+    
+    .btn-shuffle:hover:not(:disabled) {
+        background-color: #E0E0E0;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    /* VISITOR COUNTER STYLING */
+    .counter-box {
+        background-color: var(--surface-light);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: var(--shadow-subtle);
+    }
+
+    /* Settings menu */
+    .settings-option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-light);
+    }
+
+    /* Shuffle animation */
+    .shuffling {
+        animation: shuffle 0.5s ease-in-out;
+    }
+
+    @keyframes shuffle {
+        0% { transform: rotate(0deg) scale(1); }
+        25% { transform: rotate(-5deg) scale(1.02); }
+        50% { transform: rotate(5deg) scale(1.02); }
+        75% { transform: rotate(-2deg) scale(1.01); }
+        100% { transform: rotate(0deg) scale(1); }
+    }
+    
+    /* Swipe instructions */
+    .swipe-instruction {
+        text-align: center;
+        margin-top: 20px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 0.9rem;
+    }
+
+    /* DARK MODE STYLES */
+    body.dark-mode {
+        background-color: #121212;
+        color: #FFFFFF !important; /* White text in dark mode */
+    }
+
+    body.dark-mode .text-gray-900,
+    body.dark-mode .text-gray-800,
+    body.dark-mode .text-gray-700 {
+        color: #FFFFFF !important;
+    }
+
+    body.dark-mode .text-gray-600,
+    body.dark-mode .text-gray-500,
+    body.dark-mode .text-gray-400 {
+        color: #A0A0A0 !important; /* Light grey for subtext */
+    }
+
+    body.dark-mode .control-panel,
+    body.dark-mode .counter-box {
+        background-color: #1F1F1F;
+        color: #FFFFFF;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .card-front {
+        background-color: #2A2A2A;
+        color: #FFFFFF;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .swipe-instruction {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    body.dark-mode .btn-shuffle {
+        background-color: #2A2A2A;
+        color: #FFFFFF;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .btn-shuffle:hover:not(:disabled) {
+        background-color: #3A3A3A;
+    }
+
+    body.dark-mode .empty-card {
+        border-color: #FFFFFF;
+        background-color: #2A2A2A;
+        color: #FFFFFF;
+    }
+
+    /* Mobile Layout */
+    @media (max-width: 1024px) {
+        main {
+            flex-direction: column-reverse;
+        }
+        .control-panel {
+            width: 100%;
+            margin-top: 2rem;
+        }
+        header {
             margin-top: 1rem;
         }
-        
-        .btn-shuffle:hover:not(:disabled) {
-            background-color: #E0E0E0;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.05);
+        .rainbow-logo {
+            font-size: 2.5rem;
         }
+        .intro-subtitle {
+            font-size: 1rem;
+        }
+        .sidebar-menu {
+            width: 280px;
+        }
+    }
 
-        /* VISITOR COUNTER STYLING */
-        .counter-box {
-            background-color: var(--surface-light);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            box-shadow: var(--shadow-subtle);
-        }
+    /* Swipe gesture zone */
+    .swipe-zone {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+    }
 
-        /* Settings menu */
-        .settings-option {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-light);
-        }
+    /* BOLD HEADERS AND TITLES */
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 900 !important;
+        font-family: 'Mona Sans', sans-serif !important;
+    }
 
-        /* Shuffle animation */
-        .shuffling {
-            animation: shuffle 0.5s ease-in-out;
-        }
+    .game-title,
+    .modal-title,
+    .sidebar-title,
+    .rainbow-logo {
+        font-family: 'Mona Sans', sans-serif !important;
+        font-weight: 900 !important;
+        letter-spacing: -1px;
+    }
 
-        @keyframes shuffle {
-            0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-5deg) scale(1.02); }
-            50% { transform: rotate(5deg) scale(1.02); }
-            75% { transform: rotate(-2deg) scale(1.01); }
-            100% { transform: rotate(0deg) scale(1); }
-        }
-        
-        /* Swipe instructions */
-        .swipe-instruction {
-            text-align: center;
-            margin-top: 20px;
-            color: rgba(0, 0, 0, 0.5);
-            font-size: 0.9rem;
-        }
+    /* Modal titles */
+    .modal-content h2,
+    .modal-content h3 {
+        font-weight: 900 !important;
+        font-family: 'Mona Sans', sans-serif !important;
+    }
 
-        /* DARK MODE STYLES */
-        body.dark-mode {
-            background-color: #121212;
-            color: #FFFFFF !important; /* White text in dark mode */
-        }
+    /* Deck option titles */
+    .deck-option h3 {
+        font-weight: 900 !important;
+        font-family: 'Mona Sans', sans-serif !important;
+    }
 
-        body.dark-mode .text-gray-900,
-        body.dark-mode .text-gray-800,
-        body.dark-mode .text-gray-700 {
-            color: #FFFFFF !important;
-        }
+    /* Animated rainbow favicon styles */
+    .favicon-animation {
+        animation: faviconRainbow 3s linear infinite;
+    }
 
-        body.dark-mode .text-gray-600,
-        body.dark-mode .text-gray-500,
-        body.dark-mode .text-gray-400 {
-            color: #A0A0A0 !important; /* Light grey for subtext */
-        }
+    @keyframes faviconRainbow {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(360deg); }
+    }
 
-        body.dark-mode .control-panel,
-        body.dark-mode .counter-box {
-            background-color: #1F1F1F;
-            color: #FFFFFF;
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        body.dark-mode .card-front {
-            background-color: #2A2A2A;
-            color: #FFFFFF;
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        body.dark-mode .swipe-instruction {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        body.dark-mode .btn-shuffle {
-            background-color: #2A2A2A;
-            color: #FFFFFF;
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        body.dark-mode .btn-shuffle:hover:not(:disabled) {
-            background-color: #3A3A3A;
-        }
-
-        body.dark-mode .empty-card {
-            border-color: #FFFFFF;
-            background-color: #2A2A2A;
-            color: #FFFFFF;
-        }
-
-        /* Mobile Layout */
-        @media (max-width: 1024px) {
-            main {
-                flex-direction: column-reverse;
-            }
-            .control-panel {
-                width: 100%;
-                margin-top: 2rem;
-            }
-            header {
-                margin-top: 1rem;
-            }
-            .rainbow-logo {
-                font-size: 2.5rem;
-            }
-            .intro-subtitle {
-                font-size: 1rem;
-            }
-            .sidebar-menu {
-                width: 280px;
-            }
-        }
-
-        /* Swipe gesture zone */
-        .swipe-zone {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-        }
-
-        /* Persistent bold title */
-        .game-title,
-        .modal-title,
-        .sidebar-title {
-            font-family: 'Mona Sans', sans-serif !important;
-            font-weight: 900 !important; /* Enforced bold weight */
-            letter-spacing: -1px;
-        }
-
-        /* Ensure all Deeper-Decks titles are bold */
-        h1, h2, h3 {
-            font-family: 'Mona Sans', sans-serif !important;
-            font-weight: 900 !important;
-        }
-
-        /* Animated favicon styles */
-        .favicon-animation {
-            animation: faviconRainbow 3s linear infinite;
-        }
-
-        @keyframes faviconRainbow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-    </style>
+    /* Apply animation to favicon */
+    link[rel="icon"],
+    link[rel="shortcut icon"] {
+        animation: faviconRainbow 3s linear infinite;
+    }
+</style>
 </head>
 <body>
     <!-- HAMBURGER MENU BUTTON -->
@@ -2102,3 +2121,4 @@
     </script>
 </body>
 </html>
+
