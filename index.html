@@ -1101,7 +1101,8 @@
                 introScreen.style.opacity = '0';
                 setTimeout(() => {
                     introScreen.style.display = 'none';
-                    showPlayerModal();
+                    // FIX: Call showPlayerModal via window object since it's defined in global scope
+                    window.showPlayerModal();
                 }, 600); // Faster fade out
             }, 2000); // Reduced from 3000ms
         }
@@ -1610,15 +1611,16 @@
             document.getElementById('startGameBtn').disabled = players.length < 2;
         }
 
-        function showPlayerModal() {
+        // Make these functions globally accessible
+        window.showPlayerModal = function() {
             document.getElementById('playerModal').style.display = 'flex';
         }
 
-        function hidePlayerModal() {
+        window.hidePlayerModal = function() {
             document.getElementById('playerModal').style.display = 'none';
         }
 
-        function showDeckModal() {
+        window.showDeckModal = function() {
             document.getElementById('deckModal').style.display = 'flex';
             // Reset selection
             document.querySelectorAll('.deck-option').forEach(option => {
@@ -1628,15 +1630,15 @@
             selectedDeckForModal = '';
         }
 
-        function hideDeckModal() {
+        window.hideDeckModal = function() {
             document.getElementById('deckModal').style.display = 'none';
         }
 
-        function showSettingsModal() {
+        window.showSettingsModal = function() {
             document.getElementById('settingsModal').style.display = 'flex';
         }
 
-        function hideSettingsModal() {
+        window.hideSettingsModal = function() {
             document.getElementById('settingsModal').style.display = 'none';
         }
 
