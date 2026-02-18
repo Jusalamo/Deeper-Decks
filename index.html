@@ -4,784 +4,157 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deeper-Decks™: The Card Game</title>
-    
-    <!-- Favicon with shifting rainbow colors -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22url(%23rainbow)%22>D</text><defs><linearGradient id=%22rainbow%22 gradientTransform=%22rotate(90)%22><stop offset=%220%25%22 stop-color=%22%23FF1F40%22/><stop offset=%2225%25%22 stop-color=%22%23FF8BA4%22/><stop offset=%2250%25%22 stop-color=%22%2348BB78%22/><stop offset=%2275%25%22 stop-color=%22%236F38E0%22/><stop offset=%22100%25%22 stop-color=%22%23FF1F40%22/></linearGradient></defs></svg>" type="image/svg+xml">
-    <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22url(%23rainbow)%22>D</text><defs><linearGradient id=%22rainbow%22 gradientTransform=%22rotate(90)%22><stop offset=%220%25%22 stop-color=%22%23FF1F40%22/><stop offset=%2225%25%22 stop-color=%22%23FF8BA4%22/><stop offset=%2250%25%22 stop-color=%22%2348BB78%22/><stop offset=%2275%25%22 stop-color=%22%236F38E0%22/><stop offset=%22100%25%22 stop-color=%22%23FF1F40%22/></linearGradient></defs></svg>" type="image/svg+xml">
-    
-    <!-- SEO Meta Tag -->
     <meta name="description" content="Deeper-Decks™ is a card game with intimate, naughty, platonic, and girls' night questions and dares for deep connection.">
-    
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Mona Sans Font -->
     <link href="https://fonts.cdnfonts.com/css/mona-sans" rel="stylesheet">
-    
     <style>
-        /* LIGHT MODE THEME - Updated as requested */
         :root {
-            /* Theme colors - kept the same */
-            --color-romantic: #FF1F40; /* Soft Red/Pink */
-            --color-platonic: #48BB78; /* Vibrant Green */
-            --color-naughty: #6F38E0; /* Deep Purple */
-            --color-girls: #FF8BA4; /* Hotter Pink */
-            
-            /* Updated colors for light theme */
-            --bg-light: #FAFAFA; /* Dim white background for site */
-            --surface-light: #F0F0F0; /* Light grey for panels */
-            --modal-dark: #2A2A2A; /* Dark grey for modals */
+            --color-romantic: #FF1F40;
+            --color-platonic: #48BB78;
+            --color-naughty: #6F38E0;
+            --color-girls: #FF8BA4;
+            --bg-light: #FAFAFA;
+            --surface-light: #F0F0F0;
+            --modal-dark: #2A2A2A;
             --card-white: #FFFFFF;
-            --text-dark: #1A1A1A; /* Dark text for light background */
-            --text-light: #FFFFFF; /* Light text for dark modals */
-            --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-            --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.1); /* Softer shadow in light mode */
-            --shadow-stack: 0 10px 30px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1); /* Stack shadow */
-            
-            /* Rainbow animation properties */
-            --bg-position: 100;
-            --color-white: hsl(0, 0%, 100%);
-            --color-cyan: hsl(180, 100%, 50%);
-            --color-blue: hsl(240, 100%, 50%);
-            --color-purple: hsl(270, 100%, 50%);
-            --color-pink: hsl(330, 40%, 70%);
-            --color-red: hsl(0, 100%, 50%);
-            --color-yellow: hsl(60, 100%, 50%);
-            --color-lime: hsl(90, 100%, 75%);
+            --text-dark: #1A1A1A;
+            --text-light: #FFFFFF;
+            --shadow-subtle: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --shadow-card: 0 20px 50px rgba(0,0,0,0.1);
+            --shadow-stack: 0 10px 30px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);
+            --color-white: hsl(0,0%,100%);
+            --color-cyan: hsl(180,100%,50%);
+            --color-blue: hsl(240,100%,50%);
+            --color-purple: hsl(270,100%,50%);
+            --color-pink: hsl(330,40%,70%);
+            --color-red: hsl(0,100%,50%);
+            --color-yellow: hsl(60,100%,50%);
+            --color-lime: hsl(90,100%,75%);
         }
+        body { background-color: var(--bg-light); font-family: 'Inter', sans-serif; color: var(--text-dark); margin: 0; padding: 0; overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
 
-        @property --bg-position {
-            syntax: "<number>";
-            inherits: true;
-            initial-value: 100;
-        }
+        /* SIDEBAR */
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; backdrop-filter: blur(4px); }
+        .sidebar-overlay.active { opacity: 1; visibility: visible; }
+        .sidebar-menu { position: fixed; top: 0; right: -100%; width: 320px; height: 100%; background: var(--modal-dark); z-index: 3001; transition: right 0.4s cubic-bezier(0.4,0,0.2,1); padding: 24px; overflow-y: auto; box-shadow: -5px 0 30px rgba(0,0,0,0.3); }
+        .sidebar-menu.active { right: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-title { font-size: 1.5rem; font-weight: 700; color: var(--text-light); font-family: 'Mona Sans', sans-serif; }
+        .close-sidebar { background: none; border: none; color: var(--text-light); font-size: 1.5rem; cursor: pointer; padding: 8px; border-radius: 8px; transition: background-color 0.2s; }
+        .close-sidebar:hover { background-color: rgba(255,255,255,0.1); }
+        .sidebar-item { display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s ease; color: var(--text-light); border: none; width: 100%; text-align: left; font-size: 1rem; font-weight: 500; }
+        .sidebar-item:hover { background: rgba(255,255,255,0.1); transform: translateX(-2px); }
 
-        body {
-            background-color: var(--bg-light);
-            font-family: 'Inter', sans-serif;
-            color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+        /* HAMBURGER */
+        .hamburger-menu { position: fixed; top: 20px; right: 20px; z-index: 2000; background: var(--modal-dark); border: none; border-radius: 12px; width: 48px; height: 48px; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .hamburger-menu:hover { transform: scale(1.05); }
+        .hamburger-line { width: 20px; height: 2px; background: var(--text-light); border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger-menu.active .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(6px,6px); }
+        .hamburger-menu.active .hamburger-line:nth-child(2) { opacity: 0; }
+        .hamburger-menu.active .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(6px,-6px); }
 
-        /* SIDEBAR MENU STYLES */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 3000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            backdrop-filter: blur(4px);
-        }
-
-        .sidebar-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .sidebar-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 320px;
-            height: 100%;
-            background: var(--modal-dark);
-            z-index: 3001;
-            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 24px;
-            overflow-y: auto;
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar-menu.active {
-            right: 0;
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 32px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .sidebar-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-light);
-            font-family: 'Mona Sans', sans-serif;
-        }
-
-        .close-sidebar {
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: background-color 0.2s;
-        }
-
-        .close-sidebar:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: var(--text-light);
-            border: none;
-            width: 100%;
-            text-align: left;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .sidebar-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(-2px);
-        }
-
-        .sidebar-item i {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Hamburger Menu Button */
-        .hamburger-menu {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 2000;
-            background: var(--modal-dark);
-            border: none;
-            border-radius: 12px;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .hamburger-menu:hover {
-            transform: scale(1.05);
-        }
-
-        .hamburger-line {
-            width: 20px;
-            height: 2px;
-            background: var(--text-light);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger-menu.active .hamburger-line:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger-menu.active .hamburger-line:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger-menu.active .hamburger-line:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        /* RAINBOW INTRO SCREEN - Faster loading */
-        #introScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 4000;
-            transition: opacity 0.6s ease-out;
-        }
-
+        /* ── FIX 1: INTRO + PROGRESS BAR ───────────────────────────────────────── */
+        #introScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 4000; transition: opacity 0.6s ease-out; }
         .rainbow-logo {
-            font-family: 'Mona Sans', sans-serif;
-            font-size: 3rem;
-            font-weight: 900 !important; /* Enforced bold weight */
-            background: linear-gradient(
-                to right,
-                var(--color-white),
-                var(--color-white),
-                var(--color-cyan),
-                var(--color-blue),
-                var(--color-purple),
-                var(--color-pink),
-                var(--color-red),
-                var(--color-yellow),
-                var(--color-lime),
-                var(--color-white),
-                var(--color-white)
-            ) no-repeat calc(var(--bg-position) * 1%) 0% / 900%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -1px;
-            margin-bottom: 1rem;
+            font-family: 'Mona Sans', sans-serif; font-size: 3rem; font-weight: 900;
+            /* Use background-position instead of @property so all browsers animate it */
+            background: linear-gradient(to right, var(--color-white), var(--color-white), var(--color-cyan), var(--color-blue), var(--color-purple), var(--color-pink), var(--color-red), var(--color-yellow), var(--color-lime), var(--color-white), var(--color-white)) no-repeat 100% 0% / 900%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            letter-spacing: -1px; margin-bottom: 1rem;
             animation: rainbowSlide 2s ease-in-out forwards;
         }
+        @keyframes rainbowSlide { from { background-position: 100% 0%; } to { background-position: 0% 0%; } }
+        .intro-subtitle { font-size: 1.125rem; color: rgba(255,255,255,0.7); font-weight: 400; letter-spacing: 0.5px; margin-bottom: 3rem; opacity: 0; animation: fadeInUp 0.8s ease-out 0.8s forwards; }
+        .rainbow-progress { width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 3px; overflow: hidden; opacity: 0; animation: fadeIn 0.4s ease-out 0.5s forwards; }
+        /* FIX 1: longer transition + start fully rendered so reflow trick works */
+        .rainbow-progress-bar { width: 0%; height: 100%; background: linear-gradient(to right, var(--color-cyan), var(--color-blue), var(--color-purple), var(--color-pink), var(--color-red), var(--color-yellow), var(--color-lime)); border-radius: 3px; transition: width 1.8s cubic-bezier(0.28,0.11,0.32,1); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .intro-subtitle {
-            font-size: 1.125rem;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            margin-bottom: 3rem;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out 0.8s forwards;
-        }
+        /* MAIN GAME */
+        #mainGame { display: none; opacity: 0; transition: opacity 0.5s ease-in; padding: 1rem; width: 100%; min-height: 100vh; }
 
-        .rainbow-progress {
-            width: 200px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeIn 0.4s ease-out 0.8s forwards;
-        }
+        /* CARD STACK */
+        .card-stack-container { aspect-ratio: 9/14; width: 350px; max-width: 90vw; position: relative; }
+        .card-stack-shadow { position: absolute; width: 100%; height: 100%; top: 10px; left: 0; border-radius: 20px; box-shadow: var(--shadow-stack); z-index: -2; opacity: 0.4; }
+        .card-front { background-color: var(--card-white); color: var(--text-dark); border-radius: 20px; box-shadow: var(--shadow-card); transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), opacity 0.3s ease; position: absolute; width: 100%; height: 100%; top: 0; left: 0; will-change: transform, opacity; border: 1px solid rgba(0,0,0,0.05); cursor: pointer; user-select: none; -webkit-user-select: none; }
+        .card-back { background: linear-gradient(135deg,#2A2A2A 0%,#1F1F1F 100%); border-radius: 20px; box-shadow: var(--shadow-card); position: absolute; width: 98%; height: 98%; top: 1%; left: 1%; z-index: -1; border: 1px solid rgba(255,255,255,0.05); }
+        .card-slide-out-left  { transform: translateX(-150%) rotate(-15deg) !important; opacity: 0 !important; }
+        .card-slide-out-right { transform: translateX(150%)  rotate(15deg)  !important; opacity: 0 !important; }
+        .empty-card { border: 3px dashed var(--text-dark); background-color: var(--card-white); }
+        .card-content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+        .card-question-text { font-size: clamp(1.2rem,5vw,2.1rem); line-height: 1.3; font-weight: 700; text-shadow: 0 0 1px rgba(0,0,0,0.1); }
+        .card-header-chip { border-radius: 9999px; padding: 6px 14px; font-weight: 600; font-size: 0.85rem; opacity: 0.95; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .player-badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 999px; font-weight: 600; font-size: 0.9rem; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
-        .rainbow-progress-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(
-                to right,
-                var(--color-cyan),
-                var(--color-blue),
-                var(--color-purple),
-                var(--color-pink),
-                var(--color-red),
-                var(--color-yellow),
-                var(--color-lime)
-            );
-            border-radius: 3px;
-            transition: width 1.5s cubic-bezier(0.28, 0.11, 0.32, 1);
-        }
+        /* MODALS */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(4px); }
+        .modal-content { background: var(--modal-dark); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 32px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); color: var(--text-light); }
+        .deck-modal-content { max-width: 600px; }
+        .deck-option { background: rgba(255,255,255,0.05); border: 2px solid transparent; border-radius: 16px; padding: 20px; margin-bottom: 15px; cursor: pointer; transition: all 0.3s ease; }
+        .deck-option:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+        .deck-option.active { border-color: currentColor; background: rgba(255,255,255,0.15); }
+        .player-input { background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 12px 16px; color: var(--text-light); font-size: 1rem; transition: border-color 0.2s; }
+        .player-input:focus { outline: none; border-color: rgba(255,255,255,0.4); }
+        .player-item { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: var(--text-light); }
+        .btn-remove { background: rgba(255,107,129,0.2); color: var(--color-romantic); border-radius: 8px; padding: 6px 12px; font-size: 0.875rem; transition: all 0.2s; border: none; cursor: pointer; }
+        .btn-remove:hover { background: rgba(255,107,129,0.3); }
 
-        @keyframes rainbowSlide {
-            from {
-                --bg-position: 100;
-            }
-            to {
-                --bg-position: 0;
-            }
-        }
+        /* CONTROL PANEL */
+        .control-panel { background: var(--surface-light); border: 1px solid rgba(0,0,0,0.1); border-radius: 20px; padding: 24px; box-shadow: var(--shadow-subtle); align-self: flex-start; color: var(--text-dark); }
+        .btn-action { background-color: var(--modal-dark); color: var(--text-light); border-radius: 14px; padding: 16px 24px; font-weight: 700; transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s; box-shadow: 0 4px 0 rgba(0,0,0,0.2); border: none; cursor: pointer; }
+        .btn-action:hover:not(:disabled) { background-color: #3A3A3A; transform: translateY(-2px); box-shadow: 0 6px 0 rgba(0,0,0,0.2); }
+        .btn-action:disabled { opacity: 0.4; cursor: not-allowed; transform: translateY(0); box-shadow: 0 4px 0 rgba(0,0,0,0.1); }
+        .btn-shuffle { background-color: var(--surface-light); color: var(--text-dark); border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 0 rgba(0,0,0,0.05); margin-top: 1rem; }
+        .btn-shuffle:hover:not(:disabled) { background-color: #E0E0E0; transform: translateY(-2px); box-shadow: 0 6px 0 rgba(0,0,0,0.05); }
+        .counter-box { background-color: var(--surface-light); border: 1px solid rgba(0,0,0,0.08); box-shadow: var(--shadow-subtle); }
+        .settings-option { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-light); }
+        .shuffling { animation: shuffle 0.5s ease-in-out; }
+        @keyframes shuffle { 0%{transform:rotate(0deg) scale(1);} 25%{transform:rotate(-5deg) scale(1.02);} 50%{transform:rotate(5deg) scale(1.02);} 75%{transform:rotate(-2deg) scale(1.01);} 100%{transform:rotate(0deg) scale(1);} }
+        .swipe-instruction { text-align: center; margin-top: 20px; color: rgba(0,0,0,0.5); font-size: 0.9rem; }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        /* DARK MODE */
+        body.dark-mode { background-color: #121212; color: #FFFFFF !important; }
+        body.dark-mode .text-gray-900, body.dark-mode .text-gray-800, body.dark-mode .text-gray-700 { color: #FFFFFF !important; }
+        body.dark-mode .text-gray-600, body.dark-mode .text-gray-500, body.dark-mode .text-gray-400 { color: #A0A0A0 !important; }
+        body.dark-mode .control-panel, body.dark-mode .counter-box { background-color: #1F1F1F; color: #FFFFFF; border-color: rgba(255,255,255,0.1); }
+        body.dark-mode .card-front { background-color: #2A2A2A; color: #FFFFFF; border-color: rgba(255,255,255,0.1); }
+        body.dark-mode .swipe-instruction { color: rgba(255,255,255,0.5); }
+        body.dark-mode .btn-shuffle { background-color: #2A2A2A; color: #FFFFFF; border-color: rgba(255,255,255,0.1); }
+        body.dark-mode .btn-shuffle:hover:not(:disabled) { background-color: #3A3A3A; }
+        body.dark-mode .empty-card { border-color: #FFFFFF; background-color: #2A2A2A; color: #FFFFFF; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* MAIN GAME STYLES */
-        #mainGame {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease-in;
-            padding: 1rem;
-            width: 100%;
-            min-height: 100vh;
-        }
-
-        /* CARD STACK CONTAINER - Updated with stacked shadow effect */
-        .card-stack-container {
-            aspect-ratio: 9 / 14; 
-            width: 350px;
-            max-width: 90vw;
-            position: relative;
-        }
-
-        /* Card stack shadow effect */
-        .card-stack-shadow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 10px;
-            left: 0;
-            border-radius: 20px;
-            box-shadow: var(--shadow-stack);
-            z-index: -2;
-            opacity: 0.4;
-        }
-
-        /* CARD FRONT */
-        .card-front {
-            background-color: var(--card-white);
-            color: var(--text-dark);
-            border-radius: 20px;
-            box-shadow: var(--shadow-card);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            will-change: transform, opacity;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            cursor: pointer; /* Make it obvious it's swipeable */
-            user-select: none; /* Prevent text selection during swipe */
-            -webkit-user-select: none;
-        }
-
-        /* CARD BACK */
-        .card-back {
-            background: linear-gradient(135deg, #2A2A2A 0%, #1F1F1F 100%);
-            border-radius: 20px;
-            box-shadow: var(--shadow-card);
-            position: absolute;
-            width: 98%;
-            height: 98%;
-            top: 1%;
-            left: 1%;
-            z-index: -1;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* NEW ANIMATION CLASS: Slide out for swiping */
-        .card-slide-out-left {
-            transform: translateX(-150%) rotate(-15deg) !important;
-            opacity: 0 !important;
-        }
-
-        .card-slide-out-right {
-            transform: translateX(150%) rotate(15deg) !important;
-            opacity: 0 !important;
-        }
-
-        /* EMPTY DECK CARD */
-        .empty-card {
-            border: 3px dashed var(--text-dark);
-            background-color: var(--card-white);
-        }
-        
-        /* CARD CONTENT */
-        .card-content-area {
-            flex-grow: 1; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .card-question-text {
-            font-size: clamp(1.2rem, 5vw, 2.1rem); 
-            line-height: 1.3; 
-            font-weight: 700; 
-            text-shadow: 0 0 1px rgba(0, 0, 0, 0.1); 
-        }
-
-        /* CARD HEADER / DECK INFO */
-        .card-header-chip {
-            border-radius: 9999px;
-            padding: 6px 14px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            opacity: 0.95;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Player name badge on card */
-        .player-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 999px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* MODAL STYLES - Updated with dark grey background */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-content {
-            background: var(--modal-dark); /* Dark grey for modals */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 32px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            color: var(--text-light); /* Light text on dark modal */
-        }
-
-        /* Deck selection modal specific */
-        .deck-modal-content {
-            max-width: 600px;
-        }
-
-        .deck-option {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid transparent;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .deck-option:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .deck-option.active {
-            border-color: currentColor;
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        /* Player setup modal */
-        .player-input {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: var(--text-light);
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        .player-input:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        .player-item {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-light);
-        }
-
-        .btn-remove {
-            background: rgba(255, 107, 129, 0.2);
-            color: var(--color-romantic);
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 0.875rem;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-remove:hover {
-            background: rgba(255, 107, 129, 0.3);
-        }
-
-        /* CONTROL PANEL (Light theme) */
-        .control-panel {
-            background: var(--surface-light);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: var(--shadow-subtle);
-            align-self: flex-start;
-            color: var(--text-dark);
-        }
-        
-        /* DECK SELECTION BUTTONS */
-        .btn-deck {
-            background-color: var(--surface-light);
-            color: var(--text-dark);
-            border-radius: 12px;
-            padding: 12px 18px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-deck:hover {
-            background-color: #E0E0E0;
-        }
-
-        /* ACTIVE DECK BUTTON STYLE */
-        .btn-active {
-            color: white !important;
-            font-weight: 600 !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* ACTION BUTTON (Draw/Shuffle) */
-        .btn-action {
-            background-color: var(--modal-dark);
-            color: var(--text-light);
-            border-radius: 14px;
-            padding: 16px 24px;
-            font-weight: 700;
-            transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s;
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-action:hover:not(:disabled) {
-            background-color: #3A3A3A;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-action:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: translateY(0);
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-shuffle {
-            background-color: var(--surface-light);
-            color: var(--text-dark);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.05);
-            margin-top: 1rem;
-        }
-        
-        .btn-shuffle:hover:not(:disabled) {
-            background-color: #E0E0E0;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.05);
-        }
-
-        /* VISITOR COUNTER STYLING */
-        .counter-box {
-            background-color: var(--surface-light);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            box-shadow: var(--shadow-subtle);
-        }
-
-        /* Settings menu */
-        .settings-option {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-light);
-        }
-
-        /* Shuffle animation */
-        .shuffling {
-            animation: shuffle 0.5s ease-in-out;
-        }
-
-        @keyframes shuffle {
-            0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-5deg) scale(1.02); }
-            50% { transform: rotate(5deg) scale(1.02); }
-            75% { transform: rotate(-2deg) scale(1.01); }
-            100% { transform: rotate(0deg) scale(1); }
-        }
-        
-        /* Swipe instructions */
-        .swipe-instruction {
-            text-align: center;
-            margin-top: 20px;
-            color: rgba(0, 0, 0, 0.5);
-            font-size: 0.9rem;
-        }
-
-        /* DARK MODE STYLES */
-        body.dark-mode {
-            background-color: #121212;
-            color: #FFFFFF !important; /* White text in dark mode */
-        }
-
-        body.dark-mode .text-gray-900,
-        body.dark-mode .text-gray-800,
-        body.dark-mode .text-gray-700 {
-            color: #FFFFFF !important;
-        }
-
-        body.dark-mode .text-gray-600,
-        body.dark-mode .text-gray-500,
-        body.dark-mode .text-gray-400 {
-            color: #A0A0A0 !important; /* Light grey for subtext */
-        }
-
-        body.dark-mode .control-panel,
-        body.dark-mode .counter-box {
-            background-color: #1F1F1F;
-            color: #FFFFFF;
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        body.dark-mode .card-front {
-            background-color: #2A2A2A;
-            color: #FFFFFF;
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        body.dark-mode .swipe-instruction {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        body.dark-mode .btn-shuffle {
-            background-color: #2A2A2A;
-            color: #FFFFFF;
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        body.dark-mode .btn-shuffle:hover:not(:disabled) {
-            background-color: #3A3A3A;
-        }
-
-        body.dark-mode .empty-card {
-            border-color: #FFFFFF;
-            background-color: #2A2A2A;
-            color: #FFFFFF;
-        }
-
-        /* Mobile Layout */
         @media (max-width: 1024px) {
-            main {
-                flex-direction: column-reverse;
-            }
-            .control-panel {
-                width: 100%;
-                margin-top: 2rem;
-            }
-            header {
-                margin-top: 1rem;
-            }
-            .rainbow-logo {
-                font-size: 2.5rem;
-            }
-            .intro-subtitle {
-                font-size: 1rem;
-            }
-            .sidebar-menu {
-                width: 280px;
-            }
+            main { flex-direction: column-reverse; }
+            .control-panel { width: 100%; margin-top: 2rem; }
+            header { margin-top: 1rem; }
+            .rainbow-logo { font-size: 2.5rem; }
+            .intro-subtitle { font-size: 1rem; }
+            .sidebar-menu { width: 280px; }
         }
-
-        /* Swipe gesture zone */
-        .swipe-zone {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-        }
-
-        /* Persistent bold title */
-        .game-title,
-        .modal-title,
-        .sidebar-title {
-            font-family: 'Mona Sans', sans-serif !important;
-            font-weight: 900 !important; /* Enforced bold weight */
-            letter-spacing: -1px;
-        }
-
-        /* Ensure all Deeper-Decks titles are bold */
-        h1, h2, h3 {
-            font-family: 'Mona Sans', sans-serif !important;
-            font-weight: 900 !important;
-        }
-
-        /* Animated favicon styles */
-        .favicon-animation {
-            animation: faviconRainbow 3s linear infinite;
-        }
-
-        @keyframes faviconRainbow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
+        .swipe-zone { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
+        .game-title, .modal-title, .sidebar-title { font-family: 'Mona Sans', sans-serif !important; font-weight: 900 !important; letter-spacing: -1px; }
+        h1, h2, h3 { font-family: 'Mona Sans', sans-serif !important; font-weight: 900 !important; }
     </style>
 </head>
 <body>
-    <!-- HAMBURGER MENU BUTTON -->
-    <button id="hamburgerButton" class="hamburger-menu" style="display: none;">
+    <button id="hamburgerButton" class="hamburger-menu">
         <div class="hamburger-line"></div>
         <div class="hamburger-line"></div>
         <div class="hamburger-line"></div>
     </button>
 
-    <!-- SIDEBAR MENU -->
     <div id="sidebarOverlay" class="sidebar-overlay"></div>
     <div id="sidebarMenu" class="sidebar-menu">
         <div class="sidebar-header">
             <h3 class="sidebar-title">Menu</h3>
-            <button id="closeSidebar" class="close-sidebar">
-                <i data-lucide="x"></i>
-            </button>
+            <button id="closeSidebar" class="close-sidebar"><i data-lucide="x"></i></button>
         </div>
-        
-        <button id="sidebarManagePlayers" class="sidebar-item">
-            <i data-lucide="users"></i>
-            Manage Players
-        </button>
-        
-        <button id="sidebarChangeDeck" class="sidebar-item">
-            <i data-lucide="layers"></i>
-            Change Deck
-        </button>
-        
-        <button id="sidebarSettings" class="sidebar-item">
-            <i data-lucide="settings"></i>
-            Settings
-        </button>
-        
+        <button id="sidebarManagePlayers" class="sidebar-item"><i data-lucide="users"></i> Manage Players</button>
+        <button id="sidebarChangeDeck"    class="sidebar-item"><i data-lucide="layers"></i> Change Deck</button>
+        <button id="sidebarSettings"      class="sidebar-item"><i data-lucide="settings"></i> Settings</button>
         <div class="mt-8 pt-6 border-t border-gray-800">
             <div class="text-center text-gray-400 text-sm">
                 <p>Deeper-Decks™</p>
@@ -790,7 +163,7 @@
         </div>
     </div>
 
-    <!-- RAINBOW INTRO SCREEN -->
+    <!-- INTRO SCREEN -->
     <div id="introScreen">
         <header class="max-w-xl w-full text-center mb-6 px-4 sm:px-0">
             <h1 class="rainbow-logo">Deeper-Decks™</h1>
@@ -801,387 +174,144 @@
         </div>
     </div>
 
-    <!-- PLAYER SETUP MODAL -->
-    <div id="playerModal" class="modal-overlay" style="display: none;">
+    <!-- PLAYER MODAL -->
+    <div id="playerModal" class="modal-overlay" style="display:none;">
         <div class="modal-content">
-            <h2 class="text-3xl font-bold text-white mb-2 text-center font-['Mona_Sans'] game-title">Deeper-Decks™</h2>
+            <h2 class="text-3xl font-bold text-white mb-2 text-center game-title">Deeper-Decks™</h2>
             <p class="text-gray-400 text-center mb-6">Add players to get started</p>
-            
             <div class="mb-6">
                 <div class="flex gap-2 mb-4">
-                    <input 
-                        type="text" 
-                        id="playerNameInput" 
-                        class="player-input flex-1" 
-                        placeholder="Enter player name"
-                        maxlength="20"
-                    />
+                    <input type="text" id="playerNameInput" class="player-input flex-1" placeholder="Enter player name" maxlength="20" />
                     <button id="addPlayerBtn" class="btn-action px-6">Add</button>
                 </div>
-                
-                <div id="playersList" class="space-y-2 mb-4">
-                    <!-- Player items will be added here -->
-                </div>
-                
-                <p class="text-sm text-gray-400 text-center mb-4">
-                    <span id="playerCount">0</span> players added (minimum 2)
-                </p>
+                <div id="playersList" class="space-y-2 mb-4"></div>
+                <p class="text-sm text-gray-400 text-center mb-4"><span id="playerCount">0</span> players added (minimum 2)</p>
             </div>
-            
-            <button id="startGameBtn" class="btn-action w-full text-lg py-3" disabled>
-                Choose Deck & Start Playing
-            </button>
+            <button id="startGameBtn" class="btn-action w-full text-lg py-3" disabled>Choose Deck &amp; Start Playing</button>
         </div>
     </div>
 
-    <!-- DECK SELECTION MODAL -->
-    <div id="deckModal" class="modal-overlay" style="display: none;">
+    <!-- DECK MODAL -->
+    <div id="deckModal" class="modal-overlay" style="display:none;">
         <div class="modal-content deck-modal-content">
-            <h2 class="text-3xl font-bold text-white mb-2 text-center font-['Mona_Sans'] game-title">Choose Your Deck</h2>
+            <h2 class="text-3xl font-bold text-white mb-2 text-center game-title">Choose Your Deck</h2>
             <p class="text-gray-400 text-center mb-6">Select a deck to start playing</p>
-            
             <div id="deckOptions" class="space-y-3">
-                <div class="deck-option" data-deck="romantic" style="color: var(--color-romantic);">
-                    <div class="flex items-center gap-3">
-                        <i data-lucide="heart" class="w-6 h-6"></i>
-                        <div>
-                            <h3 class="text-xl font-bold">Romantic Deck</h3>
-                            <p class="text-gray-400 text-sm">90 cards for couples and dates</p>
-                        </div>
-                    </div>
+                <div class="deck-option" data-deck="romantic" style="color:var(--color-romantic);">
+                    <div class="flex items-center gap-3"><i data-lucide="heart" class="w-6 h-6"></i><div><h3 class="text-xl font-bold">Romantic Deck</h3><p class="text-gray-400 text-sm">90 cards for couples and dates</p></div></div>
                 </div>
-                
-                <div class="deck-option" data-deck="platonic" style="color: var(--color-platonic);">
-                    <div class="flex items-center gap-3">
-                        <i data-lucide="handshake" class="w-6 h-6"></i>
-                        <div>
-                            <h3 class="text-xl font-bold">Platonic Deck</h3>
-                            <p class="text-gray-400 text-sm">90 cards for friends and hangouts</p>
-                        </div>
-                    </div>
+                <div class="deck-option" data-deck="platonic" style="color:var(--color-platonic);">
+                    <div class="flex items-center gap-3"><i data-lucide="handshake" class="w-6 h-6"></i><div><h3 class="text-xl font-bold">Platonic Deck</h3><p class="text-gray-400 text-sm">90 cards for friends and hangouts</p></div></div>
                 </div>
-                
-                <div class="deck-option" data-deck="girlsnight" style="color: var(--color-girls);">
-                    <div class="flex items-center gap-3">
-                        <i data-lucide="users-2" class="w-6 h-6"></i>
-                        <div>
-                            <h3 class="text-xl font-bold">Girls' Night Deck</h3>
-                            <p class="text-gray-400 text-sm">90 cards for girls' nights out</p>
-                        </div>
-                    </div>
+                <div class="deck-option" data-deck="girlsnight" style="color:var(--color-girls);">
+                    <div class="flex items-center gap-3"><i data-lucide="users-2" class="w-6 h-6"></i><div><h3 class="text-xl font-bold">Girls' Night Deck</h3><p class="text-gray-400 text-sm">90 cards for girls' nights out</p></div></div>
                 </div>
-                
-                <div class="deck-option" data-deck="naughty" style="color: var(--color-naughty);">
-                    <div class="flex items-center gap-3">
-                        <i data-lucide="flame" class="w-6 h-6"></i>
-                        <div>
-                            <h3 class="text-xl font-bold">Naughty Deck</h3>
-                            <p class="text-gray-400 text-sm">90 cards for spicy conversations</p>
-                        </div>
-                    </div>
+                <div class="deck-option" data-deck="naughty" style="color:var(--color-naughty);">
+                    <div class="flex items-center gap-3"><i data-lucide="flame" class="w-6 h-6"></i><div><h3 class="text-xl font-bold">Naughty Deck</h3><p class="text-gray-400 text-sm">90 cards for spicy conversations</p></div></div>
                 </div>
             </div>
-            
-            <button id="confirmDeckBtn" class="btn-action w-full text-lg py-3 mt-6" disabled>
-                Start Playing with Selected Deck
-            </button>
+            <button id="confirmDeckBtn" class="btn-action w-full text-lg py-3 mt-6" disabled>Start Playing with Selected Deck</button>
         </div>
     </div>
 
     <!-- SETTINGS MODAL -->
-    <div id="settingsModal" class="modal-overlay" style="display: none;">
+    <div id="settingsModal" class="modal-overlay" style="display:none;">
         <div class="modal-content">
-            <h2 class="text-3xl font-bold text-white mb-6 text-center font-['Mona_Sans'] game-title">Settings</h2>
-            
+            <h2 class="text-3xl font-bold text-white mb-6 text-center game-title">Settings</h2>
             <div class="space-y-4">
-                <div class="settings-option">
-                    <span>Theme</span>
-                    <select id="themeSelect" class="player-input">
-                        <option value="light">Light Mode</option>
-                        <option value="dark">Dark Mode</option>
-                    </select>
-                </div>
-                
-                <div class="settings-option">
-                    <span>Card Animation Speed</span>
-                    <select id="animationSpeed" class="player-input">
-                        <option value="fast">Fast</option>
-                        <option value="normal" selected>Normal</option>
-                        <option value="slow">Slow</option>
-                    </select>
-                </div>
-                
-                <div class="settings-option">
-                    <span>Swipe Sensitivity</span>
-                    <select id="swipeSensitivity" class="player-input">
-                        <option value="low">Low</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="high">High</option>
-                    </select>
-                </div>
+                <div class="settings-option"><span>Theme</span><select id="themeSelect" class="player-input"><option value="light">Light Mode</option><option value="dark">Dark Mode</option></select></div>
+                <div class="settings-option"><span>Card Animation Speed</span><select id="animationSpeed" class="player-input"><option value="fast">Fast</option><option value="normal" selected>Normal</option><option value="slow">Slow</option></select></div>
+                <div class="settings-option"><span>Swipe Sensitivity</span><select id="swipeSensitivity" class="player-input"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div>
             </div>
-            
-            <button id="closeSettingsBtn" class="btn-action w-full text-lg py-3 mt-6">
-                Save & Close
-            </button>
+            <button id="closeSettingsBtn" class="btn-action w-full text-lg py-3 mt-6">Save &amp; Close</button>
         </div>
     </div>
 
-    <!-- MAIN GAME CONTENT -->
+    <!-- MAIN GAME -->
     <div id="mainGame" class="min-h-screen flex flex-col items-center">
         <header class="max-w-xl w-full text-center mb-6 mt-4 px-4 sm:px-0">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-2 tracking-tight font-['Mona_Sans'] game-title">Deeper-Decks<sup class="text-xl ml-1 align-top">&trade;</sup></h1>
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-2 tracking-tight game-title">Deeper-Decks<sup class="text-xl ml-1 align-top">&trade;</sup></h1>
             <p class="text-gray-600 text-lg font-medium">The Card Game for Real Connection</p>
         </header>
-
         <main class="w-full max-w-6xl flex flex-col lg:flex-row gap-8 px-4 sm:px-6">
-            
-            <!-- Controls Panel (Light theme) -->
             <section class="lg:w-1/3 control-panel h-full flex flex-col justify-start order-2 lg:order-1">
                 <h2 class="text-2xl font-bold mb-6 text-gray-900" id="deckTitle">Select a Deck</h2>
-
                 <div class="mb-8">
                     <div class="text-center p-5 rounded-xl counter-box mb-6">
                         <p class="text-base font-semibold text-gray-600">Cards Remaining</p>
                         <p id="remainingCount" class="text-5xl font-extrabold text-gray-900 tracking-wider mt-1">90</p>
                     </div>
-                    
-                    <button id="drawButton" class="btn-action py-4 px-12 text-xl font-bold tracking-wide uppercase w-full mb-3">
-                        Draw Next Card
-                    </button>
-                    
-                    <button id="shuffleButton" class="w-full btn-action btn-shuffle">
-                        <i data-lucide="rotate-ccw" class="w-5 h-5 inline mr-2"></i> Re-Shuffle Current Deck
-                    </button>
+                    <button id="drawButton" class="btn-action py-4 px-12 text-xl font-bold tracking-wide uppercase w-full mb-3">Draw Next Card</button>
+                    <button id="shuffleButton" class="w-full btn-action btn-shuffle"><i data-lucide="rotate-ccw" class="w-5 h-5 inline mr-2"></i> Re-Shuffle Current Deck</button>
                 </div>
             </section>
-
-            <!-- Game Area (Card Stack) -->
             <section class="lg:w-2/3 flex flex-col items-center order-1 lg:order-2">
-                
-                <!-- Card Display Area with Stack Shadow Effect -->
                 <div id="cardContainer" class="relative flex-shrink-0 mb-8 card-stack-container">
-                    <!-- Stack shadow effect -->
                     <div class="card-stack-shadow"></div>
-                    
-                    <!-- Card back and active card/message are placed here by JS -->
                 </div>
-                
-                <div class="swipe-instruction">
-                    <i data-lucide="move-horizontal" class="w-5 h-5 inline mr-2"></i>
-                    Swipe left/right to draw next card
-                </div>
+                <div class="swipe-instruction"><i data-lucide="move-horizontal" class="w-5 h-5 inline mr-2"></i> Swipe left/right to draw next card</div>
             </section>
         </main>
     </div>
 
-    <!-- FIREBASE AND ICONS -->
+    <!-- MODULE: Firebase + Lucide icons only -->
     <script type="module">
-        // Firebase Imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, updateDoc, increment, setDoc, collection, getDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        
-        // Lucide Icons Load and Initialization
-        import { createIcons, Heart, Flame, Users, Handshake, Star, RotateCcw, Zap, Users2, Clock, Lightbulb, User, Layers, Settings, MoveHorizontal, X } from 'https://unpkg.com/lucide@latest/dist/esm/lucide.js';
-        
-        // Expose createIcons globally
-        window.createIcons = () => createIcons({ 
-            icons: { Heart, Flame, Users, Handshake, Star, RotateCcw, Zap, Users2, Clock, Lightbulb, User, Layers, Settings, MoveHorizontal, X } 
-        });
-        
-        // --- GLOBAL FIREBASE VARIABLES & SETUP ---
+        import { getFirestore, doc, onSnapshot, updateDoc, increment, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { createIcons, Heart, Flame, Users, Handshake, Star, RotateCcw, Zap, Users2, Lightbulb, User, Layers, Settings, MoveHorizontal, X } from 'https://unpkg.com/lucide@latest/dist/esm/lucide.js';
+
+        // ── FIX 2: expose createIcons IMMEDIATELY (not inside DOMContentLoaded)
+        // so the regular script can call it as soon as icons are needed.
+        window.createIcons = () => createIcons({ icons: { Heart, Flame, Users, Handshake, Star, RotateCcw, Zap, Users2, Lightbulb, User, Layers, Settings, MoveHorizontal, X } });
+
         let db;
-        let auth;
-        let userId;
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
         const COUNTER_DOC_PATH = `/artifacts/${appId}/public/data/counters/visitor_count`;
-        
-        // Initialize Firebase and Authentication
-        async function initializeFirebase() {
-            if (Object.keys(firebaseConfig).length === 0) {
-                console.error("Firebase configuration is missing.");
-                return;
-            }
 
+        async function initFirebase() {
+            if (!Object.keys(firebaseConfig).length) return;
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
-                auth = getAuth(app);
-                
-                setLogLevel('debug');
-
-                return new Promise((resolve) => {
-                    onAuthStateChanged(auth, async (user) => {
+                const auth = getAuth(app);
+                await new Promise(res => {
+                    onAuthStateChanged(auth, async user => {
                         if (!user) {
-                            if (initialAuthToken) {
-                                await signInWithCustomToken(auth, initialAuthToken);
-                            } else {
-                                await signInAnonymously(auth);
-                            }
-                            onAuthStateChanged(auth, (newUser) => {
-                                if (newUser) {
-                                    userId = newUser.uid;
-                                    resolve();
-                                }
-                            });
-                        } else {
-                            userId = user.uid;
-                            resolve();
-                        }
+                            if (initialAuthToken) await signInWithCustomToken(auth, initialAuthToken);
+                            else await signInAnonymously(auth);
+                            onAuthStateChanged(auth, u => { if (u) res(); });
+                        } else res();
                     });
                 });
-
-            } catch (error) {
-                console.error("Error initializing Firebase:", error);
-            }
-        }
-
-        // --- VISITOR COUNTER LOGIC ---
-        function setupVisitorCounterListener() {
-            if (!db) return;
-
-            const counterRef = doc(db, COUNTER_DOC_PATH);
-
-            onSnapshot(counterRef, (docSnap) => {
-                const counterElement = document.getElementById('visitorCount');
-                if (docSnap.exists()) {
-                    const count = docSnap.data().count;
-                    if (counterElement) {
-                        counterElement.textContent = count.toLocaleString();
-                    }
-                } else if (counterElement) {
-                    counterElement.textContent = '0';
+                // Listener
+                onSnapshot(doc(db, COUNTER_DOC_PATH), snap => {
+                    const el = document.getElementById('visitorCount');
+                    if (el) el.textContent = snap.exists() ? snap.data().count.toLocaleString() : '0';
+                });
+                // Track visit
+                const KEY = 'deeper_decks_visited_v4';
+                if (sessionStorage.getItem(KEY) !== 'true') {
+                    const ref = doc(db, COUNTER_DOC_PATH);
+                    const snap = await getDoc(ref);
+                    if (snap.exists()) await updateDoc(ref, { count: increment(1) });
+                    else await setDoc(ref, { count: 1 });
+                    sessionStorage.setItem(KEY, 'true');
                 }
-            }, (error) => {
-                console.error("Error listening to visitor count:", error);
-            });
+            } catch (e) { console.error('Firebase error:', e); }
         }
 
-        async function trackVisitor() {
-            if (!db) return;
-            const counterRef = doc(db, COUNTER_DOC_PATH);
-            const SESSION_KEY = 'deeper_decks_visited_v4'; 
-
-            if (sessionStorage.getItem(SESSION_KEY) === 'true') {
-                return;
-            }
-
-            try {
-                const docSnap = await getDoc(counterRef);
-
-                if (docSnap.exists()) {
-                    await updateDoc(counterRef, { count: increment(1) });
-                } else {
-                    await setDoc(counterRef, { count: 1 });
-                }
-                sessionStorage.setItem(SESSION_KEY, 'true');
-
-            } catch (error) {
-                console.error("Error tracking visitor:", error);
-            }
-        }
-
-        // --- RAINBOW INTRO SCREEN LOGIC - Faster loading ---
-        function showRainbowIntroScreen() {
-            const introScreen = document.getElementById('introScreen');
-            const mainGame = document.getElementById('mainGame');
-            const progressBar = document.getElementById('rainbowProgressBar');
-            
-            // Start progress bar animation immediately with faster timing
-            setTimeout(() => {
-                progressBar.style.width = '100%';
-            }, 50);
-            
-            // Shorter timeout for faster loading (2 seconds instead of 3)
-            setTimeout(() => {
-                introScreen.style.opacity = '0';
-                setTimeout(() => {
-                    introScreen.style.display = 'none';
-                    // FIX: Call showPlayerModal via window object since it's defined in global scope
-                    window.showPlayerModal();
-                }, 600); // Faster fade out
-            }, 2000); // Reduced from 3000ms
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Show rainbow intro screen first
-            showRainbowIntroScreen();
-            
-            // Initialize Firebase in background
-            setTimeout(async () => {
-                await initializeFirebase();
-                if (db) {
-                    setupVisitorCounterListener();
-                    trackVisitor();
-                }
-            }, 500); // Start Firebase init after 500ms
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(initFirebase, 500);
         });
     </script>
 
+    <!-- REGULAR SCRIPT: all game logic -->
     <script>
-        // --- SIDEBAR MENU LOGIC ---
-        function initializeSidebar() {
-            const hamburgerButton = document.getElementById('hamburgerButton');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-            const sidebarMenu = document.getElementById('sidebarMenu');
-            const closeSidebar = document.getElementById('closeSidebar');
-            
-            // Show hamburger when main game is shown
-            hamburgerButton.style.display = 'flex';
-            
-            // Toggle sidebar
-            function toggleSidebar() {
-                const isActive = sidebarMenu.classList.contains('active');
-                if (isActive) {
-                    closeSidebarMenu();
-                } else {
-                    openSidebarMenu();
-                }
-            }
-            
-            function openSidebarMenu() {
-                sidebarMenu.classList.add('active');
-                sidebarOverlay.classList.add('active');
-                hamburgerButton.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            
-            function closeSidebarMenu() {
-                sidebarMenu.classList.remove('active');
-                sidebarOverlay.classList.remove('active');
-                hamburgerButton.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-            
-            // Event listeners
-            hamburgerButton.addEventListener('click', toggleSidebar);
-            closeSidebar.addEventListener('click', closeSidebarMenu);
-            sidebarOverlay.addEventListener('click', closeSidebarMenu);
-            
-            // Sidebar item clicks
-            document.getElementById('sidebarManagePlayers').addEventListener('click', () => {
-                closeSidebarMenu();
-                showPlayerModal();
-            });
-            
-            document.getElementById('sidebarChangeDeck').addEventListener('click', () => {
-                closeSidebarMenu();
-                showDeckModal();
-            });
-            
-            document.getElementById('sidebarSettings').addEventListener('click', () => {
-                closeSidebarMenu();
-                showSettingsModal();
-            });
-        }
-        
-        // --- DECK CONTENT (Same as before) ---
+        // ── DECK DATA ─────────────────────────────────────────────────────────────
         const romanticQuestions = [
-            // Romantic Questions (50)
             "What's your idea of the perfect date night that we haven't tried yet?",
             "What's one thing you're working toward right now that excites you?",
             "What's a hidden talent or hobby of yours that not many people know about?",
@@ -1232,8 +362,6 @@
             "How do you handle conflict in relationships?",
             "What's a small gesture I could do more often that would mean a lot?",
             "What's your favorite thing about the way we communicate?",
-        
-            // Romantic Dares (40)
             "DARE: Close your eyes and describe what you love most about the way I make you feel.",
             "DARE: Share the first thought you had when you saw me today.",
             "DARE: Tell me three things you're grateful for about our relationship right now.",
@@ -1275,9 +403,8 @@
             "DARE: Share a sacrifice you'd be willing to make for our relationship.",
             "DARE: Describe the moment you realized I was someone special."
         ];
-        
+
         const platonicQuestions = [
-            // Platonic Questions (50)
             "If you could only eat one food for the rest of your life, what would it be and why?",
             "What's the weirdest compliment you've ever received?",
             "If you were a kitchen appliance, which one would you be and why?",
@@ -1328,8 +455,6 @@
             "What's your most used emoji and why?",
             "What's something you do that you think is normal but others find weird?",
             "If you had to live without one of your five senses, which would you give up?",
-        
-            // Platonic Dares (40)
             "DARE: Show everyone your most embarrassing photo from your camera roll.",
             "DARE: Do your best impression of someone in the room right now.",
             "DARE: Freestyle rap about the person to your left for 20 seconds.",
@@ -1371,9 +496,8 @@
             "DARE: Show your Venmo/CashApp transaction history from this month.",
             "DARE: Do an impression of yourself waking up in the morning."
         ];
-        
+
         const girlsNightQuestions = [
-            // Girls' Night Questions (50)
             "Spill: What's the most embarrassing thing you've done to get a guy's attention?",
             "Who's your current situationship and what's the tea?",
             "What's the most unhinged text you've sent your crush at 2 AM?",
@@ -1424,8 +548,6 @@
             "Describe your signature makeup look.",
             "What's the pettiest reason you've stopped talking to someone?",
             "Share your most embarrassing autocorrect fail to your crush.",
-        
-            // Girls' Night Dares (40)
             "DARE: Make a TikTok right now recreating a trending sound about your dating life.",
             "DARE: Text your crush something flirty and read their response out loud.",
             "DARE: Show everyone the last five guys in your Instagram DMs and explain the context.",
@@ -1467,9 +589,8 @@
             "DARE: Demonstrate how you pose when someone says 'act natural' for a photo.",
             "DARE: Share your wellness or cycle tracking app and current mood."
         ];
-        
+
         const naughtyQuestions = [
-            // Naughty Questions (50)
             "Who in this room do you think is secretly the most dominant in bed?",
             "Point to someone in this room: What's the first dirty thought you had about them tonight?",
             "Who in this room looks like they give the best head? Explain your reasoning.",
@@ -1520,8 +641,6 @@
             "Who here would you let control your orgasms for a week?",
             "Point to someone in this room whose nudes you'd most want to see.",
             "Who here do you think has the best stroke game?",
-        
-            // Naughty Dares (40)
             "DARE: Point to someone in this room and tell them exactly what you'd do to them if you were alone together.",
             "DARE: Choose someone in this room to give you a sensual 30-second neck or shoulder massage.",
             "DARE: Pick someone in this room and whisper the dirtiest thing you've thought about them tonight.",
@@ -1564,542 +683,242 @@
             "DARE: Choose someone and confess the first dirty thought you had when you met them."
         ];
 
+        // ── GAME STATE ────────────────────────────────────────────────────────────
+        let currentDeck = [], remainingCardsCount = 0, deckType = '';
+        let players = [], currentPlayerIndex = 0, selectedDeckForModal = '';
+        let isSwiping = false, swipeStartX = 0, swipeStartY = 0, swipeThreshold = 50;
 
-        let currentDeck = [];
-        let remainingCardsCount = 0;
-        let deckType = '';
-        let players = [];
-        let currentPlayerIndex = 0;
-        let selectedDeckForModal = '';
-        let isSwiping = false;
-        let swipeStartX = 0;
-        let swipeStartY = 0;
-        let swipeThreshold = 50; // Default swipe threshold
-        
-        // --- Player Management ---
+        const DECK_PROPERTIES = {
+            romantic:   { icon: 'heart',    title: 'Romantic Deck™',     colorVar: 'var(--color-romantic)' },
+            platonic:   { icon: 'handshake', title: 'Platonic Deck™',    colorVar: 'var(--color-platonic)' },
+            naughty:    { icon: 'flame',     title: 'Naughty Deck™',     colorVar: 'var(--color-naughty)'  },
+            girlsnight: { icon: 'users-2',   title: "Girls' Night Deck™", colorVar: 'var(--color-girls)'   }
+        };
+
+        function getDeckQuestions(t) {
+            return { romantic: romanticQuestions, platonic: platonicQuestions, naughty: naughtyQuestions, girlsnight: girlsNightQuestions }[t] || [];
+        }
+        function getDeckInfo(t) { return DECK_PROPERTIES[t] || {}; }
+        function shuffleArray(a) {
+            for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i+1)); [a[i],a[j]] = [a[j],a[i]]; }
+            return a;
+        }
+
+        // ── PLAYERS ───────────────────────────────────────────────────────────────
         function addPlayer(name) {
-            if (name && !players.includes(name)) {
-                players.push(name);
-                updatePlayersList();
-                updatePlayerCount();
-                document.getElementById('playerNameInput').value = '';
-            }
+            if (name && !players.includes(name)) { players.push(name); renderPlayers(); }
+            document.getElementById('playerNameInput').value = '';
         }
-
-        function removePlayer(name) {
-            players = players.filter(p => p !== name);
-            updatePlayersList();
-            updatePlayerCount();
-        }
-
-        function updatePlayersList() {
-            const list = document.getElementById('playersList');
-            if (players.length === 0) {
-                list.innerHTML = '<p class="text-gray-500 text-center py-4">No players added yet</p>';
-            } else {
-                list.innerHTML = players.map(player => `
-                    <div class="player-item">
-                        <span class="text-white font-medium">${player}</span>
-                        <button class="btn-remove" onclick="removePlayer('${player}')">Remove</button>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function updatePlayerCount() {
+        window.removePlayer = n => { players = players.filter(p => p !== n); renderPlayers(); };
+        function renderPlayers() {
+            document.getElementById('playersList').innerHTML = players.length === 0
+                ? '<p class="text-gray-500 text-center py-4">No players added yet</p>'
+                : players.map(p => `<div class="player-item"><span class="text-white font-medium">${p}</span><button class="btn-remove" onclick="removePlayer('${p}')">Remove</button></div>`).join('');
             document.getElementById('playerCount').textContent = players.length;
             document.getElementById('startGameBtn').disabled = players.length < 2;
         }
+        function getCurrentPlayer() { return players.length ? players[currentPlayerIndex % players.length] : null; }
+        function advancePlayer() { currentPlayerIndex++; }
 
-        // Make these functions globally accessible
-        window.showPlayerModal = function() {
-            document.getElementById('playerModal').style.display = 'flex';
-        }
-
-        window.hidePlayerModal = function() {
-            document.getElementById('playerModal').style.display = 'none';
-        }
-
-        window.showDeckModal = function() {
+        // ── MODALS ────────────────────────────────────────────────────────────────
+        window.showPlayerModal   = () => { document.getElementById('playerModal').style.display = 'flex'; };
+        window.hidePlayerModal   = () => { document.getElementById('playerModal').style.display = 'none'; };
+        window.showDeckModal     = () => {
             document.getElementById('deckModal').style.display = 'flex';
-            // Reset selection
-            document.querySelectorAll('.deck-option').forEach(option => {
-                option.classList.remove('active');
-            });
+            document.querySelectorAll('.deck-option').forEach(o => o.classList.remove('active'));
             document.getElementById('confirmDeckBtn').disabled = true;
             selectedDeckForModal = '';
-        }
-
-        window.hideDeckModal = function() {
-            document.getElementById('deckModal').style.display = 'none';
-        }
-
-        window.showSettingsModal = function() {
-            document.getElementById('settingsModal').style.display = 'flex';
-        }
-
-        window.hideSettingsModal = function() {
-            document.getElementById('settingsModal').style.display = 'none';
-        }
-
-        function getCurrentPlayer() {
-            if (players.length === 0) return null;
-            return players[currentPlayerIndex % players.length];
-        }
-
-        function advanceToNextPlayer() {
-            currentPlayerIndex++;
-        }
-
-        // Make removePlayer globally accessible
-        window.removePlayer = removePlayer;
-        
-        // --- Game Logic ---
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-        
-        // Maps deck IDs/Types to their properties
-        const DECK_PROPERTIES = {
-            'romantic': { icon: 'heart', title: 'Romantic Deck™', colorVar: 'var(--color-romantic)' },
-            'platonic': { icon: 'handshake', title: 'Platonic Deck™', colorVar: 'var(--color-platonic)' }, 
-            'naughty': { icon: 'flame', title: 'Naughty Deck™', colorVar: 'var(--color-naughty)' },
-            'girlsnight': { icon: 'users-2', title: 'Girls\' Night Deck™', colorVar: 'var(--color-girls)' }
         };
-        
-        // Helper to get the correct questions array
-        function getDeckQuestions(type) {
-            if (type === 'romantic') return [...romanticQuestions];
-            if (type === 'platonic') return [...platonicQuestions];
-            if (type === 'naughty') return [...naughtyQuestions];
-            if (type === 'girlsnight') return [...girlsNightQuestions];
-            return [];
-        }
-        
+        window.hideDeckModal     = () => { document.getElementById('deckModal').style.display = 'none'; };
+        window.showSettingsModal = () => { document.getElementById('settingsModal').style.display = 'flex'; };
+        window.hideSettingsModal = () => { document.getElementById('settingsModal').style.display = 'none'; };
+
+        // ── CARD RENDERING ────────────────────────────────────────────────────────
         function updateCardCount() {
             document.getElementById('remainingCount').textContent = remainingCardsCount;
             document.getElementById('drawButton').disabled = remainingCardsCount === 0;
-            document.getElementById('shuffleButton').disabled = remainingCardsCount === 90;
         }
-        
-        // Helper to get the correct colors based on deck type
-        function getDeckInfo(type) {
-             return DECK_PROPERTIES[type] || {};
+        function getCardBackHtml() {
+            const c = getDeckInfo(deckType).colorVar || '#888';
+            return `<div class="card-back flex items-center justify-center p-6 z-0"><div class="text-center opacity-70"><i data-lucide="lightbulb" class="w-10 h-10 mx-auto mb-3" style="color:${c};"></i><h3 class="text-2xl font-bold text-white game-title">Deeper-Decks</h3><p class="text-sm font-medium mt-1 text-gray-400">The Card Game</p></div></div>`;
         }
-        
-        function createCardElement(question, questionIndex) {
+        function createCardElement(question) {
             const isDare = question.startsWith("DARE:");
             const content = isDare ? question.substring(5).trim() : question;
-            
-            const info = getDeckInfo(deckType); 
-            const iconName = isDare ? 'zap' : info.icon; 
-            const deckTitle = info.title;
-            const deckColor = info.colorVar;
-            const cardNumber = 90 - currentDeck.length; // Show actual card number (1-90)
-            const currentPlayer = getCurrentPlayer();
-        
-            return `
-                <div id="activeCard-${cardNumber}" class="card-front flex flex-col justify-between p-8 sm:p-12 w-full h-full text-center z-10">
-                    
-                    <!-- Card Header (ID, Type Chip, and Icon) -->
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="font-light text-base opacity-70">#${cardNumber}/90</span>
-                        <div class="card-header-chip text-white" style="background-color: ${deckColor};">
-                            <i data-lucide="${iconName}" class="w-4 h-4 inline -mt-0.5 mr-1"></i>
-                            ${isDare ? `DARE` : `QUESTION`}
-                        </div>
-                    </div>
-
-                    ${currentPlayer ? `
-                    <!-- Player Badge -->
-                    <div class="flex justify-center mb-4">
-                        <div class="player-badge" style="background-color: ${deckColor};">
-                            <i data-lucide="user" class="w-4 h-4"></i>
-                            <span>${currentPlayer}</span>
-                        </div>
-                    </div>
-                    ` : ''}
-        
-                    <!-- Main Content -->
-                    <div class="card-content-area px-0 min-h-[140px]">
-                        <p class="card-question-text text-gray-900 dark-mode:text-white">${content}</p>
-                    </div>
-        
-                    <!-- Footer -->
-                    <div class="text-xs text-right text-gray-500 dark-mode:text-gray-400 mt-6 pt-3 border-t border-gray-100 dark-mode:border-gray-800">
-                        ${deckTitle}
-                    </div>
-                </div>
-            `;
-        }
-        
-        function getCardBackHtml() {
             const info = getDeckInfo(deckType);
-            const deckColor = info.colorVar;
-            return `
-                <div class="card-back flex items-center justify-center p-6 transform z-0">
-                    <div class="text-center opacity-70">
-                        <i data-lucide="lightbulb" class="w-10 h-10 mx-auto mb-3" style="color: ${deckColor};"></i>
-                        <h3 class="text-2xl font-bold tracking-tight text-white font-['Mona_Sans']">Deeper-Decks</h3>
-                        <p class="text-sm font-medium mt-1 text-gray-400">The Card Game</p>
-                    </div>
+            const cardNumber = 90 - currentDeck.length;
+            const player = getCurrentPlayer();
+            return `<div class="card-front flex flex-col justify-between p-8 sm:p-12 w-full h-full text-center z-10">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-light text-base opacity-70">#${cardNumber}/90</span>
+                    <div class="card-header-chip text-white" style="background-color:${info.colorVar};"><i data-lucide="${isDare?'zap':info.icon}" class="w-4 h-4 inline -mt-0.5 mr-1"></i>${isDare?'DARE':'QUESTION'}</div>
                 </div>
-            `;
+                ${player ? `<div class="flex justify-center mb-4"><div class="player-badge" style="background-color:${info.colorVar};"><i data-lucide="user" class="w-4 h-4"></i><span>${player}</span></div></div>` : ''}
+                <div class="card-content-area px-0 min-h-[140px]"><p class="card-question-text text-gray-900">${content}</p></div>
+                <div class="text-xs text-right text-gray-500 mt-6 pt-3 border-t border-gray-100">${info.title}</div>
+            </div>`;
         }
-        
         function showEmptyDeckCard() {
-            const cardContainer = document.getElementById('cardContainer');
-            cardContainer.innerHTML = getCardBackHtml(); 
-            const deckColor = getDeckInfo(deckType).colorVar;
-        
-            cardContainer.insertAdjacentHTML('beforeend', `
-                <div id="activeCard" class="empty-card card-front flex flex-col justify-center items-center p-6 text-center z-10">
-                    <i data-lucide="rotate-ccw" class="w-12 h-12 mb-4" style="color: ${deckColor};"></i>
-                    <p class="text-2xl font-bold text-gray-900 dark-mode:text-white">Deck Complete!</p>
-                    <p class="text-lg text-gray-600 dark-mode:text-gray-400 mt-2">Time to shuffle for a new round.</p>
-                </div>
-            `);
-            window.createIcons();
+            const cc = document.getElementById('cardContainer');
+            cc.innerHTML = getCardBackHtml();
+            cc.insertAdjacentHTML('beforeend', `<div class="empty-card card-front flex flex-col justify-center items-center p-6 text-center z-10"><i data-lucide="rotate-ccw" class="w-12 h-12 mb-4" style="color:${getDeckInfo(deckType).colorVar};"></i><p class="text-2xl font-bold text-gray-900">Deck Complete!</p><p class="text-lg text-gray-600 mt-2">Time to shuffle for a new round.</p></div>`);
+            if (window.createIcons) window.createIcons();
         }
-        
-        function drawCard() {
-            const cardContainer = document.getElementById('cardContainer');
-            
-            if (currentDeck.length === 0) {
-                showEmptyDeckCard();
-                updateCardCount();
-                return;
-            }
-        
-            const cardData = currentDeck.pop();
-            remainingCardsCount = currentDeck.length;
-            const oldCard = cardContainer.querySelector('.card-front, .empty-card'); 
-            const nextCardHtml = createCardElement(cardData.question, cardData.originalIndex);
-        
-            if (oldCard) {
-                // Remove any swipe zone
-                const oldSwipeZone = cardContainer.querySelector('.swipe-zone');
-                if (oldSwipeZone) oldSwipeZone.remove();
-                
-                // Apply the slide-to-back animation
-                oldCard.classList.add('card-slide-out-right');
-                
-                setTimeout(() => {
-                    oldCard.remove();
-                    
-                    // Add the new card HTML to the stack
-                    cardContainer.insertAdjacentHTML('beforeend', nextCardHtml);
-                    
-                    // Add swipe zone for the new card
-                    addSwipeZone();
-                    
-                    updateCardCount();
-                    window.createIcons();
-                    
-                    // Advance to next player
-                    if (players.length > 0) {
-                        advanceToNextPlayer();
-                    }
-                }, 400); 
-            } else {
-                // Initial draw
-                cardContainer.insertAdjacentHTML('beforeend', nextCardHtml);
-                
-                // Add swipe zone for the new card
-                addSwipeZone();
-                
-                updateCardCount();
-                window.createIcons();
-                
-                // Advance to next player
-                if (players.length > 0) {
-                    advanceToNextPlayer();
-                }
+
+        // ── SWIPE ─────────────────────────────────────────────────────────────────
+        function handleSwipe(sx, sy, ex, ey) {
+            const dX = ex - sx;
+            if (Math.abs(dX) > Math.abs(ey - sy) && Math.abs(dX) > swipeThreshold) {
+                dX > 0 ? initializeDeck(deckType) : (!document.getElementById('drawButton').disabled && drawCard());
             }
         }
-        
-        // Function to handle swipe gestures
-        function handleSwipeGesture(touchStartX, touchStartY, touchEndX, touchEndY) {
-            const deltaX = touchEndX - touchStartX;
-            const deltaY = touchEndY - touchStartY;
-            
-            // Check if it's mostly horizontal swipe
-            if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                // Check if it exceeds threshold
-                if (Math.abs(deltaX) > swipeThreshold) {
-                    if (deltaX > 0) {
-                        // Swipe right - shuffle deck
-                        initializeDeck(deckType);
-                    } else {
-                        // Swipe left - draw next card
-                        if (!document.getElementById('drawButton').disabled) {
-                            drawCard();
-                        }
-                    }
-                    return true;
-                }
-            }
-            return false;
-        }
-        
-        // Add swipe zone to current card
         function addSwipeZone() {
-            const cardContainer = document.getElementById('cardContainer');
-            const currentCard = cardContainer.querySelector('.card-front');
-            
-            if (!currentCard) return;
-            
-            const swipeZone = document.createElement('div');
-            swipeZone.className = 'swipe-zone';
-            
-            // Touch events for mobile
-            swipeZone.addEventListener('touchstart', (e) => {
-                isSwiping = true;
-                swipeStartX = e.touches[0].clientX;
-                swipeStartY = e.touches[0].clientY;
-                e.preventDefault();
-            });
-            
-            swipeZone.addEventListener('touchmove', (e) => {
-                if (!isSwiping) return;
-                
-                const touchX = e.touches[0].clientX;
-                const touchY = e.touches[0].clientY;
-                const deltaX = touchX - swipeStartX;
-                
-                // Apply visual feedback during swipe
-                if (Math.abs(deltaX) > 10) {
-                    currentCard.style.transform = `translateX(${deltaX * 0.5}px) rotate(${deltaX * 0.05}deg)`;
-                }
-                
-                e.preventDefault();
-            });
-            
-            swipeZone.addEventListener('touchend', (e) => {
-                if (!isSwiping) return;
-                
-                isSwiping = false;
-                const touchEndX = e.changedTouches[0].clientX;
-                const touchEndY = e.changedTouches[0].clientY;
-                
-                // Reset card position
-                currentCard.style.transform = '';
-                
-                // Handle the swipe
-                handleSwipeGesture(swipeStartX, swipeStartY, touchEndX, touchEndY);
-                
-                e.preventDefault();
-            });
-            
-            // Mouse events for desktop
-            swipeZone.addEventListener('mousedown', (e) => {
-                isSwiping = true;
-                swipeStartX = e.clientX;
-                swipeStartY = e.clientY;
-                e.preventDefault();
-            });
-            
-            swipeZone.addEventListener('mousemove', (e) => {
-                if (!isSwiping) return;
-                
-                const mouseX = e.clientX;
-                const mouseY = e.clientY;
-                const deltaX = mouseX - swipeStartX;
-                
-                // Apply visual feedback during drag
-                if (Math.abs(deltaX) > 10) {
-                    currentCard.style.transform = `translateX(${deltaX * 0.5}px) rotate(${deltaX * 0.05}deg)`;
-                }
-                
-                e.preventDefault();
-            });
-            
-            swipeZone.addEventListener('mouseup', (e) => {
-                if (!isSwiping) return;
-                
-                isSwiping = false;
-                const mouseEndX = e.clientX;
-                const mouseEndY = e.clientY;
-                
-                // Reset card position
-                currentCard.style.transform = '';
-                
-                // Handle the swipe
-                handleSwipeGesture(swipeStartX, swipeStartY, mouseEndX, mouseEndY);
-                
-                e.preventDefault();
-            });
-            
-            swipeZone.addEventListener('mouseleave', () => {
-                if (isSwiping) {
-                    isSwiping = false;
-                    currentCard.style.transform = '';
-                }
-            });
-            
-            cardContainer.appendChild(swipeZone);
+            const cc = document.getElementById('cardContainer');
+            const card = cc.querySelector('.card-front');
+            if (!card) return;
+            const zone = document.createElement('div');
+            zone.className = 'swipe-zone';
+            const onStart = (x, y) => { isSwiping = true; swipeStartX = x; swipeStartY = y; };
+            const onMove  = x => { if (isSwiping) { const d = x - swipeStartX; if (Math.abs(d) > 10) card.style.transform = `translateX(${d*.5}px) rotate(${d*.05}deg)`; } };
+            const onEnd   = (x, y) => { if (!isSwiping) return; isSwiping = false; card.style.transform = ''; handleSwipe(swipeStartX, swipeStartY, x, y); };
+            zone.addEventListener('touchstart',  e => { onStart(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, { passive: false });
+            zone.addEventListener('touchmove',   e => { onMove(e.touches[0].clientX); e.preventDefault(); }, { passive: false });
+            zone.addEventListener('touchend',    e => { onEnd(e.changedTouches[0].clientX, e.changedTouches[0].clientY); e.preventDefault(); }, { passive: false });
+            zone.addEventListener('mousedown',   e => { onStart(e.clientX, e.clientY); e.preventDefault(); });
+            zone.addEventListener('mousemove',   e => { onMove(e.clientX); });
+            zone.addEventListener('mouseup',     e => { onEnd(e.clientX, e.clientY); });
+            zone.addEventListener('mouseleave',  () => { if (isSwiping) { isSwiping = false; card.style.transform = ''; } });
+            cc.appendChild(zone);
         }
-        
+
+        // ── DRAW ──────────────────────────────────────────────────────────────────
+        function drawCard() {
+            const cc = document.getElementById('cardContainer');
+            if (!currentDeck.length) { showEmptyDeckCard(); updateCardCount(); return; }
+            const { question } = currentDeck.pop();
+            remainingCardsCount = currentDeck.length;
+            const old = cc.querySelector('.card-front, .empty-card');
+            const next = createCardElement(question);
+            if (old) {
+                cc.querySelector('.swipe-zone')?.remove();
+                old.classList.add('card-slide-out-right');
+                setTimeout(() => { old.remove(); cc.insertAdjacentHTML('beforeend', next); addSwipeZone(); updateCardCount(); if (window.createIcons) window.createIcons(); if (players.length) advancePlayer(); }, 400);
+            } else {
+                cc.insertAdjacentHTML('beforeend', next); addSwipeZone(); updateCardCount(); if (window.createIcons) window.createIcons(); if (players.length) advancePlayer();
+            }
+        }
+
+        // ── INITIALIZE DECK ───────────────────────────────────────────────────────
         function initializeDeck(type) {
             deckType = type.toLowerCase();
-            
             const info = getDeckInfo(deckType);
-            const rawQuestions = getDeckQuestions(deckType);
-            
-            const questionsWithIndex = rawQuestions.map((q, index) => ({
-                question: q,
-                originalIndex: index 
-            }));
-        
-            currentDeck = shuffleArray(questionsWithIndex);
+            currentDeck = shuffleArray(getDeckQuestions(deckType).map((q, i) => ({ question: q, i })));
             remainingCardsCount = currentDeck.length;
-            
-            // Update UI elements
-            document.getElementById('deckTitle').textContent = `${info.title}`;
-            
-            // Apply shuffle animation and reset card area
-            const cardContainer = document.getElementById('cardContainer');
-            cardContainer.classList.add('shuffling');
-            
-            // Clear existing swipe zone
-            const existingSwipeZone = cardContainer.querySelector('.swipe-zone');
-            if (existingSwipeZone) existingSwipeZone.remove();
-            
-            // Reset card area
-            cardContainer.innerHTML = getCardBackHtml(); 
-            
-            // Add the initial message card with the deck's color
-            cardContainer.insertAdjacentHTML('beforeend', `
-                <div class="card-front flex flex-col justify-center items-center p-6 text-center z-10" 
-                     style="background-color: ${info.colorVar};">
-                    <div class="text-center text-white">
-                        <i data-lucide="star" class="w-10 h-10 mx-auto mb-4"></i>
-                        <h3 class="text-3xl font-bold tracking-widest text-white">${info.title}</h3>
-                        <p class="text-md font-medium mt-2 text-white">90 Cards Ready</p>
-                        ${players.length > 0 ? `<p class="text-sm mt-2 opacity-90">${players.length} players joined</p>` : ''}
-                    </div>
-                </div>
-            `);
-            
-            // Add swipe zone to the initial card
-            addSwipeZone();
-            
-            updateCardCount();
-            window.createIcons();
-            
-            // Remove shuffle animation after 1 second
-            setTimeout(() => {
-                cardContainer.classList.remove('shuffling');
-            }, 1000);
-            
-            // Close deck modal if open
+            document.getElementById('deckTitle').textContent = info.title;
+            const cc = document.getElementById('cardContainer');
+            cc.classList.add('shuffling');
+            cc.querySelector('.swipe-zone')?.remove();
+            cc.innerHTML = getCardBackHtml();
+            cc.insertAdjacentHTML('beforeend', `<div class="card-front flex flex-col justify-center items-center p-6 text-center z-10" style="background-color:${info.colorVar};"><div class="text-center text-white"><i data-lucide="star" class="w-10 h-10 mx-auto mb-4"></i><h3 class="text-3xl font-bold text-white">${info.title}</h3><p class="text-md font-medium mt-2 text-white">90 Cards Ready</p>${players.length ? `<p class="text-sm mt-2 opacity-90">${players.length} players joined</p>` : ''}</div></div>`);
+            addSwipeZone(); updateCardCount();
+            if (window.createIcons) window.createIcons();
+            setTimeout(() => cc.classList.remove('shuffling'), 1000);
             hideDeckModal();
         }
-        
-        // --- DARK MODE FUNCTION ---
-        function applyDarkMode(isDark) {
-            if (isDark) {
-                document.body.classList.add('dark-mode');
-                document.body.style.backgroundColor = '#121212';
-                document.body.style.color = '#FFFFFF';
-            } else {
-                document.body.classList.remove('dark-mode');
-                document.body.style.backgroundColor = '';
-                document.body.style.color = '';
-            }
+
+        // ── DARK MODE ─────────────────────────────────────────────────────────────
+        function applyDarkMode(on) {
+            document.body.classList.toggle('dark-mode', on);
+            document.body.style.backgroundColor = on ? '#121212' : '';
+            document.body.style.color = on ? '#FFFFFF' : '';
         }
-        
-        // --- Event Listeners Setup ---
+
+        // ── SIDEBAR ───────────────────────────────────────────────────────────────
+        function initSidebar() {
+            const btn = document.getElementById('hamburgerButton');
+            const overlay = document.getElementById('sidebarOverlay');
+            const menu = document.getElementById('sidebarMenu');
+            btn.style.display = 'flex';
+            const open  = () => { menu.classList.add('active'); overlay.classList.add('active'); btn.classList.add('active'); document.body.style.overflow = 'hidden'; };
+            const close = () => { menu.classList.remove('active'); overlay.classList.remove('active'); btn.classList.remove('active'); document.body.style.overflow = ''; };
+            btn.addEventListener('click', () => menu.classList.contains('active') ? close() : open());
+            document.getElementById('closeSidebar').addEventListener('click', close);
+            overlay.addEventListener('click', close);
+            document.getElementById('sidebarManagePlayers').addEventListener('click', () => { close(); showPlayerModal(); });
+            document.getElementById('sidebarChangeDeck').addEventListener('click',  () => { close(); showDeckModal(); });
+            document.getElementById('sidebarSettings').addEventListener('click',    () => { close(); showSettingsModal(); });
+        }
+
+        // ── INTRO ─────────────────────────────────────────────────────────────────
+        // FIX 1: force a reflow before setting width so the CSS transition fires.
+        // FIX 2: called directly from DOMContentLoaded with no dependency on the module.
+        function startIntro() {
+            const bar = document.getElementById('rainbowProgressBar');
+            // Reflow trick: reading any layout property forces the browser to commit
+            // the current style (width:0), so the subsequent change to width:100%
+            // is seen as an animated transition rather than an instant jump.
+            bar.getBoundingClientRect();
+            bar.style.width = '100%';
+
+            setTimeout(() => {
+                const intro = document.getElementById('introScreen');
+                intro.style.opacity = '0';
+                setTimeout(() => {
+                    intro.style.display = 'none';
+                    showPlayerModal();
+                }, 600);
+            }, 2300); // wait for bar animation (1.8s) + a little breathing room
+        }
+
+        // ── BOOT ──────────────────────────────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize sidebar
-            initializeSidebar();
-            
-            // Player modal
+            initSidebar();
+
+            // Player modal inputs
             document.getElementById('addPlayerBtn').addEventListener('click', () => {
-                const input = document.getElementById('playerNameInput');
-                const name = input.value.trim();
-                if (name) {
-                    addPlayer(name);
-                }
+                const v = document.getElementById('playerNameInput').value.trim(); if (v) addPlayer(v);
             });
-            
-            document.getElementById('playerNameInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    const name = e.target.value.trim();
-                    if (name) {
-                        addPlayer(name);
-                    }
-                }
+            document.getElementById('playerNameInput').addEventListener('keypress', e => {
+                if (e.key === 'Enter') { const v = e.target.value.trim(); if (v) addPlayer(v); }
             });
-            
-            // Start game button (goes to deck selection)
             document.getElementById('startGameBtn').addEventListener('click', () => {
-                if (players.length >= 2) {
-                    hidePlayerModal();
-                    showDeckModal();
-                }
+                if (players.length >= 2) { hidePlayerModal(); showDeckModal(); }
             });
-            
-            // Deck selection
-            document.querySelectorAll('.deck-option').forEach(option => {
-                option.addEventListener('click', () => {
-                    // Remove active class from all options
-                    document.querySelectorAll('.deck-option').forEach(opt => {
-                        opt.classList.remove('active');
-                    });
-                    
-                    // Add active class to clicked option
-                    option.classList.add('active');
-                    selectedDeckForModal = option.dataset.deck;
+
+            // Deck modal
+            document.querySelectorAll('.deck-option').forEach(opt => {
+                opt.addEventListener('click', () => {
+                    document.querySelectorAll('.deck-option').forEach(o => o.classList.remove('active'));
+                    opt.classList.add('active');
+                    selectedDeckForModal = opt.dataset.deck;
                     document.getElementById('confirmDeckBtn').disabled = false;
                 });
             });
-            
-            // Confirm deck selection
             document.getElementById('confirmDeckBtn').addEventListener('click', () => {
-                if (selectedDeckForModal) {
-                    document.getElementById('mainGame').style.display = 'block';
-                    setTimeout(() => {
-                        document.getElementById('mainGame').style.opacity = '1';
-                        initializeDeck(selectedDeckForModal);
-                    }, 50);
-                }
+                if (!selectedDeckForModal) return;
+                const mg = document.getElementById('mainGame');
+                mg.style.display = 'block';
+                setTimeout(() => { mg.style.opacity = '1'; initializeDeck(selectedDeckForModal); }, 50);
             });
-            
+
             // Settings
             document.getElementById('closeSettingsBtn').addEventListener('click', () => {
-                // Save settings
-                const theme = document.getElementById('themeSelect').value;
-                const animationSpeed = document.getElementById('animationSpeed').value;
-                const sensitivity = document.getElementById('swipeSensitivity').value;
-                
-                // Update swipe threshold based on sensitivity
-                switch(sensitivity) {
-                    case 'low': swipeThreshold = 100; break;
-                    case 'medium': swipeThreshold = 50; break;
-                    case 'high': swipeThreshold = 30; break;
-                }
-                
-                // Apply theme
-                applyDarkMode(theme === 'dark');
-                
+                const s = document.getElementById('swipeSensitivity').value;
+                swipeThreshold = s === 'low' ? 100 : s === 'high' ? 30 : 50;
+                applyDarkMode(document.getElementById('themeSelect').value === 'dark');
                 hideSettingsModal();
             });
-            
-            // Game controls
+
+            // Game buttons
             document.getElementById('drawButton').addEventListener('click', drawCard);
             document.getElementById('shuffleButton').addEventListener('click', () => initializeDeck(deckType));
-            
-            // Add default players for quick start
+
+            // Default players
             addPlayer('Player 1');
             addPlayer('Player 2');
-            
-            // Initialize icons
-            window.createIcons();
+
+            // Kick off the intro — no module dependency, always fires correctly
+            startIntro();
         });
     </script>
 </body>
