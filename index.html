@@ -135,8 +135,25 @@
             .sidebar-menu { width: 280px; }
         }
         .swipe-zone { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
-        .game-title, .modal-title, .sidebar-title { font-family: 'Mona Sans', sans-serif !important; font-weight: 900 !important; letter-spacing: -1px; }
-        h1, h2, h3 { font-family: 'Mona Sans', sans-serif !important; font-weight: 900 !important; }
+        .game-title, .modal-title, .sidebar-title {
+            font-family: 'Mona Sans', 'Inter', sans-serif !important;
+            font-weight: 900 !important;
+            letter-spacing: -1px;
+            font-synthesis: none;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3 {
+            font-family: 'Mona Sans', 'Inter', sans-serif !important;
+            font-weight: 900 !important;
+            font-synthesis: none;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Extra specificity safety net for the main title at all screen sizes */
+        #mainGame h1, #mainGame h2, #mainGame h3,
+        .modal-content h2, .sidebar-title {
+            font-weight: 900 !important;
+            font-synthesis: none !important;
+        }
     </style>
 </head>
 <body>
