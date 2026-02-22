@@ -9,12 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/mona-sans" rel="stylesheet">
     <style>
+        /* ── RESET & BASE FIXES ── */
         * {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
+            font-synthesis: none;
+            box-sizing: border-box;
         }
-        
+
         :root {
             --color-romantic: #FF1F40;
             --color-platonic: #48BB78;
@@ -30,28 +33,79 @@
             --shadow-card: 0 20px 50px rgba(0,0,0,0.1);
             --shadow-stack: 0 10px 30px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);
         }
-        
-        body { 
-            background-color: var(--bg-light); 
-            font-family: 'Inter', sans-serif; 
-            color: var(--text-dark); 
-            margin: 0; 
-            padding: 0; 
-            overflow-x: hidden;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            height: 100%;
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* body itself doesn't scroll */
+            height: 100vh;
+            width: 100vw;
             position: fixed;
-            width: 100%;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        
+
+        /* MAIN GAME - SCROLLABLE */
         #mainGame {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+            width: 100%;
             height: 100vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             padding: 0.5rem;
             position: relative;
+        }
+
+        /* ── FONT WEIGHT FIX (ALL BOLD) ── */
+        body, button, input, select, textarea, p, span, div {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500; /* base regular weight */
+        }
+        h1, h2, h3, h4, h5, h6, 
+        .game-title, 
+        .sidebar-title, 
+        .card-question-text, 
+        .player-badge, 
+        .card-header-chip, 
+        .btn-action, 
+        .btn-wildcard, 
+        .btn-history-sm,
+        .stat-mini-val, 
+        .filter-btn, 
+        .vote-btn, 
+        .btn-got-it,
+        .pause-big-title,
+        .session-box-code,
+        .timer-num,
+        .heat-label,
+        .stat-mini-label,
+        .shame-label,
+        .vote-label,
+        .consec-sub,
+        .history-item-meta {
+            font-weight: 700 !important;
+            letter-spacing: -0.02em;
+        }
+
+        /* extra bold for main titles */
+        .game-title, 
+        .sidebar-title, 
+        .pause-big-title, 
+        .session-box-code {
+            font-weight: 800 !important;
+            letter-spacing: -0.03em;
+        }
+
+        /* card text specifically */
+        .card-question-text {
+            font-weight: 700 !important;
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            line-height: 1.4;
         }
 
         /* ── SIDEBAR ── */
@@ -85,23 +139,21 @@
         @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-        /* ── MAIN GAME ── */
-        #mainGame { display:none; opacity:0; transition:opacity 0.5s ease-in; width:100%; height:100vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-
-        /* ── CARDS ── */
+        /* ── CARDS - FIXED SIZE (LARGER) ── */
         .card-stack-container { 
             aspect-ratio: 9/14; 
-            width: min(300px, 85vw);
-            max-width: 300px;
+            width: min(380px, 90vw);
+            max-width: 380px;
+            min-width: 280px;
             position: relative;
             margin: 0 auto;
         }
-        .card-stack-shadow { display:none; }
+
         .card-front { 
             background-color: var(--card-white); 
             color: var(--text-dark); 
-            border-radius: 20px; 
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08); 
+            border-radius: 24px; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12); 
             transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), opacity 0.3s ease; 
             position: absolute; 
             width: 100%; 
@@ -109,14 +161,15 @@
             top: 0; 
             left: 0; 
             will-change: transform, opacity; 
-            border: 1px solid rgba(0,0,0,0.06); 
+            border: 1px solid rgba(0,0,0,0.08); 
             cursor: pointer; 
             user-select: none; 
             -webkit-user-select: none;
             display: flex;
             flex-direction: column;
-            padding: 1.5rem;
+            padding: 1.8rem;
         }
+
         .card-back { 
             background: linear-gradient(135deg,#2A2A2A 0%,#1F1F1F 100%); 
             border-radius: 20px; 
@@ -129,9 +182,11 @@
             z-index: -1; 
             border:1px solid rgba(255,255,255,0.05); 
         }
+
         .card-slide-out-left  { transform:translateX(-150%) rotate(-15deg) !important; opacity:0 !important; }
         .card-slide-out-right { transform:translateX(150%)  rotate(15deg)  !important; opacity:0 !important; }
         .empty-card { border:3px dashed var(--text-dark); background-color:var(--card-white); }
+
         .card-content-area { 
             flex-grow: 1; 
             display: flex; 
@@ -140,32 +195,35 @@
             overflow: hidden;
             min-height: 0;
         }
+
         .card-question-text { 
-            font-size: clamp(1rem, 4vw, 1.5rem);
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
             line-height: 1.4; 
-            font-weight: 600;
+            font-weight: 700 !important;
             overflow-y: auto;
             max-height: 100%;
             padding: 0.5rem 0;
             font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
         }
+
         .card-header-chip { 
             border-radius: 9999px; 
-            padding: 6px 14px; 
-            font-weight: 600; 
-            font-size: 0.75rem; 
+            padding: 8px 16px; 
+            font-weight: 700 !important; 
+            font-size: 0.85rem; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
         }
+
         .player-badge { 
             display: inline-flex; 
             align-items: center; 
-            gap: 6px; 
-            padding: 8px 16px; 
+            gap: 8px; 
+            padding: 10px 20px; 
             border-radius: 999px; 
-            font-weight: 600; 
-            font-size: 0.8rem; 
+            font-weight: 700 !important; 
+            font-size: 0.95rem; 
             color: white; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             font-family: 'Inter', sans-serif;
@@ -186,7 +244,7 @@
         .player-item.current-turn { border-color:rgba(72,187,120,0.5); background:rgba(72,187,120,0.08); }
         .btn-remove { background:rgba(255,107,129,0.2); color:var(--color-romantic); border-radius:8px; padding:6px 12px; font-size:0.875rem; transition:all 0.2s; border:none; cursor:pointer; }
 
-        /* ── CONTROL PANEL ── */
+        /* ── CONTROL PANEL (same width as card on mobile) ── */
         .control-panel { 
             background: var(--surface-light); 
             border: 1px solid rgba(0,0,0,0.1); 
@@ -195,15 +253,16 @@
             box-shadow: var(--shadow-subtle); 
             color: var(--text-dark);
             width: 100%;
-            max-width: 350px;
+            max-width: 380px; /* matches card max-width */
             margin: 0 auto;
         }
+
         .btn-action { 
             background-color: var(--modal-dark); 
             color: var(--text-light); 
             border-radius: 14px; 
             padding: 12px 20px; 
-            font-weight: 700; 
+            font-weight: 700 !important; 
             transition: background 0.2s ease,transform 0.1s ease,box-shadow 0.2s; 
             box-shadow: 0 3px 0 rgba(0,0,0,0.2); 
             border: none; 
@@ -220,7 +279,7 @@
         .settings-option { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1); color:var(--text-light); }
         .shuffling { animation:shuffleAnim 0.5s ease-in-out; }
         @keyframes shuffleAnim{0%{transform:rotate(0) scale(1)}25%{transform:rotate(-5deg) scale(1.02)}50%{transform:rotate(5deg) scale(1.02)}75%{transform:rotate(-2deg) scale(1.01)}100%{transform:rotate(0) scale(1)}}
-        .swipe-instruction { text-align:center; margin-top:10px; color:rgba(0,0,0,0.5); font-size:0.75rem; }
+        .swipe-instruction { text-align:center; margin-top:10px; color:rgba(0,0,0,0.5); font-size:0.75rem; font-weight:500; }
 
         /* ── DARK MODE ── */
         body.dark-mode { background-color:#121212; color:#FFFFFF!important; }
@@ -247,24 +306,56 @@
         body.dark-mode .btn-history-sm{background:#2A2A2A;color:#fff;border-color:rgba(255,255,255,0.1);}
         body.dark-mode .btn-history-sm:hover{background:#3A3A3A;}
 
+        /* ── MOBILE LAYOUT FIXES (control panel & card same width) ── */
         @media(max-width:1024px){
-            main{flex-direction:column-reverse;}
-            .control-panel{width:100%;margin-top:1rem;}
-            header{margin-top:0.5rem;}
-            .sidebar-menu{width:280px;}
-            .card-stack-container{width:260px;}
+            main {
+                flex-direction: column-reverse;
+                align-items: center;
+            }
+            .control-panel {
+                width: 100%;
+                max-width: 380px;
+                margin-top: 1.5rem;
+            }
+            header {
+                margin-top: 0.5rem;
+            }
+            .sidebar-menu {
+                width: 280px;
+            }
         }
+
         @media(max-width:600px){
-            .card-stack-container{width:240px;}
-            #mainGame{padding:0.25rem;}
-            .card-front { padding: 1rem; }
-            .card-question-text { font-size: 1rem; }
+            .card-stack-container {
+                width: min(350px, 90vw);
+            }
+            .card-front {
+                padding: 1.2rem;
+            }
+            .card-question-text {
+                font-size: 1.2rem;
+            }
+            .control-panel {
+                padding: 0.8rem;
+            }
         }
-        .swipe-zone{position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;}
-        .game-title,.sidebar-title,h1,h2,h3{font-family:'Mona Sans','Inter',sans-serif!important;font-weight:900!important;letter-spacing:-1px;}
 
-        /* ════ NEW FEATURE STYLES ════ */
+        .swipe-zone {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
 
+        .game-title, .sidebar-title, h1, h2, h3 {
+            font-family: 'Mona Sans', 'Inter', sans-serif !important;
+            font-weight: 900 !important;
+            letter-spacing: -1px;
+        }
+
+        /* ════ NEW FEATURE STYLES (unchanged) ════ */
         /* PAUSE OVERLAY */
         #pauseOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:5000;display:none;flex-direction:column;justify-content:center;align-items:center;gap:2rem;backdrop-filter:blur(18px);}
         #pauseOverlay.active{display:flex;animation:fadeInUp 0.3s ease;}
@@ -372,13 +463,6 @@
 
         /* RESUME MODAL CODE INPUT */
         .resume-code-inp{font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:0.2em;text-align:center;text-transform:uppercase;width:100%;}
-
-        /* FIX SCROLLING */
-        .scroll-container {
-            height: 100%;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
     </style>
 </head>
 <body>
@@ -1646,3 +1730,4 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 </body>
 </html>
+
