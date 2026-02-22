@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deeper-Decks™: The Card Game</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22url(%23rainbow)%22>D</text><defs><linearGradient id=%22rainbow%22 gradientTransform=%22rotate(90)%22><stop offset=%220%25%22 stop-color=%22%23FF1F40%22/><stop offset=%2225%25%22 stop-color=%22%23FF8BA4%22/><stop offset=%2250%25%22 stop-color=%22%2348BB78%22/><stop offset=%2275%25%22 stop-color=%22%236F38E0%22/><stop offset=%22100%25%22 stop-color=%22%23FF1F40%22/></linearGradient></defs></svg>" type="image/svg+xml">
-    <meta name="description" content="Deeper-Decks™ is a card game with intimate, naughty, platonic, and girls' night questions and dares for deep connection.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/mona-sans" rel="stylesheet">
@@ -24,919 +23,1405 @@
             --shadow-subtle: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
             --shadow-card: 0 20px 50px rgba(0,0,0,0.1);
             --shadow-stack: 0 10px 30px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);
-            --color-white: hsl(0,0%,100%);
-            --color-cyan: hsl(180,100%,50%);
-            --color-blue: hsl(240,100%,50%);
-            --color-purple: hsl(270,100%,50%);
-            --color-pink: hsl(330,40%,70%);
-            --color-red: hsl(0,100%,50%);
-            --color-yellow: hsl(60,100%,50%);
-            --color-lime: hsl(90,100%,75%);
         }
         body { background-color: var(--bg-light); font-family: 'Inter', sans-serif; color: var(--text-dark); margin: 0; padding: 0; overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
 
-        /* SIDEBAR */
-        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; backdrop-filter: blur(4px); }
-        .sidebar-overlay.active { opacity: 1; visibility: visible; }
-        .sidebar-menu { position: fixed; top: 0; right: -100%; width: 320px; height: 100%; background: var(--modal-dark); z-index: 3001; transition: right 0.4s cubic-bezier(0.4,0,0.2,1); padding: 24px; overflow-y: auto; box-shadow: -5px 0 30px rgba(0,0,0,0.3); }
-        .sidebar-menu.active { right: 0; }
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .sidebar-title { font-size: 1.5rem; font-weight: 700; color: var(--text-light); font-family: 'Mona Sans', sans-serif; }
-        .close-sidebar { background: none; border: none; color: var(--text-light); font-size: 1.5rem; cursor: pointer; padding: 8px; border-radius: 8px; transition: background-color 0.2s; }
-        .close-sidebar:hover { background-color: rgba(255,255,255,0.1); }
-        .sidebar-item { display: flex; align-items: center; gap: 12px; padding: 16px; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s ease; color: var(--text-light); border: none; width: 100%; text-align: left; font-size: 1rem; font-weight: 500; }
-        .sidebar-item:hover { background: rgba(255,255,255,0.1); transform: translateX(-2px); }
+        /* ── SIDEBAR ── */
+        .sidebar-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:3000; opacity:0; visibility:hidden; transition:opacity 0.3s ease,visibility 0.3s ease; backdrop-filter:blur(4px); }
+        .sidebar-overlay.active { opacity:1; visibility:visible; }
+        .sidebar-menu { position:fixed; top:0; right:-100%; width:320px; height:100%; background:var(--modal-dark); z-index:3001; transition:right 0.4s cubic-bezier(0.4,0,0.2,1); padding:24px; overflow-y:auto; box-shadow:-5px 0 30px rgba(0,0,0,0.3); }
+        .sidebar-menu.active { right:0; }
+        .sidebar-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.1); }
+        .sidebar-title { font-size:1.5rem; font-weight:700; color:var(--text-light); font-family:'Mona Sans',sans-serif; }
+        .close-sidebar { background:none; border:none; color:var(--text-light); font-size:1.5rem; cursor:pointer; padding:8px; border-radius:8px; transition:background-color 0.2s; }
+        .close-sidebar:hover { background-color:rgba(255,255,255,0.1); }
+        .sidebar-item { display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:10px; cursor:pointer; transition:all 0.2s ease; color:var(--text-light); border:none; width:100%; text-align:left; font-size:1rem; font-weight:500; font-family:'Inter',sans-serif; }
+        .sidebar-item:hover { background:rgba(255,255,255,0.1); transform:translateX(-2px); }
+        .sidebar-divider { border:none; border-top:1px solid rgba(255,255,255,0.08); margin:8px 0 18px; }
 
-        /* HAMBURGER */
-        .hamburger-menu { position: fixed; top: 20px; right: 20px; z-index: 2000; background: var(--modal-dark); border: none; border-radius: 12px; width: 48px; height: 48px; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .hamburger-menu:hover { transform: scale(1.05); }
-        .hamburger-line { width: 20px; height: 2px; background: var(--text-light); border-radius: 2px; transition: all 0.3s ease; }
-        .hamburger-menu.active .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(6px,6px); }
-        .hamburger-menu.active .hamburger-line:nth-child(2) { opacity: 0; }
-        .hamburger-menu.active .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(6px,-6px); }
+        /* ── HAMBURGER ── */
+        .hamburger-menu { position:fixed; top:20px; right:20px; z-index:2000; background:var(--modal-dark); border:none; border-radius:12px; width:48px; height:48px; display:none; flex-direction:column; justify-content:center; align-items:center; gap:6px; cursor:pointer; transition:all 0.2s ease; box-shadow:0 4px 12px rgba(0,0,0,0.15); }
+        .hamburger-menu:hover { transform:scale(1.05); }
+        .hamburger-line { width:20px; height:2px; background:var(--text-light); border-radius:2px; transition:all 0.3s ease; }
+        .hamburger-menu.active .hamburger-line:nth-child(1){transform:rotate(45deg) translate(6px,6px);}
+        .hamburger-menu.active .hamburger-line:nth-child(2){opacity:0;}
+        .hamburger-menu.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(6px,-6px);}
 
-        /* ── FIX 1: INTRO + PROGRESS BAR ───────────────────────────────────────── */
-        #introScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 4000; transition: opacity 0.6s ease-out; }
-        .rainbow-logo {
-            font-family: 'Mona Sans', sans-serif; font-size: 3rem; font-weight: 900;
-            /* Use background-position instead of @property so all browsers animate it */
-            background: linear-gradient(to right, var(--color-white), var(--color-white), var(--color-cyan), var(--color-blue), var(--color-purple), var(--color-pink), var(--color-red), var(--color-yellow), var(--color-lime), var(--color-white), var(--color-white)) no-repeat 100% 0% / 900%;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-            letter-spacing: -1px; margin-bottom: 1rem;
-            animation: rainbowSlide 2s ease-in-out forwards;
+        /* ── INTRO ── */
+        #introScreen { position:fixed; top:0; left:0; width:100%; height:100%; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:4000; transition:opacity 0.6s ease-out; }
+        .rainbow-logo { font-family:'Mona Sans',sans-serif; font-size:3rem; font-weight:900; background:linear-gradient(to right,#fff,#fff,#0ff,#00f,#800080,#ffb6c1,#f00,#ff0,#90ee90,#fff,#fff) no-repeat 100% 0% / 900%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; letter-spacing:-1px; margin-bottom:1rem; animation:rainbowSlide 2s ease-in-out forwards; }
+        @keyframes rainbowSlide{from{background-position:100% 0%}to{background-position:0% 0%}}
+        .intro-subtitle { font-size:1.125rem; color:rgba(255,255,255,0.7); font-weight:400; letter-spacing:0.5px; margin-bottom:3rem; opacity:0; animation:fadeInUp 0.8s ease-out 0.8s forwards; }
+        .rainbow-progress { width:200px; height:4px; background:rgba(255,255,255,0.2); border-radius:3px; overflow:hidden; opacity:0; animation:fadeIn 0.4s ease-out 0.5s forwards; }
+        .rainbow-progress-bar { width:0%; height:100%; background:linear-gradient(to right,#0ff,#00f,#800080,#ffb6c1,#f00,#ff0,#90ee90); border-radius:3px; transition:width 1.8s cubic-bezier(0.28,0.11,0.32,1); }
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+        /* ── MAIN GAME ── */
+        #mainGame { display:none; opacity:0; transition:opacity 0.5s ease-in; padding:0.5rem; width:100%; min-height:100vh; }
+
+        /* ── CARDS ── */
+        .card-stack-container { aspect-ratio:9/14; width:300px; max-width:85vw; position:relative; }
+        .card-stack-shadow { display:none; }
+        .card-front { background-color:var(--card-white); color:var(--text-dark); border-radius:20px; box-shadow:0 4px 16px rgba(0,0,0,0.08); transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275),opacity 0.3s ease; position:absolute; width:100%; height:100%; top:0; left:0; will-change:transform,opacity; border:1px solid rgba(0,0,0,0.06); cursor:pointer; user-select:none; -webkit-user-select:none; }
+        .card-back { background:linear-gradient(135deg,#2A2A2A 0%,#1F1F1F 100%); border-radius:20px; box-shadow:0 2px 8px rgba(0,0,0,0.1); position:absolute; width:98%; height:98%; top:1%; left:1%; z-index:-1; border:1px solid rgba(255,255,255,0.05); }
+        .card-slide-out-left  { transform:translateX(-150%) rotate(-15deg) !important; opacity:0 !important; }
+        .card-slide-out-right { transform:translateX(150%)  rotate(15deg)  !important; opacity:0 !important; }
+        .empty-card { border:3px dashed var(--text-dark); background-color:var(--card-white); }
+        .card-content-area { flex-grow:1; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
+        .card-question-text { font-size:clamp(1.2rem,5vw,2.1rem); line-height:1.3; font-weight:700; }
+        .card-header-chip { border-radius:9999px; padding:6px 14px; font-weight:600; font-size:0.85rem; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+        .player-badge { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:999px; font-weight:600; font-size:0.9rem; color:white; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+
+        /* ── MODALS ── */
+        .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; z-index:2000; backdrop-filter:blur(4px); }
+        .modal-content { background:var(--modal-dark); border:1px solid rgba(255,255,255,0.1); border-radius:24px; padding:32px; max-width:500px; width:90%; max-height:85vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); color:var(--text-light); }
+        .deck-modal-content { max-width:600px; }
+        .deck-option { background:rgba(255,255,255,0.05); border:2px solid transparent; border-radius:16px; padding:20px; margin-bottom:15px; cursor:pointer; transition:all 0.3s ease; }
+        .deck-option:hover { background:rgba(255,255,255,0.1); transform:translateY(-2px); }
+        .deck-option.active { border-color:currentColor; background:rgba(255,255,255,0.15); }
+        .player-input { background:rgba(0,0,0,0.3); border:2px solid rgba(255,255,255,0.2); border-radius:12px; padding:12px 16px; color:var(--text-light); font-size:1rem; transition:border-color 0.2s; font-family:'Inter',sans-serif; }
+        .player-input:focus { outline:none; border-color:rgba(255,255,255,0.4); }
+        .player-item { background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; color:var(--text-light); margin-bottom:8px; cursor:grab; transition:all 0.2s; }
+        .player-item:active { cursor:grabbing; }
+        .player-item.drag-over { border-color:rgba(255,255,255,0.5)!important; background:rgba(255,255,255,0.12)!important; }
+        .player-item.current-turn { border-color:rgba(72,187,120,0.5); background:rgba(72,187,120,0.08); }
+        .btn-remove { background:rgba(255,107,129,0.2); color:var(--color-romantic); border-radius:8px; padding:6px 12px; font-size:0.875rem; transition:all 0.2s; border:none; cursor:pointer; }
+        .btn-remove:hover { background:rgba(255,107,129,0.3); }
+
+        /* ── CONTROL PANEL ── */
+        .control-panel { background:var(--surface-light); border:1px solid rgba(0,0,0,0.1); border-radius:20px; padding:16px; box-shadow:var(--shadow-subtle); align-self:flex-start; color:var(--text-dark); }
+        .btn-action { background-color:var(--modal-dark); color:var(--text-light); border-radius:14px; padding:12px 20px; font-weight:700; transition:background 0.2s ease,transform 0.1s ease,box-shadow 0.2s; box-shadow:0 3px 0 rgba(0,0,0,0.2); border:none; cursor:pointer; font-family:'Inter',sans-serif; }
+        .btn-action:hover:not(:disabled) { background-color:#3A3A3A; transform:translateY(-2px); box-shadow:0 5px 0 rgba(0,0,0,0.2); }
+        .btn-action:disabled { opacity:0.4; cursor:not-allowed; transform:translateY(0); box-shadow:0 3px 0 rgba(0,0,0,0.1); }
+        .btn-shuffle { background-color:var(--surface-light); color:var(--text-dark); border:1px solid rgba(0,0,0,0.1); box-shadow:0 3px 0 rgba(0,0,0,0.05); margin-top:0.4rem; }
+        .btn-shuffle:hover:not(:disabled) { background-color:#E0E0E0; }
+        .counter-box { background-color:var(--surface-light); border:1px solid rgba(0,0,0,0.08); box-shadow:var(--shadow-subtle); }
+        .settings-option { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1); color:var(--text-light); }
+        .shuffling { animation:shuffleAnim 0.5s ease-in-out; }
+        @keyframes shuffleAnim{0%{transform:rotate(0) scale(1)}25%{transform:rotate(-5deg) scale(1.02)}50%{transform:rotate(5deg) scale(1.02)}75%{transform:rotate(-2deg) scale(1.01)}100%{transform:rotate(0) scale(1)}}
+        .swipe-instruction { text-align:center; margin-top:10px; color:rgba(0,0,0,0.5); font-size:0.8rem; }
+
+        /* ── DARK MODE ── */
+        body.dark-mode { background-color:#121212; color:#FFFFFF!important; }
+        body.dark-mode .text-gray-900,body.dark-mode .text-gray-800,body.dark-mode .text-gray-700{color:#FFFFFF!important;}
+        body.dark-mode .text-gray-600,body.dark-mode .text-gray-500,body.dark-mode .text-gray-400{color:#A0A0A0!important;}
+        body.dark-mode .control-panel,.dark-mode .counter-box{background-color:#1F1F1F;color:#FFFFFF;border-color:rgba(255,255,255,0.1);}
+        body.dark-mode .card-front{background-color:#2A2A2A;color:#FFFFFF;border-color:rgba(255,255,255,0.1);}
+        body.dark-mode .card-question-text{color:#FFFFFF;}
+        body.dark-mode .swipe-instruction{color:rgba(255,255,255,0.5);}
+        body.dark-mode .btn-shuffle{background-color:#2A2A2A;color:#FFFFFF;border-color:rgba(255,255,255,0.1);}
+        body.dark-mode .btn-shuffle:hover:not(:disabled){background-color:#3A3A3A;}
+        body.dark-mode .empty-card{border-color:#FFFFFF;background-color:#2A2A2A;}
+        body.dark-mode .heat-label{color:rgba(255,255,255,0.4);}
+        body.dark-mode .heat-bar-outer{background:rgba(255,255,255,0.1);}
+        body.dark-mode .stat-mini-label{color:rgba(255,255,255,0.5);}
+        body.dark-mode .stat-mini{border-color:rgba(255,255,255,0.06);}
+        body.dark-mode .timer-bar-outer{background:rgba(255,255,255,0.1);}
+        body.dark-mode .timer-num{color:#fff;}
+        body.dark-mode #dareVote{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);}
+        body.dark-mode .vote-label{color:rgba(255,255,255,0.5);}
+        body.dark-mode .vote-btn{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.12);color:#fff;}
+        body.dark-mode .pass-player-name{color:#fff;}
+        body.dark-mode .pass-player-sub{color:rgba(255,255,255,0.5);}
+        body.dark-mode .btn-history-sm{background:#2A2A2A;color:#fff;border-color:rgba(255,255,255,0.1);}
+        body.dark-mode .btn-history-sm:hover{background:#3A3A3A;}
+
+        @media(max-width:1024px){
+            main{flex-direction:column-reverse;}
+            .control-panel{width:100%;margin-top:1rem;}
+            header{margin-top:0.5rem;}
+            .sidebar-menu{width:280px;}
+            .card-stack-container{width:260px;}
         }
-        @keyframes rainbowSlide { from { background-position: 100% 0%; } to { background-position: 0% 0%; } }
-        .intro-subtitle { font-size: 1.125rem; color: rgba(255,255,255,0.7); font-weight: 400; letter-spacing: 0.5px; margin-bottom: 3rem; opacity: 0; animation: fadeInUp 0.8s ease-out 0.8s forwards; }
-        .rainbow-progress { width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 3px; overflow: hidden; opacity: 0; animation: fadeIn 0.4s ease-out 0.5s forwards; }
-        /* FIX 1: longer transition + start fully rendered so reflow trick works */
-        .rainbow-progress-bar { width: 0%; height: 100%; background: linear-gradient(to right, var(--color-cyan), var(--color-blue), var(--color-purple), var(--color-pink), var(--color-red), var(--color-yellow), var(--color-lime)); border-radius: 3px; transition: width 1.8s cubic-bezier(0.28,0.11,0.32,1); }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* MAIN GAME */
-        #mainGame { display: none; opacity: 0; transition: opacity 0.5s ease-in; padding: 1rem; width: 100%; min-height: 100vh; }
-
-        /* CARD STACK */
-        .card-stack-container { aspect-ratio: 9/14; width: 350px; max-width: 90vw; position: relative; }
-        .card-stack-shadow { position: absolute; width: 100%; height: 100%; top: 10px; left: 0; border-radius: 20px; box-shadow: var(--shadow-stack); z-index: -2; opacity: 0.4; }
-        .card-front { background-color: var(--card-white); color: var(--text-dark); border-radius: 20px; box-shadow: var(--shadow-card); transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), opacity 0.3s ease; position: absolute; width: 100%; height: 100%; top: 0; left: 0; will-change: transform, opacity; border: 1px solid rgba(0,0,0,0.05); cursor: pointer; user-select: none; -webkit-user-select: none; }
-        .card-back { background: linear-gradient(135deg,#2A2A2A 0%,#1F1F1F 100%); border-radius: 20px; box-shadow: var(--shadow-card); position: absolute; width: 98%; height: 98%; top: 1%; left: 1%; z-index: -1; border: 1px solid rgba(255,255,255,0.05); }
-        .card-slide-out-left  { transform: translateX(-150%) rotate(-15deg) !important; opacity: 0 !important; }
-        .card-slide-out-right { transform: translateX(150%)  rotate(15deg)  !important; opacity: 0 !important; }
-        .empty-card { border: 3px dashed var(--text-dark); background-color: var(--card-white); }
-        .card-content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
-        .card-question-text { font-size: clamp(1.2rem,5vw,2.1rem); line-height: 1.3; font-weight: 700; text-shadow: 0 0 1px rgba(0,0,0,0.1); }
-        .card-header-chip { border-radius: 9999px; padding: 6px 14px; font-weight: 600; font-size: 0.85rem; opacity: 0.95; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .player-badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 999px; font-weight: 600; font-size: 0.9rem; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-
-        /* MODALS */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(4px); }
-        .modal-content { background: var(--modal-dark); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 32px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); color: var(--text-light); }
-        .deck-modal-content { max-width: 600px; }
-        .deck-option { background: rgba(255,255,255,0.05); border: 2px solid transparent; border-radius: 16px; padding: 20px; margin-bottom: 15px; cursor: pointer; transition: all 0.3s ease; }
-        .deck-option:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
-        .deck-option.active { border-color: currentColor; background: rgba(255,255,255,0.15); }
-        .player-input { background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 12px 16px; color: var(--text-light); font-size: 1rem; transition: border-color 0.2s; }
-        .player-input:focus { outline: none; border-color: rgba(255,255,255,0.4); }
-        .player-item { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: var(--text-light); }
-        .btn-remove { background: rgba(255,107,129,0.2); color: var(--color-romantic); border-radius: 8px; padding: 6px 12px; font-size: 0.875rem; transition: all 0.2s; border: none; cursor: pointer; }
-        .btn-remove:hover { background: rgba(255,107,129,0.3); }
-
-        /* CONTROL PANEL */
-        .control-panel { background: var(--surface-light); border: 1px solid rgba(0,0,0,0.1); border-radius: 20px; padding: 24px; box-shadow: var(--shadow-subtle); align-self: flex-start; color: var(--text-dark); }
-        .btn-action { background-color: var(--modal-dark); color: var(--text-light); border-radius: 14px; padding: 16px 24px; font-weight: 700; transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s; box-shadow: 0 4px 0 rgba(0,0,0,0.2); border: none; cursor: pointer; }
-        .btn-action:hover:not(:disabled) { background-color: #3A3A3A; transform: translateY(-2px); box-shadow: 0 6px 0 rgba(0,0,0,0.2); }
-        .btn-action:disabled { opacity: 0.4; cursor: not-allowed; transform: translateY(0); box-shadow: 0 4px 0 rgba(0,0,0,0.1); }
-        .btn-shuffle { background-color: var(--surface-light); color: var(--text-dark); border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 0 rgba(0,0,0,0.05); margin-top: 1rem; }
-        .btn-shuffle:hover:not(:disabled) { background-color: #E0E0E0; transform: translateY(-2px); box-shadow: 0 6px 0 rgba(0,0,0,0.05); }
-        .counter-box { background-color: var(--surface-light); border: 1px solid rgba(0,0,0,0.08); box-shadow: var(--shadow-subtle); }
-        .settings-option { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-light); }
-        .shuffling { animation: shuffle 0.5s ease-in-out; }
-        @keyframes shuffle { 0%{transform:rotate(0deg) scale(1);} 25%{transform:rotate(-5deg) scale(1.02);} 50%{transform:rotate(5deg) scale(1.02);} 75%{transform:rotate(-2deg) scale(1.01);} 100%{transform:rotate(0deg) scale(1);} }
-        .swipe-instruction { text-align: center; margin-top: 20px; color: rgba(0,0,0,0.5); font-size: 0.9rem; }
-
-        /* DARK MODE */
-        body.dark-mode { background-color: #121212; color: #FFFFFF !important; }
-        body.dark-mode .text-gray-900, body.dark-mode .text-gray-800, body.dark-mode .text-gray-700 { color: #FFFFFF !important; }
-        body.dark-mode .text-gray-600, body.dark-mode .text-gray-500, body.dark-mode .text-gray-400 { color: #A0A0A0 !important; }
-        body.dark-mode .control-panel, body.dark-mode .counter-box { background-color: #1F1F1F; color: #FFFFFF; border-color: rgba(255,255,255,0.1); }
-        body.dark-mode .card-front { background-color: #2A2A2A; color: #FFFFFF; border-color: rgba(255,255,255,0.1); }
-        body.dark-mode .swipe-instruction { color: rgba(255,255,255,0.5); }
-        body.dark-mode .btn-shuffle { background-color: #2A2A2A; color: #FFFFFF; border-color: rgba(255,255,255,0.1); }
-        body.dark-mode .btn-shuffle:hover:not(:disabled) { background-color: #3A3A3A; }
-        body.dark-mode .empty-card { border-color: #FFFFFF; background-color: #2A2A2A; color: #FFFFFF; }
-
-        @media (max-width: 1024px) {
-            main { flex-direction: column-reverse; }
-            .control-panel { width: 100%; margin-top: 2rem; }
-            header { margin-top: 1rem; }
-            .rainbow-logo { font-size: 2.5rem; }
-            .intro-subtitle { font-size: 1rem; }
-            .sidebar-menu { width: 280px; }
+        @media(max-width:600px){
+            .card-stack-container{width:240px;max-width:80vw;}
+            #mainGame{padding:0.25rem;}
         }
-        .swipe-zone { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
-        .game-title, .modal-title, .sidebar-title {
-            font-family: 'Mona Sans', 'Inter', sans-serif !important;
-            font-weight: 900 !important;
-            letter-spacing: -1px;
-            font-synthesis: none;
-            -webkit-font-smoothing: antialiased;
-        }
-        h1, h2, h3 {
-            font-family: 'Mona Sans', 'Inter', sans-serif !important;
-            font-weight: 900 !important;
-            font-synthesis: none;
-            -webkit-font-smoothing: antialiased;
-        }
-        /* Extra specificity safety net for the main title at all screen sizes */
-        #mainGame h1, #mainGame h2, #mainGame h3,
-        .modal-content h2, .sidebar-title {
-            font-weight: 900 !important;
-            font-synthesis: none !important;
-        }
+        .swipe-zone{position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;}
+        .game-title,.sidebar-title,h1,h2,h3{font-family:'Mona Sans','Inter',sans-serif!important;font-weight:900!important;letter-spacing:-1px;font-synthesis:none;-webkit-font-smoothing:antialiased;}
+
+        /* ════ NEW FEATURE STYLES (same dark aesthetic) ════ */
+
+        /* PAUSE OVERLAY */
+        #pauseOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:5000;display:none;flex-direction:column;justify-content:center;align-items:center;gap:2rem;backdrop-filter:blur(18px);}
+        #pauseOverlay.active{display:flex;animation:fadeInUp 0.3s ease;}
+        .pause-big-title{font-family:'Mona Sans',sans-serif;font-weight:900;font-size:3rem;color:#fff;letter-spacing:-1px;}
+        .pause-sub{color:rgba(255,255,255,0.5);font-size:1rem;margin-top:0.25rem;text-align:center;}
+        .session-box{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:20px 32px;text-align:center;margin-top:0.5rem;}
+        .session-box-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);margin-bottom:8px;}
+        .session-box-code{font-family:'Mona Sans',sans-serif;font-weight:900;font-size:2.5rem;letter-spacing:0.25em;color:#fff;}
+        .session-box-hint{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:6px;}
+        .pause-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+
+        /* PASS PHONE BANNER */
+        #passBanner{display:none;background:linear-gradient(135deg,rgba(255,31,64,0.12),rgba(111,56,224,0.12));border:1px solid rgba(255,31,64,0.25);border-radius:14px;padding:14px 18px;margin-bottom:0.75rem;align-items:center;gap:12px;animation:fadeInUp 0.35s ease;}
+        #passBanner.show{display:flex;}
+        .pass-icon{font-size:1.6rem;animation:phoneBounce 1s ease infinite;}
+        @keyframes phoneBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+        .pass-info{flex:1;}
+        .pass-player-name{font-weight:700;font-size:1.05rem;color:var(--text-dark);}
+        .pass-player-sub{font-size:0.78rem;color:rgba(0,0,0,0.45);margin-top:2px;}
+        .btn-got-it{background:var(--modal-dark);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-weight:700;cursor:pointer;font-size:0.88rem;transition:all 0.2s;font-family:'Inter',sans-serif;}
+        .btn-got-it:hover{background:#3A3A3A;}
+
+        /* TIMER */
+        #timerWrap{display:none;align-items:center;gap:10px;margin-bottom:0.75rem;}
+        #timerWrap.show{display:flex;}
+        .timer-bar-outer{flex:1;height:6px;background:rgba(0,0,0,0.09);border-radius:99px;overflow:hidden;}
+        .timer-bar-inner{height:100%;border-radius:99px;width:100%;background:linear-gradient(90deg,#48BB78,#FFD60A,#FF1F40);transition:width 1s linear;}
+        .timer-num{font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.1rem;min-width:28px;text-align:right;color:var(--text-dark);}
+        .timer-num.urgent{color:#FF1F40;animation:timerUrgent 0.5s ease infinite;}
+        @keyframes timerUrgent{0%,100%{opacity:1}50%{opacity:0.4}}
+
+        /* HEAT METER */
+        .heat-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+        .heat-label{font-size:0.73rem;color:rgba(0,0,0,0.4);white-space:nowrap;}
+        .heat-bar-outer{flex:1;height:5px;background:rgba(0,0,0,0.08);border-radius:99px;overflow:hidden;}
+        .heat-bar-inner{height:100%;border-radius:99px;transition:width 0.8s ease,background 0.8s ease;}
+        .heat-emoji{font-size:1rem;}
+        #heatLevelLabel{font-size:0.68rem;text-align:right;margin-top:1px;transition:color 0.8s ease;}
+
+        /* STAT MINIS */
+        .stat-mini{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.78rem;}
+        .stat-mini:last-child{border-bottom:none;}
+        .stat-mini-label{color:rgba(0,0,0,0.45);}
+        .stat-mini-val{font-weight:700;}
+        .stat-skips{color:#FF1F40;}
+
+        /* CARD FILTER TOGGLE */
+        .card-filter-row{display:flex;gap:6px;margin-bottom:0.6rem;}
+        .filter-btn{flex:1;padding:7px 6px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-weight:700;font-size:0.75rem;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;color:rgba(0,0,0,0.5);}
+        .filter-btn.active{color:#fff;border-color:transparent;}
+        .filter-btn.active.all{background:var(--modal-dark);}
+        .filter-btn.active.q{background:#3B82F6;}
+        .filter-btn.active.d{background:#EF4444;}
+        body.dark-mode .filter-btn{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.1);}
+        body.dark-mode .filter-btn.active.all{background:rgba(255,255,255,0.25);}
+
+        /* DARE VOTE */
+        #dareVote{display:none;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:12px;margin-top:0.75rem;}
+        #dareVote.show{display:block;animation:fadeInUp 0.3s ease;}
+        .vote-label{font-size:0.78rem;color:rgba(0,0,0,0.45);margin-bottom:8px;}
+        .vote-btns{display:flex;gap:6px;}
+        .vote-btn{flex:1;padding:8px;border-radius:10px;border:1px solid rgba(0,0,0,0.1);background:#fff;font-weight:600;font-size:0.8rem;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;}
+        .vote-btn.yes:hover{background:rgba(72,187,120,0.13);border-color:#48BB78;color:#276749;}
+        .vote-btn.no:hover{background:rgba(255,31,64,0.1);border-color:#FF1F40;color:#FF1F40;}
+        .vote-tally{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;font-size:0.73rem;}
+        .tally-yes{color:#48BB78;background:rgba(72,187,120,0.1);border-radius:99px;padding:2px 10px;}
+        .tally-no{color:#FF1F40;background:rgba(255,31,64,0.08);border-radius:99px;padding:2px 10px;}
+
+        /* SHAME */
+        .shame-label{font-size:0.7rem;color:#FF1F40;font-weight:600;text-align:center;margin-top:3px;display:none;}
+
+        /* WILDCARD + HISTORY ROW */
+        .btn-wildcard{background:linear-gradient(135deg,#6F38E0,#FF1F40);color:#fff;border:none;border-radius:12px;padding:10px 14px;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;box-shadow:0 4px 10px rgba(111,56,224,0.25);}
+        .btn-wildcard:hover{filter:brightness(1.1);transform:translateY(-1px);}
+        .btn-history-sm{background:var(--surface-light);color:var(--text-dark);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-weight:600;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;}
+        .btn-history-sm:hover{background:#E0E0E0;}
+
+        /* CONSEQUENCE TOAST */
+        #consecToast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(130px);background:linear-gradient(135deg,#FF1F40,#FF9F0A);color:#fff;border-radius:16px;padding:1rem 1.5rem;font-weight:700;font-size:1rem;z-index:6000;transition:transform 0.45s cubic-bezier(0.34,1.56,0.64,1);text-align:center;min-width:240px;box-shadow:0 10px 40px rgba(255,31,64,0.4);pointer-events:auto;cursor:pointer;touch-action:pan-x;}
+        #consecToast.show{transform:translateX(-50%) translateY(0);}
+        #consecToast .dismiss-hint{font-size:0.62rem;opacity:0.65;margin-top:5px;text-transform:uppercase;letter-spacing:0.08em;}
+        .consec-sub{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.8;margin-bottom:4px;}
+
+        /* HISTORY DRAWER */
+        #historyBg{position:fixed;inset:0;z-index:4400;background:rgba(0,0,0,0.5);display:none;}
+        #historyBg.show{display:block;}
+        #historyDrawer{position:fixed;bottom:0;left:0;right:0;z-index:4500;background:var(--modal-dark);border-top:1px solid rgba(255,255,255,0.1);border-radius:24px 24px 0 0;padding:1.5rem;max-height:60vh;overflow-y:auto;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);}
+        #historyDrawer.open{transform:translateY(0);}
+        .drawer-handle{width:40px;height:4px;background:rgba(255,255,255,0.15);border-radius:99px;margin:0 auto 1.25rem;}
+        .history-item{padding:11px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);margin-bottom:8px;font-size:0.82rem;color:rgba(255,255,255,0.72);transition:all 0.2s;}
+        .history-item:hover{background:rgba(255,255,255,0.1);color:#fff;}
+        .history-item-meta{font-size:0.67rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;opacity:0.7;}
+
+        /* TOGGLE */
+        .toggle{position:relative;width:40px;height:22px;flex-shrink:0;}
+        .toggle input{opacity:0;width:0;height:0;}
+        .toggle-slider{position:absolute;inset:0;cursor:pointer;background:rgba(255,255,255,0.15);border-radius:99px;transition:0.3s;}
+        .toggle-slider:before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.3s;}
+        input:checked + .toggle-slider{background:#48BB78;}
+        input:checked + .toggle-slider:before{transform:translateX(18px);}
+
+        /* CURRENT PLAYER DOT */
+        .now-dot{width:8px;height:8px;border-radius:50%;background:#48BB78;display:inline-block;margin-right:4px;animation:nowPulse 1.5s ease infinite;}
+        @keyframes nowPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:0.6}}
+
+        /* RESUME MODAL CODE INPUT */
+        .resume-code-inp{font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:0.2em;text-align:center;text-transform:uppercase;width:100%;}
     </style>
 </head>
 <body>
-    <button id="hamburgerButton" class="hamburger-menu">
-        <div class="hamburger-line"></div>
-        <div class="hamburger-line"></div>
-        <div class="hamburger-line"></div>
-    </button>
 
-    <div id="sidebarOverlay" class="sidebar-overlay"></div>
-    <div id="sidebarMenu" class="sidebar-menu">
-        <div class="sidebar-header">
-            <h3 class="sidebar-title">Menu</h3>
-            <button id="closeSidebar" class="close-sidebar"><i data-lucide="x"></i></button>
+<!-- CONSEQUENCE TOAST -->
+<div id="consecToast">
+    <div class="consec-sub">Skip Consequence 🔥</div>
+    <div id="consecText">Take a sip!</div>
+    <div class="dismiss-hint">tap or swipe to dismiss</div>
+</div>
+
+<!-- PAUSE OVERLAY -->
+<div id="pauseOverlay">
+    <div style="text-align:center;">
+        <div class="pause-big-title">⏸ Paused</div>
+        <div class="pause-sub">Game is saved. Resume whenever you're ready.</div>
+    </div>
+    <div class="session-box">
+        <div class="session-box-label">Session Code — use to resume later</div>
+        <div class="session-box-code" id="pauseCodeVal">——————</div>
+        <div class="session-box-hint">Enter this code in "Resume Game" to pick up exactly here</div>
+    </div>
+    <div class="pause-btns">
+        <button class="btn-action" style="padding:14px 32px;font-size:1rem;" onclick="resumeGame()">▶ Resume Game</button>
+        <button class="btn-action" style="padding:14px 24px;font-size:1rem;background:rgba(255,255,255,0.1);" onclick="endGame()">End Game</button>
+    </div>
+</div>
+
+<!-- HISTORY BACKDROP + DRAWER -->
+<div id="historyBg" onclick="closeHistory()"></div>
+<div id="historyDrawer">
+    <div class="drawer-handle"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <h3 style="font-family:'Mona Sans',sans-serif;font-weight:900;color:#fff;font-size:1.2rem;">Card History</h3>
+        <button onclick="closeHistory()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:1rem;">✕</button>
+    </div>
+    <div id="historyList"><p style="color:rgba(255,255,255,0.35);text-align:center;padding:2rem 0;font-size:0.85rem;">No cards drawn yet.</p></div>
+</div>
+
+<!-- HAMBURGER -->
+<button id="hamburgerButton" class="hamburger-menu">
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+</button>
+
+<!-- SIDEBAR -->
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
+<div id="sidebarMenu" class="sidebar-menu">
+    <div class="sidebar-header">
+        <h3 class="sidebar-title">Menu</h3>
+        <button id="closeSidebar" class="close-sidebar">✕</button>
+    </div>
+    <button id="sbPlayers"  class="sidebar-item">👥 Manage Players</button>
+    <button id="sbDeck"     class="sidebar-item">🃏 Change Deck</button>
+    <button id="sbHistory"  class="sidebar-item">📖 Card History</button>
+    <button id="sbResume"   class="sidebar-item">🔑 Resume Saved Game</button>
+    <hr class="sidebar-divider">
+    <button id="sbPause"    class="sidebar-item">⏸ Pause Game</button>
+    <button id="sbSettings" class="sidebar-item">⚙️ Settings</button>
+    <div style="margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08);text-align:center;color:rgba(255,255,255,0.25);font-size:0.78rem;">
+        <p>Deeper-Decks™ v2</p>
+        <p style="margin-top:4px;">The Card Game for Real Connection</p>
+    </div>
+</div>
+
+<!-- INTRO -->
+<div id="introScreen">
+    <header style="max-width:36rem;width:100%;text-align:center;margin-bottom:1.5rem;padding:0 1rem;">
+        <h1 class="rainbow-logo">Deeper-Decks™</h1>
+        <div class="intro-subtitle">The Card Game for Real Connection</div>
+    </header>
+    <div class="rainbow-progress">
+        <div class="rainbow-progress-bar" id="rainbowProgressBar"></div>
+    </div>
+</div>
+
+<!-- PLAYER MODAL -->
+<div id="playerModal" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+        <h2 class="text-3xl font-bold text-white mb-2 text-center game-title">Deeper-Decks™</h2>
+        <p class="text-gray-400 text-center mb-6">Add players · drag to reorder turn order</p>
+        <div class="mb-6">
+            <div class="flex gap-2 mb-4">
+                <input type="text" id="playerNameInput" class="player-input flex-1" placeholder="Enter player name" maxlength="20">
+                <button id="addPlayerBtn" class="btn-action px-6">Add</button>
+            </div>
+            <div id="playersList" class="mb-4"></div>
+            <p class="text-sm text-gray-400 text-center mb-4"><span id="playerCount">0</span> players added (minimum 2)</p>
         </div>
-        <button id="sidebarManagePlayers" class="sidebar-item"><i data-lucide="users"></i> Manage Players</button>
-        <button id="sidebarChangeDeck"    class="sidebar-item"><i data-lucide="layers"></i> Change Deck</button>
-        <button id="sidebarSettings"      class="sidebar-item"><i data-lucide="settings"></i> Settings</button>
-        <div class="mt-8 pt-6 border-t border-gray-800">
-            <div class="text-center text-gray-400 text-sm">
-                <p>Deeper-Decks™</p>
-                <p class="mt-1">The Card Game for Real Connection</p>
+        <button id="startGameBtn" class="btn-action w-full text-lg py-3" disabled>Choose Deck &amp; Start Playing</button>
+    </div>
+</div>
+
+<!-- DECK MODAL -->
+<div id="deckModal" class="modal-overlay" style="display:none;">
+    <div class="modal-content deck-modal-content">
+        <h2 class="text-3xl font-bold text-white mb-2 text-center game-title">Choose Your Deck</h2>
+        <p class="text-gray-400 text-center mb-6">Cards escalate in heat as you play — buckle up</p>
+        <div id="deckOptions">
+            <div class="deck-option" data-deck="romantic" style="color:var(--color-romantic);">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <span style="font-size:1.5rem;">❤️</span>
+                    <div><h3 class="text-xl font-bold">Romantic Deck</h3><p class="text-gray-400 text-sm">90 cards for couples &amp; dates · starts warm, gets electric</p></div>
+                </div>
+            </div>
+            <div class="deck-option" data-deck="platonic" style="color:var(--color-platonic);">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <span style="font-size:1.5rem;">🤝</span>
+                    <div><h3 class="text-xl font-bold">Platonic Deck</h3><p class="text-gray-400 text-sm">90 cards for friends &amp; hangouts · chaotic guaranteed</p></div>
+                </div>
+            </div>
+            <div class="deck-option" data-deck="girlsnight" style="color:var(--color-girls);">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <span style="font-size:1.5rem;">💅</span>
+                    <div><h3 class="text-xl font-bold">Girls' Night Deck</h3><p class="text-gray-400 text-sm">90 cards for girls' nights · no filter mode</p></div>
+                </div>
+            </div>
+            <div class="deck-option" data-deck="naughty" style="color:var(--color-naughty);">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <span style="font-size:1.5rem;">🔥</span>
+                    <div><h3 class="text-xl font-bold">Naughty Deck</h3><p class="text-gray-400 text-sm">90 cards · adults only · no one leaves the same</p></div>
+                </div>
             </div>
         </div>
+        <button id="confirmDeckBtn" class="btn-action w-full text-lg py-3 mt-6" disabled>Start Playing with Selected Deck</button>
     </div>
+</div>
 
-    <!-- INTRO SCREEN -->
-    <div id="introScreen">
-        <header class="max-w-xl w-full text-center mb-6 px-4 sm:px-0">
-            <h1 class="rainbow-logo">Deeper-Decks™</h1>
-            <div class="intro-subtitle">The Card Game for Real Connection</div>
-        </header>
-        <div class="rainbow-progress">
-            <div class="rainbow-progress-bar" id="rainbowProgressBar"></div>
-        </div>
-    </div>
-
-    <!-- PLAYER MODAL -->
-    <div id="playerModal" class="modal-overlay" style="display:none;">
-        <div class="modal-content">
-            <h2 class="text-3xl font-bold text-white mb-2 text-center game-title">Deeper-Decks™</h2>
-            <p class="text-gray-400 text-center mb-6">Add players to get started</p>
-            <div class="mb-6">
-                <div class="flex gap-2 mb-4">
-                    <input type="text" id="playerNameInput" class="player-input flex-1" placeholder="Enter player name" maxlength="20" />
-                    <button id="addPlayerBtn" class="btn-action px-6">Add</button>
-                </div>
-                <div id="playersList" class="space-y-2 mb-4"></div>
-                <p class="text-sm text-gray-400 text-center mb-4"><span id="playerCount">0</span> players added (minimum 2)</p>
+<!-- SETTINGS MODAL -->
+<div id="settingsModal" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+        <h2 class="text-3xl font-bold text-white mb-6 text-center game-title">Settings</h2>
+        <div>
+            <div class="settings-option">
+                <span>Theme</span>
+                <select id="themeSelect" class="player-input">
+                    <option value="light">Light Mode</option>
+                    <option value="dark">Dark Mode</option>
+                </select>
             </div>
-            <button id="startGameBtn" class="btn-action w-full text-lg py-3" disabled>Choose Deck &amp; Start Playing</button>
-        </div>
-    </div>
-
-    <!-- DECK MODAL -->
-    <div id="deckModal" class="modal-overlay" style="display:none;">
-        <div class="modal-content deck-modal-content">
-            <h2 class="text-3xl font-bold text-white mb-2 text-center game-title">Choose Your Deck</h2>
-            <p class="text-gray-400 text-center mb-6">Select a deck to start playing</p>
-            <div id="deckOptions" class="space-y-3">
-                <div class="deck-option" data-deck="romantic" style="color:var(--color-romantic);">
-                    <div class="flex items-center gap-3"><i data-lucide="heart" class="w-6 h-6"></i><div><h3 class="text-xl font-bold">Romantic Deck</h3><p class="text-gray-400 text-sm">90 cards for couples and dates</p></div></div>
-                </div>
-                <div class="deck-option" data-deck="platonic" style="color:var(--color-platonic);">
-                    <div class="flex items-center gap-3"><i data-lucide="handshake" class="w-6 h-6"></i><div><h3 class="text-xl font-bold">Platonic Deck</h3><p class="text-gray-400 text-sm">90 cards for friends and hangouts</p></div></div>
-                </div>
-                <div class="deck-option" data-deck="girlsnight" style="color:var(--color-girls);">
-                    <div class="flex items-center gap-3"><i data-lucide="users-2" class="w-6 h-6"></i><div><h3 class="text-xl font-bold">Girls' Night Deck</h3><p class="text-gray-400 text-sm">90 cards for girls' nights out</p></div></div>
-                </div>
-                <div class="deck-option" data-deck="naughty" style="color:var(--color-naughty);">
-                    <div class="flex items-center gap-3"><i data-lucide="flame" class="w-6 h-6"></i><div><h3 class="text-xl font-bold">Naughty Deck</h3><p class="text-gray-400 text-sm">90 cards for spicy conversations</p></div></div>
+            <div class="settings-option">
+                <div><div style="font-weight:600;">Turn Timer</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Countdown pressure per card</div></div>
+                <label class="toggle"><input type="checkbox" id="timerToggle" onchange="onTimerToggle()"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-option" id="timerDurRow" style="display:none;">
+                <div style="font-weight:600;">Timer Duration</div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <input type="range" min="10" max="90" step="5" value="30" id="timerDuration" style="width:90px;accent-color:#48BB78;" oninput="document.getElementById('timerDurLbl').textContent=this.value+'s'">
+                    <span id="timerDurLbl" style="font-weight:700;min-width:30px;">30s</span>
                 </div>
             </div>
-            <button id="confirmDeckBtn" class="btn-action w-full text-lg py-3 mt-6" disabled>Start Playing with Selected Deck</button>
-        </div>
-    </div>
-
-    <!-- SETTINGS MODAL -->
-    <div id="settingsModal" class="modal-overlay" style="display:none;">
-        <div class="modal-content">
-            <h2 class="text-3xl font-bold text-white mb-6 text-center game-title">Settings</h2>
-            <div class="space-y-4">
-                <div class="settings-option"><span>Theme</span><select id="themeSelect" class="player-input"><option value="light">Light Mode</option><option value="dark">Dark Mode</option></select></div>
-                <div class="settings-option"><span>Card Animation Speed</span><select id="animationSpeed" class="player-input"><option value="fast">Fast</option><option value="normal" selected>Normal</option><option value="slow">Slow</option></select></div>
-                <div class="settings-option"><span>Swipe Sensitivity</span><select id="swipeSensitivity" class="player-input"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div>
+            <div class="settings-option">
+                <div><div style="font-weight:600;">Sound Effects</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Card draws, dare fanfares, timer alerts</div></div>
+                <label class="toggle"><input type="checkbox" id="soundToggle" checked><span class="toggle-slider"></span></label>
             </div>
-            <button id="closeSettingsBtn" class="btn-action w-full text-lg py-3 mt-6">Save &amp; Close</button>
+            <div class="settings-option">
+                <div><div style="font-weight:600;">Pass Phone Mode</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Shows whose turn it is before each draw</div></div>
+                <label class="toggle"><input type="checkbox" id="passModeToggle" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-option">
+                <div><div style="font-weight:600;">Dare Voting</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Group votes whether the dare was actually done</div></div>
+                <label class="toggle"><input type="checkbox" id="dareVoteToggle" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-option">
+                <div><div style="font-weight:600;">Skip Consequences</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Skipping a card triggers a punishment</div></div>
+                <label class="toggle"><input type="checkbox" id="consequenceToggle" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-option">
+                <span>Card Animation Speed</span>
+                <select id="animationSpeed" class="player-input">
+                    <option value="fast">Fast</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="slow">Slow</option>
+                </select>
+            </div>
+            <div class="settings-option">
+                <span>Swipe Sensitivity</span>
+                <select id="swipeSensitivity" class="player-input">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
         </div>
+        <button id="closeSettingsBtn" class="btn-action w-full text-lg py-3 mt-6">Save &amp; Close</button>
     </div>
+</div>
 
-    <!-- MAIN GAME -->
-    <div id="mainGame" class="min-h-screen flex flex-col items-center">
-        <header class="max-w-xl w-full text-center mb-6 mt-4 px-4 sm:px-0">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-2 tracking-tight game-title">Deeper-Decks<sup class="text-xl ml-1 align-top">&trade;</sup></h1>
-            <p class="text-gray-600 text-lg font-medium">The Card Game for Real Connection</p>
-        </header>
-        <main class="w-full max-w-6xl flex flex-col lg:flex-row gap-8 px-4 sm:px-6">
-            <section class="lg:w-1/3 control-panel h-full flex flex-col justify-start order-2 lg:order-1">
-                <h2 class="text-2xl font-bold mb-6 text-gray-900" id="deckTitle">Select a Deck</h2>
-                <div class="mb-8">
-                    <div class="text-center p-5 rounded-xl counter-box mb-6">
-                        <p class="text-base font-semibold text-gray-600">Cards Remaining</p>
-                        <p id="remainingCount" class="text-5xl font-extrabold text-gray-900 tracking-wider mt-1">90</p>
-                    </div>
-                    <button id="drawButton" class="btn-action py-4 px-12 text-xl font-bold tracking-wide uppercase w-full mb-3">Draw Next Card</button>
-                    <button id="shuffleButton" class="w-full btn-action btn-shuffle"><i data-lucide="rotate-ccw" class="w-5 h-5 inline mr-2"></i> Re-Shuffle Current Deck</button>
-                </div>
-            </section>
-            <section class="lg:w-2/3 flex flex-col items-center order-1 lg:order-2">
-                <div id="cardContainer" class="relative flex-shrink-0 mb-8 card-stack-container">
-                    <div class="card-stack-shadow"></div>
-                </div>
-                <div class="swipe-instruction"><i data-lucide="move-horizontal" class="w-5 h-5 inline mr-2"></i> Swipe left/right to draw next card</div>
-            </section>
-        </main>
+<!-- RESUME MODAL -->
+<div id="resumeModal" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+        <h2 class="text-3xl font-bold text-white mb-2 text-center game-title">Resume Game</h2>
+        <p class="text-gray-400 text-center mb-6">Enter your 6-character session code to pick up exactly where you left off</p>
+        <input type="text" id="resumeCodeInput" class="player-input resume-code-inp mb-3" maxlength="6" placeholder="ABC123">
+        <div id="resumeErr" style="color:#FF1F40;font-size:0.8rem;text-align:center;min-height:1.2rem;margin-bottom:0.75rem;"></div>
+        <button class="btn-action w-full text-lg py-3" onclick="tryResume()">Resume →</button>
+        <button class="btn-action w-full py-3 mt-3" style="background:rgba(255,255,255,0.08);" onclick="document.getElementById('resumeModal').style.display='none'">Cancel</button>
     </div>
+</div>
 
-    <!-- MODULE: Firebase + Lucide icons only -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, updateDoc, increment, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { createIcons, Heart, Flame, Users, Handshake, Star, RotateCcw, Zap, Users2, Lightbulb, User, Layers, Settings, MoveHorizontal, X } from 'https://unpkg.com/lucide@latest/dist/esm/lucide.js';
+<!-- MAIN GAME -->
+<div id="mainGame" class="min-h-screen flex flex-col items-center">
+    <header class="max-w-xl w-full text-center mb-3 mt-2 px-4 sm:px-0">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 tracking-tight game-title">Deeper-Decks<sup class="text-base ml-1 align-top">™</sup></h1>
+        <p class="text-gray-600 text-sm font-medium">The Card Game for Real Connection</p>
+    </header>
 
-        // ── FIX 2: expose createIcons IMMEDIATELY (not inside DOMContentLoaded)
-        // so the regular script can call it as soon as icons are needed.
-        window.createIcons = () => createIcons({ icons: { Heart, Flame, Users, Handshake, Star, RotateCcw, Zap, Users2, Lightbulb, User, Layers, Settings, MoveHorizontal, X } });
+    <main class="w-full max-w-6xl flex flex-col lg:flex-row gap-4 px-3 sm:px-4">
 
-        let db;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-        const COUNTER_DOC_PATH = `/artifacts/${appId}/public/data/counters/visitor_count`;
+        <!-- LEFT: CONTROL PANEL -->
+        <section class="lg:w-1/3 control-panel flex flex-col justify-start order-2 lg:order-1">
+            <h2 class="font-bold mb-2 text-gray-900" style="font-size:1.1rem;" id="deckTitle">Select a Deck</h2>
 
-        async function initFirebase() {
-            if (!Object.keys(firebaseConfig).length) return;
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                const auth = getAuth(app);
-                await new Promise(res => {
-                    onAuthStateChanged(auth, async user => {
-                        if (!user) {
-                            if (initialAuthToken) await signInWithCustomToken(auth, initialAuthToken);
-                            else await signInAnonymously(auth);
-                            onAuthStateChanged(auth, u => { if (u) res(); });
-                        } else res();
-                    });
-                });
-                // Listener
-                onSnapshot(doc(db, COUNTER_DOC_PATH), snap => {
-                    const el = document.getElementById('visitorCount');
-                    if (el) el.textContent = snap.exists() ? snap.data().count.toLocaleString() : '0';
-                });
-                // Track visit
-                const KEY = 'deeper_decks_visited_v4';
-                if (sessionStorage.getItem(KEY) !== 'true') {
-                    const ref = doc(db, COUNTER_DOC_PATH);
-                    const snap = await getDoc(ref);
-                    if (snap.exists()) await updateDoc(ref, { count: increment(1) });
-                    else await setDoc(ref, { count: 1 });
-                    sessionStorage.setItem(KEY, 'true');
-                }
-            } catch (e) { console.error('Firebase error:', e); }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(initFirebase, 500);
-        });
-    </script>
-
-    <!-- REGULAR SCRIPT: all game logic -->
-    <script>
-        // ── DECK DATA ─────────────────────────────────────────────────────────────
-        const romanticQuestions = [
-            "What's your idea of the perfect date night that we haven't tried yet?",
-            "What's one thing you're working toward right now that excites you?",
-            "What's a hidden talent or hobby of yours that not many people know about?",
-            "If you could travel anywhere in the world together, where would you want to go and why?",
-            "What's your love language, and how do you like to receive affection?",
-            "What's something small I do that always makes you smile?",
-            "What's a childhood memory that shaped who you are today?",
-            "What does your ideal weekend look like?",
-            "What's one thing on your bucket list you're determined to accomplish?",
-            "How do you like to be comforted when you're having a bad day?",
-            "What's your favorite way to spend quality time together?",
-            "What's something you've always wanted to learn or try?",
-            "What's a tradition from your family that you'd want to carry forward?",
-            "What makes you feel most appreciated in a relationship?",
-            "What's your biggest dream for the next five years?",
-            "What's something that instantly puts you in a good mood?",
-            "How do you know when you're truly comfortable with someone?",
-            "What's a value or belief that's really important to you?",
-            "What's your favorite memory of us so far?",
-            "What's something you're really proud of yourself for?",
-            "What does partnership mean to you?",
-            "What's a song or movie that always makes you emotional?",
-            "What's your favorite thing about the stage of life you're in right now?",
-            "What's something I could do to support your goals better?",
-            "What's a random act of kindness that really stuck with you?",
-            "How do you like to celebrate your wins, big or small?",
-            "What's something you're passionate about that you could talk about for hours?",
-            "What's your favorite season and what do you love about it?",
-            "What makes you feel most connected to someone?",
-            "What's a quality you really admire in other people?",
-            "What's one thing about yourself that you feel I truly understand?",
-            "What moment made you realize you wanted to get to know me better?",
-            "What's a fear you have about relationships, and where does it come from?",
-            "How has your past shaped what you're looking for in a relationship?",
-            "What's something you've learned about yourself through being with me?",
-            "What does 'home' mean to you?",
-            "What's a habit of mine that you've grown to love?",
-            "What do you think makes us work well together?",
-            "What's the biggest lesson you've learned from a past relationship?",
-            "What's one thing you hope we never stop doing together?",
-            "How do you want to grow in the next year, personally?",
-            "What's your favorite inside joke or moment we share?",
-            "What makes you feel most loved by me?",
-            "What's a quality I have that you didn't expect?",
-            "What do you think our biggest strength as a couple is?",
-            "What's something vulnerable you've shared with me that felt scary?",
-            "What's one goal you have for us as a couple?",
-            "How do you handle conflict in relationships?",
-            "What's a small gesture I could do more often that would mean a lot?",
-            "What's your favorite thing about the way we communicate?",
-            "DARE: Close your eyes and describe what you love most about the way I make you feel.",
-            "DARE: Share the first thought you had when you saw me today.",
-            "DARE: Tell me three things you're grateful for about our relationship right now.",
-            "DARE: Describe your favorite memory with me in detail.",
-            "DARE: Give me a compliment you've been thinking but haven't said out loud yet.",
-            "DARE: Share a song that reminds you of me and explain why.",
-            "DARE: Tell me something you've noticed about me that I might not realize.",
-            "DARE: Describe what your perfect day together would look like from start to finish.",
-            "DARE: Share a goal you have and how I can support you in achieving it.",
-            "DARE: Tell me one thing you want to do together that we've never done.",
-            "DARE: Give me a 30-second shoulder massage while telling me what you appreciate about me.",
-            "DARE: Share something that made you smile today and why.",
-            "DARE: Look into my eyes for 30 seconds without saying anything, then describe what you felt.",
-            "DARE: Tell me about a moment when you felt most proud of me.",
-            "DARE: Share your favorite thing about my personality.",
-            "DARE: Describe the exact moment you knew you had feelings for me.",
-            "DARE: Tell me one thing you want me to know but have been afraid to say.",
-            "DARE: Share a dream you have for our future.",
-            "DARE: Give me three reasons why you think we're a good match.",
-            "DARE: Tell me about a time I surprised you in a good way.",
-            "DARE: Share what attracted you to me when we first met.",
-            "DARE: Describe how I make you feel safe.",
-            "DARE: Tell me one thing you've always wanted to do with me.",
-            "DARE: Share your favorite physical feature of mine and why.",
-            "DARE: Describe a moment when you felt most connected to me.",
-            "DARE: Tell me what you think makes our relationship special.",
-            "DARE: Share one thing you want to work on together as a couple.",
-            "DARE: Describe your ideal date that you'd plan for me.",
-            "DARE: Tell me about a time when I made you feel truly heard.",
-            "DARE: Share what you think our relationship will look like in 5 years.",
-            "DARE: Give me a compliment about something other than my appearance.",
-            "DARE: Tell me about a fear you have and how I can help you through it.",
-            "DARE: Share your favorite way I show you love.",
-            "DARE: Describe a quality of mine that you hope to develop in yourself.",
-            "DARE: Tell me about a time when I exceeded your expectations.",
-            "DARE: Share what you think is the most romantic thing I've done for you.",
-            "DARE: Describe how your life has changed since we got together.",
-            "DARE: Tell me one thing you appreciate about how I treat others.",
-            "DARE: Share a sacrifice you'd be willing to make for our relationship.",
-            "DARE: Describe the moment you realized I was someone special."
-        ];
-
-        const platonicQuestions = [
-            "If you could only eat one food for the rest of your life, what would it be and why?",
-            "What's the weirdest compliment you've ever received?",
-            "If you were a kitchen appliance, which one would you be and why?",
-            "What's your go-to karaoke song and how badly do you butcher it?",
-            "What's the most embarrassing thing you've done in front of a crush?",
-            "If your life had a theme song, what would it be?",
-            "What's the strangest thing you believed as a child?",
-            "What's your signature dance move when no one's watching?",
-            "If you could swap lives with any celebrity for a day, who and why?",
-            "What's the funniest text you've sent to the wrong person?",
-            "What's your comfort show that you've binged way too many times?",
-            "If you had to live in a reality TV show, which one would you choose?",
-            "What's the most useless talent you have?",
-            "What's your Starbucks order and what does it say about you?",
-            "If you could have dinner with any three people dead or alive, who would they be?",
-            "What's the pettiest thing you've done and are low-key proud of?",
-            "What's your unpopular opinion that you'll defend to death?",
-            "What's the worst haircut you've ever had?",
-            "If you could be famous for something ridiculous, what would it be?",
-            "What's your toxic trait that you refuse to change?",
-            "What's the dumbest way you've injured yourself?",
-            "If you were a meme, which one would you be?",
-            "What's your most irrational fear?",
-            "What's the most spontaneous thing you've ever done?",
-            "If you could have any superpower but it had to be completely useless, what would it be?",
-            "What's your guilty pleasure song that you blast when alone?",
-            "What's the worst gift you've ever received?",
-            "If your personality was a color, what would it be and why?",
-            "What's the funniest rumor you've heard about yourself?",
-            "What would your wrestling entrance song be?",
-            "What's something you're embarrassingly bad at?",
-            "If you could cancel one trend forever, what would it be?",
-            "What's your most controversial food opinion?",
-            "What's the weirdest phase you went through?",
-            "If you had to get a tattoo right now, what would it be?",
-            "What's your biggest ick in other people?",
-            "What's the most cringe thing you did as a teenager?",
-            "If you could bring back one discontinued product, what would it be?",
-            "What's your go-to lie when you don't want to hang out?",
-            "What's the most awkward situation you've ever been in?",
-            "If you could live in any decade, which one and why?",
-            "What's your biggest flex that no one knows about?",
-            "What's the dumbest argument you've won?",
-            "If you were arrested, what would your friends assume you did?",
-            "What's your red flag in friendships?",
-            "What's the worst advice you've ever given someone?",
-            "If you could delete one app from existence, which would it be?",
-            "What's your most used emoji and why?",
-            "What's something you do that you think is normal but others find weird?",
-            "If you had to live without one of your five senses, which would you give up?",
-            "DARE: Show everyone your most embarrassing photo from your camera roll.",
-            "DARE: Do your best impression of someone in the room right now.",
-            "DARE: Freestyle rap about the person to your left for 20 seconds.",
-            "DARE: Let someone else post anything they want on your story right now.",
-            "DARE: Show your most recent Google search and explain it.",
-            "DARE: Do a dramatic reading of the last text message you sent.",
-            "DARE: Demonstrate your worst dance moves for 15 seconds.",
-            "DARE: Let the group go through your liked videos on TikTok/Instagram.",
-            "DARE: Call a random contact and say something completely absurd.",
-            "DARE: Share your most played song this month and perform a snippet.",
-            "DARE: Show your screen time report and let everyone judge you.",
-            "DARE: Do your best celebrity impression right now.",
-            "DARE: Let someone read your notes app out loud.",
-            "DARE: Show the group your most recent Amazon purchase.",
-            "DARE: Do a dramatic monologue about your biggest pet peeve.",
-            "DARE: Let someone go through your photo gallery for 30 seconds.",
-            "DARE: Show your top 3 most contacted people and explain why.",
-            "DARE: Perform your best TikTok dance trend.",
-            "DARE: Read your most recent text conversation out loud.",
-            "DARE: Show everyone your lock screen and explain the story behind it.",
-            "DARE: Do an impression of how you act when you're hangry.",
-            "DARE: Let the group see your Spotify wrapped or most played playlist.",
-            "DARE: Show your calculator history and explain what you were calculating.",
-            "DARE: Demonstrate how you flirt with someone you like.",
-            "DARE: Let someone make up a contact name for someone in your phone.",
-            "DARE: Show your email inbox and let people judge your unread count.",
-            "DARE: Do your signature pose for taking selfies.",
-            "DARE: Share the weirdest thing in your saved Instagram posts.",
-            "DARE: Let someone read your last 5 tweets or posts out loud.",
-            "DARE: Show your YouTube search history from this week.",
-            "DARE: Demonstrate your go-to facial expression when you're annoyed.",
-            "DARE: Let the group rename your Wi-Fi network right now.",
-            "DARE: Show everyone your phone's home screen and explain your organization.",
-            "DARE: Do your best impression of yourself when you're drunk.",
-            "DARE: Let someone scroll through your Twitter/X likes.",
-            "DARE: Show your most used GIFs or stickers in messages.",
-            "DARE: Demonstrate how you walk when you think you look cool.",
-            "DARE: Let someone read your browser tabs out loud.",
-            "DARE: Show your Venmo/CashApp transaction history from this month.",
-            "DARE: Do an impression of yourself waking up in the morning."
-        ];
-
-        const girlsNightQuestions = [
-            "Spill: What's the most embarrassing thing you've done to get a guy's attention?",
-            "Who's your current situationship and what's the tea?",
-            "What's the most unhinged text you've sent your crush at 2 AM?",
-            "Rate your current partner/crush out of 10 and explain your rating.",
-            "What's the craziest thing you've done on a girls' night out?",
-            "Describe your worst date ever - don't hold back the details!",
-            "What's your signature 'getting ready' routine song?",
-            "Who in your friend group gives the worst dating advice?",
-            "What's the pettiest thing you've done after a breakup?",
-            "Share your most iconic 'revenge dress' moment.",
-            "What's the biggest red flag you've ignored in a guy?",
-            "Who's the one that got away and do you still think about them?",
-            "What's your go-to 'cry playlist' and why?",
-            "Describe the time you got the biggest ick from someone you were dating.",
-            "What's the most dramatic thing you've done over a guy who wasn't worth it?",
-            "Share your best 'hot girl walk' playlist song.",
-            "What's the worst pickup line someone has tried on you?",
-            "Who's your guilty pleasure celebrity crush?",
-            "What's the most embarrassing thing in your search history right now?",
-            "Describe your dream wedding in three words.",
-            "What's the shadiest thing another girl has done to you?",
-            "Share your most toxic trait in relationships.",
-            "What's your signature perfume and what vibe does it give?",
-            "Who's your fictional character crush and why?",
-            "What's the most money you've spent on looking good for one night?",
-            "Describe the outfit that makes you feel most confident.",
-            "What's your go-to move when you want to soft launch someone on IG?",
-            "Share the worst thing an ex has said to you.",
-            "What's your comfort romcom that you've watched 100 times?",
-            "Who's your girl crush and what do you love about her?",
-            "What's the most embarrassing thing you've posted and deleted immediately?",
-            "Describe your ideal 'that girl' morning routine.",
-            "What's the biggest lie you've told on a dating app?",
-            "Share your most controversial beauty opinion.",
-            "What's the most desperate thing you've done to see your crush's story?",
-            "Who's the friend you call first when drama happens?",
-            "What's your signature going out outfit vibe?",
-            "Describe the time you knew a friendship was over.",
-            "What's your toxic trait when it comes to texting?",
-            "Share the most cringe TikTok you've made.",
-            "What's the meanest thing you thought but didn't say?",
-            "Describe your dream honeymoon destination.",
-            "What's your biggest dating app pet peeve?",
-            "Share the most dramatic thing you've done for the perfect selfie.",
-            "What's the worst thing you've done while tipsy on a night out?",
-            "Who's your style icon and why?",
-            "What's the most embarrassing thing you've done in front of your crush?",
-            "Describe your signature makeup look.",
-            "What's the pettiest reason you've stopped talking to someone?",
-            "Share your most embarrassing autocorrect fail to your crush.",
-            "DARE: Make a TikTok right now recreating a trending sound about your dating life.",
-            "DARE: Text your crush something flirty and read their response out loud.",
-            "DARE: Show everyone the last five guys in your Instagram DMs and explain the context.",
-            "DARE: Do a runway walk across the room in your best 'just saw my ex' strut.",
-            "DARE: Create a fake dating app profile bio for the person next to you.",
-            "DARE: Show the group your 'For You' page and let them judge you.",
-            "DARE: Dramatically read the last text your ex sent you.",
-            "DARE: Give everyone a makeover tip based on their vibe.",
-            "DARE: Post a thirst trap on your story right now and screenshot the first three responses.",
-            "DARE: Recreate your go-to selfie pose and let everyone rate it out of 10.",
-            "DARE: Show everyone your Pinterest board and let them roast you.",
-            "DARE: Text someone 'we need to talk' and show the responses.",
-            "DARE: Do a makeup tutorial using only words, no demonstrating.",
-            "DARE: Show the group your camera roll from last weekend.",
-            "DARE: Create a 15-second get-ready-with-me TikTok right now.",
-            "DARE: Let someone read your group chat messages from today.",
-            "DARE: Show everyone your saved Instagram posts.",
-            "DARE: Do your best influencer voice promoting a random object in the room.",
-            "DARE: Share your Amazon shopping cart and let everyone judge.",
-            "DARE: Show your Spotify daylist and explain yourself.",
-            "DARE: Let someone write a caption for your next Instagram post.",
-            "DARE: Show everyone your dating app matches right now.",
-            "DARE: Do your best impression of yourself when you're flirting.",
-            "DARE: Show the group your recent voice memos.",
-            "DARE: Let someone look at your BeReal from today.",
-            "DARE: Share your VSCO or photo editing app and show your presets.",
-            "DARE: Show everyone your Snapchat best friends list.",
-            "DARE: Do your signature pose for mirror selfies.",
-            "DARE: Let the group see your YouTube watch history from this week.",
-            "DARE: Show your Shein/online shopping orders from this month.",
-            "DARE: Demonstrate your go-to drunk girl in the bathroom pose.",
-            "DARE: Show everyone your skincare routine products and explain them.",
-            "DARE: Let someone go through your TikTok favorites.",
-            "DARE: Share your Notes app to-do list or random notes.",
-            "DARE: Show your phone's widget screen and explain your choices.",
-            "DARE: Do your best 'main character moment' walk and pose.",
-            "DARE: Let someone read your Goodreads or book app reviews.",
-            "DARE: Show the group your Depop/Poshmark likes or purchases.",
-            "DARE: Demonstrate how you pose when someone says 'act natural' for a photo.",
-            "DARE: Share your wellness or cycle tracking app and current mood."
-        ];
-
-        const naughtyQuestions = [
-            "Who in this room do you think is secretly the most dominant in bed?",
-            "Point to someone in this room: What's the first dirty thought you had about them tonight?",
-            "Who in this room looks like they give the best head? Explain your reasoning.",
-            "If you had to sleep with two people in this room at the same time, who would it be and why?",
-            "Who in this room do you think has the biggest dick/biggest ass? Don't hold back.",
-            "Look around the room: Who do you think is into getting choked?",
-            "Who in this room would you most want to watch you masturbate?",
-            "Point to someone: What position would you want them to put you in first?",
-            "Who in this room do you think has the dirtiest porn search history?",
-            "If you could have anyone in this room go down on you right now, who would it be?",
-            "Who in this room do you think screams the loudest during sex?",
-            "Who here would you let tie you up, and what would you want them to do?",
-            "Which person in this room would you most want to receive a lap dance from?",
-            "Who in this room looks like they're into anal? Be honest.",
-            "Point to someone in this room you'd let fuck you in the bathroom right now.",
-            "Who here do you think has the highest body count and why?",
-            "Who in this room would you want to have a threesome with your partner?",
-            "Who here looks like they can last the longest in bed?",
-            "Point to someone: describe exactly what you'd do to them if the lights went out.",
-            "Who in this room would you most want to have angry, aggressive sex with?",
-            "Who here do you think is the biggest freak when the doors close?",
-            "If you had to fuck, marry, or kill three people in this room, who would they be?",
-            "Who in this room would you let record you during sex?",
-            "Point to someone who you think gives the nastiest dirty talk.",
-            "Who here would you want to have a one-night stand with, no strings attached?",
-            "Who in this room do you think has sent the most nudes?",
-            "Look around: who would you let finish on your face?",
-            "Who here looks like they're into role-playing in the bedroom?",
-            "Point to someone you'd want to make out with aggressively right now.",
-            "Who in this room do you think has the prettiest moans?",
-            "Who here would you want to dominate you completely?",
-            "If you could watch anyone in this room have sex, who would it be?",
-            "Who in this room would you let use toys on you?",
-            "Point to someone who you think fucks on the first date.",
-            "Who here do you think has the wettest pussy/hardest dick right now?",
-            "Who in this room would you want to wake up to going down on you?",
-            "Look around: who would you let spank you until you cry?",
-            "Who here looks like they swallow?",
-            "Point to someone you'd want to sit on your face immediately.",
-            "Who in this room would you want to pin you against the wall?",
-            "Who here do you think has tried the kinkiest shit?",
-            "If you had to let someone in this room walk in on you naked, who would you choose?",
-            "Who in this room would you want to share a shower with?",
-            "Point to someone who you think could make you cum the fastest.",
-            "Who here would you want to have rough, primal sex with?",
-            "Who in this room looks like they eat ass?",
-            "If you could only fuck one person in this room for the rest of your life, who?",
-            "Who here would you let control your orgasms for a week?",
-            "Point to someone in this room whose nudes you'd most want to see.",
-            "Who here do you think has the best stroke game?",
-            "DARE: Point to someone in this room and tell them exactly what you'd do to them if you were alone together.",
-            "DARE: Choose someone in this room to give you a sensual 30-second neck or shoulder massage.",
-            "DARE: Pick someone in this room and whisper the dirtiest thing you've thought about them tonight.",
-            "DARE: Stand up and demonstrate on someone how you like to be kissed.",
-            "DARE: Choose someone to sit on your lap for the next two rounds.",
-            "DARE: Pick someone in this room and describe their moans based on vibes alone.",
-            "DARE: Choose someone and trace your finger along their collarbone while maintaining eye contact.",
-            "DARE: Point to someone and tell them which position you'd put them in first.",
-            "DARE: Pick two people in this room and explain why they'd be your perfect threesome.",
-            "DARE: Choose someone to blindfold you and feed you something sensually.",
-            "DARE: Select someone in the room and tell everyone what you think their body count is.",
-            "DARE: Pick someone and demonstrate how you'd seduce them at a bar.",
-            "DARE: Choose someone to exchange a piece of clothing with for the next 10 minutes.",
-            "DARE: Point to someone and describe exactly where you'd want to kiss them first.",
-            "DARE: Pick someone and tell them your most vivid sexual fantasy involving them - be specific.",
-            "DARE: Choose someone to whisper in your ear what they'd do to you - then share it with the group.",
-            "DARE: Select someone and maintain intense eye contact while you slowly lick your lips for 15 seconds.",
-            "DARE: Pick someone in this room and describe what you think their 'O face' looks like.",
-            "DARE: Choose someone to demonstrate your favorite make-out technique on (hand or similar).",
-            "DARE: Point to someone and tell them the first body part of theirs you'd want to touch.",
-            "DARE: Pick someone and tell them what you'd name your sex tape together.",
-            "DARE: Choose someone to give you a body shot (simulated or real).",
-            "DARE: Select someone and tell everyone what you think they're like in bed based on their energy.",
-            "DARE: Pick someone and describe in detail the outfit you'd want to rip off them.",
-            "DARE: Choose someone to feed you a piece of food as sensually as possible.",
-            "DARE: Point to someone and confess what you've noticed about their body tonight.",
-            "DARE: Pick someone and tell them the exact location on their body you'd leave a hickey.",
-            "DARE: Choose someone to give you a lap dance for 20 seconds (or demonstrate the moves).",
-            "DARE: Select someone and describe the sexual tension you feel between you two.",
-            "DARE: Pick someone and tell them what toy you'd use on them.",
-            "DARE: Choose someone to sit between your legs for the next round.",
-            "DARE: Point to someone and describe how you'd dominate or submit to them.",
-            "DARE: Pick someone and tell them exactly what underwear you think they're wearing.",
-            "DARE: Choose someone to slow dance with you for 30 seconds, as close as possible.",
-            "DARE: Select someone and whisper something that would make them blush immediately.",
-            "DARE: Pick someone and rate their fuck-ability out of 10, then explain your rating.",
-            "DARE: Choose someone to bite your lip gently while making eye contact.",
-            "DARE: Point to someone and tell them what role they'd play in your ideal orgy.",
-            "DARE: Pick someone and demonstrate how you'd grind on them at a club.",
-            "DARE: Choose someone and confess the first dirty thought you had when you met them."
-        ];
-
-        // ── GAME STATE ────────────────────────────────────────────────────────────
-        let currentDeck = [], remainingCardsCount = 0, deckType = '';
-        let players = [], currentPlayerIndex = 0, selectedDeckForModal = '';
-        let isSwiping = false, swipeStartX = 0, swipeStartY = 0, swipeThreshold = 50;
-
-        const DECK_PROPERTIES = {
-            romantic:   { icon: 'heart',    title: 'Romantic Deck™',     colorVar: 'var(--color-romantic)' },
-            platonic:   { icon: 'handshake', title: 'Platonic Deck™',    colorVar: 'var(--color-platonic)' },
-            naughty:    { icon: 'flame',     title: 'Naughty Deck™',     colorVar: 'var(--color-naughty)'  },
-            girlsnight: { icon: 'users-2',   title: "Girls' Night Deck™", colorVar: 'var(--color-girls)'   }
-        };
-
-        function getDeckQuestions(t) {
-            return { romantic: romanticQuestions, platonic: platonicQuestions, naughty: naughtyQuestions, girlsnight: girlsNightQuestions }[t] || [];
-        }
-        function getDeckInfo(t) { return DECK_PROPERTIES[t] || {}; }
-        function shuffleArray(a) {
-            for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i+1)); [a[i],a[j]] = [a[j],a[i]]; }
-            return a;
-        }
-
-        // ── PLAYERS ───────────────────────────────────────────────────────────────
-        function addPlayer(name) {
-            if (name && !players.includes(name)) { players.push(name); renderPlayers(); }
-            document.getElementById('playerNameInput').value = '';
-        }
-        window.removePlayer = n => { players = players.filter(p => p !== n); renderPlayers(); };
-        function renderPlayers() {
-            document.getElementById('playersList').innerHTML = players.length === 0
-                ? '<p class="text-gray-500 text-center py-4">No players added yet</p>'
-                : players.map(p => `<div class="player-item"><span class="text-white font-medium">${p}</span><button class="btn-remove" onclick="removePlayer('${p}')">Remove</button></div>`).join('');
-            document.getElementById('playerCount').textContent = players.length;
-            document.getElementById('startGameBtn').disabled = players.length < 2;
-        }
-        function getCurrentPlayer() { return players.length ? players[currentPlayerIndex % players.length] : null; }
-        function advancePlayer() { currentPlayerIndex++; }
-
-        // ── MODALS ────────────────────────────────────────────────────────────────
-        window.showPlayerModal   = () => { document.getElementById('playerModal').style.display = 'flex'; };
-        window.hidePlayerModal   = () => { document.getElementById('playerModal').style.display = 'none'; };
-        window.showDeckModal     = () => {
-            document.getElementById('deckModal').style.display = 'flex';
-            document.querySelectorAll('.deck-option').forEach(o => o.classList.remove('active'));
-            document.getElementById('confirmDeckBtn').disabled = true;
-            selectedDeckForModal = '';
-        };
-        window.hideDeckModal     = () => { document.getElementById('deckModal').style.display = 'none'; };
-        window.showSettingsModal = () => { document.getElementById('settingsModal').style.display = 'flex'; };
-        window.hideSettingsModal = () => { document.getElementById('settingsModal').style.display = 'none'; };
-
-        // ── CARD RENDERING ────────────────────────────────────────────────────────
-        function updateCardCount() {
-            document.getElementById('remainingCount').textContent = remainingCardsCount;
-            document.getElementById('drawButton').disabled = remainingCardsCount === 0;
-        }
-        function getCardBackHtml() {
-            const c = getDeckInfo(deckType).colorVar || '#888';
-            return `<div class="card-back flex items-center justify-center p-6 z-0"><div class="text-center opacity-70"><i data-lucide="lightbulb" class="w-10 h-10 mx-auto mb-3" style="color:${c};"></i><h3 class="text-2xl font-bold text-white game-title">Deeper-Decks</h3><p class="text-sm font-medium mt-1 text-gray-400">The Card Game</p></div></div>`;
-        }
-        function createCardElement(question) {
-            const isDare = question.startsWith("DARE:");
-            const content = isDare ? question.substring(5).trim() : question;
-            const info = getDeckInfo(deckType);
-            const cardNumber = 90 - currentDeck.length;
-            const player = getCurrentPlayer();
-            return `<div class="card-front flex flex-col justify-between p-8 sm:p-12 w-full h-full text-center z-10">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="font-light text-base opacity-70">#${cardNumber}/90</span>
-                    <div class="card-header-chip text-white" style="background-color:${info.colorVar};"><i data-lucide="${isDare?'zap':info.icon}" class="w-4 h-4 inline -mt-0.5 mr-1"></i>${isDare?'DARE':'QUESTION'}</div>
+            <!-- STATS row -->
+            <div style="display:flex;gap:0.75rem;margin-bottom:0.5rem;">
+                <div style="flex:1;text-align:center;">
+                    <div class="stat-mini-val" id="remainingCount" style="font-size:1.1rem;">90</div>
+                    <div class="stat-mini-label" style="font-size:0.68rem;">Left</div>
                 </div>
-                ${player ? `<div class="flex justify-center mb-4"><div class="player-badge" style="background-color:${info.colorVar};"><i data-lucide="user" class="w-4 h-4"></i><span>${player}</span></div></div>` : ''}
-                <div class="card-content-area px-0 min-h-[140px]"><p class="card-question-text text-gray-900">${content}</p></div>
-                <div class="text-xs text-right text-gray-500 mt-6 pt-3 border-t border-gray-100">${info.title}</div>
-            </div>`;
-        }
-        function showEmptyDeckCard() {
-            const cc = document.getElementById('cardContainer');
-            cc.innerHTML = getCardBackHtml();
-            cc.insertAdjacentHTML('beforeend', `<div class="empty-card card-front flex flex-col justify-center items-center p-6 text-center z-10"><i data-lucide="rotate-ccw" class="w-12 h-12 mb-4" style="color:${getDeckInfo(deckType).colorVar};"></i><p class="text-2xl font-bold text-gray-900">Deck Complete!</p><p class="text-lg text-gray-600 mt-2">Time to shuffle for a new round.</p></div>`);
-            if (window.createIcons) window.createIcons();
-        }
+                <div style="flex:1;text-align:center;">
+                    <div class="stat-mini-val" id="drawnCount" style="font-size:1.1rem;">0</div>
+                    <div class="stat-mini-label" style="font-size:0.68rem;">Drawn</div>
+                </div>
+                <div style="flex:1;text-align:center;">
+                    <div class="stat-mini-val stat-skips" id="skippedCount" style="font-size:1.1rem;">0</div>
+                    <div class="stat-mini-label" style="font-size:0.68rem;">Skipped</div>
+                </div>
+            </div>
 
-        // ── SWIPE ─────────────────────────────────────────────────────────────────
-        function handleSwipe(sx, sy, ex, ey) {
-            const dX = ex - sx;
-            if (Math.abs(dX) > Math.abs(ey - sy) && Math.abs(dX) > swipeThreshold) {
-                dX > 0 ? initializeDeck(deckType) : (!document.getElementById('drawButton').disabled && drawCard());
-            }
-        }
-        function addSwipeZone() {
-            const cc = document.getElementById('cardContainer');
-            const card = cc.querySelector('.card-front');
-            if (!card) return;
-            const zone = document.createElement('div');
-            zone.className = 'swipe-zone';
-            const onStart = (x, y) => { isSwiping = true; swipeStartX = x; swipeStartY = y; };
-            const onMove  = x => { if (isSwiping) { const d = x - swipeStartX; if (Math.abs(d) > 10) card.style.transform = `translateX(${d*.5}px) rotate(${d*.05}deg)`; } };
-            const onEnd   = (x, y) => { if (!isSwiping) return; isSwiping = false; card.style.transform = ''; handleSwipe(swipeStartX, swipeStartY, x, y); };
-            zone.addEventListener('touchstart',  e => { onStart(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, { passive: false });
-            zone.addEventListener('touchmove',   e => { onMove(e.touches[0].clientX); e.preventDefault(); }, { passive: false });
-            zone.addEventListener('touchend',    e => { onEnd(e.changedTouches[0].clientX, e.changedTouches[0].clientY); e.preventDefault(); }, { passive: false });
-            zone.addEventListener('mousedown',   e => { onStart(e.clientX, e.clientY); e.preventDefault(); });
-            zone.addEventListener('mousemove',   e => { onMove(e.clientX); });
-            zone.addEventListener('mouseup',     e => { onEnd(e.clientX, e.clientY); });
-            zone.addEventListener('mouseleave',  () => { if (isSwiping) { isSwiping = false; card.style.transform = ''; } });
-            cc.appendChild(zone);
-        }
+            <!-- HEAT METER -->
+            <div id="heatMeter" style="margin-bottom:0.5rem;">
+                <div class="heat-row">
+                    <span class="heat-label">Heat</span>
+                    <div class="heat-bar-outer"><div class="heat-bar-inner" id="heatBarFill" style="width:3%;background:#48BB78;"></div></div>
+                    <span class="heat-emoji" id="heatEmoji">🌱</span>
+                </div>
+                <div id="heatLevelLabel" style="font-size:0.65rem;text-align:right;color:rgba(0,0,0,0.35);">Warm Up</div>
+            </div>
 
-        // ── DRAW ──────────────────────────────────────────────────────────────────
-        function drawCard() {
-            const cc = document.getElementById('cardContainer');
-            if (!currentDeck.length) { showEmptyDeckCard(); updateCardCount(); return; }
-            const { question } = currentDeck.pop();
-            remainingCardsCount = currentDeck.length;
-            const old = cc.querySelector('.card-front, .empty-card');
-            const next = createCardElement(question);
-            if (old) {
-                cc.querySelector('.swipe-zone')?.remove();
-                old.classList.add('card-slide-out-right');
-                setTimeout(() => { old.remove(); cc.insertAdjacentHTML('beforeend', next); addSwipeZone(); updateCardCount(); if (window.createIcons) window.createIcons(); if (players.length) advancePlayer(); }, 400);
-            } else {
-                cc.insertAdjacentHTML('beforeend', next); addSwipeZone(); updateCardCount(); if (window.createIcons) window.createIcons(); if (players.length) advancePlayer();
-            }
-        }
+            <!-- CARD FILTER -->
+            <div class="card-filter-row">
+                <button class="filter-btn active all" id="filterAll" onclick="setCardFilter('all')">🃏 All</button>
+                <button class="filter-btn q" id="filterQ" onclick="setCardFilter('questions')">❓ Questions</button>
+                <button class="filter-btn d" id="filterD" onclick="setCardFilter('dares')">⚡ Dares</button>
+            </div>
 
-        // ── INITIALIZE DECK ───────────────────────────────────────────────────────
-        function initializeDeck(type) {
-            deckType = type.toLowerCase();
-            const info = getDeckInfo(deckType);
-            currentDeck = shuffleArray(getDeckQuestions(deckType).map((q, i) => ({ question: q, i })));
-            remainingCardsCount = currentDeck.length;
-            document.getElementById('deckTitle').textContent = info.title;
-            const cc = document.getElementById('cardContainer');
-            cc.classList.add('shuffling');
-            cc.querySelector('.swipe-zone')?.remove();
-            cc.innerHTML = getCardBackHtml();
-            cc.insertAdjacentHTML('beforeend', `<div class="card-front flex flex-col justify-center items-center p-6 text-center z-10" style="background-color:${info.colorVar};"><div class="text-center text-white"><i data-lucide="star" class="w-10 h-10 mx-auto mb-4"></i><h3 class="text-3xl font-bold text-white">${info.title}</h3><p class="text-md font-medium mt-2 text-white">90 Cards Ready</p>${players.length ? `<p class="text-sm mt-2 opacity-90">${players.length} players joined</p>` : ''}</div></div>`);
-            addSwipeZone(); updateCardCount();
-            if (window.createIcons) window.createIcons();
-            setTimeout(() => cc.classList.remove('shuffling'), 1000);
-            hideDeckModal();
-        }
+            <!-- TIMER -->
+            <div id="timerWrap">
+                <div class="timer-bar-outer"><div class="timer-bar-inner" id="timerBar"></div></div>
+                <div class="timer-num" id="timerNum">30</div>
+            </div>
 
-        // ── DARK MODE ─────────────────────────────────────────────────────────────
-        function applyDarkMode(on) {
-            document.body.classList.toggle('dark-mode', on);
-            document.body.style.backgroundColor = on ? '#121212' : '';
-            document.body.style.color = on ? '#FFFFFF' : '';
-        }
+            <!-- MAIN BUTTONS -->
+            <button id="drawButton" class="btn-action py-3 text-base font-bold tracking-wide uppercase w-full mb-1">Draw Next Card</button>
 
-        // ── SIDEBAR ───────────────────────────────────────────────────────────────
-        function initSidebar() {
-            const btn = document.getElementById('hamburgerButton');
-            const overlay = document.getElementById('sidebarOverlay');
-            const menu = document.getElementById('sidebarMenu');
-            btn.style.display = 'flex';
-            const open  = () => { menu.classList.add('active'); overlay.classList.add('active'); btn.classList.add('active'); document.body.style.overflow = 'hidden'; };
-            const close = () => { menu.classList.remove('active'); overlay.classList.remove('active'); btn.classList.remove('active'); document.body.style.overflow = ''; };
-            btn.addEventListener('click', () => menu.classList.contains('active') ? close() : open());
-            document.getElementById('closeSidebar').addEventListener('click', close);
-            overlay.addEventListener('click', close);
-            document.getElementById('sidebarManagePlayers').addEventListener('click', () => { close(); showPlayerModal(); });
-            document.getElementById('sidebarChangeDeck').addEventListener('click',  () => { close(); showDeckModal(); });
-            document.getElementById('sidebarSettings').addEventListener('click',    () => { close(); showSettingsModal(); });
-        }
+            <!-- SKIP -->
+            <button id="skipButton" class="w-full btn-action btn-shuffle mb-1" style="display:flex;flex-direction:column;align-items:center;gap:1px;padding:10px 20px;">
+                <span>⏭ Skip This Card</span>
+                <span class="shame-label" id="shameLabel"></span>
+            </button>
 
-        // ── INTRO ─────────────────────────────────────────────────────────────────
-        // FIX 1: force a reflow before setting width so the CSS transition fires.
-        // FIX 2: called directly from DOMContentLoaded with no dependency on the module.
-        function startIntro() {
-            const bar = document.getElementById('rainbowProgressBar');
-            // Reflow trick: reading any layout property forces the browser to commit
-            // the current style (width:0), so the subsequent change to width:100%
-            // is seen as an animated transition rather than an instant jump.
-            bar.getBoundingClientRect();
-            bar.style.width = '100%';
+            <!-- WILDCARD + HISTORY -->
+            <div style="display:flex;gap:0.4rem;margin-bottom:0.5rem;">
+                <button class="btn-wildcard" style="flex:1;" onclick="drawWildcard()">🎲 Wildcard</button>
+                <button class="btn-history-sm" onclick="openHistory()">📖 History</button>
+            </div>
 
-            setTimeout(() => {
-                const intro = document.getElementById('introScreen');
-                intro.style.opacity = '0';
-                setTimeout(() => {
-                    intro.style.display = 'none';
-                    showPlayerModal();
-                }, 600);
-            }, 2300); // wait for bar animation (1.8s) + a little breathing room
-        }
+            <!-- DARE VOTE -->
+            <div id="dareVote">
+                <div class="vote-label">🗳 Did they actually do the dare?</div>
+                <div class="vote-btns">
+                    <button class="vote-btn yes" onclick="castVote('yes')">✅ They did it!</button>
+                    <button class="vote-btn no"  onclick="castVote('no')">❌ Chickened out</button>
+                </div>
+                <div class="vote-tally" id="voteTally"></div>
+            </div>
 
-        // ── BOOT ──────────────────────────────────────────────────────────────────
-        document.addEventListener('DOMContentLoaded', () => {
-            initSidebar();
+            <!-- SHUFFLE + PAUSE -->
+            <button id="shuffleButton" class="w-full btn-action btn-shuffle mt-1">🔀 Re-Shuffle</button>
+            <button onclick="pauseGame()" class="w-full btn-action btn-shuffle mt-1">⏸ Pause</button>
+        </section>
 
-            // Player modal inputs
-            document.getElementById('addPlayerBtn').addEventListener('click', () => {
-                const v = document.getElementById('playerNameInput').value.trim(); if (v) addPlayer(v);
-            });
-            document.getElementById('playerNameInput').addEventListener('keypress', e => {
-                if (e.key === 'Enter') { const v = e.target.value.trim(); if (v) addPlayer(v); }
-            });
-            document.getElementById('startGameBtn').addEventListener('click', () => {
-                if (players.length >= 2) { hidePlayerModal(); showDeckModal(); }
-            });
+        <!-- RIGHT: CARD AREA -->
+        <section class="lg:w-2/3 flex flex-col items-center order-1 lg:order-2">
 
-            // Deck modal
-            document.querySelectorAll('.deck-option').forEach(opt => {
-                opt.addEventListener('click', () => {
-                    document.querySelectorAll('.deck-option').forEach(o => o.classList.remove('active'));
-                    opt.classList.add('active');
-                    selectedDeckForModal = opt.dataset.deck;
-                    document.getElementById('confirmDeckBtn').disabled = false;
-                });
-            });
-            document.getElementById('confirmDeckBtn').addEventListener('click', () => {
-                if (!selectedDeckForModal) return;
-                const mg = document.getElementById('mainGame');
-                mg.style.display = 'block';
-                setTimeout(() => { mg.style.opacity = '1'; initializeDeck(selectedDeckForModal); }, 50);
-            });
+            <!-- PASS PHONE BANNER -->
+            <div id="passBanner" class="w-full mb-2" style="max-width:300px;">
+                <div class="pass-icon">📱</div>
+                <div class="pass-info">
+                    <div class="pass-player-name" id="passPlayerName">Player 1</div>
+                    <div class="pass-player-sub">Pass the phone — it's your turn!</div>
+                </div>
+                <button class="btn-got-it" onclick="acknowledgeTurn()">Got it ✓</button>
+            </div>
 
-            // Settings
-            document.getElementById('closeSettingsBtn').addEventListener('click', () => {
-                const s = document.getElementById('swipeSensitivity').value;
-                swipeThreshold = s === 'low' ? 100 : s === 'high' ? 30 : 50;
-                applyDarkMode(document.getElementById('themeSelect').value === 'dark');
-                hideSettingsModal();
-            });
+            <div id="cardContainer" class="relative flex-shrink-0 card-stack-container">
+                <div class="card-stack-shadow"></div>
+            </div>
+            <div class="swipe-instruction">← draw &nbsp;|&nbsp; → shuffle</div>
+        </section>
+    </main>
+</div>
 
-            // Game buttons
-            document.getElementById('drawButton').addEventListener('click', drawCard);
-            document.getElementById('shuffleButton').addEventListener('click', () => initializeDeck(deckType));
+<script>
+// ══════════════════════════════════════════════════════════════
+//  DECK DATA — 90 cards each, rewritten for physicality + heat
+// ══════════════════════════════════════════════════════════════
+const DECKS = {
+  romantic: [
+    // ── TIER 1: Warm-Up ──
+    "What's one thing about our dynamic you've never said out loud before?",
+    "What small thing do I do that makes you feel genuinely seen?",
+    "What moment made you think 'I actually really like this person'?",
+    "What's a question you've wanted to ask me but haven't yet?",
+    "What makes you feel most like yourself when you're with me?",
+    "What scared you about opening up to me at first?",
+    "What's your idea of a perfect night in — describe it fully.",
+    "What's something you want us to experience together that we haven't?",
+    "What does feeling truly loved feel like in your body?",
+    "What's a tradition you'd want to start with me?",
+    "What's the last thing that made you tear up a little?",
+    "How do you know when you trust someone completely?",
+    "What's something you're really proud of that I don't know about?",
+    "What does 'home' feel like to you — be specific?",
+    "What's a quality I have that genuinely surprised you?",
+    "What's your favorite memory of us so far?",
+    "What's something you've always wanted to learn or try?",
+    "What makes you feel most appreciated in a relationship?",
+    // ── TIER 2: Getting Real ──
+    "Look me in the eyes right now and tell me the first thing you thought about me tonight.",
+    "When do you feel most vulnerable around me — be specific, don't generalize.",
+    "Tell me about a moment you wanted to kiss me but held back.",
+    "What part of yourself do you still keep protected from me?",
+    "What's something you've been holding back from telling me, and why?",
+    "Describe the exact moment you knew this was real for you.",
+    "What's a fear you have about where we're going together?",
+    "What's something you need from me that you haven't asked for yet?",
+    "When do you feel most disconnected from me and what usually causes it?",
+    "Tell me about a time I made you feel truly wanted.",
+    "What's the hardest thing you've ever let yourself want from another person?",
+    "What would you want me to do differently when you're upset?",
+    "Tell me what it actually feels like in your body when I hold your hand.",
+    "What's a side of yourself you only let me see?",
+    "What do you think about when you can't sleep and I'm next to you?",
+    "What's something that used to feel impossible that I've made feel safer?",
+    "What's one thing you hope we never stop doing together?",
+    "What's a goal you have and how can I actually support you in it?",
+    // ── TIER 3: Electric ──
+    "Tell me what you want me to do to you tonight. Say it out loud right now.",
+    "Where on your body do you want me to touch you first — right now?",
+    "Describe in detail how you want to be kissed right now.",
+    "Tell me what you're thinking about my body in this exact moment.",
+    "What's something physical you've been craving from me?",
+    "Tell me about a fantasy involving us that you've kept to yourself.",
+    "What turns you on that you've never told me?",
+    "Describe exactly where you want my hands when we're close.",
+    "What do you want me to whisper to you when we're alone later?",
+    "What's the most electric physical moment we've had together?",
+    "Tell me one thing you want to try with me — don't filter it.",
+    "What do you want me to do to you with the lights off?",
+    "Tell me what you look like when you completely let go.",
+    "What would you do to me right now if we were completely alone?",
+    "Describe the fantasy you think about when you think about us.",
+    "What makes you feel most wanted — be explicit, not vague.",
+    "What's something physical you've imagined us doing that we haven't yet?",
+    "Tell me what you need from me physically that I haven't given you yet.",
+    // ── DARES: Mild ──
+    "DARE: Hold my face in both hands and look at me for 30 full seconds. Don't look away.",
+    "DARE: Say out loud the first physical thing you noticed about me.",
+    "DARE: Put your head in my lap right now and stay there for the next two rounds.",
+    "DARE: Trace a letter on my arm with your fingertip slowly. I have to guess what you wrote.",
+    "DARE: Hold my hand for the next three cards without letting go once.",
+    "DARE: Tell the group one thing you love about the person to your left — make it real and specific.",
+    // ── DARES: Medium ──
+    "DARE: Whisper something you've been wanting to say to me. Then say it louder so everyone hears.",
+    "DARE: Kiss my shoulder right now. Don't overthink it.",
+    "DARE: Put your arms around me from behind and stay there for a full minute.",
+    "DARE: Tell me exactly how you feel about me right now — out loud, no edits.",
+    "DARE: Slow dance with me for 60 seconds. No music needed. Go.",
+    "DARE: Sit in my lap for the next three rounds.",
+    // ── DARES: Heated ──
+    "DARE: Kiss me wherever you want to right now. No warning, no asking.",
+    "DARE: Tell everyone in this room exactly what you want to do to me later tonight.",
+    "DARE: Bite my earlobe gently, then tell me out loud if you want to do it again.",
+    "DARE: Pull me close and breathe on my neck for 20 seconds without saying a word.",
+    "DARE: Tell me one thing you want me to do to you before this night ends.",
+    "DARE: Run your hand along my leg from knee to hip. Right now. Slowly."
+  ],
 
-            // Default players
-            addPlayer('Player 1');
-            addPlayer('Player 2');
+  platonic: [
+    // ── TIER 1 ──
+    "What's the weirdest thing you genuinely believe that you rarely say out loud?",
+    "What's a friendship you lost that you still think about?",
+    "What's the most embarrassing thing in your camera roll right now?",
+    "What's the most cringe thing your past self did that you still shudder at?",
+    "What's a habit you have that would horrify your parents?",
+    "What's the dumbest reason you've ever ended a friendship?",
+    "What's something you do at home you'd die if anyone saw?",
+    "What's your most unhinged 2 AM search history topic?",
+    "What's the worst text you've sent and immediately wished you could unsend?",
+    "What's the pettiest thing you've done and genuinely won't apologize for?",
+    "What's a lie you've told so many times you almost believe it?",
+    "What's a genuine character flaw you've just fully accepted about yourself?",
+    "What's the most pathetic thing you've done for attention from someone?",
+    "What's a secret skill or hobby you're embarrassed to admit you love?",
+    "What's a movie or song you cry to but tell absolutely no one about?",
+    "What's the most desperate thing you've ever done to seem cool?",
+    "What's a red flag in yourself that you're still pretending isn't there?",
+    "What's a phase you went through that you genuinely cannot explain?",
+    // ── TIER 2 ──
+    "What's the most dishonest thing you've done that no one here knows about?",
+    "What's a friendship boundary you've crossed that still bothers you?",
+    "Who here would you actually call at 3 AM if something went wrong — and be honest why?",
+    "What's something you've done that would genuinely shock the people in this room?",
+    "What's a grudge you're still holding that you know you should let go?",
+    "What's the most selfish thing you've done disguised as an act of kindness?",
+    "Tell everyone your most embarrassing moment that no one in this room knows.",
+    "What's something you've said behind someone's back you'd never say to their face?",
+    "What's a belief you had about yourself that turned out to be completely wrong?",
+    "What's something you're secretly competitive about that would surprise people?",
+    "What's a truth about yourself that's genuinely hard to say out loud?",
+    "What's a moment where you disappointed yourself badly — what happened?",
+    "What's the pettiest thought you actually had today — be honest?",
+    "What's something that happened years ago you still haven't forgiven yourself for?",
+    "What's a relationship, friendship or romantic, that genuinely changed who you are?",
+    "What's a boundary you pretend to have but fold on every single time?",
+    "What's something you're genuinely bad at that you've never admitted out loud?",
+    "What's a thing you've never told your parents and probably never will?",
+    // ── TIER 3 ──
+    "What's the most chaotic thing you've ever done while completely sober?",
+    "Read the last text you sent your ex out loud. Right now. Go.",
+    "Tell us the most embarrassing reason you've ever ghosted someone.",
+    "Tell us about a time you lied your way out of something serious.",
+    "What's the thing you've done that you're most ashamed of?",
+    "What's your actual body count — say the number out loud to the room.",
+    "What would genuinely blow up your reputation if it became public right now?",
+    "Who in this room are you most intimidated by and why?",
+    "Tell us about a time you were genuinely cruel to someone.",
+    "What's a secret you've kept from your best friend?",
+    "What's the most embarrassing thing you've said or done while drunk?",
+    "Tell the group something about your last relationship you've never admitted.",
+    "What's something you've done you'd never want your closest friend to find out?",
+    "What's a dark thought you have regularly that you know isn't rational?",
+    "What's a moment where you knew you were being a terrible person but kept going?",
+    "What's the most unhinged behavior you've ever done over someone you liked?",
+    "What's the most embarrassing truth about your love life right now?",
+    "What's the most messed up thing you've thought about someone in this room?",
+    // ── DARES: Mild ──
+    "DARE: Open your camera roll, scroll to a random photo and show the room. No skipping allowed.",
+    "DARE: Show everyone your most recent DM thread — the whole thing.",
+    "DARE: Do a 60-second impression of the person to your right. Make it uncomfortably accurate.",
+    "DARE: Show your screen time report. Read the top three apps out loud.",
+    "DARE: Let someone go through your notes app for 45 seconds.",
+    "DARE: Everyone in the room types a message to your ex and you choose which one actually gets sent.",
+    // ── DARES: Medium ──
+    "DARE: Call a random contact and stay on the line for 30 seconds saying absolutely nothing.",
+    "DARE: Post whatever the person to your left types as your next story. No preview, no veto.",
+    "DARE: Do a full dramatic performance of your worst breakup — act both roles yourself.",
+    "DARE: Let someone write any caption and post it to your Instagram right now.",
+    "DARE: Read your most embarrassing saved voice memo out loud to the room.",
+    "DARE: Let everyone look at your Spotify Wrapped — all of it, no hiding.",
+    // ── DARES: Chaos ──
+    "DARE: The group picks one contact to text 'we need to talk.' You send it. Read the response out loud.",
+    "DARE: Let someone read your last Google search out loud in the most dramatic voice they can do.",
+    "DARE: Post a selfie with zero filter, zero editing, right now.",
+    "DARE: Read the last five things in your clipboard out loud.",
+    "DARE: Everyone picks an emoji to describe your energy tonight and explains their choice.",
+    "DARE: Demonstrate — without words — exactly how you act when you're into someone."
+  ],
 
-            // Kick off the intro — no module dependency, always fires correctly
-            startIntro();
-        });
-    </script>
+  girlsnight: [
+    // ── TIER 1 ──
+    "Rank everyone in this room by who you'd trust with your phone fully unlocked.",
+    "What's a text you wrote, almost sent, but deleted — describe it in full.",
+    "What's the most embarrassing thing you've done to look hot for someone?",
+    "Who's the situationship that still lives rent-free in your head?",
+    "What's the most dramatic thing you've done post-breakup?",
+    "Tell us about the worst situationship you let drag on way too long.",
+    "What's the most obvious red flag you pretended wasn't there?",
+    "Describe the worst date you've ever been on — spare nothing.",
+    "What's the most pathetic thing you've done to get a guy's attention?",
+    "What's a lie you told a guy that you're genuinely a little proud of?",
+    "What's the most embarrassing thing that's happened to you in front of a guy?",
+    "What's something a girl here did that you low-key respected but would never admit?",
+    "What's your most embarrassing autocorrect fail — to a crush?",
+    "What's the most unhinged Googling-an-ex moment you've had?",
+    "What's the most cringe thing you've posted, immediately deleted, and hoped no one saw?",
+    "What's your most shameful thirst trap moment?",
+    "What's a friendship fallout you genuinely haven't gotten over?",
+    "What's your most embarrassing 'read the room' fail around a guy?",
+    // ── TIER 2 ──
+    "Be honest: which girl in this room do you think has the best dating life right now and why?",
+    "What's the shadiest thing you've done to another girl over a guy?",
+    "Tell the group about your messiest situationship — what actually happened?",
+    "What's your most unhinged 'is he ignoring me' spiral behavior?",
+    "Who in this room do you think would crack first in a relationship — genuinely?",
+    "What's a personality trait you have that makes you a difficult girlfriend?",
+    "What's a friendship red flag you have that you've never owned up to?",
+    "Tell us about a time you chose a guy over a friend. Looking back — was it worth it?",
+    "What's your most toxic attachment behavior that you're still doing?",
+    "What's a truth about yourself in relationships you're only just starting to admit?",
+    "Tell us about a moment you knew a relationship was over but stayed anyway.",
+    "What's the last guy you actually cried over — what went wrong?",
+    "What's something about yourself you're scared to bring into a relationship?",
+    "What's your most embarrassing thing you've done for validation online?",
+    "What's a boundary you claim to have but fold on immediately every single time?",
+    "What's something you've done online that you'd be mortified if he found out about?",
+    "What's the pettiest reason you've ever cut someone off?",
+    "Tell us the most embarrassing thing you've done while tipsy on a night out.",
+    // ── TIER 3 ──
+    "Tell us what happened on your wildest night out — the real unfiltered version.",
+    "What's your actual body count? Say the number. Right now. Out loud.",
+    "Who in this room do you think is the best in bed based purely on vibe — and why?",
+    "What's the most explicit thing you've ever sent someone?",
+    "What's a sexual preference you have that surprises people to find out?",
+    "Tell us about your most physically intense encounter.",
+    "Who in this room do you think is secretly going through it romantically right now?",
+    "What's a sexual experience you'd never repeat — and why?",
+    "What's something you do in bed you've never told anyone about?",
+    "What's the most daring place you've ever hooked up?",
+    "Tell us about the time you were most attracted to someone you absolutely shouldn't have been.",
+    "What's your sexual dealbreaker that's very specific and sounds kind of unhinged?",
+    "Tell us one thing about your sex life your friends would actually be shocked by.",
+    "What's the most jealous you've ever been and what did you do about it?",
+    "What's the most confident you've felt in your body — what caused it?",
+    "Who's the one person you'd call right now if you wanted to ruin your own evening?",
+    "What's the most embarrassing fantasy you've had about someone real that you know?",
+    "What's the most unhinged thing you've done for a guy that you're lowkey proud of?",
+    // ── DARES: Mild ──
+    "DARE: All of you open your DMs — the person to your left reads the first unread message out loud.",
+    "DARE: Find a photo from the last 30 days in your camera roll and explain it fully to the room.",
+    "DARE: Do a full runway walk across the room like you just spotted your ex and you look incredible.",
+    "DARE: Everyone assigns you a Love Island persona. You have to accept it with zero argument.",
+    "DARE: Make everyone rate your most recent selfie out of 10. Honestly, not kindly.",
+    "DARE: Do your most embarrassing real-life flirting impression — recreate it exactly.",
+    // ── DARES: Medium ──
+    "DARE: Read the last message your ex sent you out loud with full theatrical dramatic energy.",
+    "DARE: Show everyone your Spotify Daylist right now. No preview, no preparation.",
+    "DARE: Text someone 'I miss you' with zero context. Read the response out loud when it comes.",
+    "DARE: Post a picture chosen entirely by the person to your left on your story right now.",
+    "DARE: Let someone send a voice note on your behalf to anyone in your contacts.",
+    "DARE: Show the group your full camera roll from last weekend.",
+    // ── DARES: Chaos ──
+    "DARE: Post the most unflattering photo from tonight on your story. Right now.",
+    "DARE: Everyone guesses your body count out loud. You then reveal the real number.",
+    "DARE: Do your best impression of yourself after three drinks — let the group rate it.",
+    "DARE: Everyone describes your love life using only a reality TV show title. You respond.",
+    "DARE: Post a thirst trap right now. Group decides the caption — no veto.",
+    "DARE: Let the group pick a 'red flag' emoji to add to your Instagram bio for the next 24 hours."
+  ],
+
+  naughty: [
+    // ── TIER 1: Charged ──
+    "Pick someone of the opposite gender and make out with them right now. Go.",
+    "Pick someone attractive in this room and sit in their lap — both of you have to stay there for two rounds.",
+    "Choose someone and kiss them on the neck. Once. Slowly.",
+    "Pick someone and let them caress your face for 30 seconds. Don't break eye contact.",
+    "Choose someone and trace your finger along their collarbone. They can't move.",
+    "Pick someone and make out with them for 10 seconds. The room counts out loud.",
+    "Grab the hand of whoever you find most attractive here and hold it for the next three rounds.",
+    "Pick someone across the room and walk over slowly. Kiss them on the cheek, then whisper something.",
+    "Choose someone and let them run their fingers through your hair for 30 seconds.",
+    "Pick the most attractive person here. Sit as close as physically possible to them.",
+    "Choose someone and give them a slow kiss on the jaw. Take your time.",
+    "Pick someone. Let them trace any letter they want anywhere on your body with their finger.",
+    "Choose someone and press your forehead against theirs. Look them in the eyes. 20 seconds.",
+    "Pick someone and bite their lower lip gently. Tell the room if you'd want to do it again.",
+    "Choose someone and slow dance with them as close as possible. 60 seconds, no talking.",
+    "Pick someone and let them kiss your hand slowly. Both of you stay still.",
+    "Choose someone of the opposite gender. Make out with them until the group says stop.",
+    "Pick someone. Caress their thigh slowly while making eye contact with the group.",
+    // ── TIER 2: Direct ──
+    "Pick someone and grind on them to imaginary music for 30 seconds. No stopping early.",
+    "Choose someone and tell the room in explicit detail what you'd do to them if you were alone.",
+    "Pick someone and straddle them. Stay there for the next two rounds.",
+    "Choose someone and tell them exactly which position you'd want to try with them first.",
+    "Pick the person you'd most want to hook up with tonight. Whisper to them what you want.",
+    "Choose someone and demonstrate — on them — where exactly you'd want to be touched.",
+    "Pick someone and tell the whole group your most explicit thought about them right now.",
+    "Choose someone and caress their body from their shoulder to their hip. Slowly. Both of you stand still.",
+    "Pick someone and tell them what you'd do to them the first five minutes you were alone.",
+    "Choose someone and pull them close. Press your bodies together and stay there for 30 seconds.",
+    "Pick someone and describe to the group in detail what you think they look like naked.",
+    "Choose someone. Let them put their hands wherever they want on you for 20 seconds.",
+    "Pick someone and tell them the most explicit text you'd ever send them.",
+    "Choose someone of the opposite gender. Make out with them, and the rest of the group votes if you were holding back.",
+    "Pick someone and tell them what you want their mouth to do to you right now.",
+    "Choose someone and let them caress your neck and shoulders however they want for 30 seconds.",
+    "Pick someone. Tell them what body part of theirs you've been staring at tonight.",
+    "Choose someone and act out — with your hands on them — exactly how you'd give them a massage in bed.",
+    // ── TIER 3: No Filter ──
+    "Pick two people and tell the room exactly how a threesome with them would go. Be specific.",
+    "Choose someone and describe your most explicit fantasy about them. The whole room listens.",
+    "Pick someone of the opposite gender. Make out with them for 20 full seconds. No skipping.",
+    "Choose someone and tell them where on their body you want your mouth first, second, and third.",
+    "Pick someone and grind against them from behind for 30 seconds. The group watches.",
+    "Tell the room the filthiest thing you've ever done or want to do — no editing.",
+    "Choose someone and caress them however you want for 45 seconds — within consent.",
+    "Pick two people you'd have a threesome with and walk over, take their hands, and explain your plan.",
+    "Choose someone. Let them undress one item of clothing from you — or choose an equivalent dare.",
+    "Tell the room the most explicit thing you've wanted to do since you walked in tonight.",
+    "Pick someone and show them — physically on their body — how you'd start things off.",
+    "Choose someone and press your lips to their neck and stay there for 15 seconds.",
+    "Pick someone. Tell them exactly how you'd make them finish. Be specific.",
+    "Tell the room who here you'd want to hook up with right now, and exactly what you'd do.",
+    "Choose someone and kiss them wherever you want on their body right now.",
+    "Pick someone of the opposite gender. Make out with them passionately. Group rates it 1–10.",
+    "Tell the room the most explicit scenario you've imagined with anyone in this group.",
+    "Choose someone and do whatever you want to them physically — with consent — for 30 seconds.",
+    // ── DARES: Tier 1 ──
+    "DARE: Walk over to someone and kiss them on the cheek, then whisper exactly what you've been thinking about them.",
+    "DARE: Choose someone of the opposite gender. Make out with them for 10 seconds. Group counts out loud.",
+    "DARE: Pick someone. Sit in their lap and stay there for the next three rounds.",
+    "DARE: Choose someone and caress their face slowly for 20 seconds. Both hold eye contact.",
+    "DARE: Pick someone and give them a 30-second neck massage. The room watches the whole thing.",
+    "DARE: Go up to someone and bite their earlobe. Tell them out loud if you'd want to do it again.",
+    // ── DARES: Tier 2 ──
+    "DARE: Pick someone of the opposite gender. Make out with them until the group says stop — minimum 20 seconds.",
+    "DARE: Choose someone and straddle them. Stay there for two full rounds.",
+    "DARE: Go up to someone and run your hand along their entire body from shoulder to thigh. Slowly.",
+    "DARE: Choose someone and grind on them to imaginary music for 30 seconds. Group watches.",
+    "DARE: Pick someone to whisper in your ear what they want to do to you. Repeat it to the group word for word.",
+    "DARE: Choose someone and press your body fully against theirs for 30 seconds. No talking.",
+    // ── DARES: Tier 3 ──
+    "DARE: Pick someone and make out with them passionately for 30 seconds. Group rates you both after.",
+    "DARE: Choose someone. Tell them — and the whole room — exactly what you'd do to them if everyone left right now.",
+    "DARE: Pick someone and let them caress you however they want for 45 seconds — within consent.",
+    "DARE: Choose someone and describe your most explicit fantasy about them out loud to the whole group.",
+    "DARE: Pick someone of the opposite gender. Make out with them. Then both of you describe it to the room.",
+    "DARE: Tell the room the most explicit thing you've imagined doing with anyone in this group tonight."
+  ]
+};
+
+const DECK_COLORS = {romantic:'#FF1F40',platonic:'#48BB78',girlsnight:'#FF8BA4',naughty:'#6F38E0'};
+const DECK_LABELS = {romantic:'Romantic Deck™',platonic:'Platonic Deck™',girlsnight:"Girls' Night Deck™",naughty:'Naughty Deck™'};
+const DECK_ICONS  = {romantic:'❤️',platonic:'🤝',girlsnight:'💅',naughty:'🔥'};
+const HEAT_TIERS  = [
+    {max:20, color:'#48BB78', emoji:'🌱', label:'Warm Up'},
+    {max:40, color:'#FFD60A', emoji:'✨', label:'Getting Interesting'},
+    {max:60, color:'#FF9F0A', emoji:'🌶', label:'Spicy'},
+    {max:80, color:'#FF453A', emoji:'🔥', label:'On Fire'},
+    {max:100,color:'#6F38E0', emoji:'💀', label:'No Going Back'}
+];
+const CONSEQUENCES = [
+    "Take a sip! 🍷","Tell an embarrassing truth — no filter!","Do 10 jumping jacks right now.",
+    "Text someone 'we need to talk' with no context.","Two sips! 🍹","Act out the card with someone else.",
+    "Give your phone to the left for 30 seconds.","Sing the next thing you say out loud.",
+    "Do your best impression of someone in this room.","Post a story chosen by the group right now."
+];
+
+// ══════════════════════════════════════════════════════════════
+//  AUDIO
+// ══════════════════════════════════════════════════════════════
+let _ac = null;
+function getAC(){if(!_ac)_ac=new(window.AudioContext||window.webkitAudioContext)();return _ac;}
+function sfx(t){
+    if(!document.getElementById('soundToggle').checked)return;
+    try{
+        const ctx=getAC(),o=ctx.createOscillator(),g=ctx.createGain();
+        o.connect(g);g.connect(ctx.destination);
+        if(t==='draw'){o.type='sine';o.frequency.setValueAtTime(440,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(660,ctx.currentTime+0.1);g.gain.setValueAtTime(0.13,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.25);o.start();o.stop(ctx.currentTime+0.25);}
+        else if(t==='skip'){o.type='sawtooth';o.frequency.setValueAtTime(300,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(150,ctx.currentTime+0.15);g.gain.setValueAtTime(0.1,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.2);o.start();o.stop(ctx.currentTime+0.2);}
+        else if(t==='dare'){o.type='triangle';o.frequency.setValueAtTime(523,ctx.currentTime);o.frequency.setValueAtTime(659,ctx.currentTime+0.1);o.frequency.setValueAtTime(784,ctx.currentTime+0.2);g.gain.setValueAtTime(0.16,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.4);o.start();o.stop(ctx.currentTime+0.4);}
+        else if(t==='timer'){o.type='square';o.frequency.setValueAtTime(880,ctx.currentTime);o.frequency.setValueAtTime(440,ctx.currentTime+0.1);o.frequency.setValueAtTime(880,ctx.currentTime+0.2);g.gain.setValueAtTime(0.18,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.4);o.start();o.stop(ctx.currentTime+0.4);}
+        else if(t==='shuffle'){for(let i=0;i<3;i++){const o2=ctx.createOscillator(),g2=ctx.createGain();o2.connect(g2);g2.connect(ctx.destination);o2.frequency.value=380+i*100;g2.gain.setValueAtTime(0.09,ctx.currentTime+i*0.07);g2.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.07+0.1);o2.start(ctx.currentTime+i*0.07);o2.stop(ctx.currentTime+i*0.07+0.1);}}
+        else if(t==='pause'){o.type='sine';o.frequency.setValueAtTime(600,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(300,ctx.currentTime+0.3);g.gain.setValueAtTime(0.14,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.35);o.start();o.stop(ctx.currentTime+0.35);}
+        else if(t==='resume'){o.type='sine';o.frequency.setValueAtTime(400,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(800,ctx.currentTime+0.25);g.gain.setValueAtTime(0.14,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3);o.start();o.stop(ctx.currentTime+0.3);}
+        else if(t==='vote'){o.type='sine';o.frequency.value=880;g.gain.setValueAtTime(0.1,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.15);o.start();o.stop(ctx.currentTime+0.15);}
+    }catch(e){}
+}
+
+// ══════════════════════════════════════════════════════════════
+//  GAME STATE
+// ══════════════════════════════════════════════════════════════
+let players=[],currentPlayerIdx=0,currentDeck=[],deckType='';
+let cardsDrawn=0,cardsSkipped=0,cardHistory=[],sessionCode='';
+let isPaused=false,timerEnabled=false,timerInterval=null,timerRemaining=30;
+let isSwiping=false,swipeStartX=0,swipeStartY=0,swipeThreshold=50;
+let turnAcknowledged=true,votes={};
+let cardFilter='all'; // 'all' | 'questions' | 'dares'
+
+// ══════════════════════════════════════════════════════════════
+//  CARD FILTER
+// ══════════════════════════════════════════════════════════════
+function setCardFilter(f){
+    cardFilter=f;
+    document.getElementById('filterAll').classList.toggle('active',f==='all');
+    document.getElementById('filterQ').classList.toggle('active',f==='questions');
+    document.getElementById('filterD').classList.toggle('active',f==='dares');
+    // rebuild filtered deck from current type
+    if(deckType){
+        const qs=DECKS[deckType]||[];
+        let pool=qs.map((q,i)=>({q,i,isDare:q.startsWith('DARE:')}));
+        if(f==='questions')pool=pool.filter(c=>!c.isDare);
+        else if(f==='dares')pool=pool.filter(c=>c.isDare);
+        currentDeck=shuffleArr(pool);
+        cardsDrawn=0;cardsSkipped=0;cardHistory=[];currentPlayerIdx=0;votes={};
+        updateStats();renderWelcomeCard();updateHeat();renderPlayers();updateDareVote(false);stopTimer();
+    }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  SESSION
+// ══════════════════════════════════════════════════════════════
+function genCode(){return Array.from({length:6},()=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*33)]).join('');}
+function saveSession(){
+    if(!sessionCode)return;
+    try{localStorage.setItem('dd_'+sessionCode,JSON.stringify({players,deckType,currentPlayerIdx,cardsDrawn,cardsSkipped,deck:currentDeck.map(c=>c.i),history:cardHistory.slice(0,30),code:sessionCode}));}catch(e){}
+}
+function copyCode(){
+    if(!sessionCode)return;
+    navigator.clipboard.writeText(sessionCode).catch(()=>{});
+    const b=document.getElementById('copyCodeBtn');
+    b.textContent='✓ Copied!';setTimeout(()=>b.textContent='📋 Copy',1500);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  PLAYERS
+// ══════════════════════════════════════════════════════════════
+window.removePlayer=function(n){players=players.filter(p=>p!==n);renderPlayers();};
+let dragIdx=null;
+function addPlayer(name){
+    if(name&&!players.includes(name)&&players.length<10){players.push(name);renderPlayers();}
+    document.getElementById('playerNameInput').value='';
+}
+function renderPlayers(){
+    const list=document.getElementById('playersList');
+    const count=document.getElementById('playerCount');
+    list.innerHTML=players.length===0
+        ?'<p class="text-gray-500 text-center py-4">No players added yet</p>'
+        :players.map((p,i)=>`
+            <div class="player-item${i===currentPlayerIdx?' current-turn':''}"
+                draggable="true"
+                ondragstart="dragIdx=${i}"
+                ondragover="event.preventDefault();this.classList.add('drag-over')"
+                ondragleave="this.classList.remove('drag-over')"
+                ondrop="event.preventDefault();this.classList.remove('drag-over');dropPlayer(${i})">
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="color:rgba(255,255,255,0.25);font-size:0.9rem;">⠿</span>
+                    ${i===currentPlayerIdx?'<span class="now-dot"></span>':''}
+                    <span>${p}</span>
+                    ${i===currentPlayerIdx?'<span style="font-size:0.68rem;opacity:0.5;text-transform:uppercase;letter-spacing:0.06em;">Now</span>':''}
+                </div>
+                <button class="btn-remove" onclick="removePlayer('${p}')">Remove</button>
+            </div>`).join('');
+    count.textContent=players.length;
+    document.getElementById('startGameBtn').disabled=players.length<2;
+}
+function dropPlayer(to){if(dragIdx===null||dragIdx===to)return;const p=players.splice(dragIdx,1)[0];players.splice(to,0,p);dragIdx=null;renderPlayers();}
+
+// ══════════════════════════════════════════════════════════════
+//  MODALS
+// ══════════════════════════════════════════════════════════════
+function showModal(id){document.getElementById(id).style.display='flex';}
+function hideModal(id){document.getElementById(id).style.display='none';}
+
+// ══════════════════════════════════════════════════════════════
+//  DECK SELECTION
+// ══════════════════════════════════════════════════════════════
+let selectedDeckKey='';
+function selectDeck(el){
+    document.querySelectorAll('.deck-option').forEach(d=>d.classList.remove('active'));
+    el.classList.add('active');
+    selectedDeckKey=el.dataset.deck;
+    document.getElementById('confirmDeckBtn').disabled=false;
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function initializeDeck(type){
+    deckType=type;
+    const qs=DECKS[type]||[];
+    let pool=qs.map((q,i)=>({q,i,isDare:q.startsWith('DARE:')}));
+    if(cardFilter==='questions')pool=pool.filter(c=>!c.isDare);
+    else if(cardFilter==='dares')pool=pool.filter(c=>c.isDare);
+    currentDeck=shuffleArr(pool);
+    cardsDrawn=0;cardsSkipped=0;cardHistory=[];currentPlayerIdx=0;votes={};
+    if(!sessionCode)sessionCode=genCode();
+    document.getElementById('deckTitle').textContent=DECK_LABELS[type]||type;
+    updateStats();renderWelcomeCard();updateHeat();renderPlayers();updateDareVote(false);sfx('shuffle');
+    hideModal('deckModal');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CARD RENDERING (original style)
+// ══════════════════════════════════════════════════════════════
+function getCardColor(){return DECK_COLORS[deckType]||'#2A2A2A';}
+
+function getCardBackHTML(){
+    return `<div class="card-back flex items-center justify-center p-6 z-0">
+        <div class="text-center opacity-60">
+            <div style="font-size:2rem;margin-bottom:0.5rem;">${DECK_ICONS[deckType]||'🃏'}</div>
+            <p class="text-white text-sm font-semibold">${DECK_LABELS[deckType]||''}</p>
+        </div>
+    </div>`;
+}
+
+function renderWelcomeCard(){
+    const cc=document.getElementById('cardContainer');
+    cc.querySelector('.swipe-zone')?.remove();
+    const old=cc.querySelector('.card-front,.empty-card');
+    const color=getCardColor();
+    const html=getCardBackHTML()+`<div class="card-front flex flex-col justify-center items-center p-6 text-center z-10" style="background:${color};border:none;">
+        <div style="font-size:3rem;margin-bottom:1rem;">${DECK_ICONS[deckType]||'🃏'}</div>
+        <h3 class="text-3xl font-bold text-white game-title">${DECK_LABELS[deckType]||''}</h3>
+        <p class="text-white mt-2" style="opacity:0.75;font-size:0.9rem;">${currentDeck.length} cards · ${players.length} players</p>
+        <p class="text-white mt-1" style="opacity:0.5;font-size:0.75rem;">Cards heat up as you play 🌡</p>
+    </div>`;
+    if(old){old.classList.add('card-slide-out-right');setTimeout(()=>{old.remove();cc.insertAdjacentHTML('beforeend',html);addSwipeZone();},380);}
+    else{cc.insertAdjacentHTML('beforeend',html);addSwipeZone();}
+}
+
+function makeCardHTML(card){
+    const isDare=card.isDare;
+    const text=isDare?card.q.substring(5).trim():card.q;
+    const color=getCardColor();
+    const player=players.length?players[currentPlayerIdx%players.length]:null;
+    const total=(DECKS[deckType]||[]).length;
+    const num=total-currentDeck.length;
+    return getCardBackHTML()+`<div class="card-front flex flex-col justify-between p-8 sm:p-12 w-full h-full text-center z-10" id="activeCard">
+        <div class="flex justify-between items-center mb-4">
+            <span class="font-light text-base opacity-60">#${num}/${total}</span>
+            <div class="card-header-chip text-white" style="background-color:${color};">${isDare?'⚡ DARE':'❓ QUESTION'}</div>
+        </div>
+        ${player?`<div class="flex justify-center mb-4"><div class="player-badge" style="background-color:${color};">👤 ${player}</div></div>`:''}
+        <div class="card-content-area px-0 min-h-[140px]"><p class="card-question-text text-gray-900">${text}</p></div>
+        <div class="text-xs text-right text-gray-400 mt-6 pt-3 border-t border-gray-100">${DECK_LABELS[deckType]||''}</div>
+    </div>`;
+}
+
+function showEmptyCard(){
+    const cc=document.getElementById('cardContainer');
+    cc.querySelector('.swipe-zone')?.remove();
+    const old=cc.querySelector('.card-front,.empty-card');
+    const html=getCardBackHTML()+`<div class="empty-card card-front flex flex-col justify-center items-center p-6 text-center z-10">
+        <div style="font-size:3rem;margin-bottom:1rem;">🔄</div>
+        <p class="text-2xl font-bold text-gray-900">Deck Complete!</p>
+        <p class="text-lg text-gray-600 mt-2">Shuffle for another round.</p>
+    </div>`;
+    if(old){old.classList.add('card-slide-out-right');setTimeout(()=>{old.remove();cc.insertAdjacentHTML('beforeend',html);addSwipeZone();},380);}
+    else{cc.insertAdjacentHTML('beforeend',html);addSwipeZone();}
+}
+
+// ══════════════════════════════════════════════════════════════
+//  DRAW / SKIP / WILDCARD
+// ══════════════════════════════════════════════════════════════
+function drawCard(){
+    if(isPaused||!deckType)return;
+    if(!currentDeck.length){showEmptyCard();updateStats();return;}
+    // Pass phone gate
+    if(!turnAcknowledged&&document.getElementById('passModeToggle').checked&&cardsDrawn>0){
+        const name=players[currentPlayerIdx%Math.max(players.length,1)]||'Next Player';
+        document.getElementById('passPlayerName').textContent=name;
+        document.getElementById('passBanner').classList.add('show');
+        return;
+    }
+    turnAcknowledged=false;
+    stopTimer();
+    const card=currentDeck.pop();
+    cardsDrawn++;
+    cardHistory.unshift({...card,player:players[currentPlayerIdx%Math.max(players.length,1)]||'',at:Date.now()});
+    if(cardHistory.length>50)cardHistory.pop();
+
+    const cc=document.getElementById('cardContainer');
+    cc.querySelector('.swipe-zone')?.remove();
+    const old=cc.querySelector('.card-front,.empty-card');
+    const html=makeCardHTML(card);
+    const done=()=>{cc.insertAdjacentHTML('beforeend',html);addSwipeZone();updateStats();updateHeat();updateDareVote(card.isDare);sfx(card.isDare?'dare':'draw');};
+    if(old){old.classList.add('card-slide-out-right');setTimeout(done,380);}else{done();}
+
+    currentPlayerIdx=(currentPlayerIdx+1)%Math.max(players.length,1);
+    renderPlayers();saveSession();
+    if(timerEnabled&&document.getElementById('timerToggle').checked)startTimer();
+}
+
+function skipCard(){
+    if(!deckType||!currentDeck.length)return;
+    sfx('skip');cardsSkipped++;
+    const card=currentDeck.pop();currentDeck.unshift(card);
+    if(document.getElementById('consequenceToggle').checked)showConsequence();
+    updateStats();stopTimer();
+}
+
+function drawWildcard(){
+    if(!deckType)return;
+    const keys=Object.keys(DECKS);
+    const rk=keys[Math.floor(Math.random()*keys.length)];
+    const pool=DECKS[rk];
+    const q=pool[Math.floor(Math.random()*pool.length)];
+    const card={q,i:-1,isDare:q.startsWith('DARE:')};
+    cardsDrawn++;cardHistory.unshift({...card,player:'🎲 Wildcard',at:Date.now()});
+
+    const cc=document.getElementById('cardContainer');
+    cc.querySelector('.swipe-zone')?.remove();
+    const old=cc.querySelector('.card-front,.empty-card');
+    const savedType=deckType;deckType=rk;
+    const html=makeCardHTML(card);deckType=savedType;
+    const done=()=>{cc.insertAdjacentHTML('beforeend',html);addSwipeZone();updateStats();updateDareVote(card.isDare);sfx('dare');};
+    if(old){old.classList.add('card-slide-out-right');setTimeout(done,380);}else{done();}
+}
+
+function reshuffleDeck(){
+    if(!deckType)return;
+    sfx('shuffle');
+    let pool=(DECKS[deckType]||[]).map((q,i)=>({q,i,isDare:q.startsWith('DARE:')}));
+    if(cardFilter==='questions')pool=pool.filter(c=>!c.isDare);
+    else if(cardFilter==='dares')pool=pool.filter(c=>c.isDare);
+    currentDeck=shuffleArr(pool);
+    cardsDrawn=0;cardsSkipped=0;cardHistory=[];currentPlayerIdx=0;votes={};
+    updateStats();renderWelcomeCard();updateHeat();renderPlayers();updateDareVote(false);stopTimer();
+    const cc=document.getElementById('cardContainer');
+    cc.classList.add('shuffling');setTimeout(()=>cc.classList.remove('shuffling'),600);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  PASS PHONE
+// ══════════════════════════════════════════════════════════════
+function acknowledgeTurn(){
+    document.getElementById('passBanner').classList.remove('show');
+    turnAcknowledged=true;drawCard();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  DARE VOTE
+// ══════════════════════════════════════════════════════════════
+function updateDareVote(isDare){
+    const dv=document.getElementById('dareVote');
+    document.getElementById('voteTally').innerHTML='';votes={};
+    if(isDare&&document.getElementById('dareVoteToggle').checked)dv.classList.add('show');
+    else dv.classList.remove('show');
+}
+function castVote(val){
+    votes['v'+Date.now()]=val;sfx('vote');
+    const y=Object.values(votes).filter(v=>v==='yes').length;
+    const n=Object.values(votes).filter(v=>v==='no').length;
+    document.getElementById('voteTally').innerHTML=`<span class="tally-yes">✅ ${y}</span><span class="tally-no">❌ ${n}</span>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  HEAT METER
+// ══════════════════════════════════════════════════════════════
+function updateHeat(){
+    const total=(DECKS[deckType]||[]).length;
+    const pct=total?(cardsDrawn/total)*100:0;
+    let tier=HEAT_TIERS[HEAT_TIERS.length-1];
+    for(const t of HEAT_TIERS){if(pct<=t.max){tier=t;break;}}
+    document.getElementById('heatBarFill').style.width=Math.min(pct,100)+'%';
+    document.getElementById('heatBarFill').style.background=tier.color;
+    document.getElementById('heatEmoji').textContent=tier.emoji;
+    document.getElementById('heatLevelLabel').textContent=tier.label;
+    document.getElementById('heatLevelLabel').style.color=tier.color;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  TIMER
+// ══════════════════════════════════════════════════════════════
+function onTimerToggle(){
+    timerEnabled=document.getElementById('timerToggle').checked;
+    document.getElementById('timerDurRow').style.display=timerEnabled?'flex':'none';
+    if(!timerEnabled){document.getElementById('timerWrap').classList.remove('show');stopTimer();}
+}
+function startTimer(){
+    stopTimer();
+    const dur=parseInt(document.getElementById('timerDuration').value)||30;
+    timerRemaining=dur;
+    document.getElementById('timerWrap').classList.add('show');
+    const bar=document.getElementById('timerBar'),num=document.getElementById('timerNum');
+    bar.style.transition='none';bar.style.width='100%';
+    setTimeout(()=>{bar.style.transition=`width ${dur}s linear`;bar.style.width='0%';},50);
+    num.textContent=dur;num.classList.remove('urgent');
+    timerInterval=setInterval(()=>{
+        timerRemaining--;num.textContent=timerRemaining;
+        if(timerRemaining<=5){num.classList.add('urgent');sfx('timer');}
+        if(timerRemaining<=0)stopTimer();
+    },1000);
+}
+function stopTimer(){clearInterval(timerInterval);timerInterval=null;document.getElementById('timerNum').classList.remove('urgent');}
+
+// ══════════════════════════════════════════════════════════════
+//  PAUSE / RESUME / END
+// ══════════════════════════════════════════════════════════════
+function pauseGame(){
+    isPaused=true;sfx('pause');saveSession();
+    document.getElementById('pauseCodeVal').textContent=sessionCode||'——————';
+    document.getElementById('pauseOverlay').classList.add('active');
+}
+function resumeGame(){isPaused=false;sfx('resume');document.getElementById('pauseOverlay').classList.remove('active');}
+function endGame(){
+    isPaused=false;document.getElementById('pauseOverlay').classList.remove('active');
+    document.getElementById('mainGame').style.opacity='0';
+    setTimeout(()=>{
+        document.getElementById('mainGame').style.display='none';
+        deckType='';currentDeck=[];cardsDrawn=0;cardsSkipped=0;
+        cardHistory=[];sessionCode='';currentPlayerIdx=0;votes={};stopTimer();
+        showModal('playerModal');
+    },400);
+}
+
+function tryResume(){
+    const code=document.getElementById('resumeCodeInput').value.trim().toUpperCase();
+    const err=document.getElementById('resumeErr');
+    if(code.length<6){err.textContent='Enter a valid 6-character code.';return;}
+    let data;try{data=JSON.parse(localStorage.getItem('dd_'+code)||'null');}catch(e){}
+    if(!data){err.textContent='No saved game found with that code. Check and try again.';return;}
+    err.textContent='';
+    players=data.players||[];deckType=data.deckType||'';
+    currentPlayerIdx=data.currentPlayerIdx||0;cardsDrawn=data.cardsDrawn||0;
+    cardsSkipped=data.cardsSkipped||0;cardHistory=data.history||[];sessionCode=code;
+    const allQ=DECKS[deckType]||[];
+    currentDeck=(data.deck||[]).map(i=>({q:allQ[i]||'',i,isDare:(allQ[i]||'').startsWith('DARE:')}));
+    document.getElementById('pauseCodeVal').textContent=sessionCode;
+    hideModal('resumeModal');
+    const mg=document.getElementById('mainGame');mg.style.display='block';
+    setTimeout(()=>{mg.style.opacity='1';document.getElementById('deckTitle').textContent=DECK_LABELS[deckType]||'';updateStats();renderWelcomeCard();updateHeat();renderPlayers();updateDareVote(false);},50);
+    sfx('resume');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  STATS
+// ══════════════════════════════════════════════════════════════
+function updateStats(){
+    document.getElementById('remainingCount').textContent=currentDeck.length;
+    document.getElementById('drawnCount').textContent=cardsDrawn;
+    document.getElementById('skippedCount').textContent=cardsSkipped;
+    document.getElementById('drawButton').disabled=!currentDeck.length;
+    const sl=document.getElementById('shameLabel');
+    if(cardsSkipped>0){sl.style.display='block';sl.textContent=`😬 ${cardsSkipped} skip${cardsSkipped!==1?'s':''} — coward energy`;}
+    else sl.style.display='none';
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CONSEQUENCE
+// ══════════════════════════════════════════════════════════════
+let consecTimeout=null;
+function dismissConsequence(){
+    const t=document.getElementById('consecToast');
+    t.classList.remove('show');
+    clearTimeout(consecTimeout);consecTimeout=null;
+}
+function showConsequence(){
+    const c=CONSEQUENCES[Math.floor(Math.random()*CONSEQUENCES.length)];
+    document.getElementById('consecText').textContent=c;
+    const t=document.getElementById('consecToast');
+    t.classList.add('show');
+    clearTimeout(consecTimeout);
+    consecTimeout=setTimeout(dismissConsequence,10000);
+}
+// swipe/tap to dismiss toast
+(function(){
+    let tsx=0;
+    document.getElementById('consecToast').addEventListener('click',dismissConsequence);
+    document.getElementById('consecToast').addEventListener('touchstart',e=>{tsx=e.touches[0].clientX;},{passive:true});
+    document.getElementById('consecToast').addEventListener('touchend',e=>{
+        if(Math.abs(e.changedTouches[0].clientX-tsx)>40)dismissConsequence();
+    },{passive:true});
+})();
+
+// ══════════════════════════════════════════════════════════════
+//  HISTORY
+// ══════════════════════════════════════════════════════════════
+function openHistory(){
+    const list=document.getElementById('historyList');
+    if(!cardHistory.length){list.innerHTML='<p style="color:rgba(255,255,255,0.35);text-align:center;padding:2rem 0;font-size:0.85rem;">No cards drawn yet.</p>';}
+    else{list.innerHTML=cardHistory.map(h=>`<div class="history-item"><div class="history-item-meta" style="color:${DECK_COLORS[deckType]||'#aaa'};">${h.player||''}${h.isDare?' · DARE':' · Question'}</div>${h.isDare?h.q.substring(5).trim():h.q}</div>`).join('');}
+    document.getElementById('historyDrawer').classList.add('open');
+    document.getElementById('historyBg').classList.add('show');
+}
+function closeHistory(){
+    document.getElementById('historyDrawer').classList.remove('open');
+    document.getElementById('historyBg').classList.remove('show');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  SWIPE
+// ══════════════════════════════════════════════════════════════
+function addSwipeZone(){
+    const cc=document.getElementById('cardContainer');
+    cc.querySelector('.swipe-zone')?.remove();
+    const card=cc.querySelector('.card-front');if(!card)return;
+    const zone=document.createElement('div');zone.className='swipe-zone';
+    const onS=(x,y)=>{isSwiping=true;swipeStartX=x;swipeStartY=y;};
+    const onM=x=>{if(!isSwiping)return;const d=x-swipeStartX;if(Math.abs(d)>8)card.style.transform=`translateX(${d*.55}px) rotate(${d*.045}deg)`;};
+    const onE=(x,y)=>{if(!isSwiping)return;isSwiping=false;card.style.transform='';const dx=x-swipeStartX,dy=y-swipeStartY;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>swipeThreshold){if(dx<0)drawCard();else reshuffleDeck();}};
+    zone.addEventListener('touchstart',e=>{onS(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();},{passive:false});
+    zone.addEventListener('touchmove',e=>{onM(e.touches[0].clientX);e.preventDefault();},{passive:false});
+    zone.addEventListener('touchend',e=>{onE(e.changedTouches[0].clientX,e.changedTouches[0].clientY);e.preventDefault();},{passive:false});
+    zone.addEventListener('mousedown',e=>{onS(e.clientX,e.clientY);e.preventDefault();});
+    zone.addEventListener('mousemove',e=>{onM(e.clientX);});
+    zone.addEventListener('mouseup',e=>{onE(e.clientX,e.clientY);});
+    zone.addEventListener('mouseleave',()=>{if(isSwiping){isSwiping=false;card.style.transform='';}});
+    cc.appendChild(zone);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  DARK MODE
+// ══════════════════════════════════════════════════════════════
+function applyDarkMode(on){document.body.classList.toggle('dark-mode',on);}
+
+// ══════════════════════════════════════════════════════════════
+//  SIDEBAR
+// ══════════════════════════════════════════════════════════════
+function initSidebar(){
+    const btn=document.getElementById('hamburgerButton');
+    const overlay=document.getElementById('sidebarOverlay');
+    const menu=document.getElementById('sidebarMenu');
+    btn.style.display='flex';
+    const open=()=>{menu.classList.add('active');overlay.classList.add('active');btn.classList.add('active');document.body.style.overflow='hidden';};
+    const close=()=>{menu.classList.remove('active');overlay.classList.remove('active');btn.classList.remove('active');document.body.style.overflow='';};
+    btn.addEventListener('click',()=>menu.classList.contains('active')?close():open());
+    document.getElementById('closeSidebar').addEventListener('click',close);
+    overlay.addEventListener('click',close);
+    document.getElementById('sbPlayers').addEventListener('click', ()=>{close();showModal('playerModal');});
+    document.getElementById('sbDeck').addEventListener('click',    ()=>{close();showModal('deckModal');});
+    document.getElementById('sbHistory').addEventListener('click', ()=>{close();openHistory();});
+    document.getElementById('sbResume').addEventListener('click',  ()=>{close();showModal('resumeModal');});
+    document.getElementById('sbPause').addEventListener('click',   ()=>{close();pauseGame();});
+    document.getElementById('sbSettings').addEventListener('click',()=>{close();showModal('settingsModal');});
+}
+
+// ══════════════════════════════════════════════════════════════
+//  BOOT
+// ══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+    initSidebar();
+
+    document.getElementById('addPlayerBtn').addEventListener('click',()=>{
+        const v=document.getElementById('playerNameInput').value.trim();if(v)addPlayer(v);
+    });
+    document.getElementById('playerNameInput').addEventListener('keypress',e=>{
+        if(e.key==='Enter'){const v=e.target.value.trim();if(v)addPlayer(v);}
+    });
+    document.getElementById('startGameBtn').addEventListener('click',()=>{
+        if(players.length>=2){hideModal('playerModal');showModal('deckModal');}
+    });
+
+    document.querySelectorAll('.deck-option').forEach(opt=>{
+        opt.addEventListener('click',()=>selectDeck(opt));
+    });
+    document.getElementById('confirmDeckBtn').addEventListener('click',()=>{
+        if(!selectedDeckKey)return;
+        const mg=document.getElementById('mainGame');mg.style.display='block';
+        setTimeout(()=>{mg.style.opacity='1';initializeDeck(selectedDeckKey);},50);
+    });
+
+    document.getElementById('closeSettingsBtn').addEventListener('click',()=>{
+        const s=document.getElementById('swipeSensitivity').value;
+        swipeThreshold=s==='low'?100:s==='high'?30:50;
+        applyDarkMode(document.getElementById('themeSelect').value==='dark');
+        timerEnabled=document.getElementById('timerToggle').checked;
+        hideModal('settingsModal');
+    });
+
+    document.getElementById('drawButton').addEventListener('click',drawCard);
+    document.getElementById('skipButton').addEventListener('click',skipCard);
+    document.getElementById('shuffleButton').addEventListener('click',reshuffleDeck);
+
+    // Close modals on backdrop click (not player/deck which require choices)
+    ['settingsModal','resumeModal'].forEach(id=>{
+        document.getElementById(id).addEventListener('click',e=>{if(e.target===document.getElementById(id))hideModal(id);});
+    });
+
+    addPlayer('Player 1');
+    addPlayer('Player 2');
+
+    const bar=document.getElementById('rainbowProgressBar');
+    bar.getBoundingClientRect();bar.style.width='100%';
+    setTimeout(()=>{
+        const intro=document.getElementById('introScreen');
+        intro.style.opacity='0';
+        setTimeout(()=>{intro.style.display='none';showModal('playerModal');},600);
+    },2300);
+});
+</script>
 </body>
 </html>
