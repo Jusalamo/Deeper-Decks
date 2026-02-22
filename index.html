@@ -2,13 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Deeper-Decks™: The Card Game</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22url(%23rainbow)%22>D</text><defs><linearGradient id=%22rainbow%22 gradientTransform=%22rotate(90)%22><stop offset=%220%25%22 stop-color=%22%23FF1F40%22/><stop offset=%2225%25%22 stop-color=%22%23FF8BA4%22/><stop offset=%2250%25%22 stop-color=%22%2348BB78%22/><stop offset=%2275%25%22 stop-color=%22%236F38E0%22/><stop offset=%22100%25%22 stop-color=%22%23FF1F40%22/></linearGradient></defs></svg>" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/mona-sans" rel="stylesheet">
     <style>
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        
         :root {
             --color-romantic: #FF1F40;
             --color-platonic: #48BB78;
@@ -24,7 +30,29 @@
             --shadow-card: 0 20px 50px rgba(0,0,0,0.1);
             --shadow-stack: 0 10px 30px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);
         }
-        body { background-color: var(--bg-light); font-family: 'Inter', sans-serif; color: var(--text-dark); margin: 0; padding: 0; overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
+        
+        body { 
+            background-color: var(--bg-light); 
+            font-family: 'Inter', sans-serif; 
+            color: var(--text-dark); 
+            margin: 0; 
+            padding: 0; 
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            height: 100%;
+            position: fixed;
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        #mainGame {
+            height: 100vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0.5rem;
+            position: relative;
+        }
 
         /* ── SIDEBAR ── */
         .sidebar-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:3000; opacity:0; visibility:hidden; transition:opacity 0.3s ease,visibility 0.3s ease; backdrop-filter:blur(4px); }
@@ -58,20 +86,90 @@
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
         /* ── MAIN GAME ── */
-        #mainGame { display:none; opacity:0; transition:opacity 0.5s ease-in; padding:0.5rem; width:100%; min-height:100vh; }
+        #mainGame { display:none; opacity:0; transition:opacity 0.5s ease-in; width:100%; height:100vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
 
         /* ── CARDS ── */
-        .card-stack-container { aspect-ratio:9/14; width:300px; max-width:85vw; position:relative; }
+        .card-stack-container { 
+            aspect-ratio: 9/14; 
+            width: min(300px, 85vw);
+            max-width: 300px;
+            position: relative;
+            margin: 0 auto;
+        }
         .card-stack-shadow { display:none; }
-        .card-front { background-color:var(--card-white); color:var(--text-dark); border-radius:20px; box-shadow:0 4px 16px rgba(0,0,0,0.08); transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275),opacity 0.3s ease; position:absolute; width:100%; height:100%; top:0; left:0; will-change:transform,opacity; border:1px solid rgba(0,0,0,0.06); cursor:pointer; user-select:none; -webkit-user-select:none; }
-        .card-back { background:linear-gradient(135deg,#2A2A2A 0%,#1F1F1F 100%); border-radius:20px; box-shadow:0 2px 8px rgba(0,0,0,0.1); position:absolute; width:98%; height:98%; top:1%; left:1%; z-index:-1; border:1px solid rgba(255,255,255,0.05); }
+        .card-front { 
+            background-color: var(--card-white); 
+            color: var(--text-dark); 
+            border-radius: 20px; 
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08); 
+            transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), opacity 0.3s ease; 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            top: 0; 
+            left: 0; 
+            will-change: transform, opacity; 
+            border: 1px solid rgba(0,0,0,0.06); 
+            cursor: pointer; 
+            user-select: none; 
+            -webkit-user-select: none;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+        .card-back { 
+            background: linear-gradient(135deg,#2A2A2A 0%,#1F1F1F 100%); 
+            border-radius: 20px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+            position: absolute; 
+            width: 98%; 
+            height: 98%; 
+            top: 1%; 
+            left: 1%; 
+            z-index: -1; 
+            border:1px solid rgba(255,255,255,0.05); 
+        }
         .card-slide-out-left  { transform:translateX(-150%) rotate(-15deg) !important; opacity:0 !important; }
         .card-slide-out-right { transform:translateX(150%)  rotate(15deg)  !important; opacity:0 !important; }
         .empty-card { border:3px dashed var(--text-dark); background-color:var(--card-white); }
-        .card-content-area { flex-grow:1; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
-        .card-question-text { font-size:clamp(1.2rem,5vw,2.1rem); line-height:1.3; font-weight:700; }
-        .card-header-chip { border-radius:9999px; padding:6px 14px; font-weight:600; font-size:0.85rem; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-        .player-badge { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:999px; font-weight:600; font-size:0.9rem; color:white; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+        .card-content-area { 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            overflow: hidden;
+            min-height: 0;
+        }
+        .card-question-text { 
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            line-height: 1.4; 
+            font-weight: 600;
+            overflow-y: auto;
+            max-height: 100%;
+            padding: 0.5rem 0;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-header-chip { 
+            border-radius: 9999px; 
+            padding: 6px 14px; 
+            font-weight: 600; 
+            font-size: 0.75rem; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-family: 'Inter', sans-serif;
+        }
+        .player-badge { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            padding: 8px 16px; 
+            border-radius: 999px; 
+            font-weight: 600; 
+            font-size: 0.8rem; 
+            color: white; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-family: 'Inter', sans-serif;
+        }
 
         /* ── MODALS ── */
         .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; z-index:2000; backdrop-filter:blur(4px); }
@@ -87,11 +185,33 @@
         .player-item.drag-over { border-color:rgba(255,255,255,0.5)!important; background:rgba(255,255,255,0.12)!important; }
         .player-item.current-turn { border-color:rgba(72,187,120,0.5); background:rgba(72,187,120,0.08); }
         .btn-remove { background:rgba(255,107,129,0.2); color:var(--color-romantic); border-radius:8px; padding:6px 12px; font-size:0.875rem; transition:all 0.2s; border:none; cursor:pointer; }
-        .btn-remove:hover { background:rgba(255,107,129,0.3); }
 
         /* ── CONTROL PANEL ── */
-        .control-panel { background:var(--surface-light); border:1px solid rgba(0,0,0,0.1); border-radius:20px; padding:16px; box-shadow:var(--shadow-subtle); align-self:flex-start; color:var(--text-dark); }
-        .btn-action { background-color:var(--modal-dark); color:var(--text-light); border-radius:14px; padding:12px 20px; font-weight:700; transition:background 0.2s ease,transform 0.1s ease,box-shadow 0.2s; box-shadow:0 3px 0 rgba(0,0,0,0.2); border:none; cursor:pointer; font-family:'Inter',sans-serif; }
+        .control-panel { 
+            background: var(--surface-light); 
+            border: 1px solid rgba(0,0,0,0.1); 
+            border-radius: 20px; 
+            padding: 1rem;
+            box-shadow: var(--shadow-subtle); 
+            color: var(--text-dark);
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+        .btn-action { 
+            background-color: var(--modal-dark); 
+            color: var(--text-light); 
+            border-radius: 14px; 
+            padding: 12px 20px; 
+            font-weight: 700; 
+            transition: background 0.2s ease,transform 0.1s ease,box-shadow 0.2s; 
+            box-shadow: 0 3px 0 rgba(0,0,0,0.2); 
+            border: none; 
+            cursor: pointer; 
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            width: 100%;
+        }
         .btn-action:hover:not(:disabled) { background-color:#3A3A3A; transform:translateY(-2px); box-shadow:0 5px 0 rgba(0,0,0,0.2); }
         .btn-action:disabled { opacity:0.4; cursor:not-allowed; transform:translateY(0); box-shadow:0 3px 0 rgba(0,0,0,0.1); }
         .btn-shuffle { background-color:var(--surface-light); color:var(--text-dark); border:1px solid rgba(0,0,0,0.1); box-shadow:0 3px 0 rgba(0,0,0,0.05); margin-top:0.4rem; }
@@ -100,7 +220,7 @@
         .settings-option { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1); color:var(--text-light); }
         .shuffling { animation:shuffleAnim 0.5s ease-in-out; }
         @keyframes shuffleAnim{0%{transform:rotate(0) scale(1)}25%{transform:rotate(-5deg) scale(1.02)}50%{transform:rotate(5deg) scale(1.02)}75%{transform:rotate(-2deg) scale(1.01)}100%{transform:rotate(0) scale(1)}}
-        .swipe-instruction { text-align:center; margin-top:10px; color:rgba(0,0,0,0.5); font-size:0.8rem; }
+        .swipe-instruction { text-align:center; margin-top:10px; color:rgba(0,0,0,0.5); font-size:0.75rem; }
 
         /* ── DARK MODE ── */
         body.dark-mode { background-color:#121212; color:#FFFFFF!important; }
@@ -135,13 +255,15 @@
             .card-stack-container{width:260px;}
         }
         @media(max-width:600px){
-            .card-stack-container{width:240px;max-width:80vw;}
+            .card-stack-container{width:240px;}
             #mainGame{padding:0.25rem;}
+            .card-front { padding: 1rem; }
+            .card-question-text { font-size: 1rem; }
         }
         .swipe-zone{position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;}
-        .game-title,.sidebar-title,h1,h2,h3{font-family:'Mona Sans','Inter',sans-serif!important;font-weight:900!important;letter-spacing:-1px;font-synthesis:none;-webkit-font-smoothing:antialiased;}
+        .game-title,.sidebar-title,h1,h2,h3{font-family:'Mona Sans','Inter',sans-serif!important;font-weight:900!important;letter-spacing:-1px;}
 
-        /* ════ NEW FEATURE STYLES (same dark aesthetic) ════ */
+        /* ════ NEW FEATURE STYLES ════ */
 
         /* PAUSE OVERLAY */
         #pauseOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:5000;display:none;flex-direction:column;justify-content:center;align-items:center;gap:2rem;backdrop-filter:blur(18px);}
@@ -250,6 +372,13 @@
 
         /* RESUME MODAL CODE INPUT */
         .resume-code-inp{font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:0.2em;text-align:center;text-transform:uppercase;width:100%;}
+
+        /* FIX SCROLLING */
+        .scroll-container {
+            height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
 </head>
 <body>
@@ -549,18 +678,18 @@
             <div id="cardContainer" class="relative flex-shrink-0 card-stack-container">
                 <div class="card-stack-shadow"></div>
             </div>
-            <div class="swipe-instruction">← draw &nbsp;|&nbsp; → shuffle</div>
+            <div class="swipe-instruction">← swipe left to draw &nbsp;|&nbsp; swipe right to shuffle →</div>
         </section>
     </main>
 </div>
 
 <script>
 // ══════════════════════════════════════════════════════════════
-//  DECK DATA — 90 cards each, rewritten for physicality + heat
+//  DECK DATA — 90 cards each, with complete dares
 // ══════════════════════════════════════════════════════════════
 const DECKS = {
   romantic: [
-    // ── TIER 1: Warm-Up ──
+    // ── TIER 1: Warm-Up (Questions 1-18) ──
     "What's one thing about our dynamic you've never said out loud before?",
     "What small thing do I do that makes you feel genuinely seen?",
     "What moment made you think 'I actually really like this person'?",
@@ -579,7 +708,8 @@ const DECKS = {
     "What's your favorite memory of us so far?",
     "What's something you've always wanted to learn or try?",
     "What makes you feel most appreciated in a relationship?",
-    // ── TIER 2: Getting Real ──
+    
+    // ── TIER 2: Getting Real (Questions 19-36) ──
     "Look me in the eyes right now and tell me the first thing you thought about me tonight.",
     "When do you feel most vulnerable around me — be specific, don't generalize.",
     "Tell me about a moment you wanted to kiss me but held back.",
@@ -598,7 +728,8 @@ const DECKS = {
     "What's something that used to feel impossible that I've made feel safer?",
     "What's one thing you hope we never stop doing together?",
     "What's a goal you have and how can I actually support you in it?",
-    // ── TIER 3: Electric ──
+    
+    // ── TIER 3: Electric (Questions 37-54) ──
     "Tell me what you want me to do to you tonight. Say it out loud right now.",
     "Where on your body do you want me to touch you first — right now?",
     "Describe in detail how you want to be kissed right now.",
@@ -617,31 +748,52 @@ const DECKS = {
     "What makes you feel most wanted — be explicit, not vague.",
     "What's something physical you've imagined us doing that we haven't yet?",
     "Tell me what you need from me physically that I haven't given you yet.",
-    // ── DARES: Mild ──
+    
+    // ── DARES: Mild (55-66) ──
     "DARE: Hold my face in both hands and look at me for 30 full seconds. Don't look away.",
     "DARE: Say out loud the first physical thing you noticed about me.",
     "DARE: Put your head in my lap right now and stay there for the next two rounds.",
     "DARE: Trace a letter on my arm with your fingertip slowly. I have to guess what you wrote.",
     "DARE: Hold my hand for the next three cards without letting go once.",
     "DARE: Tell the group one thing you love about the person to your left — make it real and specific.",
-    // ── DARES: Medium ──
+    "DARE: Give me a 30-second shoulder massage right now.",
+    "DARE: Whisper something sweet in my ear that no one else can hear.",
+    "DARE: Look into my eyes and tell me something you've never told anyone.",
+    "DARE: Play with my hair for the next two minutes.",
+    "DARE: Describe your ideal date with me in vivid detail.",
+    "DARE: Give me a compliment that has nothing to do with my appearance.",
+    
+    // ── DARES: Medium (67-78) ──
     "DARE: Whisper something you've been wanting to say to me. Then say it louder so everyone hears.",
     "DARE: Kiss my shoulder right now. Don't overthink it.",
     "DARE: Put your arms around me from behind and stay there for a full minute.",
     "DARE: Tell me exactly how you feel about me right now — out loud, no edits.",
     "DARE: Slow dance with me for 60 seconds. No music needed. Go.",
     "DARE: Sit in my lap for the next three rounds.",
-    // ── DARES: Heated ──
+    "DARE: Trace your finger along my jawline slowly while maintaining eye contact.",
+    "DARE: Tell me the thing you find most attractive about my personality.",
+    "DARE: Give me a hug that lasts at least 20 seconds.",
+    "DARE: Run your fingers through my hair and tell me what you're thinking.",
+    "DARE: Kiss my forehead and hold it there for 10 seconds.",
+    "DARE: Tell me a secret fantasy you've had about us.",
+    
+    // ── DARES: Heated (79-90) ──
     "DARE: Kiss me wherever you want to right now. No warning, no asking.",
     "DARE: Tell everyone in this room exactly what you want to do to me later tonight.",
     "DARE: Bite my earlobe gently, then tell me out loud if you want to do it again.",
     "DARE: Pull me close and breathe on my neck for 20 seconds without saying a word.",
     "DARE: Tell me one thing you want me to do to you before this night ends.",
-    "DARE: Run your hand along my leg from knee to hip. Right now. Slowly."
+    "DARE: Run your hand along my leg from knee to hip. Right now. Slowly.",
+    "DARE: Kiss me on the neck and don't stop until I tell you to.",
+    "DARE: Describe in detail how you'd undress me if we were alone.",
+    "DARE: Press your body against mine and hold that position for 30 seconds.",
+    "DARE: Tell me the dirtiest thought you've had about me today.",
+    "DARE: Kiss me like you mean it — for at least 15 seconds.",
+    "DARE: Whisper in my ear exactly what you want me to do to you later."
   ],
 
   platonic: [
-    // ── TIER 1 ──
+    // ── TIER 1 (Questions 1-18) ──
     "What's the weirdest thing you genuinely believe that you rarely say out loud?",
     "What's a friendship you lost that you still think about?",
     "What's the most embarrassing thing in your camera roll right now?",
@@ -660,7 +812,8 @@ const DECKS = {
     "What's the most desperate thing you've ever done to seem cool?",
     "What's a red flag in yourself that you're still pretending isn't there?",
     "What's a phase you went through that you genuinely cannot explain?",
-    // ── TIER 2 ──
+    
+    // ── TIER 2 (Questions 19-36) ──
     "What's the most dishonest thing you've done that no one here knows about?",
     "What's a friendship boundary you've crossed that still bothers you?",
     "Who here would you actually call at 3 AM if something went wrong — and be honest why?",
@@ -679,7 +832,8 @@ const DECKS = {
     "What's a boundary you pretend to have but fold on every single time?",
     "What's something you're genuinely bad at that you've never admitted out loud?",
     "What's a thing you've never told your parents and probably never will?",
-    // ── TIER 3 ──
+    
+    // ── TIER 3 (Questions 37-54) ──
     "What's the most chaotic thing you've ever done while completely sober?",
     "Read the last text you sent your ex out loud. Right now. Go.",
     "Tell us the most embarrassing reason you've ever ghosted someone.",
@@ -698,31 +852,52 @@ const DECKS = {
     "What's the most unhinged behavior you've ever done over someone you liked?",
     "What's the most embarrassing truth about your love life right now?",
     "What's the most messed up thing you've thought about someone in this room?",
-    // ── DARES: Mild ──
+    
+    // ── DARES: Mild (55-66) ──
     "DARE: Open your camera roll, scroll to a random photo and show the room. No skipping allowed.",
     "DARE: Show everyone your most recent DM thread — the whole thing.",
     "DARE: Do a 60-second impression of the person to your right. Make it uncomfortably accurate.",
     "DARE: Show your screen time report. Read the top three apps out loud.",
     "DARE: Let someone go through your notes app for 45 seconds.",
     "DARE: Everyone in the room types a message to your ex and you choose which one actually gets sent.",
-    // ── DARES: Medium ──
+    "DARE: Do your best dance move for 30 seconds straight.",
+    "DARE: Sing the chorus of your favorite song right now.",
+    "DARE: Let someone tickle you for 15 seconds without resisting.",
+    "DARE: Do 10 pushups in the middle of the room.",
+    "DARE: Speak in an accent for the next three rounds.",
+    "DARE: Let someone draw on your face with a pen (washable, hopefully).",
+    
+    // ── DARES: Medium (67-78) ──
     "DARE: Call a random contact and stay on the line for 30 seconds saying absolutely nothing.",
     "DARE: Post whatever the person to your left types as your next story. No preview, no veto.",
     "DARE: Do a full dramatic performance of your worst breakup — act both roles yourself.",
     "DARE: Let someone write any caption and post it to your Instagram right now.",
     "DARE: Read your most embarrassing saved voice memo out loud to the room.",
     "DARE: Let everyone look at your Spotify Wrapped — all of it, no hiding.",
-    // ── DARES: Chaos ──
+    "DARE: Text your mom 'I love you' with no context and show us the response.",
+    "DARE: Let someone go through your photo app for 60 seconds.",
+    "DARE: Do your best impression of someone famous while the group guesses who.",
+    "DARE: Tell a story using only movie titles.",
+    "DARE: Let the group pose you for a photo and post it immediately.",
+    "DARE: Eat something weird (like hot sauce on a cracker) without complaining.",
+    
+    // ── DARES: Chaos (79-90) ──
     "DARE: The group picks one contact to text 'we need to talk.' You send it. Read the response out loud.",
     "DARE: Let someone read your last Google search out loud in the most dramatic voice they can do.",
     "DARE: Post a selfie with zero filter, zero editing, right now.",
     "DARE: Read the last five things in your clipboard out loud.",
     "DARE: Everyone picks an emoji to describe your energy tonight and explains their choice.",
-    "DARE: Demonstrate — without words — exactly how you act when you're into someone."
+    "DARE: Demonstrate — without words — exactly how you act when you're into someone.",
+    "DARE: Let the group create a dating profile for you and you have to read it aloud.",
+    "DARE: Reveal your most controversial opinion and defend it for 2 minutes.",
+    "DARE: Let someone go through your search history for 30 seconds and read something aloud.",
+    "DARE: Do a dramatic reading of the last text you sent to your crush/ex.",
+    "DARE: Let the group vote on a new nickname for you that you have to accept for the rest of the night.",
+    "DARE: Share your screen time and explain the top 3 apps."
   ],
 
   girlsnight: [
-    // ── TIER 1 ──
+    // ── TIER 1 (Questions 1-18) ──
     "Rank everyone in this room by who you'd trust with your phone fully unlocked.",
     "What's a text you wrote, almost sent, but deleted — describe it in full.",
     "What's the most embarrassing thing you've done to look hot for someone?",
@@ -741,7 +916,8 @@ const DECKS = {
     "What's your most shameful thirst trap moment?",
     "What's a friendship fallout you genuinely haven't gotten over?",
     "What's your most embarrassing 'read the room' fail around a guy?",
-    // ── TIER 2 ──
+    
+    // ── TIER 2 (Questions 19-36) ──
     "Be honest: which girl in this room do you think has the best dating life right now and why?",
     "What's the shadiest thing you've done to another girl over a guy?",
     "Tell the group about your messiest situationship — what actually happened?",
@@ -760,7 +936,8 @@ const DECKS = {
     "What's something you've done online that you'd be mortified if he found out about?",
     "What's the pettiest reason you've ever cut someone off?",
     "Tell us the most embarrassing thing you've done while tipsy on a night out.",
-    // ── TIER 3 ──
+    
+    // ── TIER 3 (Questions 37-54) ──
     "Tell us what happened on your wildest night out — the real unfiltered version.",
     "What's your actual body count? Say the number. Right now. Out loud.",
     "Who in this room do you think is the best in bed based purely on vibe — and why?",
@@ -779,31 +956,52 @@ const DECKS = {
     "Who's the one person you'd call right now if you wanted to ruin your own evening?",
     "What's the most embarrassing fantasy you've had about someone real that you know?",
     "What's the most unhinged thing you've done for a guy that you're lowkey proud of?",
-    // ── DARES: Mild ──
+    
+    // ── DARES: Mild (55-66) ──
     "DARE: All of you open your DMs — the person to your left reads the first unread message out loud.",
     "DARE: Find a photo from the last 30 days in your camera roll and explain it fully to the room.",
     "DARE: Do a full runway walk across the room like you just spotted your ex and you look incredible.",
     "DARE: Everyone assigns you a Love Island persona. You have to accept it with zero argument.",
     "DARE: Make everyone rate your most recent selfie out of 10. Honestly, not kindly.",
     "DARE: Do your most embarrassing real-life flirting impression — recreate it exactly.",
-    // ── DARES: Medium ──
+    "DARE: Show everyone your most recent purchase and explain why you bought it.",
+    "DARE: Let someone do your makeup with their eyes closed.",
+    "DARE: Do a 60-second TikTok dance challenge right now.",
+    "DARE: Rate everyone's outfits 1-10 and explain each rating.",
+    "DARE: Let someone pick out an outfit from your closet for you to wear tomorrow.",
+    "DARE: Do your best celebrity impression while the group guesses who.",
+    
+    // ── DARES: Medium (67-78) ──
     "DARE: Read the last message your ex sent you out loud with full theatrical dramatic energy.",
     "DARE: Show everyone your Spotify Daylist right now. No preview, no preparation.",
     "DARE: Text someone 'I miss you' with zero context. Read the response out loud when it comes.",
     "DARE: Post a picture chosen entirely by the person to your left on your story right now.",
     "DARE: Let someone send a voice note on your behalf to anyone in your contacts.",
     "DARE: Show the group your full camera roll from last weekend.",
-    // ── DARES: Chaos ──
+    "DARE: Call your mom and tell her you're getting married (then explain it's a dare).",
+    "DARE: Let the group read your last 5 texts out loud.",
+    "DARE: Do a dramatic reading of your diary from middle school (if you have it).",
+    "DARE: Let someone post anything they want on your social media (within reason).",
+    "DARE: Reveal your celebrity crush and explain why in detail.",
+    "DARE: Let the group ask your crush one question (if single) or partner one question (if taken).",
+    
+    // ── DARES: Chaos (79-90) ──
     "DARE: Post the most unflattering photo from tonight on your story. Right now.",
     "DARE: Everyone guesses your body count out loud. You then reveal the real number.",
     "DARE: Do your best impression of yourself after three drinks — let the group rate it.",
     "DARE: Everyone describes your love life using only a reality TV show title. You respond.",
     "DARE: Post a thirst trap right now. Group decides the caption — no veto.",
-    "DARE: Let the group pick a 'red flag' emoji to add to your Instagram bio for the next 24 hours."
+    "DARE: Let the group pick a 'red flag' emoji to add to your Instagram bio for the next 24 hours.",
+    "DARE: Swipe on dating apps for 2 minutes while everyone watches and comments.",
+    "DARE: Let the group create a dating profile for you and actually post it.",
+    "DARE: Send a risky text to someone — group decides the exact wording.",
+    "DARE: Show your most embarrassing saved Snapchat memory.",
+    "DARE: Let someone go through your WhatsApp chats for 60 seconds and read something aloud.",
+    "DARE: Rate everyone's kissing ability based purely on vibes (no experience required)."
   ],
 
   naughty: [
-    // ── TIER 1: Charged ──
+    // ── TIER 1: Charged (Questions 1-18) ──
     "Pick someone of the opposite gender and make out with them right now. Go.",
     "Pick someone attractive in this room and sit in their lap — both of you have to stay there for two rounds.",
     "Choose someone and kiss them on the neck. Once. Slowly.",
@@ -822,7 +1020,8 @@ const DECKS = {
     "Pick someone and let them kiss your hand slowly. Both of you stay still.",
     "Choose someone of the opposite gender. Make out with them until the group says stop.",
     "Pick someone. Caress their thigh slowly while making eye contact with the group.",
-    // ── TIER 2: Direct ──
+    
+    // ── TIER 2: Direct (Questions 19-36) ──
     "Pick someone and grind on them to imaginary music for 30 seconds. No stopping early.",
     "Choose someone and tell the room in explicit detail what you'd do to them if you were alone.",
     "Pick someone and straddle them. Stay there for the next two rounds.",
@@ -841,7 +1040,8 @@ const DECKS = {
     "Choose someone and let them caress your neck and shoulders however they want for 30 seconds.",
     "Pick someone. Tell them what body part of theirs you've been staring at tonight.",
     "Choose someone and act out — with your hands on them — exactly how you'd give them a massage in bed.",
-    // ── TIER 3: No Filter ──
+    
+    // ── TIER 3: No Filter (Questions 37-54) ──
     "Pick two people and tell the room exactly how a threesome with them would go. Be specific.",
     "Choose someone and describe your most explicit fantasy about them. The whole room listens.",
     "Pick someone of the opposite gender. Make out with them for 20 full seconds. No skipping.",
@@ -860,27 +1060,48 @@ const DECKS = {
     "Pick someone of the opposite gender. Make out with them passionately. Group rates it 1–10.",
     "Tell the room the most explicit scenario you've imagined with anyone in this group.",
     "Choose someone and do whatever you want to them physically — with consent — for 30 seconds.",
-    // ── DARES: Tier 1 ──
+    
+    // ── DARES: Tier 1 (55-66) ──
     "DARE: Walk over to someone and kiss them on the cheek, then whisper exactly what you've been thinking about them.",
     "DARE: Choose someone of the opposite gender. Make out with them for 10 seconds. Group counts out loud.",
     "DARE: Pick someone. Sit in their lap and stay there for the next three rounds.",
     "DARE: Choose someone and caress their face slowly for 20 seconds. Both hold eye contact.",
     "DARE: Pick someone and give them a 30-second neck massage. The room watches the whole thing.",
     "DARE: Go up to someone and bite their earlobe. Tell them out loud if you'd want to do it again.",
-    // ── DARES: Tier 2 ──
+    "DARE: Give someone a 20-second hug and whisper something dirty in their ear.",
+    "DARE: Let someone trace their finger along your inner thigh for 10 seconds.",
+    "DARE: Kiss someone on the forehead, then slowly kiss down to their lips.",
+    "DARE: Let someone undo one button of your shirt.",
+    "DARE: Sit back-to-back with someone for 2 minutes and describe what you're feeling.",
+    "DARE: Let someone smell your neck and describe what you smell like.",
+    
+    // ── DARES: Tier 2 (67-78) ──
     "DARE: Pick someone of the opposite gender. Make out with them until the group says stop — minimum 20 seconds.",
     "DARE: Choose someone and straddle them. Stay there for two full rounds.",
     "DARE: Go up to someone and run your hand along their entire body from shoulder to thigh. Slowly.",
     "DARE: Choose someone and grind on them to imaginary music for 30 seconds. Group watches.",
     "DARE: Pick someone to whisper in your ear what they want to do to you. Repeat it to the group word for word.",
     "DARE: Choose someone and press your body fully against theirs for 30 seconds. No talking.",
-    // ── DARES: Tier 3 ──
+    "DARE: Let someone blindfold you and have someone else kiss you anywhere — guess who it was.",
+    "DARE: Give someone a hickey anywhere visible (with consent).",
+    "DARE: Let someone remove one piece of your clothing (within reason).",
+    "DARE: Kiss someone's neck for 30 seconds while they try not to react.",
+    "DARE: Let someone tie your hands behind your back for the next round.",
+    "DARE: Describe in detail what you'd do if you had 5 minutes alone with someone in this room.",
+    
+    // ── DARES: Tier 3 (79-90) ──
     "DARE: Pick someone and make out with them passionately for 30 seconds. Group rates you both after.",
     "DARE: Choose someone. Tell them — and the whole room — exactly what you'd do to them if everyone left right now.",
     "DARE: Pick someone and let them caress you however they want for 45 seconds — within consent.",
     "DARE: Choose someone and describe your most explicit fantasy about them out loud to the whole group.",
     "DARE: Pick someone of the opposite gender. Make out with them. Then both of you describe it to the room.",
-    "DARE: Tell the room the most explicit thing you've imagined doing with anyone in this group tonight."
+    "DARE: Tell the room the most explicit thing you've imagined doing with anyone in this group tonight.",
+    "DARE: Let someone remove an article of clothing from you using only their mouth.",
+    "DARE: Kiss someone in a way that would make your ex jealous.",
+    "DARE: Let someone touch you anywhere they want for 20 seconds (within consent).",
+    "DARE: Demonstrate your favorite position on someone (clothed, with consent).",
+    "DARE: Let someone whisper the dirtiest thing they can think of in your ear.",
+    "DARE: Do something to someone that makes them genuinely blush."
   ]
 };
 
@@ -1069,14 +1290,14 @@ function makeCardHTML(card){
     const player=players.length?players[currentPlayerIdx%players.length]:null;
     const total=(DECKS[deckType]||[]).length;
     const num=total-currentDeck.length;
-    return getCardBackHTML()+`<div class="card-front flex flex-col justify-between p-8 sm:p-12 w-full h-full text-center z-10" id="activeCard">
-        <div class="flex justify-between items-center mb-4">
-            <span class="font-light text-base opacity-60">#${num}/${total}</span>
+    return getCardBackHTML()+`<div class="card-front flex flex-col justify-between w-full h-full text-center z-10" id="activeCard">
+        <div class="flex justify-between items-center mb-2">
+            <span class="font-light text-sm opacity-60">#${num}/${total}</span>
             <div class="card-header-chip text-white" style="background-color:${color};">${isDare?'⚡ DARE':'❓ QUESTION'}</div>
         </div>
-        ${player?`<div class="flex justify-center mb-4"><div class="player-badge" style="background-color:${color};">👤 ${player}</div></div>`:''}
-        <div class="card-content-area px-0 min-h-[140px]"><p class="card-question-text text-gray-900">${text}</p></div>
-        <div class="text-xs text-right text-gray-400 mt-6 pt-3 border-t border-gray-100">${DECK_LABELS[deckType]||''}</div>
+        ${player?`<div class="flex justify-center mb-3"><div class="player-badge" style="background-color:${color};">👤 ${player}</div></div>`:''}
+        <div class="card-content-area flex-1 min-h-0"><p class="card-question-text">${text}</p></div>
+        <div class="text-xs text-right text-gray-400 mt-3 pt-2 border-t border-gray-100">${DECK_LABELS[deckType]||''}</div>
     </div>`;
 }
 
