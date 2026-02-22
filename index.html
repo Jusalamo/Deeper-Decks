@@ -6,9 +6,8 @@
     <title>Deeper-Decks™: The Card Game</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22url(%23rainbow)%22>D</text><defs><linearGradient id=%22rainbow%22 gradientTransform=%22rotate(90)%22><stop offset=%220%25%22 stop-color=%22%23FF1F40%22/><stop offset=%2225%25%22 stop-color=%22%23FF8BA4%22/><stop offset=%2250%25%22 stop-color=%22%2348BB78%22/><stop offset=%2275%25%22 stop-color=%22%236F38E0%22/><stop offset=%22100%25%22 stop-color=%22%23FF1F40%22/></linearGradient></defs></svg>" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Mona Sans for all display/title text -->
-    <link href="https://fonts.cdnfonts.com/css/mona-sans" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Figtree 900 = guaranteed ultra-black on all devices -->
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
    <style>
         /* ── RESET & BASE FIXES ── */
         * {
@@ -77,17 +76,19 @@
         }
 
         /* ══════════════════════════════
-           TYPOGRAPHY SYSTEM
-           ALL TITLES/HEADERS use Mona Sans with proper weight
+           TYPOGRAPHY SYSTEM — Figtree 900
+           Figtree is a Google Font with a true, confirmed 900 black weight.
+           Applied everywhere with !important to crush cascade conflicts.
         ══════════════════════════════ */
 
-        /* Default body text */
+        /* Base body — Inter for body copy */
         body, button, input, select, textarea, p, span, div {
             font-family: 'Inter', sans-serif;
             font-weight: 500;
         }
 
-        /* ── MONA SANS for all display/title elements ── */
+        /* ── FIGTREE 900 for ALL display/title/heading elements ── */
+        h1, h2, h3, h4, h5, h6,
         .game-title,
         .sidebar-title,
         #deckTitle,
@@ -105,37 +106,35 @@
         .btn-history-sm,
         .btn-got-it,
         .timer-num,
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Mona Sans', 'Inter', sans-serif !important;
+        .stat-mini-val,
+        .history-item-meta,
+        .consec-sub,
+        .pass-player-name,
+        .deck-dropdown-btn,
+        .dd-option {
+            font-family: 'Figtree', 'Inter', sans-serif !important;
             font-weight: 900 !important;
             letter-spacing: -0.03em;
         }
 
-        /* Ensure card question text is thick and uses Mona Sans */
+        /* Card question text — Figtree 900, large and punchy */
         .card-question-text {
-            font-family: 'Mona Sans', 'Inter', sans-serif !important;
-            font-weight: 800 !important;
-            font-size: clamp(1.3rem, 5vw, 1.8rem);
-            line-height: 1.35;
-            letter-spacing: -0.02em;
-        }
-
-        /* Stat values */
-        .stat-mini-val {
-            font-family: 'Mona Sans', 'Inter', sans-serif !important;
+            font-family: 'Figtree', 'Inter', sans-serif !important;
             font-weight: 900 !important;
+            font-size: clamp(1.35rem, 5vw, 1.9rem);
+            line-height: 1.3;
             letter-spacing: -0.03em;
+            color: #0a0a0a;
         }
 
-        /* History item meta, heat label, shame label, vote label */
+        /* Stat/label supporting text — bold but not display */
         .heat-label,
         .stat-mini-label,
         .shame-label,
         .vote-label,
-        .consec-sub,
-        .history-item-meta,
         .filter-btn {
-            font-weight: 700 !important;
+            font-family: 'Figtree', sans-serif !important;
+            font-weight: 800 !important;
         }
 
         /* ── SIDEBAR ── */
@@ -144,10 +143,10 @@
         .sidebar-menu { position:fixed; top:0; right:-100%; width:320px; height:100%; background:var(--modal-dark); z-index:3001; transition:right 0.4s cubic-bezier(0.4,0,0.2,1); padding:24px; overflow-y:auto; box-shadow:-5px 0 30px rgba(0,0,0,0.3); }
         .sidebar-menu.active { right:0; }
         .sidebar-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.1); }
-        .sidebar-title { font-size:1.5rem; color:var(--text-light); font-family:'Mona Sans',sans-serif !important; font-weight:900 !important; }
+        .sidebar-title { font-size:1.5rem; color:var(--text-light); font-family:'Figtree',sans-serif !important; font-weight:900 !important; }
         .close-sidebar { background:none; border:none; color:var(--text-light); font-size:1.5rem; cursor:pointer; padding:8px; border-radius:8px; transition:background-color 0.2s; }
         .close-sidebar:hover { background-color:rgba(255,255,255,0.1); }
-        .sidebar-item { display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:10px; cursor:pointer; transition:all 0.2s ease; color:var(--text-light); border:none; width:100%; text-align:left; font-size:1rem; font-weight:600; font-family:'Inter',sans-serif; }
+        .sidebar-item { display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:10px; cursor:pointer; transition:all 0.2s ease; color:var(--text-light); border:none; width:100%; text-align:left; font-size:1rem; font-weight:800; font-family:'Figtree','Inter',sans-serif; letter-spacing:-0.01em; }
         .sidebar-item:hover { background:rgba(255,255,255,0.1); transform:translateX(-2px); }
         .sidebar-divider { border:none; border-top:1px solid rgba(255,255,255,0.08); margin:8px 0 18px; }
 
@@ -162,21 +161,22 @@
         /* ── INTRO ── */
         #introScreen { position:fixed; top:0; left:0; width:100%; height:100%; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:4000; transition:opacity 0.6s ease-out; }
         
-        /* FIXED: Rainbow logo now uses Mona Sans with proper 900 weight */
+        /* Intro logo — Figtree 900, big, bold, unmissable */
         .rainbow-logo { 
-            font-family:'Mona Sans',sans-serif !important; 
-            font-size:3.5rem; 
+            font-family:'Figtree','Inter',sans-serif !important; 
+            font-size:clamp(2.8rem, 10vw, 4.5rem); 
             font-weight:900 !important; 
             background:linear-gradient(to right,#fff,#fff,#0ff,#00f,#800080,#ffb6c1,#f00,#ff0,#90ee90,#fff,#fff) no-repeat 100% 0% / 900%; 
             -webkit-background-clip:text; 
             -webkit-text-fill-color:transparent; 
             background-clip:text; 
-            letter-spacing:-2px; 
+            letter-spacing:-3px; 
             margin-bottom:1rem; 
-            animation:rainbowSlide 2s ease-in-out forwards; 
+            animation:rainbowSlide 2s ease-in-out forwards;
+            display:block;
         }
         @keyframes rainbowSlide{from{background-position:100% 0%}to{background-position:0% 0%}}
-        .intro-subtitle { font-size:1.125rem; color:rgba(255,255,255,0.7); font-weight:400; letter-spacing:0.5px; margin-bottom:3rem; opacity:0; animation:fadeInUp 0.8s ease-out 0.8s forwards; }
+        .intro-subtitle { font-family:'Figtree','Inter',sans-serif !important; font-size:1.15rem; color:rgba(255,255,255,0.85); font-weight:700 !important; letter-spacing:0.3px; margin-bottom:3rem; opacity:0; animation:fadeInUp 0.8s ease-out 0.8s forwards; }
         .rainbow-progress { width:200px; height:4px; background:rgba(255,255,255,0.2); border-radius:3px; overflow:hidden; opacity:0; animation:fadeIn 0.4s ease-out 0.5s forwards; }
         .rainbow-progress-bar { width:0%; height:100%; background:linear-gradient(to right,#0ff,#00f,#800080,#ffb6c1,#f00,#ff0,#90ee90); border-radius:3px; transition:width 1.8s cubic-bezier(0.28,0.11,0.32,1); }
         @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
@@ -213,25 +213,26 @@
             padding: 1.8rem;
         }
 
-        /* FIXED: Card back title uses Mona Sans 900 */
+        /* CARD BACK — dark, rich, with a strong bold title */
         .card-back { 
-            background: linear-gradient(135deg,#2A2A2A 0%,#1F1F1F 100%); 
+            background: linear-gradient(145deg,#1a1a1a 0%,#111111 100%); 
             border-radius: 20px; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3); 
             position: absolute; 
             width: 98%; 
             height: 98%; 
             top: 1%; 
             left: 1%; 
             z-index: -1; 
-            border:1px solid rgba(255,255,255,0.05); 
+            border:1px solid rgba(255,255,255,0.08); 
         }
         .card-back-title {
-            font-family: 'Mona Sans', sans-serif !important;
+            font-family: 'Figtree', sans-serif !important;
             font-weight: 900 !important;
-            font-size: 1rem;
-            letter-spacing: -0.02em;
-            color: rgba(255,255,255,0.8);
+            font-size: 1.15rem;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+            opacity: 1 !important;
         }
 
         .card-slide-out-left  { transform:translateX(-150%) rotate(-15deg) !important; opacity:0 !important; }
@@ -252,7 +253,7 @@
             padding: 8px 16px; 
             font-size: 0.85rem; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            font-family: 'Mona Sans', sans-serif !important;
+            font-family: 'Figtree', sans-serif !important;
             font-weight: 900 !important;
             letter-spacing: -0.01em;
         }
@@ -266,7 +267,7 @@
             font-size: 0.95rem; 
             color: white; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            font-family: 'Mona Sans', sans-serif !important;
+            font-family: 'Figtree', sans-serif !important;
             font-weight: 900 !important;
         }
 
@@ -277,7 +278,7 @@
         .deck-option { background:rgba(255,255,255,0.05); border:2px solid transparent; border-radius:16px; padding:20px; margin-bottom:15px; cursor:pointer; transition:all 0.3s ease; }
         .deck-option:hover { background:rgba(255,255,255,0.1); transform:translateY(-2px); }
         .deck-option.active { border-color:currentColor; background:rgba(255,255,255,0.15); }
-        .deck-option h3 { font-family:'Mona Sans',sans-serif !important; font-weight:900 !important; font-size:1.2rem !important; letter-spacing:-0.03em; }
+        .deck-option h3 { font-family:'Figtree','Inter',sans-serif !important; font-weight:900 !important; font-size:1.25rem !important; letter-spacing:-0.04em; color:inherit; }
         .player-input { background:rgba(0,0,0,0.3); border:2px solid rgba(255,255,255,0.2); border-radius:12px; padding:12px 16px; color:var(--text-light); font-size:1rem; transition:border-color 0.2s; font-family:'Inter',sans-serif; }
         .player-input:focus { outline:none; border-color:rgba(255,255,255,0.4); }
         .player-item { background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; color:var(--text-light); margin-bottom:8px; cursor:grab; transition:all 0.2s; }
@@ -301,24 +302,24 @@
         }
 
         .btn-action { 
-            background-color: var(--modal-dark); 
-            color: var(--text-light); 
+            background-color: #111111; 
+            color: #ffffff; 
             border-radius: 14px; 
-            padding: 12px 20px; 
+            padding: 14px 20px; 
             transition: background 0.2s ease,transform 0.1s ease,box-shadow 0.2s; 
-            box-shadow: 0 3px 0 rgba(0,0,0,0.2); 
+            box-shadow: 0 4px 0 rgba(0,0,0,0.4); 
             border: none; 
             cursor: pointer; 
-            font-family: 'Mona Sans', sans-serif !important;
+            font-family: 'Figtree', 'Inter', sans-serif !important;
             font-weight: 900 !important;
-            font-size: 0.9rem;
-            letter-spacing: -0.01em;
+            font-size: 0.95rem;
+            letter-spacing: -0.02em;
             width: 100%;
         }
-        .btn-action:hover:not(:disabled) { background-color:#3A3A3A; transform:translateY(-2px); box-shadow:0 5px 0 rgba(0,0,0,0.2); }
-        .btn-action:disabled { opacity:0.4; cursor:not-allowed; transform:translateY(0); box-shadow:0 3px 0 rgba(0,0,0,0.1); }
-        .btn-shuffle { background-color:var(--surface-light); color:var(--text-dark); border:1px solid rgba(0,0,0,0.1); box-shadow:0 3px 0 rgba(0,0,0,0.05); margin-top:0.4rem; }
-        .btn-shuffle:hover:not(:disabled) { background-color:#E0E0E0; }
+        .btn-action:hover:not(:disabled) { background-color:#222222; transform:translateY(-2px); box-shadow:0 6px 0 rgba(0,0,0,0.4); }
+        .btn-action:disabled { opacity:0.35; cursor:not-allowed; transform:translateY(0); box-shadow:0 3px 0 rgba(0,0,0,0.15); }
+        .btn-shuffle { background-color:#ffffff; color:#0a0a0a !important; border:2px solid rgba(0,0,0,0.18); box-shadow:0 3px 0 rgba(0,0,0,0.12); margin-top:0.4rem; font-family:'Figtree','Inter',sans-serif !important; font-weight:900 !important; }
+        .btn-shuffle:hover:not(:disabled) { background-color:#f5f5f5; border-color:rgba(0,0,0,0.28); }
         .counter-box { background-color:var(--surface-light); border:1px solid rgba(0,0,0,0.08); box-shadow:var(--shadow-subtle); }
         .settings-option { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1); color:var(--text-light); }
         .shuffling { animation:shuffleAnim 0.5s ease-in-out; }
@@ -335,19 +336,19 @@
         .deck-dropdown-btn {
             width: 100%;
             background: #fff;
-            border: 1.5px solid rgba(0,0,0,0.1);
+            border: 2px solid rgba(0,0,0,0.15);
             border-radius: 12px;
-            padding: 10px 14px;
+            padding: 11px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            font-family: 'Mona Sans', sans-serif;
-            font-weight: 700;
-            font-size: 0.85rem;
-            color: var(--text-dark);
+            font-family: 'Figtree', 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 0.9rem;
+            color: #0a0a0a;
             transition: all 0.2s;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }
         .deck-dropdown-btn:hover { border-color: rgba(0,0,0,0.2); background: #f8f8f8; }
         .deck-dropdown-btn .dd-arrow {
@@ -384,12 +385,13 @@
             border: none;
             background: transparent;
             cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--text-dark);
+            font-family: 'Figtree', 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 0.88rem;
+            color: #0a0a0a;
             transition: background 0.15s;
             text-align: left;
+            letter-spacing: -0.01em;
         }
         .dd-option:not(:last-child) { border-bottom: 1px solid rgba(0,0,0,0.06); }
         .dd-option:hover { background: rgba(0,0,0,0.04); }
@@ -412,7 +414,7 @@
         body.dark-mode .card-front{background-color:#2A2A2A;color:#FFFFFF;border-color:rgba(255,255,255,0.1);}
         body.dark-mode .card-question-text{color:#FFFFFF;}
         body.dark-mode .swipe-instruction{color:rgba(255,255,255,0.5);}
-        body.dark-mode .btn-shuffle{background-color:#2A2A2A;color:#FFFFFF;border-color:rgba(255,255,255,0.1);}
+        body.dark-mode .btn-shuffle{background-color:#2A2A2A;color:#FFFFFF !important;border-color:rgba(255,255,255,0.2);font-family:'Figtree','Inter',sans-serif !important;font-weight:900 !important;}
         body.dark-mode .btn-shuffle:hover:not(:disabled){background-color:#3A3A3A;}
         body.dark-mode .empty-card{border-color:#FFFFFF;background-color:#2A2A2A;}
         body.dark-mode .heat-label{color:rgba(255,255,255,0.4);}
@@ -490,11 +492,11 @@
         /* PAUSE OVERLAY */
         #pauseOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:5000;display:none;flex-direction:column;justify-content:center;align-items:center;gap:2rem;backdrop-filter:blur(18px);}
         #pauseOverlay.active{display:flex;animation:fadeInUp 0.3s ease;}
-        .pause-big-title{font-family:'Mona Sans',sans-serif !important;font-size:3rem;font-weight:900 !important;color:#fff;letter-spacing:-2px;}
+        .pause-big-title{font-family:'Figtree','Inter',sans-serif !important;font-size:3.5rem;font-weight:900 !important;color:#fff;letter-spacing:-3px;}
         .pause-sub{color:rgba(255,255,255,0.5);font-size:1rem;margin-top:0.25rem;text-align:center;}
         .session-box{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:20px 32px;text-align:center;margin-top:0.5rem;}
         .session-box-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);margin-bottom:8px;}
-        .session-box-code{font-family:'Mona Sans',sans-serif !important;font-size:2.5rem;font-weight:900 !important;letter-spacing:0.25em;color:#fff;}
+        .session-box-code{font-family:'Figtree','Inter',sans-serif !important;font-size:2.8rem;font-weight:900 !important;letter-spacing:0.2em;color:#fff;}
         .session-box-hint{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:6px;}
         .pause-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
 
@@ -504,9 +506,9 @@
         .pass-icon{font-size:1.6rem;animation:phoneBounce 1s ease infinite;}
         @keyframes phoneBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
         .pass-info{flex:1;}
-        .pass-player-name{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:1.05rem;color:var(--text-dark);}
+        .pass-player-name{font-family:'Figtree',sans-serif !important;font-weight:900 !important;font-size:1.05rem;color:var(--text-dark);}
         .pass-player-sub{font-size:0.78rem;color:rgba(0,0,0,0.45);margin-top:2px;}
-        .btn-got-it{background:var(--modal-dark);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;cursor:pointer;font-size:0.88rem;transition:all 0.2s;}
+        .btn-got-it{background:var(--modal-dark);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-family:'Figtree',sans-serif !important;font-weight:900 !important;cursor:pointer;font-size:0.88rem;transition:all 0.2s;}
         .btn-got-it:hover{background:#3A3A3A;}
 
         /* TIMER */
@@ -514,7 +516,7 @@
         #timerWrap.show{display:flex;}
         .timer-bar-outer{flex:1;height:6px;background:rgba(0,0,0,0.09);border-radius:99px;overflow:hidden;}
         .timer-bar-inner{height:100%;border-radius:99px;width:100%;background:linear-gradient(90deg,#48BB78,#FFD60A,#FF1F40);transition:width 1s linear;}
-        .timer-num{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:1.1rem;min-width:28px;text-align:right;color:var(--text-dark);}
+        .timer-num{font-family:'Figtree',sans-serif !important;font-weight:900 !important;font-size:1.1rem;min-width:28px;text-align:right;color:var(--text-dark);}
         .timer-num.urgent{color:#FF1F40;animation:timerUrgent 0.5s ease infinite;}
         @keyframes timerUrgent{0%,100%{opacity:1}50%{opacity:0.4}}
 
@@ -530,7 +532,7 @@
         .stat-mini{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.78rem;}
         .stat-mini:last-child{border-bottom:none;}
         .stat-mini-label{color:rgba(0,0,0,0.45);font-weight:600;}
-        .stat-mini-val{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;}
+        .stat-mini-val{font-family:'Figtree',sans-serif !important;font-weight:900 !important;}
         .stat-skips{color:#FF1F40;}
 
         /* DARE VOTE */
@@ -549,16 +551,16 @@
         .shame-label{font-size:0.7rem;color:#FF1F40;font-weight:700;text-align:center;margin-top:3px;display:none;}
 
         /* WILDCARD + HISTORY ROW */
-        .btn-wildcard{background:linear-gradient(135deg,#6F38E0,#FF1F40);color:#fff;border:none;border-radius:12px;padding:10px 14px;font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;box-shadow:0 4px 10px rgba(111,56,224,0.25);}
+        .btn-wildcard{background:linear-gradient(135deg,#6F38E0,#FF1F40);color:#fff;border:none;border-radius:12px;padding:12px 16px;font-family:'Figtree','Inter',sans-serif !important;font-weight:900 !important;font-size:0.9rem;letter-spacing:-0.02em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;box-shadow:0 5px 12px rgba(111,56,224,0.35);}
         .btn-wildcard:hover{filter:brightness(1.1);transform:translateY(-1px);}
-        .btn-history-sm{background:var(--surface-light);color:var(--text-dark);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
+        .btn-history-sm{background:var(--surface-light);color:var(--text-dark);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-family:'Figtree',sans-serif !important;font-weight:900 !important;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
         .btn-history-sm:hover{background:#E0E0E0;}
 
         /* CONSEQUENCE TOAST */
         #consecToast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(130px);background:linear-gradient(135deg,#FF1F40,#FF9F0A);color:#fff;border-radius:16px;padding:1rem 1.5rem;font-size:1rem;z-index:6000;transition:transform 0.45s cubic-bezier(0.34,1.56,0.64,1);text-align:center;min-width:240px;box-shadow:0 10px 40px rgba(255,31,64,0.4);pointer-events:auto;cursor:pointer;touch-action:pan-x;}
         #consecToast.show{transform:translateX(-50%) translateY(0);}
         #consecToast .dismiss-hint{font-size:0.62rem;opacity:0.65;margin-top:5px;text-transform:uppercase;letter-spacing:0.08em;}
-        .consec-sub{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.8;margin-bottom:4px;}
+        .consec-sub{font-family:'Figtree',sans-serif !important;font-weight:900 !important;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.8;margin-bottom:4px;}
 
         /* HISTORY DRAWER */
         #historyBg{position:fixed;inset:0;z-index:4400;background:rgba(0,0,0,0.5);display:none;}
@@ -568,7 +570,7 @@
         .drawer-handle{width:40px;height:4px;background:rgba(255,255,255,0.15);border-radius:99px;margin:0 auto 1.25rem;}
         .history-item{padding:11px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);margin-bottom:8px;font-size:0.82rem;color:rgba(255,255,255,0.72);transition:all 0.2s;}
         .history-item:hover{background:rgba(255,255,255,0.1);color:#fff;}
-        .history-item-meta{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:0.67rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;opacity:0.7;}
+        .history-item-meta{font-family:'Figtree',sans-serif !important;font-weight:900 !important;font-size:0.67rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;opacity:0.7;}
 
         /* TOGGLE */
         .toggle{position:relative;width:40px;height:22px;flex-shrink:0;}
@@ -583,7 +585,7 @@
         @keyframes nowPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:0.6}}
 
         /* RESUME MODAL CODE INPUT */
-        .resume-code-inp{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:1.5rem;letter-spacing:0.2em;text-align:center;text-transform:uppercase;width:100%;}
+        .resume-code-inp{font-family:'Figtree',sans-serif !important;font-weight:900 !important;font-size:1.5rem;letter-spacing:0.2em;text-align:center;text-transform:uppercase;width:100%;}
     </style>
 </head>
 <body>
@@ -617,7 +619,7 @@
 <div id="historyDrawer">
     <div class="drawer-handle"></div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-        <h3 style="font-family:'Mona Sans',sans-serif;font-weight:900;color:#fff;font-size:1.2rem;letter-spacing:-0.03em;">Card History</h3>
+        <h3 style="font-family:'Figtree','Inter',sans-serif;font-weight:900;color:#fff;font-size:1.4rem;letter-spacing:-0.04em;">Card History</h3>
         <button onclick="closeHistory()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:1rem;">✕</button>
     </div>
     <div id="historyList"><p style="color:rgba(255,255,255,0.35);text-align:center;padding:2rem 0;font-size:0.85rem;">No cards drawn yet.</p></div>
@@ -645,7 +647,7 @@
     <button id="sbPause"    class="sidebar-item">⏸ Pause Game</button>
     <button id="sbSettings" class="sidebar-item">⚙️ Settings</button>
     <div style="margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08);text-align:center;color:rgba(255,255,255,0.25);font-size:0.78rem;">
-        <p style="font-family:'Mona Sans',sans-serif;font-weight:700;">Deeper-Decks™ v2</p>
+        <p style="font-family:'Figtree',sans-serif;font-weight:700;">Deeper-Decks™ v2</p>
         <p style="margin-top:4px;">The Card Game for Real Connection</p>
     </div>
 </div>
@@ -664,7 +666,7 @@
 <!-- PLAYER MODAL -->
 <div id="playerModal" class="modal-overlay" style="display:none;">
     <div class="modal-content">
-        <h2 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.8rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:0.5rem;">Deeper-Decks™</h2>
+        <h2 style="font-family:'Figtree',sans-serif;font-weight:900;font-size:2.1rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:0.5rem;">Deeper-Decks™</h2>
         <p class="text-gray-400 text-center mb-6">Add players · drag to reorder turn order</p>
         <div class="mb-6">
             <div class="flex gap-2 mb-4">
@@ -681,7 +683,7 @@
 <!-- DECK MODAL -->
 <div id="deckModal" class="modal-overlay" style="display:none;">
     <div class="modal-content deck-modal-content">
-        <h2 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.8rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:0.5rem;">Choose Your Deck</h2>
+        <h2 style="font-family:'Figtree',sans-serif;font-weight:900;font-size:2.1rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:0.5rem;">Choose Your Deck</h2>
         <p class="text-gray-400 text-center mb-6">Cards escalate in heat as you play — buckle up</p>
         <div id="deckOptions">
             <div class="deck-option" data-deck="romantic" style="color:var(--color-romantic);">
@@ -716,7 +718,7 @@
 <!-- SETTINGS MODAL -->
 <div id="settingsModal" class="modal-overlay" style="display:none;">
     <div class="modal-content">
-        <h2 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.8rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:1.5rem;">Settings</h2>
+        <h2 style="font-family:'Figtree',sans-serif;font-weight:900;font-size:2.1rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:1.5rem;">Settings</h2>
         <div>
             <div class="settings-option">
                 <span>Theme</span>
@@ -733,7 +735,7 @@
                 <div style="font-weight:700;">Timer Duration</div>
                 <div style="display:flex;align-items:center;gap:8px;">
                     <input type="range" min="10" max="90" step="5" value="30" id="timerDuration" style="width:90px;accent-color:#48BB78;" oninput="document.getElementById('timerDurLbl').textContent=this.value+'s'">
-                    <span id="timerDurLbl" style="font-weight:900;font-family:'Mona Sans',sans-serif;min-width:30px;">30s</span>
+                    <span id="timerDurLbl" style="font-weight:900;font-family:'Figtree',sans-serif;min-width:30px;">30s</span>
                 </div>
             </div>
             <div class="settings-option">
@@ -776,7 +778,7 @@
 <!-- RESUME MODAL -->
 <div id="resumeModal" class="modal-overlay" style="display:none;">
     <div class="modal-content">
-        <h2 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.8rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:0.5rem;">Resume Game</h2>
+        <h2 style="font-family:'Figtree',sans-serif;font-weight:900;font-size:2.1rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:0.5rem;">Resume Game</h2>
         <p class="text-gray-400 text-center mb-6">Enter your 6-character session code to pick up exactly where you left off</p>
         <input type="text" id="resumeCodeInput" class="player-input resume-code-inp mb-3" maxlength="6" placeholder="ABC123">
         <div id="resumeErr" style="color:#FF1F40;font-size:0.8rem;text-align:center;min-height:1.2rem;margin-bottom:0.75rem;"></div>
@@ -788,7 +790,7 @@
 <!-- MAIN GAME -->
 <div id="mainGame" class="min-h-screen flex flex-col items-center">
     <header class="max-w-xl w-full text-center mb-3 mt-2 px-4 sm:px-0">
-        <h1 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:2.2rem;color:#1a1a1a;letter-spacing:-0.05em;margin-bottom:0.2rem;">Deeper-Decks<sup style="font-size:0.55em;vertical-align:super;margin-left:2px;">™</sup></h1>
+        <h1 style="font-family:'Figtree','Inter',sans-serif;font-weight:900;font-size:2.6rem;color:#0a0a0a;letter-spacing:-0.06em;margin-bottom:0.2rem;line-height:1;">Deeper-Decks<sup style="font-size:0.45em;vertical-align:super;margin-left:2px;">™</sup></h1>
         <p class="text-gray-600 text-sm font-medium">The Card Game for Real Connection</p>
     </header>
 
@@ -796,7 +798,7 @@
 
         <!-- LEFT: CONTROL PANEL -->
         <section class="lg:w-1/3 control-panel flex flex-col justify-start order-2 lg:order-1">
-            <h2 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.05rem;letter-spacing:-0.03em;margin-bottom:0.6rem;" id="deckTitle">Select a Deck</h2>
+            <h2 style="font-family:'Figtree','Inter',sans-serif;font-weight:900;font-size:1.1rem;letter-spacing:-0.04em;margin-bottom:0.6rem;color:#0a0a0a;" id="deckTitle">Select a Deck</h2>
 
             <!-- STATS row -->
             <div style="display:flex;gap:0.75rem;margin-bottom:0.6rem;">
@@ -861,7 +863,7 @@
             </div>
 
             <!-- MAIN BUTTONS -->
-            <button id="drawButton" class="btn-action py-3 text-base font-bold tracking-wide uppercase w-full mb-1" style="margin-top:0.6rem;">Draw Next Card</button>
+            <button id="drawButton" class="btn-action w-full mb-1" style="margin-top:0.6rem;font-size:1.05rem;padding:15px 20px;letter-spacing:0.02em;text-transform:uppercase;">Draw Next Card</button>
 
             <!-- SKIP -->
             <button id="skipButton" class="w-full btn-action btn-shuffle mb-1" style="display:flex;flex-direction:column;align-items:center;gap:1px;padding:10px 20px;">
@@ -1457,9 +1459,9 @@ function getCardColor(){return DECK_COLORS[deckType]||'#2A2A2A';}
 
 function getCardBackHTML(){
     return `<div class="card-back flex items-center justify-center p-6 z-0">
-        <div class="text-center opacity-60">
-            <div style="font-size:2rem;margin-bottom:0.5rem;">${DECK_ICONS[deckType]||'🃏'}</div>
-            <p class="card-back-title">${DECK_LABELS[deckType]||''}</p>
+        <div class="text-center" style="display:flex;flex-direction:column;align-items:center;gap:0.6rem;">
+            <div style="font-size:3rem;line-height:1;">${DECK_ICONS[deckType]||'🃏'}</div>
+            <p style="font-family:'Figtree','Inter',sans-serif;font-weight:900;font-size:1.1rem;letter-spacing:-0.03em;color:#ffffff;margin:0;">${DECK_LABELS[deckType]||''}</p>
         </div>
     </div>`;
 }
@@ -1471,7 +1473,7 @@ function renderWelcomeCard(){
     const color=getCardColor();
     const html=getCardBackHTML()+`<div class="card-front flex flex-col justify-center items-center p-6 text-center z-10" style="background:${color};border:none;">
         <div style="font-size:3rem;margin-bottom:1rem;">${DECK_ICONS[deckType]||'🃏'}</div>
-        <h3 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.6rem;color:white;letter-spacing:-0.04em;">${DECK_LABELS[deckType]||''}</h3>
+        <h3 style="font-family:'Figtree','Inter',sans-serif;font-weight:900;font-size:1.9rem;color:#ffffff;letter-spacing:-0.05em;text-shadow:0 2px 12px rgba(0,0,0,0.25);">${DECK_LABELS[deckType]||''}</h3>
         <p class="text-white mt-2" style="opacity:0.75;font-size:0.9rem;">${currentDeck.length} cards · ${players.length} players</p>
         <p class="text-white mt-1" style="opacity:0.5;font-size:0.75rem;">Cards heat up as you play 🌡</p>
     </div>`;
@@ -1493,7 +1495,7 @@ function makeCardHTML(card){
         </div>
         ${player?`<div class="flex justify-center mb-3"><div class="player-badge" style="background-color:${color};">👤 ${player}</div></div>`:''}
         <div class="card-content-area flex-1 min-h-0"><p class="card-question-text">${text}</p></div>
-        <div style="font-family:'Mona Sans',sans-serif;font-weight:700;font-size:0.72rem;text-align:right;color:rgba(0,0,0,0.3);margin-top:0.75rem;padding-top:0.5rem;border-top:1px solid rgba(0,0,0,0.06);">${DECK_LABELS[deckType]||''}</div>
+        <div style="font-family:'Figtree','Inter',sans-serif;font-weight:900;font-size:0.75rem;text-align:right;color:rgba(0,0,0,0.5);margin-top:0.75rem;padding-top:0.5rem;border-top:1px solid rgba(0,0,0,0.08);letter-spacing:-0.01em;">${DECK_LABELS[deckType]||''}</div>
     </div>`;
 }
 
@@ -1503,7 +1505,7 @@ function showEmptyCard(){
     const old=cc.querySelector('.card-front,.empty-card');
     const html=getCardBackHTML()+`<div class="empty-card card-front flex flex-col justify-center items-center p-6 text-center z-10">
         <div style="font-size:3rem;margin-bottom:1rem;">🔄</div>
-        <p style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:-0.04em;">Deck Complete!</p>
+        <p style="font-family:'Figtree','Inter',sans-serif;font-weight:900;font-size:1.8rem;letter-spacing:-0.05em;color:#0a0a0a;">Deck Complete!</p>
         <p class="text-lg text-gray-600 mt-2">Shuffle for another round.</p>
     </div>`;
     if(old){old.classList.add('card-slide-out-right');setTimeout(()=>{old.remove();cc.insertAdjacentHTML('beforeend',html);addSwipeZone();},380);}
