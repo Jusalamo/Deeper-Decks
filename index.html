@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/mona-sans" rel="stylesheet">
-    <style>
+   <style>
         /* ── RESET & BASE FIXES ── */
         * {
             -webkit-font-smoothing: antialiased;
@@ -16,6 +16,13 @@
             text-rendering: optimizeLegibility;
             font-synthesis: none;
             box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         :root {
@@ -38,9 +45,6 @@
             background-color: var(--bg-light);
             font-family: 'Inter', sans-serif;
             color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* body itself doesn't scroll */
             height: 100vh;
             width: 100vw;
             position: fixed;
@@ -56,30 +60,36 @@
             height: 100vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            padding: 0.5rem;
+            padding: 0.5rem 0.5rem 30px 0.5rem; /* extra bottom padding */
             position: relative;
         }
 
-        /* ── FONT WEIGHT FIX (ALL BOLD) ── */
+        /* ── FONT WEIGHT FIX: ALL HEADERS/TITLES THICK ── */
         body, button, input, select, textarea, p, span, div {
             font-family: 'Inter', sans-serif;
-            font-weight: 500; /* base regular weight */
+            font-weight: 500;
         }
-        h1, h2, h3, h4, h5, h6, 
-        .game-title, 
-        .sidebar-title, 
-        .card-question-text, 
-        .player-badge, 
-        .card-header-chip, 
-        .btn-action, 
-        .btn-wildcard, 
-        .btn-history-sm,
-        .stat-mini-val, 
-        .filter-btn, 
-        .vote-btn, 
-        .btn-got-it,
+
+        /* Force all headings and title-like elements to be extra bold */
+        h1, h2, h3, h4, h5, h6,
+        .game-title,
+        .sidebar-title,
+        #deckTitle,
+        .deck-option h3,
+        .modal-content h2,
+        .modal-content h3,
         .pause-big-title,
         .session-box-code,
+        .card-question-text,
+        .player-badge,
+        .card-header-chip,
+        .btn-action,
+        .btn-wildcard,
+        .btn-history-sm,
+        .stat-mini-val,
+        .filter-btn,
+        .vote-btn,
+        .btn-got-it,
         .timer-num,
         .heat-label,
         .stat-mini-label,
@@ -87,23 +97,12 @@
         .vote-label,
         .consec-sub,
         .history-item-meta {
-            font-weight: 700 !important;
+            font-weight: 900 !important;
             letter-spacing: -0.02em;
         }
 
-        /* extra bold for main titles */
-        .game-title, 
-        .sidebar-title, 
-        .pause-big-title, 
-        .session-box-code {
-            font-weight: 800 !important;
-            letter-spacing: -0.03em;
-        }
-
-        /* card text specifically */
+        /* Card text specifically (already bold but ensure) */
         .card-question-text {
-            font-weight: 700 !important;
-            font-family: 'Inter', sans-serif;
             font-size: clamp(1.3rem, 5vw, 1.8rem);
             line-height: 1.4;
         }
@@ -114,7 +113,7 @@
         .sidebar-menu { position:fixed; top:0; right:-100%; width:320px; height:100%; background:var(--modal-dark); z-index:3001; transition:right 0.4s cubic-bezier(0.4,0,0.2,1); padding:24px; overflow-y:auto; box-shadow:-5px 0 30px rgba(0,0,0,0.3); }
         .sidebar-menu.active { right:0; }
         .sidebar-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.1); }
-        .sidebar-title { font-size:1.5rem; font-weight:700; color:var(--text-light); font-family:'Mona Sans',sans-serif; }
+        .sidebar-title { font-size:1.5rem; color:var(--text-light); font-family:'Mona Sans',sans-serif; }
         .close-sidebar { background:none; border:none; color:var(--text-light); font-size:1.5rem; cursor:pointer; padding:8px; border-radius:8px; transition:background-color 0.2s; }
         .close-sidebar:hover { background-color:rgba(255,255,255,0.1); }
         .sidebar-item { display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:10px; cursor:pointer; transition:all 0.2s ease; color:var(--text-light); border:none; width:100%; text-align:left; font-size:1rem; font-weight:500; font-family:'Inter',sans-serif; }
@@ -139,7 +138,7 @@
         @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-        /* ── CARDS - FIXED SIZE (LARGER) ── */
+        /* ── CARDS - LARGER ── */
         .card-stack-container { 
             aspect-ratio: 9/14; 
             width: min(380px, 90vw);
@@ -199,7 +198,6 @@
         .card-question-text { 
             font-size: clamp(1.3rem, 5vw, 1.8rem);
             line-height: 1.4; 
-            font-weight: 700 !important;
             overflow-y: auto;
             max-height: 100%;
             padding: 0.5rem 0;
@@ -209,7 +207,6 @@
         .card-header-chip { 
             border-radius: 9999px; 
             padding: 8px 16px; 
-            font-weight: 700 !important; 
             font-size: 0.85rem; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             font-family: 'Inter', sans-serif;
@@ -222,7 +219,6 @@
             gap: 8px; 
             padding: 10px 20px; 
             border-radius: 999px; 
-            font-weight: 700 !important; 
             font-size: 0.95rem; 
             color: white; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -244,7 +240,7 @@
         .player-item.current-turn { border-color:rgba(72,187,120,0.5); background:rgba(72,187,120,0.08); }
         .btn-remove { background:rgba(255,107,129,0.2); color:var(--color-romantic); border-radius:8px; padding:6px 12px; font-size:0.875rem; transition:all 0.2s; border:none; cursor:pointer; }
 
-        /* ── CONTROL PANEL (same width as card on mobile) ── */
+        /* ── CONTROL PANEL (same width as card) ── */
         .control-panel { 
             background: var(--surface-light); 
             border: 1px solid rgba(0,0,0,0.1); 
@@ -253,8 +249,8 @@
             box-shadow: var(--shadow-subtle); 
             color: var(--text-dark);
             width: 100%;
-            max-width: 380px; /* matches card max-width */
-            margin: 0 auto;
+            max-width: 380px;
+            margin: 0 auto 20px auto; /* bottom margin for spacing */
         }
 
         .btn-action { 
@@ -262,7 +258,6 @@
             color: var(--text-light); 
             border-radius: 14px; 
             padding: 12px 20px; 
-            font-weight: 700 !important; 
             transition: background 0.2s ease,transform 0.1s ease,box-shadow 0.2s; 
             box-shadow: 0 3px 0 rgba(0,0,0,0.2); 
             border: none; 
@@ -306,7 +301,7 @@
         body.dark-mode .btn-history-sm{background:#2A2A2A;color:#fff;border-color:rgba(255,255,255,0.1);}
         body.dark-mode .btn-history-sm:hover{background:#3A3A3A;}
 
-        /* ── MOBILE LAYOUT FIXES (control panel & card same width) ── */
+        /* ── MOBILE LAYOUT FIXES ── */
         @media(max-width:1024px){
             main {
                 flex-direction: column-reverse;
@@ -316,6 +311,7 @@
                 width: 100%;
                 max-width: 380px;
                 margin-top: 1.5rem;
+                margin-bottom: 20px;
             }
             header {
                 margin-top: 0.5rem;
@@ -349,21 +345,19 @@
             z-index: 10;
         }
 
-        .game-title, .sidebar-title, h1, h2, h3 {
+        .game-title, .sidebar-title {
             font-family: 'Mona Sans', 'Inter', sans-serif !important;
-            font-weight: 900 !important;
-            letter-spacing: -1px;
         }
 
         /* ════ NEW FEATURE STYLES (unchanged) ════ */
         /* PAUSE OVERLAY */
         #pauseOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:5000;display:none;flex-direction:column;justify-content:center;align-items:center;gap:2rem;backdrop-filter:blur(18px);}
         #pauseOverlay.active{display:flex;animation:fadeInUp 0.3s ease;}
-        .pause-big-title{font-family:'Mona Sans',sans-serif;font-weight:900;font-size:3rem;color:#fff;letter-spacing:-1px;}
+        .pause-big-title{font-family:'Mona Sans',sans-serif;font-size:3rem;color:#fff;letter-spacing:-1px;}
         .pause-sub{color:rgba(255,255,255,0.5);font-size:1rem;margin-top:0.25rem;text-align:center;}
         .session-box{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:20px 32px;text-align:center;margin-top:0.5rem;}
         .session-box-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);margin-bottom:8px;}
-        .session-box-code{font-family:'Mona Sans',sans-serif;font-weight:900;font-size:2.5rem;letter-spacing:0.25em;color:#fff;}
+        .session-box-code{font-family:'Mona Sans',sans-serif;font-size:2.5rem;letter-spacing:0.25em;color:#fff;}
         .session-box-hint{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:6px;}
         .pause-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
 
@@ -383,7 +377,7 @@
         #timerWrap.show{display:flex;}
         .timer-bar-outer{flex:1;height:6px;background:rgba(0,0,0,0.09);border-radius:99px;overflow:hidden;}
         .timer-bar-inner{height:100%;border-radius:99px;width:100%;background:linear-gradient(90deg,#48BB78,#FFD60A,#FF1F40);transition:width 1s linear;}
-        .timer-num{font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.1rem;min-width:28px;text-align:right;color:var(--text-dark);}
+        .timer-num{font-family:'Mona Sans',sans-serif;font-size:1.1rem;min-width:28px;text-align:right;color:var(--text-dark);}
         .timer-num.urgent{color:#FF1F40;animation:timerUrgent 0.5s ease infinite;}
         @keyframes timerUrgent{0%,100%{opacity:1}50%{opacity:0.4}}
 
@@ -404,7 +398,7 @@
 
         /* CARD FILTER TOGGLE */
         .card-filter-row{display:flex;gap:6px;margin-bottom:0.6rem;}
-        .filter-btn{flex:1;padding:7px 6px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-weight:700;font-size:0.75rem;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;color:rgba(0,0,0,0.5);}
+        .filter-btn{flex:1;padding:7px 6px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-size:0.75rem;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;color:rgba(0,0,0,0.5);}
         .filter-btn.active{color:#fff;border-color:transparent;}
         .filter-btn.active.all{background:var(--modal-dark);}
         .filter-btn.active.q{background:#3B82F6;}
@@ -417,7 +411,7 @@
         #dareVote.show{display:block;animation:fadeInUp 0.3s ease;}
         .vote-label{font-size:0.78rem;color:rgba(0,0,0,0.45);margin-bottom:8px;}
         .vote-btns{display:flex;gap:6px;}
-        .vote-btn{flex:1;padding:8px;border-radius:10px;border:1px solid rgba(0,0,0,0.1);background:#fff;font-weight:600;font-size:0.8rem;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;}
+        .vote-btn{flex:1;padding:8px;border-radius:10px;border:1px solid rgba(0,0,0,0.1);background:#fff;font-size:0.8rem;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;}
         .vote-btn.yes:hover{background:rgba(72,187,120,0.13);border-color:#48BB78;color:#276749;}
         .vote-btn.no:hover{background:rgba(255,31,64,0.1);border-color:#FF1F40;color:#FF1F40;}
         .vote-tally{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;font-size:0.73rem;}
@@ -428,13 +422,13 @@
         .shame-label{font-size:0.7rem;color:#FF1F40;font-weight:600;text-align:center;margin-top:3px;display:none;}
 
         /* WILDCARD + HISTORY ROW */
-        .btn-wildcard{background:linear-gradient(135deg,#6F38E0,#FF1F40);color:#fff;border:none;border-radius:12px;padding:10px 14px;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;box-shadow:0 4px 10px rgba(111,56,224,0.25);}
+        .btn-wildcard{background:linear-gradient(135deg,#6F38E0,#FF1F40);color:#fff;border:none;border-radius:12px;padding:10px 14px;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;box-shadow:0 4px 10px rgba(111,56,224,0.25);}
         .btn-wildcard:hover{filter:brightness(1.1);transform:translateY(-1px);}
-        .btn-history-sm{background:var(--surface-light);color:var(--text-dark);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-weight:600;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;}
+        .btn-history-sm{background:var(--surface-light);color:var(--text-dark);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;}
         .btn-history-sm:hover{background:#E0E0E0;}
 
         /* CONSEQUENCE TOAST */
-        #consecToast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(130px);background:linear-gradient(135deg,#FF1F40,#FF9F0A);color:#fff;border-radius:16px;padding:1rem 1.5rem;font-weight:700;font-size:1rem;z-index:6000;transition:transform 0.45s cubic-bezier(0.34,1.56,0.64,1);text-align:center;min-width:240px;box-shadow:0 10px 40px rgba(255,31,64,0.4);pointer-events:auto;cursor:pointer;touch-action:pan-x;}
+        #consecToast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(130px);background:linear-gradient(135deg,#FF1F40,#FF9F0A);color:#fff;border-radius:16px;padding:1rem 1.5rem;font-size:1rem;z-index:6000;transition:transform 0.45s cubic-bezier(0.34,1.56,0.64,1);text-align:center;min-width:240px;box-shadow:0 10px 40px rgba(255,31,64,0.4);pointer-events:auto;cursor:pointer;touch-action:pan-x;}
         #consecToast.show{transform:translateX(-50%) translateY(0);}
         #consecToast .dismiss-hint{font-size:0.62rem;opacity:0.65;margin-top:5px;text-transform:uppercase;letter-spacing:0.08em;}
         .consec-sub{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.8;margin-bottom:4px;}
@@ -1730,4 +1724,5 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 </body>
 </html>
+
 
