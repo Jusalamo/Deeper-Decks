@@ -6,8 +6,9 @@
     <title>Deeper-Decks™: The Card Game</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22url(%23rainbow)%22>D</text><defs><linearGradient id=%22rainbow%22 gradientTransform=%22rotate(90)%22><stop offset=%220%25%22 stop-color=%22%23FF1F40%22/><stop offset=%2225%25%22 stop-color=%22%23FF8BA4%22/><stop offset=%2250%25%22 stop-color=%22%2348BB78%22/><stop offset=%2275%25%22 stop-color=%22%236F38E0%22/><stop offset=%22100%25%22 stop-color=%22%23FF1F40%22/></linearGradient></defs></svg>" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Mona Sans for all display/title text -->
     <link href="https://fonts.cdnfonts.com/css/mona-sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
    <style>
         /* ── RESET & BASE FIXES ── */
         * {
@@ -18,11 +19,20 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html {
+            overflow-x: hidden;
+            /* Prevent horizontal scroll on mobile */
+            overscroll-behavior-x: none;
+        }
+
+        body {
             overflow-x: hidden;
             max-width: 100%;
             margin: 0;
             padding: 0;
+            /* Prevent horizontal scroll on mobile caused by swipe */
+            overscroll-behavior-x: none;
+            touch-action: pan-y; /* allow vertical scroll, block horizontal */
         }
 
         :root {
@@ -59,19 +69,25 @@
             width: 100%;
             height: 100vh;
             overflow-y: auto;
+            overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
-            padding: 0.5rem 0.5rem 30px 0.5rem; /* extra bottom padding */
+            /* Extra bottom padding to prevent clipping */
+            padding: 0.5rem 0.5rem 80px 0.5rem;
             position: relative;
         }
 
-        /* ── FONT WEIGHT FIX: ALL HEADERS/TITLES THICK ── */
+        /* ══════════════════════════════
+           TYPOGRAPHY SYSTEM
+           ALL TITLES/HEADERS use Mona Sans with proper weight
+        ══════════════════════════════ */
+
+        /* Default body text */
         body, button, input, select, textarea, p, span, div {
             font-family: 'Inter', sans-serif;
             font-weight: 500;
         }
 
-        /* Force all headings and title-like elements to be extra bold */
-        h1, h2, h3, h4, h5, h6,
+        /* ── MONA SANS for all display/title elements ── */
         .game-title,
         .sidebar-title,
         #deckTitle,
@@ -80,43 +96,58 @@
         .modal-content h3,
         .pause-big-title,
         .session-box-code,
-        .card-question-text,
-        .player-badge,
+        .card-back-title,
+        .rainbow-logo,
         .card-header-chip,
+        .player-badge,
         .btn-action,
         .btn-wildcard,
         .btn-history-sm,
-        .stat-mini-val,
-        .filter-btn,
-        .vote-btn,
         .btn-got-it,
         .timer-num,
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Mona Sans', 'Inter', sans-serif !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.03em;
+        }
+
+        /* Ensure card question text is thick and uses Mona Sans */
+        .card-question-text {
+            font-family: 'Mona Sans', 'Inter', sans-serif !important;
+            font-weight: 800 !important;
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            line-height: 1.35;
+            letter-spacing: -0.02em;
+        }
+
+        /* Stat values */
+        .stat-mini-val {
+            font-family: 'Mona Sans', 'Inter', sans-serif !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.03em;
+        }
+
+        /* History item meta, heat label, shame label, vote label */
         .heat-label,
         .stat-mini-label,
         .shame-label,
         .vote-label,
         .consec-sub,
-        .history-item-meta {
-            font-weight: 900 !important;
-            letter-spacing: -0.02em;
-        }
-
-        /* Card text specifically (already bold but ensure) */
-        .card-question-text {
-            font-size: clamp(1.3rem, 5vw, 1.8rem);
-            line-height: 1.4;
+        .history-item-meta,
+        .filter-btn {
+            font-weight: 700 !important;
         }
 
         /* ── SIDEBAR ── */
-        .sidebar-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:3000; opacity:0; visibility:hidden; transition:opacity 0.3s ease,visibility 0.3s ease; backdrop-filter:blur(4px); }
+        .sidebar-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:3000; opacity:0; visibility:hidden; transition:opacity 0.3s ease,visibility 0.3s ease; backdrop-filter:blur(4px); }
         .sidebar-overlay.active { opacity:1; visibility:visible; }
         .sidebar-menu { position:fixed; top:0; right:-100%; width:320px; height:100%; background:var(--modal-dark); z-index:3001; transition:right 0.4s cubic-bezier(0.4,0,0.2,1); padding:24px; overflow-y:auto; box-shadow:-5px 0 30px rgba(0,0,0,0.3); }
         .sidebar-menu.active { right:0; }
         .sidebar-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.1); }
-        .sidebar-title { font-size:1.5rem; color:var(--text-light); font-family:'Mona Sans',sans-serif; }
+        .sidebar-title { font-size:1.5rem; color:var(--text-light); font-family:'Mona Sans',sans-serif !important; font-weight:900 !important; }
         .close-sidebar { background:none; border:none; color:var(--text-light); font-size:1.5rem; cursor:pointer; padding:8px; border-radius:8px; transition:background-color 0.2s; }
         .close-sidebar:hover { background-color:rgba(255,255,255,0.1); }
-        .sidebar-item { display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:10px; cursor:pointer; transition:all 0.2s ease; color:var(--text-light); border:none; width:100%; text-align:left; font-size:1rem; font-weight:500; font-family:'Inter',sans-serif; }
+        .sidebar-item { display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(255,255,255,0.05); border-radius:12px; margin-bottom:10px; cursor:pointer; transition:all 0.2s ease; color:var(--text-light); border:none; width:100%; text-align:left; font-size:1rem; font-weight:600; font-family:'Inter',sans-serif; }
         .sidebar-item:hover { background:rgba(255,255,255,0.1); transform:translateX(-2px); }
         .sidebar-divider { border:none; border-top:1px solid rgba(255,255,255,0.08); margin:8px 0 18px; }
 
@@ -130,7 +161,20 @@
 
         /* ── INTRO ── */
         #introScreen { position:fixed; top:0; left:0; width:100%; height:100%; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:4000; transition:opacity 0.6s ease-out; }
-        .rainbow-logo { font-family:'Mona Sans',sans-serif; font-size:3rem; font-weight:900; background:linear-gradient(to right,#fff,#fff,#0ff,#00f,#800080,#ffb6c1,#f00,#ff0,#90ee90,#fff,#fff) no-repeat 100% 0% / 900%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; letter-spacing:-1px; margin-bottom:1rem; animation:rainbowSlide 2s ease-in-out forwards; }
+        
+        /* FIXED: Rainbow logo now uses Mona Sans with proper 900 weight */
+        .rainbow-logo { 
+            font-family:'Mona Sans',sans-serif !important; 
+            font-size:3.5rem; 
+            font-weight:900 !important; 
+            background:linear-gradient(to right,#fff,#fff,#0ff,#00f,#800080,#ffb6c1,#f00,#ff0,#90ee90,#fff,#fff) no-repeat 100% 0% / 900%; 
+            -webkit-background-clip:text; 
+            -webkit-text-fill-color:transparent; 
+            background-clip:text; 
+            letter-spacing:-2px; 
+            margin-bottom:1rem; 
+            animation:rainbowSlide 2s ease-in-out forwards; 
+        }
         @keyframes rainbowSlide{from{background-position:100% 0%}to{background-position:0% 0%}}
         .intro-subtitle { font-size:1.125rem; color:rgba(255,255,255,0.7); font-weight:400; letter-spacing:0.5px; margin-bottom:3rem; opacity:0; animation:fadeInUp 0.8s ease-out 0.8s forwards; }
         .rainbow-progress { width:200px; height:4px; background:rgba(255,255,255,0.2); border-radius:3px; overflow:hidden; opacity:0; animation:fadeIn 0.4s ease-out 0.5s forwards; }
@@ -138,7 +182,7 @@
         @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-        /* ── CARDS - LARGER ── */
+        /* ── CARDS ── */
         .card-stack-container { 
             aspect-ratio: 9/14; 
             width: min(380px, 90vw);
@@ -169,6 +213,7 @@
             padding: 1.8rem;
         }
 
+        /* FIXED: Card back title uses Mona Sans 900 */
         .card-back { 
             background: linear-gradient(135deg,#2A2A2A 0%,#1F1F1F 100%); 
             border-radius: 20px; 
@@ -180,6 +225,13 @@
             left: 1%; 
             z-index: -1; 
             border:1px solid rgba(255,255,255,0.05); 
+        }
+        .card-back-title {
+            font-family: 'Mona Sans', sans-serif !important;
+            font-weight: 900 !important;
+            font-size: 1rem;
+            letter-spacing: -0.02em;
+            color: rgba(255,255,255,0.8);
         }
 
         .card-slide-out-left  { transform:translateX(-150%) rotate(-15deg) !important; opacity:0 !important; }
@@ -195,22 +247,14 @@
             min-height: 0;
         }
 
-        .card-question-text { 
-            font-size: clamp(1.3rem, 5vw, 1.8rem);
-            line-height: 1.4; 
-            overflow-y: auto;
-            max-height: 100%;
-            padding: 0.5rem 0;
-            font-family: 'Inter', sans-serif;
-        }
-
         .card-header-chip { 
             border-radius: 9999px; 
             padding: 8px 16px; 
             font-size: 0.85rem; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 0.3px;
+            font-family: 'Mona Sans', sans-serif !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.01em;
         }
 
         .player-badge { 
@@ -222,7 +266,8 @@
             font-size: 0.95rem; 
             color: white; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Mona Sans', sans-serif !important;
+            font-weight: 900 !important;
         }
 
         /* ── MODALS ── */
@@ -232,6 +277,7 @@
         .deck-option { background:rgba(255,255,255,0.05); border:2px solid transparent; border-radius:16px; padding:20px; margin-bottom:15px; cursor:pointer; transition:all 0.3s ease; }
         .deck-option:hover { background:rgba(255,255,255,0.1); transform:translateY(-2px); }
         .deck-option.active { border-color:currentColor; background:rgba(255,255,255,0.15); }
+        .deck-option h3 { font-family:'Mona Sans',sans-serif !important; font-weight:900 !important; font-size:1.2rem !important; letter-spacing:-0.03em; }
         .player-input { background:rgba(0,0,0,0.3); border:2px solid rgba(255,255,255,0.2); border-radius:12px; padding:12px 16px; color:var(--text-light); font-size:1rem; transition:border-color 0.2s; font-family:'Inter',sans-serif; }
         .player-input:focus { outline:none; border-color:rgba(255,255,255,0.4); }
         .player-item { background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; color:var(--text-light); margin-bottom:8px; cursor:grab; transition:all 0.2s; }
@@ -240,7 +286,7 @@
         .player-item.current-turn { border-color:rgba(72,187,120,0.5); background:rgba(72,187,120,0.08); }
         .btn-remove { background:rgba(255,107,129,0.2); color:var(--color-romantic); border-radius:8px; padding:6px 12px; font-size:0.875rem; transition:all 0.2s; border:none; cursor:pointer; }
 
-        /* ── CONTROL PANEL (same width as card) ── */
+        /* ── CONTROL PANEL ── */
         .control-panel { 
             background: var(--surface-light); 
             border: 1px solid rgba(0,0,0,0.1); 
@@ -250,7 +296,8 @@
             color: var(--text-dark);
             width: 100%;
             max-width: 380px;
-            margin: 0 auto 20px auto; /* bottom margin for spacing */
+            /* FIXED: proper bottom margin */
+            margin: 0 auto 24px auto;
         }
 
         .btn-action { 
@@ -262,8 +309,10 @@
             box-shadow: 0 3px 0 rgba(0,0,0,0.2); 
             border: none; 
             cursor: pointer; 
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
+            font-family: 'Mona Sans', sans-serif !important;
+            font-weight: 900 !important;
+            font-size: 0.9rem;
+            letter-spacing: -0.01em;
             width: 100%;
         }
         .btn-action:hover:not(:disabled) { background-color:#3A3A3A; transform:translateY(-2px); box-shadow:0 5px 0 rgba(0,0,0,0.2); }
@@ -275,6 +324,85 @@
         .shuffling { animation:shuffleAnim 0.5s ease-in-out; }
         @keyframes shuffleAnim{0%{transform:rotate(0) scale(1)}25%{transform:rotate(-5deg) scale(1.02)}50%{transform:rotate(5deg) scale(1.02)}75%{transform:rotate(-2deg) scale(1.01)}100%{transform:rotate(0) scale(1)}}
         .swipe-instruction { text-align:center; margin-top:10px; color:rgba(0,0,0,0.5); font-size:0.75rem; font-weight:500; }
+
+        /* ══════════════════════════════
+           REDESIGNED: DECK/FILTER DROPDOWN
+        ══════════════════════════════ */
+        .deck-dropdown-wrap {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        .deck-dropdown-btn {
+            width: 100%;
+            background: #fff;
+            border: 1.5px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: 'Mona Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            transition: all 0.2s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+        }
+        .deck-dropdown-btn:hover { border-color: rgba(0,0,0,0.2); background: #f8f8f8; }
+        .deck-dropdown-btn .dd-arrow {
+            font-size: 0.7rem;
+            opacity: 0.5;
+            transition: transform 0.2s;
+        }
+        .deck-dropdown-btn.open .dd-arrow { transform: rotate(180deg); }
+        .deck-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1.5px solid rgba(0,0,0,0.1);
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            z-index: 100;
+            overflow: hidden;
+            display: none;
+            animation: dropdownFade 0.18s ease;
+        }
+        .deck-dropdown-menu.open { display: block; }
+        @keyframes dropdownFade {
+            from { opacity:0; transform:translateY(-6px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        .dd-option {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 14px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            transition: background 0.15s;
+            text-align: left;
+        }
+        .dd-option:not(:last-child) { border-bottom: 1px solid rgba(0,0,0,0.06); }
+        .dd-option:hover { background: rgba(0,0,0,0.04); }
+        .dd-option.active { color: #fff; }
+        .dd-option .dd-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .dd-option-label { flex: 1; }
+        .dd-option .dd-check { font-size: 0.75rem; opacity: 0; transition: opacity 0.15s; }
+        .dd-option.active .dd-check { opacity: 1; }
 
         /* ── DARK MODE ── */
         body.dark-mode { background-color:#121212; color:#FFFFFF!important; }
@@ -300,6 +428,12 @@
         body.dark-mode .pass-player-sub{color:rgba(255,255,255,0.5);}
         body.dark-mode .btn-history-sm{background:#2A2A2A;color:#fff;border-color:rgba(255,255,255,0.1);}
         body.dark-mode .btn-history-sm:hover{background:#3A3A3A;}
+        body.dark-mode .deck-dropdown-btn { background:#2A2A2A; color:#fff; border-color:rgba(255,255,255,0.1); }
+        body.dark-mode .deck-dropdown-btn:hover { background:#333; }
+        body.dark-mode .deck-dropdown-menu { background:#2A2A2A; border-color:rgba(255,255,255,0.1); }
+        body.dark-mode .dd-option { color:#fff; }
+        body.dark-mode .dd-option:not(:last-child) { border-bottom-color:rgba(255,255,255,0.06); }
+        body.dark-mode .dd-option:hover { background:rgba(255,255,255,0.07); }
 
         /* ── MOBILE LAYOUT FIXES ── */
         @media(max-width:1024px){
@@ -311,7 +445,8 @@
                 width: 100%;
                 max-width: 380px;
                 margin-top: 1.5rem;
-                margin-bottom: 20px;
+                /* FIXED: bottom margin on mobile too */
+                margin-bottom: 32px;
             }
             header {
                 margin-top: 0.5rem;
@@ -334,8 +469,13 @@
             .control-panel {
                 padding: 0.8rem;
             }
+            #mainGame {
+                /* Extra padding on small screens */
+                padding-bottom: 100px;
+            }
         }
 
+        /* FIXED: swipe zone only captures horizontal input, vertical scroll still works */
         .swipe-zone {
             position: absolute;
             top: 0;
@@ -343,21 +483,18 @@
             width: 100%;
             height: 100%;
             z-index: 10;
+            touch-action: none; /* we handle all touch ourselves */
         }
 
-        .game-title, .sidebar-title {
-            font-family: 'Mona Sans', 'Inter', sans-serif !important;
-        }
-
-        /* ════ NEW FEATURE STYLES (unchanged) ════ */
+        /* ════ NEW FEATURE STYLES ════ */
         /* PAUSE OVERLAY */
         #pauseOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:5000;display:none;flex-direction:column;justify-content:center;align-items:center;gap:2rem;backdrop-filter:blur(18px);}
         #pauseOverlay.active{display:flex;animation:fadeInUp 0.3s ease;}
-        .pause-big-title{font-family:'Mona Sans',sans-serif;font-size:3rem;color:#fff;letter-spacing:-1px;}
+        .pause-big-title{font-family:'Mona Sans',sans-serif !important;font-size:3rem;font-weight:900 !important;color:#fff;letter-spacing:-2px;}
         .pause-sub{color:rgba(255,255,255,0.5);font-size:1rem;margin-top:0.25rem;text-align:center;}
         .session-box{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:20px 32px;text-align:center;margin-top:0.5rem;}
         .session-box-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);margin-bottom:8px;}
-        .session-box-code{font-family:'Mona Sans',sans-serif;font-size:2.5rem;letter-spacing:0.25em;color:#fff;}
+        .session-box-code{font-family:'Mona Sans',sans-serif !important;font-size:2.5rem;font-weight:900 !important;letter-spacing:0.25em;color:#fff;}
         .session-box-hint{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:6px;}
         .pause-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
 
@@ -367,9 +504,9 @@
         .pass-icon{font-size:1.6rem;animation:phoneBounce 1s ease infinite;}
         @keyframes phoneBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
         .pass-info{flex:1;}
-        .pass-player-name{font-weight:700;font-size:1.05rem;color:var(--text-dark);}
+        .pass-player-name{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:1.05rem;color:var(--text-dark);}
         .pass-player-sub{font-size:0.78rem;color:rgba(0,0,0,0.45);margin-top:2px;}
-        .btn-got-it{background:var(--modal-dark);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-weight:700;cursor:pointer;font-size:0.88rem;transition:all 0.2s;font-family:'Inter',sans-serif;}
+        .btn-got-it{background:var(--modal-dark);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;cursor:pointer;font-size:0.88rem;transition:all 0.2s;}
         .btn-got-it:hover{background:#3A3A3A;}
 
         /* TIMER */
@@ -377,13 +514,13 @@
         #timerWrap.show{display:flex;}
         .timer-bar-outer{flex:1;height:6px;background:rgba(0,0,0,0.09);border-radius:99px;overflow:hidden;}
         .timer-bar-inner{height:100%;border-radius:99px;width:100%;background:linear-gradient(90deg,#48BB78,#FFD60A,#FF1F40);transition:width 1s linear;}
-        .timer-num{font-family:'Mona Sans',sans-serif;font-size:1.1rem;min-width:28px;text-align:right;color:var(--text-dark);}
+        .timer-num{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:1.1rem;min-width:28px;text-align:right;color:var(--text-dark);}
         .timer-num.urgent{color:#FF1F40;animation:timerUrgent 0.5s ease infinite;}
         @keyframes timerUrgent{0%,100%{opacity:1}50%{opacity:0.4}}
 
         /* HEAT METER */
         .heat-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
-        .heat-label{font-size:0.73rem;color:rgba(0,0,0,0.4);white-space:nowrap;}
+        .heat-label{font-size:0.73rem;color:rgba(0,0,0,0.4);white-space:nowrap;font-weight:700;}
         .heat-bar-outer{flex:1;height:5px;background:rgba(0,0,0,0.08);border-radius:99px;overflow:hidden;}
         .heat-bar-inner{height:100%;border-radius:99px;transition:width 0.8s ease,background 0.8s ease;}
         .heat-emoji{font-size:1rem;}
@@ -392,26 +529,16 @@
         /* STAT MINIS */
         .stat-mini{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.78rem;}
         .stat-mini:last-child{border-bottom:none;}
-        .stat-mini-label{color:rgba(0,0,0,0.45);}
-        .stat-mini-val{font-weight:700;}
+        .stat-mini-label{color:rgba(0,0,0,0.45);font-weight:600;}
+        .stat-mini-val{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;}
         .stat-skips{color:#FF1F40;}
-
-        /* CARD FILTER TOGGLE */
-        .card-filter-row{display:flex;gap:6px;margin-bottom:0.6rem;}
-        .filter-btn{flex:1;padding:7px 6px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-size:0.75rem;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;color:rgba(0,0,0,0.5);}
-        .filter-btn.active{color:#fff;border-color:transparent;}
-        .filter-btn.active.all{background:var(--modal-dark);}
-        .filter-btn.active.q{background:#3B82F6;}
-        .filter-btn.active.d{background:#EF4444;}
-        body.dark-mode .filter-btn{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.1);}
-        body.dark-mode .filter-btn.active.all{background:rgba(255,255,255,0.25);}
 
         /* DARE VOTE */
         #dareVote{display:none;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:12px;margin-top:0.75rem;}
         #dareVote.show{display:block;animation:fadeInUp 0.3s ease;}
-        .vote-label{font-size:0.78rem;color:rgba(0,0,0,0.45);margin-bottom:8px;}
+        .vote-label{font-size:0.78rem;color:rgba(0,0,0,0.45);margin-bottom:8px;font-weight:700;}
         .vote-btns{display:flex;gap:6px;}
-        .vote-btn{flex:1;padding:8px;border-radius:10px;border:1px solid rgba(0,0,0,0.1);background:#fff;font-size:0.8rem;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;}
+        .vote-btn{flex:1;padding:8px;border-radius:10px;border:1px solid rgba(0,0,0,0.1);background:#fff;font-size:0.8rem;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;font-weight:700;}
         .vote-btn.yes:hover{background:rgba(72,187,120,0.13);border-color:#48BB78;color:#276749;}
         .vote-btn.no:hover{background:rgba(255,31,64,0.1);border-color:#FF1F40;color:#FF1F40;}
         .vote-tally{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;font-size:0.73rem;}
@@ -419,19 +546,19 @@
         .tally-no{color:#FF1F40;background:rgba(255,31,64,0.08);border-radius:99px;padding:2px 10px;}
 
         /* SHAME */
-        .shame-label{font-size:0.7rem;color:#FF1F40;font-weight:600;text-align:center;margin-top:3px;display:none;}
+        .shame-label{font-size:0.7rem;color:#FF1F40;font-weight:700;text-align:center;margin-top:3px;display:none;}
 
         /* WILDCARD + HISTORY ROW */
-        .btn-wildcard{background:linear-gradient(135deg,#6F38E0,#FF1F40);color:#fff;border:none;border-radius:12px;padding:10px 14px;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;box-shadow:0 4px 10px rgba(111,56,224,0.25);}
+        .btn-wildcard{background:linear-gradient(135deg,#6F38E0,#FF1F40);color:#fff;border:none;border-radius:12px;padding:10px 14px;font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;box-shadow:0 4px 10px rgba(111,56,224,0.25);}
         .btn-wildcard:hover{filter:brightness(1.1);transform:translateY(-1px);}
-        .btn-history-sm{background:var(--surface-light);color:var(--text-dark);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;}
+        .btn-history-sm{background:var(--surface-light);color:var(--text-dark);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
         .btn-history-sm:hover{background:#E0E0E0;}
 
         /* CONSEQUENCE TOAST */
         #consecToast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(130px);background:linear-gradient(135deg,#FF1F40,#FF9F0A);color:#fff;border-radius:16px;padding:1rem 1.5rem;font-size:1rem;z-index:6000;transition:transform 0.45s cubic-bezier(0.34,1.56,0.64,1);text-align:center;min-width:240px;box-shadow:0 10px 40px rgba(255,31,64,0.4);pointer-events:auto;cursor:pointer;touch-action:pan-x;}
         #consecToast.show{transform:translateX(-50%) translateY(0);}
         #consecToast .dismiss-hint{font-size:0.62rem;opacity:0.65;margin-top:5px;text-transform:uppercase;letter-spacing:0.08em;}
-        .consec-sub{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.8;margin-bottom:4px;}
+        .consec-sub{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.8;margin-bottom:4px;}
 
         /* HISTORY DRAWER */
         #historyBg{position:fixed;inset:0;z-index:4400;background:rgba(0,0,0,0.5);display:none;}
@@ -441,7 +568,7 @@
         .drawer-handle{width:40px;height:4px;background:rgba(255,255,255,0.15);border-radius:99px;margin:0 auto 1.25rem;}
         .history-item{padding:11px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);margin-bottom:8px;font-size:0.82rem;color:rgba(255,255,255,0.72);transition:all 0.2s;}
         .history-item:hover{background:rgba(255,255,255,0.1);color:#fff;}
-        .history-item-meta{font-size:0.67rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;opacity:0.7;}
+        .history-item-meta{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:0.67rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;opacity:0.7;}
 
         /* TOGGLE */
         .toggle{position:relative;width:40px;height:22px;flex-shrink:0;}
@@ -456,7 +583,7 @@
         @keyframes nowPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:0.6}}
 
         /* RESUME MODAL CODE INPUT */
-        .resume-code-inp{font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:0.2em;text-align:center;text-transform:uppercase;width:100%;}
+        .resume-code-inp{font-family:'Mona Sans',sans-serif !important;font-weight:900 !important;font-size:1.5rem;letter-spacing:0.2em;text-align:center;text-transform:uppercase;width:100%;}
     </style>
 </head>
 <body>
@@ -490,7 +617,7 @@
 <div id="historyDrawer">
     <div class="drawer-handle"></div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-        <h3 style="font-family:'Mona Sans',sans-serif;font-weight:900;color:#fff;font-size:1.2rem;">Card History</h3>
+        <h3 style="font-family:'Mona Sans',sans-serif;font-weight:900;color:#fff;font-size:1.2rem;letter-spacing:-0.03em;">Card History</h3>
         <button onclick="closeHistory()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:1rem;">✕</button>
     </div>
     <div id="historyList"><p style="color:rgba(255,255,255,0.35);text-align:center;padding:2rem 0;font-size:0.85rem;">No cards drawn yet.</p></div>
@@ -518,7 +645,7 @@
     <button id="sbPause"    class="sidebar-item">⏸ Pause Game</button>
     <button id="sbSettings" class="sidebar-item">⚙️ Settings</button>
     <div style="margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08);text-align:center;color:rgba(255,255,255,0.25);font-size:0.78rem;">
-        <p>Deeper-Decks™ v2</p>
+        <p style="font-family:'Mona Sans',sans-serif;font-weight:700;">Deeper-Decks™ v2</p>
         <p style="margin-top:4px;">The Card Game for Real Connection</p>
     </div>
 </div>
@@ -537,12 +664,12 @@
 <!-- PLAYER MODAL -->
 <div id="playerModal" class="modal-overlay" style="display:none;">
     <div class="modal-content">
-        <h2 class="text-3xl font-bold text-white mb-2 text-center game-title">Deeper-Decks™</h2>
+        <h2 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.8rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:0.5rem;">Deeper-Decks™</h2>
         <p class="text-gray-400 text-center mb-6">Add players · drag to reorder turn order</p>
         <div class="mb-6">
             <div class="flex gap-2 mb-4">
                 <input type="text" id="playerNameInput" class="player-input flex-1" placeholder="Enter player name" maxlength="20">
-                <button id="addPlayerBtn" class="btn-action px-6">Add</button>
+                <button id="addPlayerBtn" class="btn-action px-6" style="width:auto;">Add</button>
             </div>
             <div id="playersList" class="mb-4"></div>
             <p class="text-sm text-gray-400 text-center mb-4"><span id="playerCount">0</span> players added (minimum 2)</p>
@@ -554,31 +681,31 @@
 <!-- DECK MODAL -->
 <div id="deckModal" class="modal-overlay" style="display:none;">
     <div class="modal-content deck-modal-content">
-        <h2 class="text-3xl font-bold text-white mb-2 text-center game-title">Choose Your Deck</h2>
+        <h2 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.8rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:0.5rem;">Choose Your Deck</h2>
         <p class="text-gray-400 text-center mb-6">Cards escalate in heat as you play — buckle up</p>
         <div id="deckOptions">
             <div class="deck-option" data-deck="romantic" style="color:var(--color-romantic);">
                 <div style="display:flex;align-items:center;gap:12px;">
                     <span style="font-size:1.5rem;">❤️</span>
-                    <div><h3 class="text-xl font-bold">Romantic Deck</h3><p class="text-gray-400 text-sm">90 cards for couples &amp; dates · starts warm, gets electric</p></div>
+                    <div><h3>Romantic Deck</h3><p class="text-gray-400 text-sm">90 cards for couples &amp; dates · starts warm, gets electric</p></div>
                 </div>
             </div>
             <div class="deck-option" data-deck="platonic" style="color:var(--color-platonic);">
                 <div style="display:flex;align-items:center;gap:12px;">
                     <span style="font-size:1.5rem;">🤝</span>
-                    <div><h3 class="text-xl font-bold">Platonic Deck</h3><p class="text-gray-400 text-sm">90 cards for friends &amp; hangouts · chaotic guaranteed</p></div>
+                    <div><h3>Platonic Deck</h3><p class="text-gray-400 text-sm">90 cards for friends &amp; hangouts · chaotic guaranteed</p></div>
                 </div>
             </div>
             <div class="deck-option" data-deck="girlsnight" style="color:var(--color-girls);">
                 <div style="display:flex;align-items:center;gap:12px;">
                     <span style="font-size:1.5rem;">💅</span>
-                    <div><h3 class="text-xl font-bold">Girls' Night Deck</h3><p class="text-gray-400 text-sm">90 cards for girls' nights · no filter mode</p></div>
+                    <div><h3>Girls' Night Deck</h3><p class="text-gray-400 text-sm">90 cards for girls' nights · no filter mode</p></div>
                 </div>
             </div>
             <div class="deck-option" data-deck="naughty" style="color:var(--color-naughty);">
                 <div style="display:flex;align-items:center;gap:12px;">
                     <span style="font-size:1.5rem;">🔥</span>
-                    <div><h3 class="text-xl font-bold">Naughty Deck</h3><p class="text-gray-400 text-sm">90 cards · adults only · no one leaves the same</p></div>
+                    <div><h3>Naughty Deck</h3><p class="text-gray-400 text-sm">90 cards · adults only · no one leaves the same</p></div>
                 </div>
             </div>
         </div>
@@ -589,7 +716,7 @@
 <!-- SETTINGS MODAL -->
 <div id="settingsModal" class="modal-overlay" style="display:none;">
     <div class="modal-content">
-        <h2 class="text-3xl font-bold text-white mb-6 text-center game-title">Settings</h2>
+        <h2 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.8rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:1.5rem;">Settings</h2>
         <div>
             <div class="settings-option">
                 <span>Theme</span>
@@ -599,30 +726,30 @@
                 </select>
             </div>
             <div class="settings-option">
-                <div><div style="font-weight:600;">Turn Timer</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Countdown pressure per card</div></div>
+                <div><div style="font-weight:700;">Turn Timer</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Countdown pressure per card</div></div>
                 <label class="toggle"><input type="checkbox" id="timerToggle" onchange="onTimerToggle()"><span class="toggle-slider"></span></label>
             </div>
             <div class="settings-option" id="timerDurRow" style="display:none;">
-                <div style="font-weight:600;">Timer Duration</div>
+                <div style="font-weight:700;">Timer Duration</div>
                 <div style="display:flex;align-items:center;gap:8px;">
                     <input type="range" min="10" max="90" step="5" value="30" id="timerDuration" style="width:90px;accent-color:#48BB78;" oninput="document.getElementById('timerDurLbl').textContent=this.value+'s'">
-                    <span id="timerDurLbl" style="font-weight:700;min-width:30px;">30s</span>
+                    <span id="timerDurLbl" style="font-weight:900;font-family:'Mona Sans',sans-serif;min-width:30px;">30s</span>
                 </div>
             </div>
             <div class="settings-option">
-                <div><div style="font-weight:600;">Sound Effects</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Card draws, dare fanfares, timer alerts</div></div>
+                <div><div style="font-weight:700;">Sound Effects</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Card draws, dare fanfares, timer alerts</div></div>
                 <label class="toggle"><input type="checkbox" id="soundToggle" checked><span class="toggle-slider"></span></label>
             </div>
             <div class="settings-option">
-                <div><div style="font-weight:600;">Pass Phone Mode</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Shows whose turn it is before each draw</div></div>
+                <div><div style="font-weight:700;">Pass Phone Mode</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Shows whose turn it is before each draw</div></div>
                 <label class="toggle"><input type="checkbox" id="passModeToggle" checked><span class="toggle-slider"></span></label>
             </div>
             <div class="settings-option">
-                <div><div style="font-weight:600;">Dare Voting</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Group votes whether the dare was actually done</div></div>
+                <div><div style="font-weight:700;">Dare Voting</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Group votes whether the dare was actually done</div></div>
                 <label class="toggle"><input type="checkbox" id="dareVoteToggle" checked><span class="toggle-slider"></span></label>
             </div>
             <div class="settings-option">
-                <div><div style="font-weight:600;">Skip Consequences</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Skipping a card triggers a punishment</div></div>
+                <div><div style="font-weight:700;">Skip Consequences</div><div style="font-size:0.73rem;opacity:0.55;margin-top:2px;">Skipping a card triggers a punishment</div></div>
                 <label class="toggle"><input type="checkbox" id="consequenceToggle" checked><span class="toggle-slider"></span></label>
             </div>
             <div class="settings-option">
@@ -649,7 +776,7 @@
 <!-- RESUME MODAL -->
 <div id="resumeModal" class="modal-overlay" style="display:none;">
     <div class="modal-content">
-        <h2 class="text-3xl font-bold text-white mb-2 text-center game-title">Resume Game</h2>
+        <h2 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.8rem;color:#fff;text-align:center;letter-spacing:-0.04em;margin-bottom:0.5rem;">Resume Game</h2>
         <p class="text-gray-400 text-center mb-6">Enter your 6-character session code to pick up exactly where you left off</p>
         <input type="text" id="resumeCodeInput" class="player-input resume-code-inp mb-3" maxlength="6" placeholder="ABC123">
         <div id="resumeErr" style="color:#FF1F40;font-size:0.8rem;text-align:center;min-height:1.2rem;margin-bottom:0.75rem;"></div>
@@ -661,7 +788,7 @@
 <!-- MAIN GAME -->
 <div id="mainGame" class="min-h-screen flex flex-col items-center">
     <header class="max-w-xl w-full text-center mb-3 mt-2 px-4 sm:px-0">
-        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 tracking-tight game-title">Deeper-Decks<sup class="text-base ml-1 align-top">™</sup></h1>
+        <h1 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:2.2rem;color:#1a1a1a;letter-spacing:-0.05em;margin-bottom:0.2rem;">Deeper-Decks<sup style="font-size:0.55em;vertical-align:super;margin-left:2px;">™</sup></h1>
         <p class="text-gray-600 text-sm font-medium">The Card Game for Real Connection</p>
     </header>
 
@@ -669,10 +796,10 @@
 
         <!-- LEFT: CONTROL PANEL -->
         <section class="lg:w-1/3 control-panel flex flex-col justify-start order-2 lg:order-1">
-            <h2 class="font-bold mb-2 text-gray-900" style="font-size:1.1rem;" id="deckTitle">Select a Deck</h2>
+            <h2 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.05rem;letter-spacing:-0.03em;margin-bottom:0.6rem;" id="deckTitle">Select a Deck</h2>
 
             <!-- STATS row -->
-            <div style="display:flex;gap:0.75rem;margin-bottom:0.5rem;">
+            <div style="display:flex;gap:0.75rem;margin-bottom:0.6rem;">
                 <div style="flex:1;text-align:center;">
                     <div class="stat-mini-val" id="remainingCount" style="font-size:1.1rem;">90</div>
                     <div class="stat-mini-label" style="font-size:0.68rem;">Left</div>
@@ -688,30 +815,53 @@
             </div>
 
             <!-- HEAT METER -->
-            <div id="heatMeter" style="margin-bottom:0.5rem;">
+            <div id="heatMeter" style="margin-bottom:0.6rem;">
                 <div class="heat-row">
                     <span class="heat-label">Heat</span>
                     <div class="heat-bar-outer"><div class="heat-bar-inner" id="heatBarFill" style="width:3%;background:#48BB78;"></div></div>
                     <span class="heat-emoji" id="heatEmoji">🌱</span>
                 </div>
-                <div id="heatLevelLabel" style="font-size:0.65rem;text-align:right;color:rgba(0,0,0,0.35);">Warm Up</div>
+                <div id="heatLevelLabel" style="font-size:0.65rem;text-align:right;margin-top:1px;transition:color 0.8s ease;color:rgba(0,0,0,0.35);">Warm Up</div>
             </div>
 
-            <!-- CARD FILTER -->
-            <div class="card-filter-row">
-                <button class="filter-btn active all" id="filterAll" onclick="setCardFilter('all')">🃏 All</button>
-                <button class="filter-btn q" id="filterQ" onclick="setCardFilter('questions')">❓ Questions</button>
-                <button class="filter-btn d" id="filterD" onclick="setCardFilter('dares')">⚡ Dares</button>
+            <!-- FILTER + HISTORY DROPDOWN -->
+            <div class="deck-dropdown-wrap" id="filterDropdownWrap">
+                <button class="deck-dropdown-btn" id="filterDropdownBtn" onclick="toggleFilterDropdown()">
+                    <span id="filterDropdownLabel">🃏 All Cards</span>
+                    <span class="dd-arrow">▼</span>
+                </button>
+                <div class="deck-dropdown-menu" id="filterDropdownMenu">
+                    <button class="dd-option active" id="ddOptAll" onclick="setCardFilter('all');closeFilterDropdown();">
+                        <span class="dd-dot" style="background:#2A2A2A;"></span>
+                        <span class="dd-option-label">🃏 All Cards</span>
+                        <span class="dd-check">✓</span>
+                    </button>
+                    <button class="dd-option" id="ddOptQ" onclick="setCardFilter('questions');closeFilterDropdown();">
+                        <span class="dd-dot" style="background:#3B82F6;"></span>
+                        <span class="dd-option-label">❓ Questions Only</span>
+                        <span class="dd-check">✓</span>
+                    </button>
+                    <button class="dd-option" id="ddOptD" onclick="setCardFilter('dares');closeFilterDropdown();">
+                        <span class="dd-dot" style="background:#EF4444;"></span>
+                        <span class="dd-option-label">⚡ Dares Only</span>
+                        <span class="dd-check">✓</span>
+                    </button>
+                    <button class="dd-option" id="ddOptH" onclick="openHistory();closeFilterDropdown();">
+                        <span class="dd-dot" style="background:#6F38E0;"></span>
+                        <span class="dd-option-label">📖 Card History</span>
+                        <span class="dd-check" style="display:none;"></span>
+                    </button>
+                </div>
             </div>
 
             <!-- TIMER -->
-            <div id="timerWrap">
+            <div id="timerWrap" style="margin-top:0.5rem;">
                 <div class="timer-bar-outer"><div class="timer-bar-inner" id="timerBar"></div></div>
                 <div class="timer-num" id="timerNum">30</div>
             </div>
 
             <!-- MAIN BUTTONS -->
-            <button id="drawButton" class="btn-action py-3 text-base font-bold tracking-wide uppercase w-full mb-1">Draw Next Card</button>
+            <button id="drawButton" class="btn-action py-3 text-base font-bold tracking-wide uppercase w-full mb-1" style="margin-top:0.6rem;">Draw Next Card</button>
 
             <!-- SKIP -->
             <button id="skipButton" class="w-full btn-action btn-shuffle mb-1" style="display:flex;flex-direction:column;align-items:center;gap:1px;padding:10px 20px;">
@@ -719,10 +869,9 @@
                 <span class="shame-label" id="shameLabel"></span>
             </button>
 
-            <!-- WILDCARD + HISTORY -->
+            <!-- WILDCARD -->
             <div style="display:flex;gap:0.4rem;margin-bottom:0.5rem;">
                 <button class="btn-wildcard" style="flex:1;" onclick="drawWildcard()">🎲 Wildcard</button>
-                <button class="btn-history-sm" onclick="openHistory()">📖 History</button>
             </div>
 
             <!-- DARE VOTE -->
@@ -767,7 +916,6 @@
 // ══════════════════════════════════════════════════════════════
 const DECKS = {
   romantic: [
-    // ── TIER 1: Warm-Up (Questions 1-18) ──
     "What's one thing about our dynamic you've never said out loud before?",
     "What small thing do I do that makes you feel genuinely seen?",
     "What moment made you think 'I actually really like this person'?",
@@ -786,8 +934,6 @@ const DECKS = {
     "What's your favorite memory of us so far?",
     "What's something you've always wanted to learn or try?",
     "What makes you feel most appreciated in a relationship?",
-    
-    // ── TIER 2: Getting Real (Questions 19-36) ──
     "Look me in the eyes right now and tell me the first thing you thought about me tonight.",
     "When do you feel most vulnerable around me — be specific, don't generalize.",
     "Tell me about a moment you wanted to kiss me but held back.",
@@ -806,8 +952,6 @@ const DECKS = {
     "What's something that used to feel impossible that I've made feel safer?",
     "What's one thing you hope we never stop doing together?",
     "What's a goal you have and how can I actually support you in it?",
-    
-    // ── TIER 3: Electric (Questions 37-54) ──
     "Tell me what you want me to do to you tonight. Say it out loud right now.",
     "Where on your body do you want me to touch you first — right now?",
     "Describe in detail how you want to be kissed right now.",
@@ -826,8 +970,6 @@ const DECKS = {
     "What makes you feel most wanted — be explicit, not vague.",
     "What's something physical you've imagined us doing that we haven't yet?",
     "Tell me what you need from me physically that I haven't given you yet.",
-    
-    // ── DARES: Mild (55-66) ──
     "DARE: Hold my face in both hands and look at me for 30 full seconds. Don't look away.",
     "DARE: Say out loud the first physical thing you noticed about me.",
     "DARE: Put your head in my lap right now and stay there for the next two rounds.",
@@ -840,8 +982,6 @@ const DECKS = {
     "DARE: Play with my hair for the next two minutes.",
     "DARE: Describe your ideal date with me in vivid detail.",
     "DARE: Give me a compliment that has nothing to do with my appearance.",
-    
-    // ── DARES: Medium (67-78) ──
     "DARE: Whisper something you've been wanting to say to me. Then say it louder so everyone hears.",
     "DARE: Kiss my shoulder right now. Don't overthink it.",
     "DARE: Put your arms around me from behind and stay there for a full minute.",
@@ -854,8 +994,6 @@ const DECKS = {
     "DARE: Run your fingers through my hair and tell me what you're thinking.",
     "DARE: Kiss my forehead and hold it there for 10 seconds.",
     "DARE: Tell me a secret fantasy you've had about us.",
-    
-    // ── DARES: Heated (79-90) ──
     "DARE: Kiss me wherever you want to right now. No warning, no asking.",
     "DARE: Tell everyone in this room exactly what you want to do to me later tonight.",
     "DARE: Bite my earlobe gently, then tell me out loud if you want to do it again.",
@@ -871,7 +1009,6 @@ const DECKS = {
   ],
 
   platonic: [
-    // ── TIER 1 (Questions 1-18) ──
     "What's the weirdest thing you genuinely believe that you rarely say out loud?",
     "What's a friendship you lost that you still think about?",
     "What's the most embarrassing thing in your camera roll right now?",
@@ -890,8 +1027,6 @@ const DECKS = {
     "What's the most desperate thing you've ever done to seem cool?",
     "What's a red flag in yourself that you're still pretending isn't there?",
     "What's a phase you went through that you genuinely cannot explain?",
-    
-    // ── TIER 2 (Questions 19-36) ──
     "What's the most dishonest thing you've done that no one here knows about?",
     "What's a friendship boundary you've crossed that still bothers you?",
     "Who here would you actually call at 3 AM if something went wrong — and be honest why?",
@@ -910,8 +1045,6 @@ const DECKS = {
     "What's a boundary you pretend to have but fold on every single time?",
     "What's something you're genuinely bad at that you've never admitted out loud?",
     "What's a thing you've never told your parents and probably never will?",
-    
-    // ── TIER 3 (Questions 37-54) ──
     "What's the most chaotic thing you've ever done while completely sober?",
     "Read the last text you sent your ex out loud. Right now. Go.",
     "Tell us the most embarrassing reason you've ever ghosted someone.",
@@ -930,8 +1063,6 @@ const DECKS = {
     "What's the most unhinged behavior you've ever done over someone you liked?",
     "What's the most embarrassing truth about your love life right now?",
     "What's the most messed up thing you've thought about someone in this room?",
-    
-    // ── DARES: Mild (55-66) ──
     "DARE: Open your camera roll, scroll to a random photo and show the room. No skipping allowed.",
     "DARE: Show everyone your most recent DM thread — the whole thing.",
     "DARE: Do a 60-second impression of the person to your right. Make it uncomfortably accurate.",
@@ -944,8 +1075,6 @@ const DECKS = {
     "DARE: Do 10 pushups in the middle of the room.",
     "DARE: Speak in an accent for the next three rounds.",
     "DARE: Let someone draw on your face with a pen (washable, hopefully).",
-    
-    // ── DARES: Medium (67-78) ──
     "DARE: Call a random contact and stay on the line for 30 seconds saying absolutely nothing.",
     "DARE: Post whatever the person to your left types as your next story. No preview, no veto.",
     "DARE: Do a full dramatic performance of your worst breakup — act both roles yourself.",
@@ -958,8 +1087,6 @@ const DECKS = {
     "DARE: Tell a story using only movie titles.",
     "DARE: Let the group pose you for a photo and post it immediately.",
     "DARE: Eat something weird (like hot sauce on a cracker) without complaining.",
-    
-    // ── DARES: Chaos (79-90) ──
     "DARE: The group picks one contact to text 'we need to talk.' You send it. Read the response out loud.",
     "DARE: Let someone read your last Google search out loud in the most dramatic voice they can do.",
     "DARE: Post a selfie with zero filter, zero editing, right now.",
@@ -975,7 +1102,6 @@ const DECKS = {
   ],
 
   girlsnight: [
-    // ── TIER 1 (Questions 1-18) ──
     "Rank everyone in this room by who you'd trust with your phone fully unlocked.",
     "What's a text you wrote, almost sent, but deleted — describe it in full.",
     "What's the most embarrassing thing you've done to look hot for someone?",
@@ -994,8 +1120,6 @@ const DECKS = {
     "What's your most shameful thirst trap moment?",
     "What's a friendship fallout you genuinely haven't gotten over?",
     "What's your most embarrassing 'read the room' fail around a guy?",
-    
-    // ── TIER 2 (Questions 19-36) ──
     "Be honest: which girl in this room do you think has the best dating life right now and why?",
     "What's the shadiest thing you've done to another girl over a guy?",
     "Tell the group about your messiest situationship — what actually happened?",
@@ -1014,8 +1138,6 @@ const DECKS = {
     "What's something you've done online that you'd be mortified if he found out about?",
     "What's the pettiest reason you've ever cut someone off?",
     "Tell us the most embarrassing thing you've done while tipsy on a night out.",
-    
-    // ── TIER 3 (Questions 37-54) ──
     "Tell us what happened on your wildest night out — the real unfiltered version.",
     "What's your actual body count? Say the number. Right now. Out loud.",
     "Who in this room do you think is the best in bed based purely on vibe — and why?",
@@ -1034,8 +1156,6 @@ const DECKS = {
     "Who's the one person you'd call right now if you wanted to ruin your own evening?",
     "What's the most embarrassing fantasy you've had about someone real that you know?",
     "What's the most unhinged thing you've done for a guy that you're lowkey proud of?",
-    
-    // ── DARES: Mild (55-66) ──
     "DARE: All of you open your DMs — the person to your left reads the first unread message out loud.",
     "DARE: Find a photo from the last 30 days in your camera roll and explain it fully to the room.",
     "DARE: Do a full runway walk across the room like you just spotted your ex and you look incredible.",
@@ -1048,8 +1168,6 @@ const DECKS = {
     "DARE: Rate everyone's outfits 1-10 and explain each rating.",
     "DARE: Let someone pick out an outfit from your closet for you to wear tomorrow.",
     "DARE: Do your best celebrity impression while the group guesses who.",
-    
-    // ── DARES: Medium (67-78) ──
     "DARE: Read the last message your ex sent you out loud with full theatrical dramatic energy.",
     "DARE: Show everyone your Spotify Daylist right now. No preview, no preparation.",
     "DARE: Text someone 'I miss you' with zero context. Read the response out loud when it comes.",
@@ -1062,8 +1180,6 @@ const DECKS = {
     "DARE: Let someone post anything they want on your social media (within reason).",
     "DARE: Reveal your celebrity crush and explain why in detail.",
     "DARE: Let the group ask your crush one question (if single) or partner one question (if taken).",
-    
-    // ── DARES: Chaos (79-90) ──
     "DARE: Post the most unflattering photo from tonight on your story. Right now.",
     "DARE: Everyone guesses your body count out loud. You then reveal the real number.",
     "DARE: Do your best impression of yourself after three drinks — let the group rate it.",
@@ -1079,7 +1195,6 @@ const DECKS = {
   ],
 
   naughty: [
-    // ── TIER 1: Charged (Questions 1-18) ──
     "Pick someone of the opposite gender and make out with them right now. Go.",
     "Pick someone attractive in this room and sit in their lap — both of you have to stay there for two rounds.",
     "Choose someone and kiss them on the neck. Once. Slowly.",
@@ -1098,8 +1213,6 @@ const DECKS = {
     "Pick someone and let them kiss your hand slowly. Both of you stay still.",
     "Choose someone of the opposite gender. Make out with them until the group says stop.",
     "Pick someone. Caress their thigh slowly while making eye contact with the group.",
-    
-    // ── TIER 2: Direct (Questions 19-36) ──
     "Pick someone and grind on them to imaginary music for 30 seconds. No stopping early.",
     "Choose someone and tell the room in explicit detail what you'd do to them if you were alone.",
     "Pick someone and straddle them. Stay there for the next two rounds.",
@@ -1118,8 +1231,6 @@ const DECKS = {
     "Choose someone and let them caress your neck and shoulders however they want for 30 seconds.",
     "Pick someone. Tell them what body part of theirs you've been staring at tonight.",
     "Choose someone and act out — with your hands on them — exactly how you'd give them a massage in bed.",
-    
-    // ── TIER 3: No Filter (Questions 37-54) ──
     "Pick two people and tell the room exactly how a threesome with them would go. Be specific.",
     "Choose someone and describe your most explicit fantasy about them. The whole room listens.",
     "Pick someone of the opposite gender. Make out with them for 20 full seconds. No skipping.",
@@ -1138,8 +1249,6 @@ const DECKS = {
     "Pick someone of the opposite gender. Make out with them passionately. Group rates it 1–10.",
     "Tell the room the most explicit scenario you've imagined with anyone in this group.",
     "Choose someone and do whatever you want to them physically — with consent — for 30 seconds.",
-    
-    // ── DARES: Tier 1 (55-66) ──
     "DARE: Walk over to someone and kiss them on the cheek, then whisper exactly what you've been thinking about them.",
     "DARE: Choose someone of the opposite gender. Make out with them for 10 seconds. Group counts out loud.",
     "DARE: Pick someone. Sit in their lap and stay there for the next three rounds.",
@@ -1152,8 +1261,6 @@ const DECKS = {
     "DARE: Let someone undo one button of your shirt.",
     "DARE: Sit back-to-back with someone for 2 minutes and describe what you're feeling.",
     "DARE: Let someone smell your neck and describe what you smell like.",
-    
-    // ── DARES: Tier 2 (67-78) ──
     "DARE: Pick someone of the opposite gender. Make out with them until the group says stop — minimum 20 seconds.",
     "DARE: Choose someone and straddle them. Stay there for two full rounds.",
     "DARE: Go up to someone and run your hand along their entire body from shoulder to thigh. Slowly.",
@@ -1166,8 +1273,6 @@ const DECKS = {
     "DARE: Kiss someone's neck for 30 seconds while they try not to react.",
     "DARE: Let someone tie your hands behind your back for the next round.",
     "DARE: Describe in detail what you'd do if you had 5 minutes alone with someone in this room.",
-    
-    // ── DARES: Tier 3 (79-90) ──
     "DARE: Pick someone and make out with them passionately for 30 seconds. Group rates you both after.",
     "DARE: Choose someone. Tell them — and the whole room — exactly what you'd do to them if everyone left right now.",
     "DARE: Pick someone and let them caress you however they want for 45 seconds — within consent.",
@@ -1229,17 +1334,36 @@ let cardsDrawn=0,cardsSkipped=0,cardHistory=[],sessionCode='';
 let isPaused=false,timerEnabled=false,timerInterval=null,timerRemaining=30;
 let isSwiping=false,swipeStartX=0,swipeStartY=0,swipeThreshold=50;
 let turnAcknowledged=true,votes={};
-let cardFilter='all'; // 'all' | 'questions' | 'dares'
+let cardFilter='all';
 
 // ══════════════════════════════════════════════════════════════
-//  CARD FILTER
+//  FILTER DROPDOWN
 // ══════════════════════════════════════════════════════════════
+function toggleFilterDropdown(){
+    const btn=document.getElementById('filterDropdownBtn');
+    const menu=document.getElementById('filterDropdownMenu');
+    const isOpen=menu.classList.contains('open');
+    if(isOpen){closeFilterDropdown();}else{btn.classList.add('open');menu.classList.add('open');}
+}
+function closeFilterDropdown(){
+    document.getElementById('filterDropdownBtn').classList.remove('open');
+    document.getElementById('filterDropdownMenu').classList.remove('open');
+}
+// Close dropdown when clicking outside
+document.addEventListener('click',function(e){
+    const wrap=document.getElementById('filterDropdownWrap');
+    if(wrap&&!wrap.contains(e.target))closeFilterDropdown();
+});
+
 function setCardFilter(f){
     cardFilter=f;
-    document.getElementById('filterAll').classList.toggle('active',f==='all');
-    document.getElementById('filterQ').classList.toggle('active',f==='questions');
-    document.getElementById('filterD').classList.toggle('active',f==='dares');
-    // rebuild filtered deck from current type
+    // Update active states
+    ['ddOptAll','ddOptQ','ddOptD'].forEach(id=>document.getElementById(id).classList.remove('active'));
+    const labels={'all':'🃏 All Cards','questions':'❓ Questions Only','dares':'⚡ Dares Only'};
+    if(f==='all'){document.getElementById('ddOptAll').classList.add('active');}
+    else if(f==='questions'){document.getElementById('ddOptQ').classList.add('active');}
+    else if(f==='dares'){document.getElementById('ddOptD').classList.add('active');}
+    document.getElementById('filterDropdownLabel').textContent=labels[f]||labels['all'];
     if(deckType){
         const qs=DECKS[deckType]||[];
         let pool=qs.map((q,i)=>({q,i,isDare:q.startsWith('DARE:')}));
@@ -1258,12 +1382,6 @@ function genCode(){return Array.from({length:6},()=>'ABCDEFGHJKLMNPQRSTUVWXYZ234
 function saveSession(){
     if(!sessionCode)return;
     try{localStorage.setItem('dd_'+sessionCode,JSON.stringify({players,deckType,currentPlayerIdx,cardsDrawn,cardsSkipped,deck:currentDeck.map(c=>c.i),history:cardHistory.slice(0,30),code:sessionCode}));}catch(e){}
-}
-function copyCode(){
-    if(!sessionCode)return;
-    navigator.clipboard.writeText(sessionCode).catch(()=>{});
-    const b=document.getElementById('copyCodeBtn');
-    b.textContent='✓ Copied!';setTimeout(()=>b.textContent='📋 Copy',1500);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1333,7 +1451,7 @@ function initializeDeck(type){
 }
 
 // ══════════════════════════════════════════════════════════════
-//  CARD RENDERING (original style)
+//  CARD RENDERING
 // ══════════════════════════════════════════════════════════════
 function getCardColor(){return DECK_COLORS[deckType]||'#2A2A2A';}
 
@@ -1341,7 +1459,7 @@ function getCardBackHTML(){
     return `<div class="card-back flex items-center justify-center p-6 z-0">
         <div class="text-center opacity-60">
             <div style="font-size:2rem;margin-bottom:0.5rem;">${DECK_ICONS[deckType]||'🃏'}</div>
-            <p class="text-white text-sm font-semibold">${DECK_LABELS[deckType]||''}</p>
+            <p class="card-back-title">${DECK_LABELS[deckType]||''}</p>
         </div>
     </div>`;
 }
@@ -1353,7 +1471,7 @@ function renderWelcomeCard(){
     const color=getCardColor();
     const html=getCardBackHTML()+`<div class="card-front flex flex-col justify-center items-center p-6 text-center z-10" style="background:${color};border:none;">
         <div style="font-size:3rem;margin-bottom:1rem;">${DECK_ICONS[deckType]||'🃏'}</div>
-        <h3 class="text-3xl font-bold text-white game-title">${DECK_LABELS[deckType]||''}</h3>
+        <h3 style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.6rem;color:white;letter-spacing:-0.04em;">${DECK_LABELS[deckType]||''}</h3>
         <p class="text-white mt-2" style="opacity:0.75;font-size:0.9rem;">${currentDeck.length} cards · ${players.length} players</p>
         <p class="text-white mt-1" style="opacity:0.5;font-size:0.75rem;">Cards heat up as you play 🌡</p>
     </div>`;
@@ -1370,12 +1488,12 @@ function makeCardHTML(card){
     const num=total-currentDeck.length;
     return getCardBackHTML()+`<div class="card-front flex flex-col justify-between w-full h-full text-center z-10" id="activeCard">
         <div class="flex justify-between items-center mb-2">
-            <span class="font-light text-sm opacity-60">#${num}/${total}</span>
+            <span style="font-weight:700;font-size:0.85rem;opacity:0.5;">#${num}/${total}</span>
             <div class="card-header-chip text-white" style="background-color:${color};">${isDare?'⚡ DARE':'❓ QUESTION'}</div>
         </div>
         ${player?`<div class="flex justify-center mb-3"><div class="player-badge" style="background-color:${color};">👤 ${player}</div></div>`:''}
         <div class="card-content-area flex-1 min-h-0"><p class="card-question-text">${text}</p></div>
-        <div class="text-xs text-right text-gray-400 mt-3 pt-2 border-t border-gray-100">${DECK_LABELS[deckType]||''}</div>
+        <div style="font-family:'Mona Sans',sans-serif;font-weight:700;font-size:0.72rem;text-align:right;color:rgba(0,0,0,0.3);margin-top:0.75rem;padding-top:0.5rem;border-top:1px solid rgba(0,0,0,0.06);">${DECK_LABELS[deckType]||''}</div>
     </div>`;
 }
 
@@ -1385,7 +1503,7 @@ function showEmptyCard(){
     const old=cc.querySelector('.card-front,.empty-card');
     const html=getCardBackHTML()+`<div class="empty-card card-front flex flex-col justify-center items-center p-6 text-center z-10">
         <div style="font-size:3rem;margin-bottom:1rem;">🔄</div>
-        <p class="text-2xl font-bold text-gray-900">Deck Complete!</p>
+        <p style="font-family:'Mona Sans',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:-0.04em;">Deck Complete!</p>
         <p class="text-lg text-gray-600 mt-2">Shuffle for another round.</p>
     </div>`;
     if(old){old.classList.add('card-slide-out-right');setTimeout(()=>{old.remove();cc.insertAdjacentHTML('beforeend',html);addSwipeZone();},380);}
@@ -1398,7 +1516,6 @@ function showEmptyCard(){
 function drawCard(){
     if(isPaused||!deckType)return;
     if(!currentDeck.length){showEmptyCard();updateStats();return;}
-    // Pass phone gate
     if(!turnAcknowledged&&document.getElementById('passModeToggle').checked&&cardsDrawn>0){
         const name=players[currentPlayerIdx%Math.max(players.length,1)]||'Next Player';
         document.getElementById('passPlayerName').textContent=name;
@@ -1596,7 +1713,6 @@ function showConsequence(){
     clearTimeout(consecTimeout);
     consecTimeout=setTimeout(dismissConsequence,10000);
 }
-// swipe/tap to dismiss toast
 (function(){
     let tsx=0;
     document.getElementById('consecToast').addEventListener('click',dismissConsequence);
@@ -1622,23 +1738,76 @@ function closeHistory(){
 }
 
 // ══════════════════════════════════════════════════════════════
-//  SWIPE
+//  SWIPE — FIXED: no horizontal scroll on mobile
 // ══════════════════════════════════════════════════════════════
 function addSwipeZone(){
     const cc=document.getElementById('cardContainer');
     cc.querySelector('.swipe-zone')?.remove();
     const card=cc.querySelector('.card-front');if(!card)return;
     const zone=document.createElement('div');zone.className='swipe-zone';
-    const onS=(x,y)=>{isSwiping=true;swipeStartX=x;swipeStartY=y;};
-    const onM=x=>{if(!isSwiping)return;const d=x-swipeStartX;if(Math.abs(d)>8)card.style.transform=`translateX(${d*.55}px) rotate(${d*.045}deg)`;};
-    const onE=(x,y)=>{if(!isSwiping)return;isSwiping=false;card.style.transform='';const dx=x-swipeStartX,dy=y-swipeStartY;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>swipeThreshold){if(dx<0)drawCard();else reshuffleDeck();}};
-    zone.addEventListener('touchstart',e=>{onS(e.touches[0].clientX,e.touches[0].clientY);e.preventDefault();},{passive:false});
-    zone.addEventListener('touchmove',e=>{onM(e.touches[0].clientX);e.preventDefault();},{passive:false});
-    zone.addEventListener('touchend',e=>{onE(e.changedTouches[0].clientX,e.changedTouches[0].clientY);e.preventDefault();},{passive:false});
-    zone.addEventListener('mousedown',e=>{onS(e.clientX,e.clientY);e.preventDefault();});
-    zone.addEventListener('mousemove',e=>{onM(e.clientX);});
-    zone.addEventListener('mouseup',e=>{onE(e.clientX,e.clientY);});
-    zone.addEventListener('mouseleave',()=>{if(isSwiping){isSwiping=false;card.style.transform='';}});
+
+    let startX=0,startY=0,moving=false,isHorizontal=null;
+
+    // Touch events — we determine direction first, then lock
+    zone.addEventListener('touchstart',e=>{
+        startX=e.touches[0].clientX;
+        startY=e.touches[0].clientY;
+        moving=true;isHorizontal=null;
+        // Don't prevent default here — let scroll start normally
+    },{passive:true});
+
+    zone.addEventListener('touchmove',e=>{
+        if(!moving)return;
+        const dx=e.touches[0].clientX-startX;
+        const dy=e.touches[0].clientY-startY;
+        // First movement: determine direction
+        if(isHorizontal===null&&(Math.abs(dx)>5||Math.abs(dy)>5)){
+            isHorizontal=Math.abs(dx)>Math.abs(dy);
+        }
+        if(isHorizontal){
+            // Only prevent default for horizontal swipes to stop page scroll
+            e.preventDefault();
+            card.style.transform=`translateX(${dx*0.55}px) rotate(${dx*0.045}deg)`;
+        }
+        // If vertical: do nothing, let browser handle scroll
+    },{passive:false});
+
+    zone.addEventListener('touchend',e=>{
+        if(!moving)return;
+        moving=false;
+        card.style.transform='';
+        if(isHorizontal){
+            const dx=e.changedTouches[0].clientX-startX;
+            if(Math.abs(dx)>swipeThreshold){
+                if(dx<0)drawCard();
+                else reshuffleDeck();
+            }
+        }
+        isHorizontal=null;
+    },{passive:true});
+
+    // Mouse events for desktop
+    zone.addEventListener('mousedown',e=>{
+        isSwiping=true;swipeStartX=e.clientX;swipeStartY=e.clientY;
+        e.preventDefault();
+    });
+    zone.addEventListener('mousemove',e=>{
+        if(!isSwiping)return;
+        const d=e.clientX-swipeStartX;
+        if(Math.abs(d)>8)card.style.transform=`translateX(${d*.55}px) rotate(${d*.045}deg)`;
+    });
+    zone.addEventListener('mouseup',e=>{
+        if(!isSwiping)return;
+        isSwiping=false;card.style.transform='';
+        const dx=e.clientX-swipeStartX;
+        if(Math.abs(dx)>Math.abs(e.clientY-swipeStartY)&&Math.abs(dx)>swipeThreshold){
+            if(dx<0)drawCard();else reshuffleDeck();
+        }
+    });
+    zone.addEventListener('mouseleave',()=>{
+        if(isSwiping){isSwiping=false;card.style.transform='';}
+    });
+
     cc.appendChild(zone);
 }
 
@@ -1705,7 +1874,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('skipButton').addEventListener('click',skipCard);
     document.getElementById('shuffleButton').addEventListener('click',reshuffleDeck);
 
-    // Close modals on backdrop click (not player/deck which require choices)
     ['settingsModal','resumeModal'].forEach(id=>{
         document.getElementById(id).addEventListener('click',e=>{if(e.target===document.getElementById(id))hideModal(id);});
     });
@@ -1724,5 +1892,3 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 </body>
 </html>
-
-
