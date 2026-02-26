@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Deeper-Decks™: The Card Game</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22url(%23rainbow)%22>D</text><defs><linearGradient id=%22rainbow%22 gradientTransform=%22rotate(90)%22><stop offset=%220%25%22 stop-color=%22%23FF1F40%22/><stop offset=%2225%25%22 stop-color=%22%23FF8BA4%22/><stop offset=%2250%25%22 stop-color=%22%2348BB78%22/><stop offset=%2275%25%22 stop-color=%22%236F38E0%22/><stop offset=%22100%25%22 stop-color=%22%23FF1F40%22/></linearGradient></defs></svg>" type="image/svg+xml">
+    <!-- FIXED FAVICON: Mirrored DD logo, gradient, bold sans-serif -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF1F40'/%3E%3Cstop offset='50%25' stop-color='%236F38E0'/%3E%3Cstop offset='100%25' stop-color='%2348BB78'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x='2' y='78' font-family='Arial Black%2CImpact%2Csans-serif' font-weight='900' font-size='76' fill='url(%23g)'%3ED%3C/text%3E%3Cg transform='translate(100%2C0) scale(-1%2C1)'%3E%3Ctext x='2' y='78' font-family='Arial Black%2CImpact%2Csans-serif' font-weight='900' font-size='76' fill='url(%23g)'%3ED%3C/text%3E%3C/g%3E%3C/svg%3E" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Figtree 900 = guaranteed ultra-black on all devices -->
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
    <style>
         /* ── RESET & BASE FIXES ── */
@@ -20,7 +20,6 @@
 
         html {
             overflow-x: hidden;
-            /* Prevent horizontal scroll on mobile */
             overscroll-behavior-x: none;
         }
 
@@ -29,9 +28,8 @@
             max-width: 100%;
             margin: 0;
             padding: 0;
-            /* Prevent horizontal scroll on mobile caused by swipe */
             overscroll-behavior-x: none;
-            touch-action: pan-y; /* allow vertical scroll, block horizontal */
+            touch-action: pan-y;
         }
 
         :root {
@@ -60,7 +58,6 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* MAIN GAME - SCROLLABLE */
         #mainGame {
             display: none;
             opacity: 0;
@@ -70,24 +67,15 @@
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
-            /* Extra bottom padding to prevent clipping */
             padding: 0.5rem 0.5rem 80px 0.5rem;
             position: relative;
         }
 
-        /* ══════════════════════════════
-           TYPOGRAPHY SYSTEM — Figtree 900
-           Figtree is a Google Font with a true, confirmed 900 black weight.
-           Applied everywhere with !important to crush cascade conflicts.
-        ══════════════════════════════ */
-
-        /* Base body — Inter for body copy */
         body, button, input, select, textarea, p, span, div {
             font-family: 'Inter', sans-serif;
             font-weight: 500;
         }
 
-        /* ── FIGTREE 900 for ALL display/title/heading elements ── */
         h1, h2, h3, h4, h5, h6,
         .game-title,
         .sidebar-title,
@@ -117,7 +105,6 @@
             letter-spacing: -0.03em;
         }
 
-        /* Card question text — Figtree 900, large and punchy */
         .card-question-text {
             font-family: 'Figtree', 'Inter', sans-serif !important;
             font-weight: 900 !important;
@@ -127,7 +114,6 @@
             color: #0a0a0a;
         }
 
-        /* Stat/label supporting text — bold but not display */
         .heat-label,
         .stat-mini-label,
         .shame-label,
@@ -137,7 +123,6 @@
             font-weight: 800 !important;
         }
 
-        /* ── SIDEBAR ── */
         .sidebar-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:3000; opacity:0; visibility:hidden; transition:opacity 0.3s ease,visibility 0.3s ease; backdrop-filter:blur(4px); }
         .sidebar-overlay.active { opacity:1; visibility:visible; }
         .sidebar-menu { position:fixed; top:0; right:-100%; width:320px; height:100%; background:var(--modal-dark); z-index:3001; transition:right 0.4s cubic-bezier(0.4,0,0.2,1); padding:24px; overflow-y:auto; box-shadow:-5px 0 30px rgba(0,0,0,0.3); }
@@ -150,7 +135,6 @@
         .sidebar-item:hover { background:rgba(255,255,255,0.1); transform:translateX(-2px); }
         .sidebar-divider { border:none; border-top:1px solid rgba(255,255,255,0.08); margin:8px 0 18px; }
 
-        /* ── HAMBURGER ── */
         .hamburger-menu { position:fixed; top:20px; right:20px; z-index:2000; background:var(--modal-dark); border:none; border-radius:12px; width:48px; height:48px; display:none; flex-direction:column; justify-content:center; align-items:center; gap:6px; cursor:pointer; transition:all 0.2s ease; box-shadow:0 4px 12px rgba(0,0,0,0.15); }
         .hamburger-menu:hover { transform:scale(1.05); }
         .hamburger-line { width:20px; height:2px; background:var(--text-light); border-radius:2px; transition:all 0.3s ease; }
@@ -158,10 +142,8 @@
         .hamburger-menu.active .hamburger-line:nth-child(2){opacity:0;}
         .hamburger-menu.active .hamburger-line:nth-child(3){transform:rotate(-45deg) translate(6px,-6px);}
 
-        /* ── INTRO ── */
         #introScreen { position:fixed; top:0; left:0; width:100%; height:100%; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:4000; transition:opacity 0.6s ease-out; }
         
-        /* Intro logo — Figtree 900, big, bold, unmissable */
         .rainbow-logo { 
             font-family:'Figtree','Inter',sans-serif !important; 
             font-size:clamp(2.8rem, 10vw, 4.5rem); 
@@ -182,7 +164,6 @@
         @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-        /* ── CARDS ── */
         .card-stack-container { 
             aspect-ratio: 9/14; 
             width: min(380px, 90vw);
@@ -213,7 +194,6 @@
             padding: 1.8rem;
         }
 
-        /* CARD BACK — dark, rich, with a strong bold title */
         .card-back { 
             background: linear-gradient(145deg,#1a1a1a 0%,#111111 100%); 
             border-radius: 20px; 
@@ -271,7 +251,6 @@
             font-weight: 900 !important;
         }
 
-        /* ── MODALS ── */
         .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; z-index:2000; backdrop-filter:blur(4px); }
         .modal-content { background:var(--modal-dark); border:1px solid rgba(255,255,255,0.1); border-radius:24px; padding:32px; max-width:500px; width:90%; max-height:85vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); color:var(--text-light); }
         .deck-modal-content { max-width:600px; }
@@ -285,9 +264,10 @@
         .player-item:active { cursor:grabbing; }
         .player-item.drag-over { border-color:rgba(255,255,255,0.5)!important; background:rgba(255,255,255,0.12)!important; }
         .player-item.current-turn { border-color:rgba(72,187,120,0.5); background:rgba(72,187,120,0.08); }
+        /* Touch drag ghost style */
+        .player-item.touch-dragging { opacity:0.25 !important; }
         .btn-remove { background:rgba(255,107,129,0.2); color:var(--color-romantic); border-radius:8px; padding:6px 12px; font-size:0.875rem; transition:all 0.2s; border:none; cursor:pointer; }
 
-        /* ── CONTROL PANEL ── */
         .control-panel { 
             background: var(--surface-light); 
             border: 1px solid rgba(0,0,0,0.1); 
@@ -297,7 +277,6 @@
             color: var(--text-dark);
             width: 100%;
             max-width: 380px;
-            /* FIXED: proper bottom margin */
             margin: 0 auto 24px auto;
         }
 
@@ -326,9 +305,6 @@
         @keyframes shuffleAnim{0%{transform:rotate(0) scale(1)}25%{transform:rotate(-5deg) scale(1.02)}50%{transform:rotate(5deg) scale(1.02)}75%{transform:rotate(-2deg) scale(1.01)}100%{transform:rotate(0) scale(1)}}
         .swipe-instruction { text-align:center; margin-top:10px; color:rgba(0,0,0,0.5); font-size:0.75rem; font-weight:500; }
 
-        /* ══════════════════════════════
-           REDESIGNED: DECK/FILTER DROPDOWN
-        ══════════════════════════════ */
         .deck-dropdown-wrap {
             position: relative;
             margin-bottom: 0.5rem;
@@ -406,7 +382,6 @@
         .dd-option .dd-check { font-size: 0.75rem; opacity: 0; transition: opacity 0.15s; }
         .dd-option.active .dd-check { opacity: 1; }
 
-        /* ── DARK MODE ── */
         body.dark-mode { background-color:#121212; color:#FFFFFF!important; }
         body.dark-mode .text-gray-900,body.dark-mode .text-gray-800,body.dark-mode .text-gray-700{color:#FFFFFF!important;}
         body.dark-mode .text-gray-600,body.dark-mode .text-gray-500,body.dark-mode .text-gray-400{color:#A0A0A0!important;}
@@ -437,7 +412,6 @@
         body.dark-mode .dd-option:not(:last-child) { border-bottom-color:rgba(255,255,255,0.06); }
         body.dark-mode .dd-option:hover { background:rgba(255,255,255,0.07); }
 
-        /* ── MOBILE LAYOUT FIXES ── */
         @media(max-width:1024px){
             main {
                 flex-direction: column-reverse;
@@ -447,7 +421,6 @@
                 width: 100%;
                 max-width: 380px;
                 margin-top: 1.5rem;
-                /* FIXED: bottom margin on mobile too */
                 margin-bottom: 32px;
             }
             header {
@@ -472,12 +445,10 @@
                 padding: 0.8rem;
             }
             #mainGame {
-                /* Extra padding on small screens */
                 padding-bottom: 100px;
             }
         }
 
-        /* FIXED: swipe zone only captures horizontal input, vertical scroll still works */
         .swipe-zone {
             position: absolute;
             top: 0;
@@ -485,11 +456,9 @@
             width: 100%;
             height: 100%;
             z-index: 10;
-            touch-action: none; /* we handle all touch ourselves */
+            touch-action: none;
         }
 
-        /* ════ NEW FEATURE STYLES ════ */
-        /* PAUSE OVERLAY */
         #pauseOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:5000;display:none;flex-direction:column;justify-content:center;align-items:center;gap:2rem;backdrop-filter:blur(18px);}
         #pauseOverlay.active{display:flex;animation:fadeInUp 0.3s ease;}
         .pause-big-title{font-family:'Figtree','Inter',sans-serif !important;font-size:3.5rem;font-weight:900 !important;color:#fff;letter-spacing:-3px;}
@@ -500,7 +469,6 @@
         .session-box-hint{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:6px;}
         .pause-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
 
-        /* PASS PHONE BANNER */
         #passBanner{display:none;background:linear-gradient(135deg,rgba(255,31,64,0.12),rgba(111,56,224,0.12));border:1px solid rgba(255,31,64,0.25);border-radius:14px;padding:14px 18px;margin-bottom:0.75rem;align-items:center;gap:12px;animation:fadeInUp 0.35s ease;}
         #passBanner.show{display:flex;}
         .pass-icon{font-size:1.6rem;animation:phoneBounce 1s ease infinite;}
@@ -511,7 +479,6 @@
         .btn-got-it{background:var(--modal-dark);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-family:'Figtree',sans-serif !important;font-weight:900 !important;cursor:pointer;font-size:0.88rem;transition:all 0.2s;}
         .btn-got-it:hover{background:#3A3A3A;}
 
-        /* TIMER */
         #timerWrap{display:none;align-items:center;gap:10px;margin-bottom:0.75rem;}
         #timerWrap.show{display:flex;}
         .timer-bar-outer{flex:1;height:6px;background:rgba(0,0,0,0.09);border-radius:99px;overflow:hidden;}
@@ -520,7 +487,6 @@
         .timer-num.urgent{color:#FF1F40;animation:timerUrgent 0.5s ease infinite;}
         @keyframes timerUrgent{0%,100%{opacity:1}50%{opacity:0.4}}
 
-        /* HEAT METER */
         .heat-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
         .heat-label{font-size:0.73rem;color:rgba(0,0,0,0.4);white-space:nowrap;font-weight:700;}
         .heat-bar-outer{flex:1;height:5px;background:rgba(0,0,0,0.08);border-radius:99px;overflow:hidden;}
@@ -528,14 +494,12 @@
         .heat-emoji{font-size:1rem;}
         #heatLevelLabel{font-size:0.68rem;text-align:right;margin-top:1px;transition:color 0.8s ease;}
 
-        /* STAT MINIS */
         .stat-mini{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.78rem;}
         .stat-mini:last-child{border-bottom:none;}
         .stat-mini-label{color:rgba(0,0,0,0.45);font-weight:600;}
         .stat-mini-val{font-family:'Figtree',sans-serif !important;font-weight:900 !important;}
         .stat-skips{color:#FF1F40;}
 
-        /* DARE VOTE */
         #dareVote{display:none;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:12px;margin-top:0.75rem;}
         #dareVote.show{display:block;animation:fadeInUp 0.3s ease;}
         .vote-label{font-size:0.78rem;color:rgba(0,0,0,0.45);margin-bottom:8px;font-weight:700;}
@@ -547,22 +511,18 @@
         .tally-yes{color:#48BB78;background:rgba(72,187,120,0.1);border-radius:99px;padding:2px 10px;}
         .tally-no{color:#FF1F40;background:rgba(255,31,64,0.08);border-radius:99px;padding:2px 10px;}
 
-        /* SHAME */
         .shame-label{font-size:0.7rem;color:#FF1F40;font-weight:700;text-align:center;margin-top:3px;display:none;}
 
-        /* WILDCARD + HISTORY ROW */
         .btn-wildcard{background:linear-gradient(135deg,#6F38E0,#FF1F40);color:#fff;border:none;border-radius:12px;padding:12px 16px;font-family:'Figtree','Inter',sans-serif !important;font-weight:900 !important;font-size:0.9rem;letter-spacing:-0.02em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;box-shadow:0 5px 12px rgba(111,56,224,0.35);}
         .btn-wildcard:hover{filter:brightness(1.1);transform:translateY(-1px);}
         .btn-history-sm{background:var(--surface-light);color:var(--text-dark);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-family:'Figtree',sans-serif !important;font-weight:900 !important;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
         .btn-history-sm:hover{background:#E0E0E0;}
 
-        /* CONSEQUENCE TOAST */
         #consecToast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(130px);background:linear-gradient(135deg,#FF1F40,#FF9F0A);color:#fff;border-radius:16px;padding:1rem 1.5rem;font-size:1rem;z-index:6000;transition:transform 0.45s cubic-bezier(0.34,1.56,0.64,1);text-align:center;min-width:240px;box-shadow:0 10px 40px rgba(255,31,64,0.4);pointer-events:auto;cursor:pointer;touch-action:pan-x;}
         #consecToast.show{transform:translateX(-50%) translateY(0);}
         #consecToast .dismiss-hint{font-size:0.62rem;opacity:0.65;margin-top:5px;text-transform:uppercase;letter-spacing:0.08em;}
         .consec-sub{font-family:'Figtree',sans-serif !important;font-weight:900 !important;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.8;margin-bottom:4px;}
 
-        /* HISTORY DRAWER */
         #historyBg{position:fixed;inset:0;z-index:4400;background:rgba(0,0,0,0.5);display:none;}
         #historyBg.show{display:block;}
         #historyDrawer{position:fixed;bottom:0;left:0;right:0;z-index:4500;background:var(--modal-dark);border-top:1px solid rgba(255,255,255,0.1);border-radius:24px 24px 0 0;padding:1.5rem;max-height:60vh;overflow-y:auto;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);}
@@ -572,7 +532,6 @@
         .history-item:hover{background:rgba(255,255,255,0.1);color:#fff;}
         .history-item-meta{font-family:'Figtree',sans-serif !important;font-weight:900 !important;font-size:0.67rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;opacity:0.7;}
 
-        /* TOGGLE */
         .toggle{position:relative;width:40px;height:22px;flex-shrink:0;}
         .toggle input{opacity:0;width:0;height:0;}
         .toggle-slider{position:absolute;inset:0;cursor:pointer;background:rgba(255,255,255,0.15);border-radius:99px;transition:0.3s;}
@@ -580,11 +539,9 @@
         input:checked + .toggle-slider{background:#48BB78;}
         input:checked + .toggle-slider:before{transform:translateX(18px);}
 
-        /* CURRENT PLAYER DOT */
         .now-dot{width:8px;height:8px;border-radius:50%;background:#48BB78;display:inline-block;margin-right:4px;animation:nowPulse 1.5s ease infinite;}
         @keyframes nowPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:0.6}}
 
-        /* RESUME MODAL CODE INPUT */
         .resume-code-inp{font-family:'Figtree',sans-serif !important;font-weight:900 !important;font-size:1.5rem;letter-spacing:0.2em;text-align:center;text-transform:uppercase;width:100%;}
     </style>
 </head>
@@ -800,7 +757,6 @@
         <section class="lg:w-1/3 control-panel flex flex-col justify-start order-2 lg:order-1">
             <h2 style="font-family:'Figtree','Inter',sans-serif;font-weight:900;font-size:1.1rem;letter-spacing:-0.04em;margin-bottom:0.6rem;color:#0a0a0a;" id="deckTitle">Select a Deck</h2>
 
-            <!-- STATS row -->
             <div style="display:flex;gap:0.75rem;margin-bottom:0.6rem;">
                 <div style="flex:1;text-align:center;">
                     <div class="stat-mini-val" id="remainingCount" style="font-size:1.1rem;">90</div>
@@ -816,7 +772,6 @@
                 </div>
             </div>
 
-            <!-- HEAT METER -->
             <div id="heatMeter" style="margin-bottom:0.6rem;">
                 <div class="heat-row">
                     <span class="heat-label">Heat</span>
@@ -826,7 +781,6 @@
                 <div id="heatLevelLabel" style="font-size:0.65rem;text-align:right;margin-top:1px;transition:color 0.8s ease;color:rgba(0,0,0,0.35);">Warm Up</div>
             </div>
 
-            <!-- FILTER + HISTORY DROPDOWN -->
             <div class="deck-dropdown-wrap" id="filterDropdownWrap">
                 <button class="deck-dropdown-btn" id="filterDropdownBtn" onclick="toggleFilterDropdown()">
                     <span id="filterDropdownLabel">🃏 All Cards</span>
@@ -856,27 +810,22 @@
                 </div>
             </div>
 
-            <!-- TIMER -->
             <div id="timerWrap" style="margin-top:0.5rem;">
                 <div class="timer-bar-outer"><div class="timer-bar-inner" id="timerBar"></div></div>
                 <div class="timer-num" id="timerNum">30</div>
             </div>
 
-            <!-- MAIN BUTTONS -->
             <button id="drawButton" class="btn-action w-full mb-1" style="margin-top:0.6rem;font-size:1.05rem;padding:15px 20px;letter-spacing:0.02em;text-transform:uppercase;">Draw Next Card</button>
 
-            <!-- SKIP -->
             <button id="skipButton" class="w-full btn-action btn-shuffle mb-1" style="display:flex;flex-direction:column;align-items:center;gap:1px;padding:10px 20px;">
                 <span>⏭ Skip This Card</span>
                 <span class="shame-label" id="shameLabel"></span>
             </button>
 
-            <!-- WILDCARD -->
             <div style="display:flex;gap:0.4rem;margin-bottom:0.5rem;">
                 <button class="btn-wildcard" style="flex:1;" onclick="drawWildcard()">🎲 Wildcard</button>
             </div>
 
-            <!-- DARE VOTE -->
             <div id="dareVote">
                 <div class="vote-label">🗳 Did they actually do the dare?</div>
                 <div class="vote-btns">
@@ -886,7 +835,6 @@
                 <div class="vote-tally" id="voteTally"></div>
             </div>
 
-            <!-- SHUFFLE + PAUSE -->
             <button id="shuffleButton" class="w-full btn-action btn-shuffle mt-1">🔀 Re-Shuffle</button>
             <button onclick="pauseGame()" class="w-full btn-action btn-shuffle mt-1">⏸ Pause</button>
         </section>
@@ -894,7 +842,6 @@
         <!-- RIGHT: CARD AREA -->
         <section class="lg:w-2/3 flex flex-col items-center order-1 lg:order-2">
 
-            <!-- PASS PHONE BANNER -->
             <div id="passBanner" class="w-full mb-2" style="max-width:300px;">
                 <div class="pass-icon">📱</div>
                 <div class="pass-info">
@@ -913,9 +860,6 @@
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════════════
-//  DECK DATA — 90 cards each, with complete dares
-// ══════════════════════════════════════════════════════════════
 const DECKS = {
   romantic: [
     "What's one thing about our dynamic you've never said out loud before?",
@@ -1351,7 +1295,6 @@ function closeFilterDropdown(){
     document.getElementById('filterDropdownBtn').classList.remove('open');
     document.getElementById('filterDropdownMenu').classList.remove('open');
 }
-// Close dropdown when clicking outside
 document.addEventListener('click',function(e){
     const wrap=document.getElementById('filterDropdownWrap');
     if(wrap&&!wrap.contains(e.target))closeFilterDropdown();
@@ -1359,7 +1302,6 @@ document.addEventListener('click',function(e){
 
 function setCardFilter(f){
     cardFilter=f;
-    // Update active states
     ['ddOptAll','ddOptQ','ddOptD'].forEach(id=>document.getElementById(id).classList.remove('active'));
     const labels={'all':'🃏 All Cards','questions':'❓ Questions Only','dares':'⚡ Dares Only'};
     if(f==='all'){document.getElementById('ddOptAll').classList.add('active');}
@@ -1387,7 +1329,7 @@ function saveSession(){
 }
 
 // ══════════════════════════════════════════════════════════════
-//  PLAYERS
+//  PLAYERS — with TOUCH DRAG-AND-DROP fix for mobile
 // ══════════════════════════════════════════════════════════════
 window.removePlayer=function(n){players=players.filter(p=>p!==n);renderPlayers();};
 let dragIdx=null;
@@ -1395,6 +1337,7 @@ function addPlayer(name){
     if(name&&!players.includes(name)&&players.length<10){players.push(name);renderPlayers();}
     document.getElementById('playerNameInput').value='';
 }
+
 function renderPlayers(){
     const list=document.getElementById('playersList');
     const count=document.getElementById('playerCount');
@@ -1403,12 +1346,13 @@ function renderPlayers(){
         :players.map((p,i)=>`
             <div class="player-item${i===currentPlayerIdx?' current-turn':''}"
                 draggable="true"
+                data-idx="${i}"
                 ondragstart="dragIdx=${i}"
                 ondragover="event.preventDefault();this.classList.add('drag-over')"
                 ondragleave="this.classList.remove('drag-over')"
                 ondrop="event.preventDefault();this.classList.remove('drag-over');dropPlayer(${i})">
                 <div style="display:flex;align-items:center;gap:8px;">
-                    <span style="color:rgba(255,255,255,0.25);font-size:0.9rem;">⠿</span>
+                    <span style="color:rgba(255,255,255,0.3);font-size:1.1rem;line-height:1;cursor:grab;padding:2px 4px;">≡</span>
                     ${i===currentPlayerIdx?'<span class="now-dot"></span>':''}
                     <span>${p}</span>
                     ${i===currentPlayerIdx?'<span style="font-size:0.68rem;opacity:0.5;text-transform:uppercase;letter-spacing:0.06em;">Now</span>':''}
@@ -1417,8 +1361,96 @@ function renderPlayers(){
             </div>`).join('');
     count.textContent=players.length;
     document.getElementById('startGameBtn').disabled=players.length<2;
+    // Attach touch drag after rendering
+    _attachTouchDrag();
 }
+
 function dropPlayer(to){if(dragIdx===null||dragIdx===to)return;const p=players.splice(dragIdx,1)[0];players.splice(to,0,p);dragIdx=null;renderPlayers();}
+
+// ── TOUCH DRAG-AND-DROP (mobile fix) ─────────────────────────
+let _tdi=null,_tdGhost=null,_tdItems=[],_tdOrigTop=0,_tdStartY=0;
+
+function _attachTouchDrag(){
+    document.querySelectorAll('#playersList .player-item').forEach(el=>{
+        el.addEventListener('touchstart', _tdStart, {passive:false});
+        el.addEventListener('touchmove',  _tdMove,  {passive:false});
+        el.addEventListener('touchend',   _tdEnd,   {passive:true});
+    });
+}
+
+function _tdStart(e){
+    // Don't intercept taps on the Remove button
+    if(e.target.classList.contains('btn-remove') || e.target.closest('.btn-remove')) return;
+    const el = e.currentTarget;
+    _tdi = parseInt(el.dataset.idx);
+    _tdStartY = e.touches[0].clientY;
+    const rect = el.getBoundingClientRect();
+    _tdOrigTop = rect.top;
+
+    // Create floating ghost clone
+    _tdGhost = el.cloneNode(true);
+    Object.assign(_tdGhost.style, {
+        position: 'fixed',
+        left: rect.left + 'px',
+        top:  rect.top  + 'px',
+        width: rect.width + 'px',
+        zIndex: '99999',
+        opacity: '0.92',
+        pointerEvents: 'none',
+        borderRadius: '12px',
+        background: 'rgba(255,255,255,0.22)',
+        border: '1.5px solid rgba(255,255,255,0.55)',
+        boxShadow: '0 10px 32px rgba(0,0,0,0.5)',
+        transform: 'scale(1.04)',
+        transition: 'box-shadow 0.1s',
+    });
+    document.body.appendChild(_tdGhost);
+
+    el.style.opacity = '0.2';
+    _tdItems = [...document.querySelectorAll('#playersList .player-item')];
+    e.preventDefault();
+}
+
+function _tdMove(e){
+    if(_tdi === null || !_tdGhost) return;
+    e.preventDefault();
+    const dy = e.touches[0].clientY - _tdStartY;
+    _tdGhost.style.top = (_tdOrigTop + dy) + 'px';
+
+    const ty = e.touches[0].clientY;
+    _tdItems.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if(ty >= r.top && ty <= r.bottom){ el.classList.add('drag-over'); }
+        else { el.classList.remove('drag-over'); }
+    });
+}
+
+function _tdEnd(e){
+    if(_tdi === null) return;
+    const ty = e.changedTouches[0].clientY;
+    let targetIdx = _tdi;
+
+    _tdItems.forEach(el => {
+        el.classList.remove('drag-over');
+        el.style.opacity = '';
+        const r = el.getBoundingClientRect();
+        if(ty >= r.top && ty <= r.bottom){
+            targetIdx = parseInt(el.dataset.idx);
+        }
+    });
+
+    if(_tdGhost){ _tdGhost.remove(); _tdGhost = null; }
+
+    if(targetIdx !== _tdi){
+        const p = players.splice(_tdi, 1)[0];
+        players.splice(targetIdx, 0, p);
+        renderPlayers();
+    } else {
+        // Just re-render to restore opacity
+        renderPlayers();
+    }
+    _tdi = null; _tdItems = [];
+}
 
 // ══════════════════════════════════════════════════════════════
 //  MODALS
@@ -1740,7 +1772,7 @@ function closeHistory(){
 }
 
 // ══════════════════════════════════════════════════════════════
-//  SWIPE — FIXED: no horizontal scroll on mobile
+//  SWIPE
 // ══════════════════════════════════════════════════════════════
 function addSwipeZone(){
     const cc=document.getElementById('cardContainer');
@@ -1750,28 +1782,23 @@ function addSwipeZone(){
 
     let startX=0,startY=0,moving=false,isHorizontal=null;
 
-    // Touch events — we determine direction first, then lock
     zone.addEventListener('touchstart',e=>{
         startX=e.touches[0].clientX;
         startY=e.touches[0].clientY;
         moving=true;isHorizontal=null;
-        // Don't prevent default here — let scroll start normally
     },{passive:true});
 
     zone.addEventListener('touchmove',e=>{
         if(!moving)return;
         const dx=e.touches[0].clientX-startX;
         const dy=e.touches[0].clientY-startY;
-        // First movement: determine direction
         if(isHorizontal===null&&(Math.abs(dx)>5||Math.abs(dy)>5)){
             isHorizontal=Math.abs(dx)>Math.abs(dy);
         }
         if(isHorizontal){
-            // Only prevent default for horizontal swipes to stop page scroll
             e.preventDefault();
             card.style.transform=`translateX(${dx*0.55}px) rotate(${dx*0.045}deg)`;
         }
-        // If vertical: do nothing, let browser handle scroll
     },{passive:false});
 
     zone.addEventListener('touchend',e=>{
@@ -1788,7 +1815,6 @@ function addSwipeZone(){
         isHorizontal=null;
     },{passive:true});
 
-    // Mouse events for desktop
     zone.addEventListener('mousedown',e=>{
         isSwiping=true;swipeStartX=e.clientX;swipeStartY=e.clientY;
         e.preventDefault();
