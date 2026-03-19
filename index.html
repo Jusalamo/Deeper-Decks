@@ -394,6 +394,20 @@ body.dark .dots-divider { background: rgba(255,255,255,.08); }
   position: relative;
   z-index: 3;
 }
+.card-back-icon-wrap {
+  position: relative;
+  z-index: 3;
+  margin-bottom: .4rem;
+  opacity: .85;
+}
+.card-back-icon-wrap svg {
+  stroke: rgba(255,255,255,.9);
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: block;
+}
 
 /* Card type chip — larger and clearly legible */
 .card-type-chip {
@@ -876,22 +890,127 @@ body.dark .btn-skip:hover { background: rgba(255,255,255,.16); }
 .deck-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 1.2rem; }
 .d-opt {
   background: rgba(255,255,255,.05);
-  border: 1.5px solid transparent;
+  border: 2px solid transparent;
   border-radius: 15px;
   padding: 14px;
   cursor: pointer;
-  transition: all .22s;
+  transition: background .22s;
   text-align: left;
+  position: relative;
+  /* rainbow border via background-clip trick */
+  background-clip: padding-box;
 }
-.d-opt:hover { background: rgba(255,255,255,.09); }
+.d-opt::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  background: linear-gradient(135deg,
+    #E8294A, #7C3AED, #3B82F6, #27C07A, #F59E0B, #E8294A
+  );
+  background-size: 300% 300%;
+  opacity: 0;
+  transition: opacity .25s;
+  z-index: -1;
+  animation: deckBorderSpin 3s linear infinite;
+}
+@keyframes deckBorderSpin {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.d-opt:hover { background: rgba(255,255,255,.08); }
+.d-opt:hover::before { opacity: .7; }
 .d-opt.on { background: rgba(255,255,255,.11); }
-.d-icon { font-size: 1.5rem; margin-bottom: .4rem; line-height: 1; }
+.d-opt.on::before { opacity: 1; }
+.d-icon-wrap {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: .55rem;
+  flex-shrink: 0;
+}
+.d-icon-wrap svg {
+  width: 20px; height: 20px;
+  stroke: #fff; fill: none;
+  stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+}
 .d-name {
   font-family: 'Figtree', sans-serif;
-  font-weight: 700; font-size: .9rem;
+  font-weight: 800; font-size: .9rem;
   margin-bottom: 3px; letter-spacing: -.01em;
 }
 .d-desc { font-size: .68rem; color: rgba(255,255,255,.38); line-height: 1.4; }
+
+/* ── ICON PICKER (custom deck builder) ── */
+.icon-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 7px;
+  margin: .75rem 0;
+}
+.icon-pick-btn {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.05);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.icon-pick-btn:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); }
+.icon-pick-btn.on {
+  border-color: var(--white);
+  background: rgba(255,255,255,.15);
+}
+.icon-pick-btn svg {
+  width: 18px; height: 18px;
+  stroke: rgba(255,255,255,.7); fill: none;
+  stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+}
+.icon-pick-btn.on svg { stroke: #fff; }
+
+/* ── PROFILE PHOTO ── */
+.profile-photo-wrap {
+  position: relative;
+  width: 72px; height: 72px;
+  margin: 0 auto .75rem;
+  cursor: pointer;
+}
+.profile-photo-wrap img,
+.profile-avatar-lg {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Figtree', sans-serif;
+  font-weight: 900;
+  font-size: 1.6rem;
+  color: #fff;
+}
+.profile-photo-edit {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 24px; height: 24px;
+  background: var(--white);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,.3);
+}
+.profile-photo-edit svg {
+  width: 12px; height: 12px;
+  stroke: var(--ink); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+#photoInput { display: none; }
+
+/* profile btn with photo */
+.profile-btn img {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
 
 /* ── SETTINGS ── */
 .s-row {
@@ -1506,7 +1625,14 @@ input:checked + .tog-track:before { transform: translateX(17px); }
 <div id="profileBg" onclick="closeProfile()"></div>
 <div id="profileDrawer">
   <div style="width:30px;height:3px;background:rgba(255,255,255,.14);border-radius:99px;margin:0 auto .9rem;"></div>
-  <div class="profile-avatar-lg" id="profileAvatarLg"></div>
+  <!-- Photo upload -->
+  <div class="profile-photo-wrap" onclick="document.getElementById('photoInput').click()" title="Change photo">
+    <div class="profile-avatar-lg" id="profileAvatarLg"></div>
+    <div class="profile-photo-edit">
+      <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+    </div>
+  </div>
+  <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoUpload(event)">
   <div class="profile-name" id="profileNameLbl">Guest</div>
   <div class="profile-email" id="profileEmailLbl"></div>
   <div class="profile-stats" id="profileStats"></div>
@@ -1600,18 +1726,30 @@ input:checked + .tog-track:before { transform: translateX(17px); }
     <div class="modal-sub">Cards heat up naturally — buckle up</div>
     <div class="deck-grid">
       <div class="d-opt" data-deck="romantic" onclick="pickDeck(this)">
+        <div class="d-icon-wrap" style="background:#E8294A;">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
         <div class="d-name" style="color:#E8294A;">Romantic</div>
         <div class="d-desc">Couples &amp; dates · starts warm, gets electric</div>
       </div>
       <div class="d-opt" data-deck="platonic" onclick="pickDeck(this)">
+        <div class="d-icon-wrap" style="background:#27C07A;">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
         <div class="d-name" style="color:#27C07A;">Platonic</div>
         <div class="d-desc">Friends &amp; hangouts · chaos guaranteed</div>
       </div>
       <div class="d-opt" data-deck="girlsnight" onclick="pickDeck(this)">
+        <div class="d-icon-wrap" style="background:#F05A8E;">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+        </div>
         <div class="d-name" style="color:#F05A8E;">Girls' Night</div>
         <div class="d-desc">No filter mode · zero mercy</div>
       </div>
       <div class="d-opt" data-deck="naughty" onclick="pickDeck(this)">
+        <div class="d-icon-wrap" style="background:#7C3AED;">
+          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
         <div class="d-name" style="color:#7C3AED;">Naughty</div>
         <div class="d-desc">Adults only · no one leaves the same</div>
       </div>
@@ -1646,8 +1784,11 @@ input:checked + .tog-track:before { transform: translateX(17px); }
     <!-- Step 1: Name + Color -->
     <div class="cd-step active" id="cdStep1">
       <div class="modal-h">Name Your Deck</div>
-      <div class="modal-sub">Give it a name and pick a colour</div>
-      <input type="text" id="cdName" class="pin-input" placeholder="e.g. Office Party" maxlength="28" style="width:100%;margin-bottom:.4rem;">
+      <div class="modal-sub">Name it, pick a colour and an icon</div>
+      <input type="text" id="cdName" class="pin-input" placeholder="e.g. Office Party" maxlength="28" style="width:100%;margin-bottom:.75rem;">
+
+      <!-- Color swatches -->
+      <div style="font-size:.65rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.4rem;">Colour</div>
       <div class="cd-color-row" id="cdColorRow">
         <div class="cd-color-swatch on" data-color="#E8294A" style="background:#E8294A;" onclick="pickCdColor(this)"></div>
         <div class="cd-color-swatch" data-color="#27C07A" style="background:#27C07A;" onclick="pickCdColor(this)"></div>
@@ -1658,6 +1799,11 @@ input:checked + .tog-track:before { transform: translateX(17px); }
         <div class="cd-color-swatch" data-color="#EF4444" style="background:#EF4444;" onclick="pickCdColor(this)"></div>
         <div class="cd-color-swatch" data-color="#0E0E0E" style="background:#0E0E0E;border:2px solid rgba(255,255,255,.2);" onclick="pickCdColor(this)"></div>
       </div>
+
+      <!-- Icon picker -->
+      <div style="font-size:.65rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.4rem;margin-top:.75rem;">Icon</div>
+      <div class="icon-picker-grid" id="cdIconGrid"></div>
+
       <button class="btn-full" onclick="cdGoStep2()">Next: Add Cards →</button>
       <button class="btn-ghost" onclick="closeM('deckBuilderModal');openM('myDecksModal')">Cancel</button>
     </div>
@@ -2229,6 +2375,47 @@ naughty: [
 
 const COLORS = { romantic:'#E8294A', platonic:'#27C07A', girlsnight:'#F05A8E', naughty:'#7C3AED' };
 const LABELS = { romantic:'Romantic Deck™', platonic:'Platonic Deck™', girlsnight:"Girls' Night™", naughty:'Naughty Deck™' };
+
+// SVG path data for each built-in deck icon (shown on card back + deck picker)
+const DECK_ICONS = {
+  romantic:   `<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>`,
+  platonic:   `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
+  girlsnight: `<circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/>`,
+  naughty:    `<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>`
+};
+
+// Icon set available for custom decks — [id, svgPaths]
+const ICON_SET = [
+  ['star',      `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`],
+  ['zap',       `<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>`],
+  ['fire',      `<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>`],
+  ['heart',     `<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>`],
+  ['smile',     `<circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>`],
+  ['music',     `<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>`],
+  ['gift',      `<polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>`],
+  ['crown',     `<path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/>`],
+  ['dice',      `<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 8h.01M12 12h.01M8 16h.01M8 8h.01M16 16h.01"/>`],
+  ['globe',     `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`],
+  ['moon',      `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`],
+  ['sun',       `<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`],
+  ['cocktail',  `<path d="M8 22h8"/><path d="M12 11v11"/><path d="m19 3-7 8-7-8Z"/>`],
+  ['camera',    `<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>`],
+  ['compass',   `<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>`],
+  ['trophy',    `<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>`],
+  ['map-pin',   `<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>`],
+  ['eye',       `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`]
+];
+
+function deckIconSVG(iconId, size=20){
+  const entry = ICON_SET.find(([id])=>id===iconId);
+  if(!entry) return '';
+  return `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${entry[1]}</svg>`;
+}
+function builtinIconSVG(deckKey, size=20){
+  const paths = DECK_ICONS[deckKey]||'';
+  if(!paths) return '';
+  return `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
+}
 const HEAT_TIERS = [
   { max:20, color:'#27C07A', label:'Warm up' },
   { max:40, color:'#FFD60A', label:'Getting interesting' },
@@ -2381,11 +2568,9 @@ function _tE(e){
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let selDeck='';
 function pickDeck(el){
-  document.querySelectorAll('.d-opt').forEach(d=>{ d.classList.remove('on'); d.style.borderColor='transparent'; });
-  el.classList.add('on'); selDeck=el.dataset.deck;
-  // resolve color for both built-in and custom
-  const col = COLORS[selDeck] || (()=>{ const cd=getCustomDeck(selDeck); return cd?cd.color:'#555'; })();
-  el.style.borderColor = col;
+  document.querySelectorAll('.d-opt').forEach(d=>{ d.classList.remove('on'); });
+  el.classList.add('on');
+  selDeck = el.dataset.deck;
   document.getElementById('confirmDeck').disabled = false;
 }
 function toDeck(){ closeM('playerModal'); openM('deckModal'); }
@@ -2437,20 +2622,19 @@ function clearSlotAndShow(cb, direction='right'){
   setTimeout(()=>{ slot.innerHTML=''; cb(); }, 360);
 }
 
+function getDeckLabel(){ if(deckType.startsWith('custom_')){ const cd=getCustomDeck(deckType); return cd?cd.name:'Custom Deck'; } return LABELS[deckType]||''; }
+function getDeckColor(){ if(deckType.startsWith('custom_')){ const cd=getCustomDeck(deckType); return cd?cd.color:'#555'; } return COLORS[deckType]||'#555'; }
+function getDeckTotal(){ if(deckType.startsWith('custom_')){ const cd=getCustomDeck(deckType); return cd?cd.cards.length:0; } return (DECKS[deckType]||[]).length; }
+function getDeckIcon(){ if(deckType.startsWith('custom_')){ const cd=getCustomDeck(deckType); return cd?.icon?deckIconSVG(cd.icon,22):''; } return builtinIconSVG(deckType,22); }
+
 function cardBackHTML(deckColor, deckLabel){
-  // Watermark: tiled "DD" text as an SVG pattern
-  const wm = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-    <defs>
-      <pattern id="wmp" x="0" y="0" width="64" height="64" patternUnits="userSpaceOnUse">
-        <text x="10" y="40" font-family="Figtree,sans-serif" font-weight="900" font-size="28" fill="white" opacity="1" letter-spacing="-1">DD</text>
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#wmp)"/>
-  </svg>`;
+  const wm = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="wmp" x="0" y="0" width="64" height="64" patternUnits="userSpaceOnUse"><text x="10" y="40" font-family="Figtree,sans-serif" font-weight="900" font-size="28" fill="white" opacity="1" letter-spacing="-1">DD</text></pattern></defs><rect width="100%" height="100%" fill="url(#wmp)"/></svg>`;
+  const iconHTML = getDeckIcon();
   return `
     <div class="card-back-face" style="background:${deckColor};">
       <div class="card-back-watermark">${wm}</div>
       <div class="card-back-frame"></div>
+      ${iconHTML ? `<div class="card-back-icon-wrap">${iconHTML}</div>` : ''}
       <div class="card-back-brand">Deeper-Decks™</div>
       <div class="card-back-rule"></div>
       <div class="card-back-deck">${deckLabel}</div>
@@ -2481,9 +2665,6 @@ function renderWelcome(){
   addSwipeZone();
 }
 
-function getDeckLabel(){ if(deckType.startsWith('custom_')){ const cd=getCustomDeck(deckType); return cd?cd.name:'Custom Deck'; } return LABELS[deckType]||''; }
-function getDeckColor(){ if(deckType.startsWith('custom_')){ const cd=getCustomDeck(deckType); return cd?cd.color:'#555'; } return COLORS[deckType]||'#555'; }
-function getDeckTotal(){ if(deckType.startsWith('custom_')){ const cd=getCustomDeck(deckType); return cd?cd.cards.length:0; } return (DECKS[deckType]||[]).length; }
 
 function renderCard(card){
   const slot = document.getElementById('cardSlot');
@@ -2850,6 +3031,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // Default players
   players=['Player 1','Player 2'];
   renderP();
+
+  // Pre-render icon picker grid so it's ready when builder opens
+  renderIconPicker();
 });
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // 3-DOT MENU
@@ -2905,8 +3089,10 @@ function renderDeckModalCustom(){
   if(!decks.length){ el.innerHTML=''; return; }
   el.innerHTML = `<div style="font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3);margin:.75rem 0 .4rem;">My Decks</div>`
     + decks.map(d=>`
-    <div class="d-opt" data-deck="${d.id}" onclick="pickDeck(this)" style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-      <div style="width:10px;height:10px;border-radius:50%;background:${d.color};flex-shrink:0;"></div>
+    <div class="d-opt" data-deck="${d.id}" onclick="pickDeck(this)" style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+      <div class="d-icon-wrap" style="background:${d.color};width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        ${d.icon ? `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${(ICON_SET.find(([id])=>id===d.icon)||['',''])[1]}</svg>` : `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>`}
+      </div>
       <div>
         <div class="d-name" style="color:${d.color};">${d.name}</div>
         <div class="d-desc">${d.cards.length} cards · custom</div>
@@ -2941,10 +3127,11 @@ function openDeckBuilder(editId){
   cdEditId = editId || null;
   cdColor = '#E8294A';
   cdCards = [];
+  cdIcon = 'star';
 
   if(editId){
     const d = getCustomDeck(editId);
-    if(d){ cdColor=d.color; cdCards=[...d.cards]; }
+    if(d){ cdColor=d.color; cdCards=[...d.cards]; cdIcon=d.icon||'star'; }
   }
 
   // Reset step 1
@@ -2952,6 +3139,7 @@ function openDeckBuilder(editId){
   document.querySelectorAll('.cd-color-swatch').forEach(s=>{
     s.classList.toggle('on', s.dataset.color===cdColor);
   });
+  renderIconPicker();
 
   // Reset type toggle to Question
   cdCurrentType = 'question';
@@ -3059,9 +3247,9 @@ function cdSaveDeck(){
   const decks = loadCustomDecks();
   if(cdEditId){
     const idx = decks.findIndex(d=>d.id===cdEditId);
-    if(idx>-1){ decks[idx] = { ...decks[idx], name, color:cdColor, cards:[...cdCards] }; }
+    if(idx>-1){ decks[idx] = { ...decks[idx], name, color:cdColor, icon:cdIcon, cards:[...cdCards] }; }
   } else {
-    decks.push({ id:'custom_'+Date.now(), name, color:cdColor, cards:[...cdCards], created:Date.now() });
+    decks.push({ id:'custom_'+Date.now(), name, color:cdColor, icon:cdIcon, cards:[...cdCards], created:Date.now() });
     bumpStat('decks');
   }
   saveCustomDecks(decks);
@@ -3239,19 +3427,22 @@ function updateProfileBtn(){
   const btn = document.getElementById('profileBtn');
   if(!currentUser){ btn.style.display='none'; return; }
   btn.style.display = 'flex';
-  btn.style.background = currentUser.color;
-  btn.textContent = initials(currentUser.name);
+  const photo = getProfilePhoto();
+  if(photo){
+    btn.style.background = 'none';
+    btn.innerHTML = `<img src="${photo}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;display:block;">`;
+  } else {
+    btn.style.background = currentUser.color;
+    btn.innerHTML = initials(currentUser.name);
+    btn.style.fontSize = '.75rem';
+  }
 }
 
 function openProfile(){
   const u = currentUser || { name:'Guest', email:'', color:'#555', guest:true };
   const stats = getLocalStats();
 
-  // Avatar
-  const av = document.getElementById('profileAvatarLg');
-  av.style.background = u.color;
-  av.textContent = initials(u.name);
-
+  renderProfileAvatar();
   document.getElementById('profileNameLbl').textContent = u.name;
   document.getElementById('profileEmailLbl').textContent = u.guest ? 'Playing as guest' : u.email;
 
@@ -3292,6 +3483,77 @@ async function profileAuthAction(){
   }
 }
 
+// ── DECK ICON STATE ──────────────────────
+let cdIcon = 'star'; // default icon for custom decks
+
+function renderIconPicker(){
+  const grid = document.getElementById('cdIconGrid');
+  if(!grid) return;
+  grid.innerHTML = ICON_SET.map(([id, paths]) => `
+    <button class="icon-pick-btn${cdIcon===id?' on':''}" data-icon="${id}" onclick="pickCdIcon(this)" title="${id}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>
+    </button>`).join('');
+}
+
+function pickCdIcon(el){
+  document.querySelectorAll('.icon-pick-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  cdIcon = el.dataset.icon;
+}
+
+// ── PHOTO UPLOAD ─────────────────────────
+function getProfilePhoto(){
+  try{ return localStorage.getItem('dd_profile_photo')||null; }catch(e){ return null; }
+}
+function saveProfilePhoto(b64){
+  try{ localStorage.setItem('dd_profile_photo', b64); }catch(e){}
+}
+
+function handlePhotoUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      // Resize to 120×120 via canvas
+      const canvas = document.createElement('canvas');
+      canvas.width = 120; canvas.height = 120;
+      const ctx = canvas.getContext('2d');
+      // Crop to square from centre
+      const s = Math.min(img.width, img.height);
+      const ox = (img.width - s) / 2;
+      const oy = (img.height - s) / 2;
+      ctx.drawImage(img, ox, oy, s, s, 0, 0, 120, 120);
+      const b64 = canvas.toDataURL('image/jpeg', 0.85);
+      saveProfilePhoto(b64);
+      renderProfileAvatar(); // update drawer
+      updateProfileBtn();    // update topbar
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+  // Reset input so same file can be re-selected
+  e.target.value = '';
+}
+
+function renderProfileAvatar(){
+  const u = currentUser || { name:'Guest', color:'#555' };
+  const photo = getProfilePhoto();
+  const av = document.getElementById('profileAvatarLg');
+  if(!av) return;
+  if(photo){
+    av.innerHTML = '';
+    av.style.background = 'none';
+    const img = document.createElement('img');
+    img.src = photo;
+    img.style.cssText = 'width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;';
+    av.appendChild(img);
+  } else {
+    av.innerHTML = initials(u.name);
+    av.style.background = u.color;
+  }
+}
 
 </script>
 </body>
