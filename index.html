@@ -39,6 +39,105 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;o
 .intro-bar-fill{height:100%;width:0;background:linear-gradient(to right,#0ff,#00f,#800080,#f00,#ff0,#90ee90);border-radius:99px;transition:width 1.9s cubic-bezier(.4,0,.2,1);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   IMPROVEMENT 1: HOW-TO-PLAY ONBOARDING TOUR
+   3-step first-run guide (shown once, localStorage-gated)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#howToPlay{position:fixed;inset:0;z-index:8800;background:rgba(0,0,0,.92);backdrop-filter:blur(12px);display:none;flex-direction:column;justify-content:flex-end;align-items:center;padding:0 0 2.5rem;}
+#howToPlay.show{display:flex;animation:fadeUp .35s ease;}
+.htp-card{width:100%;max-width:420px;padding:0 1.2rem;}
+.htp-steps-track{display:flex;gap:6px;justify-content:center;margin-bottom:1.6rem;}
+.htp-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .3s ease;}
+.htp-dot.on{width:20px;border-radius:3px;background:#fff;}
+.htp-panel{background:#1a1a1a;border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:1.6rem 1.5rem 1.4rem;margin-bottom:.75rem;}
+.htp-icon-ring{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.75rem;}
+.htp-title{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:-0.04em;color:#fff;margin-bottom:.45rem;line-height:1.1;}
+.htp-desc{font-size:.88rem;color:rgba(255,255,255,.45);line-height:1.6;}
+.htp-visual{margin-top:1rem;padding:.8rem 1rem;background:rgba(255,255,255,.04);border-radius:12px;border:1px solid rgba(255,255,255,.06);}
+.htp-visual-row{display:flex;align-items:center;gap:.65rem;padding:.3rem 0;}
+.htp-visual-row+.htp-visual-row{border-top:1px solid rgba(255,255,255,.05);margin-top:.3rem;}
+.htp-vi{font-size:.95rem;flex-shrink:0;width:22px;text-align:center;}
+.htp-vt{font-size:.78rem;color:rgba(255,255,255,.5);font-weight:500;}
+.htp-vt strong{color:rgba(255,255,255,.8);font-weight:700;}
+.htp-next-btn{width:100%;padding:15px;background:#fff;color:var(--ink);border:none;border-radius:14px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-0.01em;cursor:pointer;transition:transform .15s,opacity .15s;}
+.htp-next-btn:hover{transform:translateY(-1px);}
+.htp-skip{width:100%;padding:10px;background:transparent;border:none;color:rgba(255,255,255,.25);font-family:'Figtree',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:color .15s;margin-top:.1rem;}
+.htp-skip:hover{color:rgba(255,255,255,.5);}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   IMPROVEMENT 2: INLINE CONFIRM SHEET
+   Replaces all confirm() dialogs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#confirmSheet{position:fixed;inset:0;z-index:9100;background:rgba(0,0,0,.6);display:none;justify-content:flex-end;align-items:flex-end;backdrop-filter:blur(6px);}
+#confirmSheet.show{display:flex;animation:fadeUp .22s ease;}
+.cs-inner{width:100%;max-width:480px;margin:0 auto;background:#1a1a1a;border-radius:22px 22px 0 0;border-top:1px solid rgba(255,255,255,.08);padding:1.2rem 1.2rem 2.8rem;}
+.cs-pip{width:34px;height:3px;background:rgba(255,255,255,.16);border-radius:99px;margin:0 auto .9rem;}
+.cs-icon{font-size:2rem;text-align:center;margin-bottom:.5rem;}
+.cs-title{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.3rem;letter-spacing:-0.03em;color:#fff;text-align:center;margin-bottom:.35rem;}
+.cs-msg{font-size:.84rem;color:rgba(255,255,255,.38);text-align:center;line-height:1.55;margin-bottom:1.2rem;}
+.cs-btns{display:flex;flex-direction:column;gap:8px;}
+.cs-confirm{width:100%;padding:14px;border:none;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:.95rem;cursor:pointer;transition:transform .12s;}
+.cs-confirm:hover{transform:scale(1.01);}
+.cs-cancel{width:100%;padding:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:13px;font-family:'Figtree',sans-serif;font-weight:800;font-size:.88rem;color:rgba(255,255,255,.55);cursor:pointer;transition:all .15s;}
+.cs-cancel:hover{background:rgba(255,255,255,.12);color:#fff;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   IMPROVEMENT 3: FIRST-RUN HOTSPOT TOOLTIPS
+   Two contextual tips shown after first card draw
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hotspot-wrap{position:absolute;z-index:6600;pointer-events:none;}
+.hotspot-wrap.active{pointer-events:auto;}
+.hotspot-pulse{width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.9);position:relative;cursor:pointer;animation:hsPulse 1.8s ease-in-out infinite;}
+@keyframes hsPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.5);}50%{box-shadow:0 0 0 10px rgba(255,255,255,0);}}
+.hotspot-tip{position:absolute;background:#fff;color:var(--ink);border-radius:12px;padding:.65rem .9rem;width:190px;box-shadow:0 8px 24px rgba(0,0,0,.28);opacity:0;transform:translateY(6px) scale(.96);transition:all .22s cubic-bezier(.16,1,.3,1);pointer-events:none;font-size:.78rem;font-weight:600;line-height:1.45;}
+.hotspot-tip.show{opacity:1;transform:translateY(0) scale(1);}
+.hotspot-tip::after{content:'';position:absolute;border:6px solid transparent;}
+.hotspot-tip.tip-above::after{bottom:-12px;left:50%;transform:translateX(-50%);border-top-color:#fff;}
+.hotspot-tip.tip-below::after{top:-12px;left:50%;transform:translateX(-50%);border-bottom-color:#fff;}
+.ht-title{font-weight:800;font-size:.82rem;margin-bottom:3px;}
+.ht-dismiss{display:block;margin-top:5px;font-size:.68rem;color:var(--muted);cursor:pointer;}
+/* Swipe hotspot — centered over card area */
+#hotspotSwipe{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);}
+#hotspotSwipe .hotspot-tip{bottom:26px;left:50%;transform:translateX(-50%) translateY(6px) scale(.96);white-space:nowrap;width:210px;}
+#hotspotSwipe .hotspot-tip.show{transform:translateX(-50%) translateY(0) scale(1);}
+/* Menu hotspot — near 3-dot */
+#hotspotMenu{position:fixed;top:18px;right:16px;z-index:6600;}
+#hotspotMenu .hotspot-pulse{position:absolute;top:0;right:0;}
+#hotspotMenu .hotspot-tip{top:24px;right:0;white-space:normal;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   IMPROVEMENT 4: DECK PREVIEW PANEL
+   Sample card peek when selecting a deck
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.deck-preview-strip{overflow:hidden;max-height:0;transition:max-height .38s cubic-bezier(.16,1,.3,1),opacity .28s ease;opacity:0;}
+.deck-preview-strip.open{max-height:140px;opacity:1;}
+.dp-inner{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:.9rem 1rem;margin:.4rem 0 .6rem;display:flex;align-items:flex-start;gap:.75rem;}
+.dp-chip{padding:3px 10px;border-radius:99px;font-size:.6rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#fff;flex-shrink:0;margin-top:1px;}
+.dp-text{font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.5;font-weight:500;flex:1;}
+.dp-meta{font-size:.68rem;color:rgba(255,255,255,.25);margin-top:.35rem;}
+.d-count-badge{font-size:.65rem;font-weight:700;color:rgba(255,255,255,.3);margin-top:3px;}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   IMPROVEMENT 5: GUEST SOFT GATE
+   Contextual upgrade nudge after 3 rounds
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#guestGate{position:fixed;inset:0;z-index:8600;background:rgba(0,0,0,.72);display:none;justify-content:flex-end;align-items:flex-end;backdrop-filter:blur(8px);}
+#guestGate.show{display:flex;animation:fadeUp .32s ease;}
+.gg-sheet{width:100%;max-width:480px;margin:0 auto;background:linear-gradient(170deg,#1a1a2e 0%,#16213e 50%,#1a1a1a 100%);border-radius:22px 22px 0 0;border-top:1px solid rgba(255,255,255,.1);padding:1.4rem 1.4rem 3rem;position:relative;overflow:hidden;}
+.gg-sheet::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(124,58,237,.35) 0%,transparent 70%);pointer-events:none;}
+.gg-pip{width:34px;height:3px;background:rgba(255,255,255,.16);border-radius:99px;margin:0 auto 1rem;}
+.gg-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:4px 12px;font-size:.65rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.9rem;}
+.gg-emoji{font-size:2.5rem;margin-bottom:.6rem;display:block;}
+.gg-title{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.65rem;letter-spacing:-0.04em;color:#fff;line-height:1.1;margin-bottom:.4rem;}
+.gg-sub{font-size:.84rem;color:rgba(255,255,255,.38);line-height:1.6;margin-bottom:1.3rem;}
+.gg-perks{display:flex;flex-direction:column;gap:6px;margin-bottom:1.3rem;}
+.gg-perk{display:flex;align-items:center;gap:.6rem;font-size:.82rem;color:rgba(255,255,255,.6);font-weight:500;}
+.gg-perk-dot{width:6px;height:6px;border-radius:50%;background:var(--c-platonic);flex-shrink:0;}
+.gg-btn{width:100%;padding:15px;background:#fff;color:var(--ink);border:none;border-radius:14px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-0.01em;cursor:pointer;transition:transform .15s;margin-bottom:8px;}
+.gg-btn:hover{transform:translateY(-1px);}
+.gg-continue{width:100%;padding:11px;background:transparent;border:none;color:rgba(255,255,255,.3);font-family:'Figtree',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:color .15s;}
+.gg-continue:hover{color:rgba(255,255,255,.6);}
+
 /* APP */
 #app{position:fixed;inset:0;background:var(--paper);display:none;flex-direction:column;transition:background .3s ease;}
 #app.visible{display:flex;}
@@ -76,7 +175,7 @@ body.dark .dots-divider{background:rgba(255,255,255,.08);}
 .scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;align-items:center;padding:0 16px 24px;gap:0;}
 
 /* CARD CONTAINER */
-.card-container-wrap{width:100%;max-width:320px;margin:0 auto;flex-shrink:0;}
+.card-container-wrap{width:100%;max-width:320px;margin:0 auto;flex-shrink:0;position:relative;}
 .card-aspect-box{position:relative;width:100%;padding-bottom:min(155.56%,calc(100vh - 260px));overflow:visible;}
 @media(min-height:700px){.card-aspect-box{padding-bottom:min(155.56%,440px);}}
 .card-slot{position:absolute;inset:0;}
@@ -327,8 +426,8 @@ input:checked+.tog-track:before{transform:translateX(17px);}
 .hist-item{padding:9px 11px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05);margin-bottom:6px;font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.5;}
 .hist-meta{font-weight:700;font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;opacity:.55;}
 
-/* ━━━ END SCREEN ━━━ */
-#endScreen{position:fixed;inset:0;z-index:8200;background:var(--ink);display:none;flex-direction:column;justify-content:center;align-items:center;padding:2rem;gap:1.2rem;overflow-y:auto;}
+/* END SCREEN */
+#endScreen{position:fixed;inset:0;z-index:8200;background:var(--ink);display:none;flex-direction:column;justify-content:center;align-items:center;padding:2rem;gap:1.2rem;}
 #endScreen.show{display:flex;animation:fadeUp .4s ease;}
 .end-icon{font-size:3.5rem;animation:floatIcon 2.8s ease-in-out infinite;}
 @keyframes floatIcon{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
@@ -338,17 +437,6 @@ input:checked+.tog-track:before{transform:translateX(17px);}
 .end-stat-n{font-family:'Figtree',sans-serif;font-weight:900;font-size:2.2rem;color:var(--white);}
 .end-stat-l{font-size:.62rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.07em;margin-top:1px;}
 .end-note{color:rgba(255,255,255,.3);font-size:.8rem;text-align:center;max-width:240px;line-height:1.6;}
-
-/* END SCREEN SPONSOR CARD */
-.end-sponsor{width:100%;max-width:320px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;text-decoration:none;transition:background .18s,border-color .18s;cursor:pointer;}
-.end-sponsor:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);}
-.end-sponsor-logo{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;}
-.end-sponsor-info{flex:1;min-width:0;}
-.end-sponsor-label{font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:2px;}
-.end-sponsor-name{font-family:'Figtree',sans-serif;font-weight:800;font-size:.88rem;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.end-sponsor-tagline{font-size:.7rem;color:rgba(255,255,255,.38);margin-top:1px;line-height:1.3;}
-.end-sponsor-cta{font-size:.65rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.35);flex-shrink:0;padding:5px 10px;border:1px solid rgba(255,255,255,.12);border-radius:99px;transition:all .15s;white-space:nowrap;}
-.end-sponsor:hover .end-sponsor-cta{color:var(--white);border-color:rgba(255,255,255,.3);}
 
 /* CUSTOM DECK BUILDER */
 .cd-step{display:none;}
@@ -388,19 +476,13 @@ input:checked+.tog-track:before{transform:translateX(17px);}
 .credits-block{margin-bottom:.85rem;}
 .credits-label{font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.3rem;}
 .credits-value{font-family:'Figtree',sans-serif;font-weight:700;font-size:.95rem;color:var(--white);line-height:1.4;}
-
-/* SPONSOR CARDS — used in credits AND end screen */
-.sponsor-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;text-decoration:none;transition:background .15s,border-color .15s;cursor:pointer;}
-.sponsor-card:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);}
+.sponsor-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
 .sponsor-dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#E8294A,#7C3AED);flex-shrink:0;}
-.sponsor-logo-placeholder{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
 .sponsor-info{flex:1;min-width:0;}
 .sponsor-name{font-family:'Figtree',sans-serif;font-weight:800;font-size:.88rem;color:var(--white);}
 .sponsor-desc{font-size:.7rem;color:rgba(255,255,255,.35);margin-top:2px;line-height:1.4;}
 .sponsor-badge{font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px;flex-shrink:0;}
 .sponsor-badge.open{background:rgba(39,192,122,.12);color:#27C07A;}
-.sponsor-badge.featured{background:rgba(232,41,74,.12);color:#FF7085;}
-.sponsor-badge.partner{background:rgba(124,58,237,.12);color:#A78BFA;}
 .credits-contact-btn{width:100%;padding:13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:rgba(255,255,255,.7);font-family:'Figtree',sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .15s;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;}
 .credits-contact-btn:hover{background:rgba(255,255,255,.11);color:var(--white);}
 
@@ -408,34 +490,6 @@ input:checked+.tog-track:before{transform:translateX(17px);}
 .forgot-success-icon{font-size:2.5rem;text-align:center;margin-bottom:.5rem;}
 .forgot-success-title{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.4rem;letter-spacing:-0.03em;color:var(--white);text-align:center;margin-bottom:.5rem;}
 .forgot-success-msg{font-size:.84rem;color:rgba(255,255,255,.45);text-align:center;line-height:1.6;margin-bottom:1.2rem;}
-
-/* ━━━ TUTORIAL SYSTEM ━━━ */
-#tutOverlay{position:fixed;inset:0;z-index:9200;pointer-events:none;display:none;}
-#tutOverlay.active{pointer-events:auto;}
-#tutBackdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);transition:background .35s ease;}
-#tutSpot{position:absolute;border-radius:16px;box-shadow:0 0 0 9999px rgba(0,0,0,.72);transition:top .38s cubic-bezier(.4,0,.2,1),left .38s cubic-bezier(.4,0,.2,1),width .38s cubic-bezier(.4,0,.2,1),height .38s cubic-bezier(.4,0,.2,1),border-radius .38s;pointer-events:none;z-index:2;}
-#tutSpot.pulse{animation:spotPulse 1.6s ease-in-out infinite;}
-@keyframes spotPulse{0%,100%{box-shadow:0 0 0 9999px rgba(0,0,0,.72),0 0 0 3px rgba(255,255,255,.18);}50%{box-shadow:0 0 0 9999px rgba(0,0,0,.72),0 0 0 7px rgba(255,255,255,.38);}}
-#tutTip{position:absolute;background:#141414;border:1px solid rgba(255,255,255,.13);border-radius:18px;padding:18px 20px 14px;max-width:min(300px,calc(100vw - 40px));z-index:9210;box-shadow:0 12px 40px rgba(0,0,0,.6);transition:top .38s cubic-bezier(.4,0,.2,1),left .38s cubic-bezier(.4,0,.2,1);}
-#tutCaret{position:absolute;width:14px;height:14px;background:#141414;border:1px solid rgba(255,255,255,.13);z-index:9209;transition:top .38s cubic-bezier(.4,0,.2,1),left .38s cubic-bezier(.4,0,.2,1);}
-.tut-step-label{font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.35rem;}
-.tut-icon{font-size:1.5rem;margin-bottom:.4rem;display:block;line-height:1;}
-.tut-title{font-family:Figtree,sans-serif;font-weight:900;font-size:1.12rem;letter-spacing:-.02em;color:#fff;margin-bottom:.35rem;line-height:1.25;}
-.tut-body{font-size:.8rem;color:rgba(255,255,255,.52);line-height:1.6;margin-bottom:.9rem;}
-.tut-swipe-demo{display:flex;align-items:center;justify-content:center;gap:14px;margin:.4rem 0 .8rem;padding:8px 0;}
-.tut-swipe-arrow{font-size:1.3rem;animation:swipeArrowR 1.4s ease-in-out infinite;}
-.tut-swipe-arrow.left{animation-name:swipeArrowL;}
-.tut-swipe-card{width:36px;height:50px;background:rgba(255,255,255,.1);border-radius:7px;border:1px solid rgba(255,255,255,.15);flex-shrink:0;}
-@keyframes swipeArrowR{0%,100%{opacity:.25;transform:translateX(0);}50%{opacity:.9;transform:translateX(5px);}}
-@keyframes swipeArrowL{0%,100%{opacity:.25;transform:translateX(0);}50%{opacity:.9;transform:translateX(-5px);}}
-.tut-dots{display:flex;gap:5px;justify-content:center;margin-bottom:.75rem;}
-.tut-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.18);transition:background .2s,transform .2s;}
-.tut-dot.on{background:#fff;transform:scale(1.3);}
-.tut-btns{display:flex;gap:8px;align-items:center;}
-.tut-next{flex:1;padding:11px 0;background:#fff;color:#0E0E0E;border:none;border-radius:11px;font-family:Figtree,sans-serif;font-weight:900;font-size:.86rem;cursor:pointer;transition:transform .12s,opacity .12s;}
-.tut-next:hover{transform:scale(1.02);}
-.tut-skip{background:none;border:none;color:rgba(255,255,255,.28);font-family:Figtree,sans-serif;font-size:.76rem;font-weight:600;cursor:pointer;padding:4px 2px;transition:color .15s;white-space:nowrap;}
-.tut-skip:hover{color:rgba(255,255,255,.55);}
 </style>
 </head>
 <body>
@@ -445,6 +499,42 @@ input:checked+.tog-track:before{transform:translateX(17px);}
   <div class="intro-logo" id="introLogo">Deeper-Decks™</div>
   <div class="intro-sub">The Card Game for Real Connection</div>
   <div class="intro-bar"><div class="intro-bar-fill" id="introProg"></div></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     IMPROVEMENT 1: HOW-TO-PLAY TOUR
+     First-run 3-step onboarding guide
+══════════════════════════════════════ -->
+<div id="howToPlay">
+  <div class="htp-card">
+    <div class="htp-steps-track" id="htpDots">
+      <div class="htp-dot on"></div>
+      <div class="htp-dot"></div>
+      <div class="htp-dot"></div>
+    </div>
+    <div class="htp-panel" id="htpPanel">
+      <!-- Filled by JS -->
+    </div>
+    <button class="htp-next-btn" id="htpNextBtn" onclick="htpNext()">Next →</button>
+    <button class="htp-skip" onclick="htpSkip()">Skip intro</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     IMPROVEMENT 2: INLINE CONFIRM SHEET
+     Replaces all confirm() dialogs
+══════════════════════════════════════ -->
+<div id="confirmSheet" onclick="if(event.target===this)csCancel()">
+  <div class="cs-inner">
+    <div class="cs-pip"></div>
+    <div class="cs-icon" id="csIcon">⚠️</div>
+    <div class="cs-title" id="csTitle">Are you sure?</div>
+    <div class="cs-msg" id="csMsg"></div>
+    <div class="cs-btns">
+      <button class="cs-confirm" id="csConfirmBtn" onclick="csConfirm()">Confirm</button>
+      <button class="cs-cancel" onclick="csCancel()">Cancel</button>
+    </div>
+  </div>
 </div>
 
 <!-- AUTH SCREEN -->
@@ -559,25 +649,6 @@ input:checked+.tog-track:before{transform:translateX(17px);}
   <div class="ct-hint">tap to dismiss</div>
 </div>
 
-
-<!-- GUEST SESSION BANNER -->
-<!-- GUEST SESSION BANNER — bottom-left pill, never covers header -->
-<div id="guestBanner" style="display:none;position:fixed;bottom:88px;left:16px;z-index:6700;background:rgba(14,14,14,.96);border:1px solid rgba(255,255,255,.12);border-radius:99px;padding:7px 12px 7px 14px;align-items:center;gap:8px;backdrop-filter:blur(14px);box-shadow:0 4px 20px rgba(0,0,0,.4);transition:background .4s,border-color .4s;max-width:220px;">
-  <div style="flex:1;min-width:0;">
-    <div id="guestBannerTime" style="font-family:Figtree,sans-serif;font-weight:900;font-size:.95rem;letter-spacing:-.02em;color:#fff;line-height:1;">15:00</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.4);font-weight:600;margin-top:2px;white-space:nowrap;">Guest · tap to unlock</div>
-  </div>
-  <button onclick="closeProfile();showAuthScreen()" style="background:#fff;color:#0E0E0E;border:none;border-radius:99px;padding:5px 11px;font-family:Figtree,sans-serif;font-weight:800;font-size:.7rem;cursor:pointer;white-space:nowrap;flex-shrink:0;">Sign In</button>
-</div>
-
-<!-- GUEST EXPIRED OVERLAY -->
-<div id="guestExpiredOverlay" style="display:none;position:fixed;inset:0;z-index:8600;background:rgba(0,0,0,.93);flex-direction:column;justify-content:center;align-items:center;gap:1.1rem;padding:2rem;text-align:center;backdrop-filter:blur(20px);">
-  <div style="font-size:3rem;">⏰</div>
-  <div style="font-family:Figtree,sans-serif;font-weight:900;font-size:2.2rem;letter-spacing:-.04em;color:#fff;line-height:1.1;">Guest time&#39;s up!</div>
-  <div style="font-size:.86rem;color:rgba(255,255,255,.45);max-width:270px;line-height:1.65;">Your free 15-minute session has ended. Create a free account to keep playing with no time limit or player cap.</div>
-  <button onclick="hideExpired();showAuthScreen()" style="background:#fff;color:#0E0E0E;border:none;border-radius:13px;padding:14px 36px;font-family:Figtree,sans-serif;font-weight:900;font-size:1rem;cursor:pointer;margin-top:.4rem;width:100%;max-width:280px;">Create Free Account →</button>
-  <button onclick="fullReset();hideExpired()" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.12);border-radius:13px;padding:12px 36px;font-family:Figtree,sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;width:100%;max-width:280px;">End Session</button>
-</div>
 <!-- PASS PHONE -->
 <div id="passOverlay">
   <div class="pass-icon-big">📱</div>
@@ -614,7 +685,7 @@ input:checked+.tog-track:before{transform:translateX(17px);}
   <div id="histList"><p style="color:rgba(255,255,255,.22);text-align:center;padding:1.5rem;font-size:.82rem;">No cards drawn yet.</p></div>
 </div>
 
-<!-- ━━━ END SCREEN ━━━ -->
+<!-- END SCREEN -->
 <div id="endScreen">
   <div class="end-icon">🎉</div>
   <div class="end-h">Deck Complete!</div>
@@ -624,24 +695,28 @@ input:checked+.tog-track:before{transform:translateX(17px);}
     <div class="end-stat"><div class="end-stat-n" id="endPlayers">0</div><div class="end-stat-l">Players</div></div>
   </div>
   <div class="end-note">Hope it got interesting in there. Play again?</div>
-
-  <!-- ✦ SPONSOR MOMENT — shown only when a sponsor is configured -->
-  <div id="endSponsorSlot" style="width:100%;max-width:320px;display:none;">
-    <div style="height:1px;background:rgba(255,255,255,.07);margin:.2rem 0 .9rem;"></div>
-    <div style="font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);text-align:center;margin-bottom:.55rem;">Tonight's game brought to you by</div>
-    <a class="end-sponsor" id="endSponsorCard" href="#" target="_blank" rel="noopener">
-      <div class="end-sponsor-logo" id="endSponsorLogo">🍺</div>
-      <div class="end-sponsor-info">
-        <div class="end-sponsor-label">Sponsor</div>
-        <div class="end-sponsor-name" id="endSponsorName">Your Brand Here</div>
-        <div class="end-sponsor-tagline" id="endSponsorTagline">Reach thousands of players every night</div>
-      </div>
-      <div class="end-sponsor-cta" id="endSponsorCta">Learn more</div>
-    </a>
-  </div>
-
   <button class="pbtn w" style="min-width:190px;" onclick="restartRound()">Another Round</button>
   <button class="pbtn g" style="min-width:190px;" onclick="fullReset()">New Game</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     IMPROVEMENT 5: GUEST SOFT GATE
+══════════════════════════════════════ -->
+<div id="guestGate">
+  <div class="gg-sheet">
+    <div class="gg-pip"></div>
+    <div class="gg-badge">🎮 Guest Mode</div>
+    <span class="gg-emoji">✨</span>
+    <div class="gg-title">You're on a roll — save your progress</div>
+    <div class="gg-sub">You've played <strong id="ggRoundsPlayed" style="color:#fff;">3</strong> rounds as a guest. Sign up free to unlock everything.</div>
+    <div class="gg-perks">
+      <div class="gg-perk"><div class="gg-perk-dot"></div>Save and resume games with a code</div>
+      <div class="gg-perk"><div class="gg-perk-dot"></div>Build and share custom decks</div>
+      <div class="gg-perk"><div class="gg-perk-dot"></div>Track your stats across sessions</div>
+    </div>
+    <button class="gg-btn" onclick="ggSignUp()">Create Free Account →</button>
+    <button class="gg-continue" onclick="ggDismiss()">Keep playing as guest</button>
+  </div>
 </div>
 
 <!-- PLAYER MODAL -->
@@ -655,9 +730,7 @@ input:checked+.tog-track:before{transform:translateX(17px);}
       <button class="btn-add-p" onclick="addP()">Add</button>
     </div>
     <div id="pList"></div>
-    <!-- ← UPDATED: cap is now 20 -->
-    <div class="p-count"><span id="pCount">0</span> / <span id="pCapLabel">20</span> players · minimum 2 to start</div>
-    <div id="guestCapMsg" style="display:none;color:#FF7085;font-size:.75rem;text-align:center;margin-top:4px;font-weight:600;">Guest limit is 5 players · <button onclick="showAuthScreen()" style="background:none;border:none;color:#fff;text-decoration:underline;cursor:pointer;font-size:.75rem;font-weight:700;padding:0;">Sign in for 20</button></div>
+    <div class="p-count"><span id="pCount">0</span> players · minimum 2 to start</div>
     <button id="startBtn" class="btn-full" onclick="playerModalConfirm()" disabled>Choose a Deck →</button>
     <button id="backToGameBtn" class="btn-ghost" onclick="closeM('playerModal')" style="display:none;">← Back to Game</button>
   </div>
@@ -668,28 +741,36 @@ input:checked+.tog-track:before{transform:translateX(17px);}
   <div class="modal-sheet" id="deckSheet">
     <div class="modal-pip"></div>
     <div class="modal-h">Pick Your Deck</div>
-    <div class="modal-sub">Cards heat up naturally — buckle up</div>
+    <div class="modal-sub">Tap a deck to preview a card — then start playing</div>
     <div class="deck-grid">
       <div class="d-opt" data-deck="romantic" onclick="pickDeck(this)">
         <div class="d-icon-wrap" style="background:#E8294A;"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
         <div class="d-name" style="color:#E8294A;">Romantic</div>
         <div class="d-desc">Couples &amp; dates · starts warm, gets electric</div>
+        <div class="d-count-badge" id="countRomantic"></div>
       </div>
       <div class="d-opt" data-deck="platonic" onclick="pickDeck(this)">
         <div class="d-icon-wrap" style="background:#27C07A;"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
         <div class="d-name" style="color:#27C07A;">Platonic</div>
         <div class="d-desc">Friends &amp; hangouts · chaos guaranteed</div>
+        <div class="d-count-badge" id="countPlatonic"></div>
       </div>
       <div class="d-opt" data-deck="girlsnight" onclick="pickDeck(this)">
-        <div class="d-icon-wrap" style="background:#F05A8E;"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M6 2h12l-2 9a4 4 0 0 1-8 0L6 2z"/><path d="M6 7H4a2 2 0 0 0 0 4h2"/><path d="M18 7h2a2 2 0 0 1 0 4h-2"/></svg></div>
+        <div class="d-icon-wrap" style="background:#F05A8E;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg></div>
         <div class="d-name" style="color:#F05A8E;">Girls' Night</div>
         <div class="d-desc">No filter mode · zero mercy</div>
+        <div class="d-count-badge" id="countGirlsnight"></div>
       </div>
       <div class="d-opt" data-deck="naughty" onclick="pickDeck(this)">
         <div class="d-icon-wrap" style="background:#7C3AED;"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
         <div class="d-name" style="color:#7C3AED;">Naughty</div>
         <div class="d-desc">Adults only · no one leaves the same</div>
+        <div class="d-count-badge" id="countNaughty"></div>
       </div>
+    </div>
+    <!-- IMPROVEMENT 4: DECK PREVIEW STRIP -->
+    <div class="deck-preview-strip" id="deckPreviewStrip">
+      <div class="dp-inner" id="deckPreviewInner"></div>
     </div>
     <div id="deckModalCustom"></div>
     <button id="confirmDeck" class="btn-full" onclick="startDeck()" disabled>Start Playing</button>
@@ -819,47 +900,16 @@ input:checked+.tog-track:before{transform:translateX(17px);}
     <div class="credits-tagline">The Card Game for Real Connection</div>
     <div class="credits-block"><div class="credits-label">Created by</div><div class="credits-value">Sogibuchukwu Azuwa {Jusa}</div></div>
     <div class="credits-block"><div class="credits-label">Launched</div><div class="credits-value">2025</div></div>
-    <div class="credits-block"><div class="credits-label">Version</div><div class="credits-value">1.1 · deeper-decks.vercel.app</div></div>
+    <div class="credits-block"><div class="credits-label">Version</div><div class="credits-value">1.2 · deeper-decks.vercel.app</div></div>
     <div class="credits-rule"></div>
-
-    <!-- ✦ SPONSORS SECTION — expanded with real structure -->
     <div class="credits-label" style="margin-bottom:.6rem;">Sponsors & Partners</div>
-
-    <!-- Slot 1: Featured sponsor (fill this when you have one) -->
-    <a class="sponsor-card" href="/cdn-cgi/l/email-protection#b2d6d7d7c2d7c0d6d7d1d9c1f2d5dfd3dbde9cd1dddf" style="text-decoration:none;">
-      <div class="sponsor-logo-placeholder">✨</div>
-      <div class="sponsor-info">
-        <div class="sponsor-name">Be Our Featured Sponsor</div>
-        <div class="sponsor-desc">Your brand in front of thousands of players every week. Prime placement on end screen + credits.</div>
-      </div>
-      <div class="sponsor-badge featured">Featured</div>
-    </a>
-
-    <!-- Slot 2: Partner -->
-    <a class="sponsor-card" href="/cdn-cgi/l/email-protection#85e1e0e0f5e0f7e1e0e6eef6c5e2e8e4ece9abe6eae8" style="text-decoration:none;">
-      <div class="sponsor-logo-placeholder">🤝</div>
-      <div class="sponsor-info">
-        <div class="sponsor-name">Brand Activations & Collabs</div>
-        <div class="sponsor-desc">Deck takeovers, custom card packs, in-game features, event activations.</div>
-      </div>
-      <div class="sponsor-badge partner">Partner</div>
-    </a>
-
-    <!-- Slot 3: Open -->
-    <a class="sponsor-card" href="/cdn-cgi/l/email-protection#a6c2c3c3d6c3d4c2c3c5cdd5e6c1cbc7cfca88c5c9cb" style="text-decoration:none;">
-      <div class="sponsor-logo-placeholder">📣</div>
-      <div class="sponsor-info">
-        <div class="sponsor-name">Promotions & Giveaways</div>
-        <div class="sponsor-desc">Discount codes, giveaway integrations, promo moments shown to players after games.</div>
-      </div>
-      <div class="sponsor-badge open">Open</div>
-    </a>
-
+    <div class="sponsor-card"><div class="sponsor-dot"></div><div class="sponsor-info"><div class="sponsor-name">We Place Your Brand Here</div><div class="sponsor-desc">Sponsorship opportunities available · reach thousands of players</div></div><div class="sponsor-badge open">Open</div></div>
+    <div class="sponsor-card"><div class="sponsor-dot"></div><div class="sponsor-info"><div class="sponsor-name">Promotions &amp; Collabs</div><div class="sponsor-desc">Brand activations, deck takeovers, in-game features</div></div><div class="sponsor-badge open">Open</div></div>
     <div class="credits-rule"></div>
     <div class="credits-label" style="margin-bottom:.5rem;">Get in Touch</div>
-    <a href="/cdn-cgi/l/email-protection#395d5c5c495c4b5d5c5a524a795e54585055175a5654" class="credits-contact-btn">
+    <a href="mailto:deeperdecks@gmail.com" class="credits-contact-btn">
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-      <span class="__cf_email__" data-cfemail="98fcfdfde8fdeafcfdfbf3ebd8fff5f9f1f4b6fbf7f5">[email&#160;protected]</span>
+      hello@deeper-decks.vercel.app
     </a>
     <div class="credits-rule"></div>
     <p style="font-size:.68rem;color:rgba(255,255,255,.18);text-align:center;line-height:1.6;">© 2025 Deeper-Decks™ · All rights reserved<br>Built for deeper connection.</p>
@@ -880,7 +930,7 @@ input:checked+.tog-track:before{transform:translateX(17px);}
         </button>
         <div class="dots-menu" id="dotsMenu">
           <button class="dots-item" onclick="event.stopPropagation();closeDots();openHist()"><span class="di-icon"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span>Card History</span></button>
-          <button class="dots-item" onclick="event.stopPropagation();closeDots();reshuffleDeck()"><span class="di-icon"><svg viewBox="0 0 24 24"><path d="M4 4v5h5M20 20v-5h-5M20 9A9 9 0 0 0 7.2 4.2M4 15a9 9 0 0 0 12.8 4.8"/></svg></span><span>Reshuffle Deck</span></button>
+          <button class="dots-item" onclick="event.stopPropagation();closeDots();confirmReshuffle()"><span class="di-icon"><svg viewBox="0 0 24 24"><path d="M4 4v5h5M20 20v-5h-5M20 9A9 9 0 0 0 7.2 4.2M4 15a9 9 0 0 0 12.8 4.8"/></svg></span><span>Reshuffle Deck</span></button>
           <button class="dots-item" onclick="event.stopPropagation();closeDots();openPlayerModal()"><span class="di-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Manage Players</span></button>
           <button class="dots-item" onclick="event.stopPropagation();closeDots();openDeckModal()"><span class="di-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span><span>Change Deck</span></button>
           <button class="dots-item" onclick="event.stopPropagation();closeDots();openMyDecks()"><span class="di-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span>My Custom Decks</span></button>
@@ -903,6 +953,15 @@ input:checked+.tog-track:before{transform:translateX(17px);}
       <div class="card-aspect-box">
         <div class="card-slot" id="cardSlot"></div>
       </div>
+      <!-- IMPROVEMENT 3: SWIPE HOTSPOT (positioned inside card-container-wrap) -->
+      <div class="hotspot-wrap" id="hotspotSwipe" style="display:none;">
+        <div class="hotspot-pulse" onclick="toggleHotspotTip('swipe')"></div>
+        <div class="hotspot-tip tip-above" id="htSwipeTip">
+          <div class="ht-title">Swipe to play</div>
+          ← <strong>Swipe left</strong> to draw · <strong>right</strong> to reshuffle
+          <span class="ht-dismiss" onclick="dismissHotspot('swipe')">Got it ✓</span>
+        </div>
+      </div>
     </div>
     <div class="swipe-hint">← swipe to draw &nbsp;·&nbsp; → to reshuffle</div>
     <div class="heat-wrap">
@@ -920,22 +979,17 @@ input:checked+.tog-track:before{transform:translateX(17px);}
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// SPONSOR CONFIG
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// To activate the end-screen sponsor slot, fill in the object below.
-// Set enabled: false to hide it completely (default — no placeholder shown).
-// Set enabled: true when you have a real sponsor deal.
-const SPONSOR = {
-  enabled: false,          // ← flip to true when live
-  name: 'Your Brand',
-  tagline: 'A short punchy tagline here',
-  logo: '🍺',             // emoji OR a URL to an image (https://...)
-  url: 'https://example.com',
-  cta: 'Learn more'
-};
+<!-- IMPROVEMENT 3: MENU HOTSPOT (fixed, over 3-dot button) -->
+<div class="hotspot-wrap active" id="hotspotMenu" style="display:none;">
+  <div class="hotspot-pulse" onclick="toggleHotspotTip('menu')"></div>
+  <div class="hotspot-tip" id="htMenuTip">
+    <div class="ht-title">Everything lives here</div>
+    History, reshuffle, timer, pause & more
+    <span class="ht-dismiss" onclick="dismissHotspot('menu')">Got it ✓</span>
+  </div>
+</div>
 
+<script>
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // DECK DATA
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1315,7 +1369,7 @@ const LABELS = { romantic:'Romantic Deck™', platonic:'Platonic Deck™', girls
 const DECK_ICONS = {
   romantic:   `<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>`,
   platonic:   `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
-  girlsnight: `<path d="M8 22h8"/><path d="M12 11v11"/><path d="M6 2h12l-2 9a4 4 0 0 1-8 0L6 2z"/><path d="M6 7H4a2 2 0 0 0 0 4h2"/><path d="M18 7h2a2 2 0 0 1 0 4h-2"/>`,
+  girlsnight: `<circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/>`,
   naughty:    `<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>`
 };
 const ICON_SET = [
@@ -1360,27 +1414,6 @@ let timerOn=false,timerInt=null,timerLeft=30;
 let ackd=true,dragI=null;
 const THRESH=52;
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// SPONSOR HELPERS
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function initEndSponsor() {
-  const slot = document.getElementById('endSponsorSlot');
-  if (!SPONSOR.enabled) { slot.style.display = 'none'; return; }
-  slot.style.display = '';
-  // Logo: URL or emoji
-  const logoEl = document.getElementById('endSponsorLogo');
-  if (SPONSOR.logo && SPONSOR.logo.startsWith('http')) {
-    logoEl.innerHTML = `<img src="${SPONSOR.logo}" style="width:28px;height:28px;border-radius:6px;object-fit:contain;">`;
-  } else {
-    logoEl.textContent = SPONSOR.logo || '✨';
-  }
-  document.getElementById('endSponsorName').textContent = SPONSOR.name || '';
-  document.getElementById('endSponsorTagline').textContent = SPONSOR.tagline || '';
-  document.getElementById('endSponsorCta').textContent = SPONSOR.cta || 'Learn more';
-  const card = document.getElementById('endSponsorCard');
-  card.href = SPONSOR.url || '#';
-}
-
 // AUDIO
 let _ac=null;
 function getAC(){if(!_ac)_ac=new(window.AudioContext||window.webkitAudioContext)();return _ac;}
@@ -1401,21 +1434,261 @@ function openM(id){const el=document.getElementById(id);el.style.display='flex';
 function closeM(id){document.getElementById(id).style.display='none';}
 function outClick(e,id){if(e.target===document.getElementById(id))closeM(id);}
 
-// PLAYERS — 20 for accounts, 5 for guests
-function addP(){
-  const v=document.getElementById('pinInput').value.trim();
-  const cap=guestPlayerCap();
-  if(v&&!players.includes(v)&&players.length<cap){players.push(v);renderP();}
-  else if(v&&players.length>=cap&&isGuest()){
-    const el=document.getElementById('guestCapMsg');
-    if(el){el.style.display='block';setTimeout(()=>el.style.display='none',3000);}
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// IMPROVEMENT 1: HOW-TO-PLAY TOUR
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const HTP_STEPS = [
+  {
+    icon: '🎴',
+    bg: 'linear-gradient(135deg,#1a1a2e,#16213e)',
+    title: 'Draw cards. Dig deeper.',
+    desc: 'Each round, a card asks a question or dares someone to act. No skipping (well, almost).',
+    visual: [
+      { icon: '👈', text: '<strong>Swipe left</strong> to draw the next card' },
+      { icon: '👉', text: '<strong>Swipe right</strong> to reshuffle the deck' },
+      { icon: '🃏', text: 'Or tap <strong>Draw Card</strong> below' }
+    ]
+  },
+  {
+    icon: '👥',
+    bg: 'linear-gradient(135deg,#0d1f0d,#1a2e1a)',
+    title: 'Take turns together.',
+    desc: 'Add everyone\'s names and we\'ll track whose turn it is. Pass the phone around.',
+    visual: [
+      { icon: '📱', text: '<strong>Pass Phone Mode</strong> shows who\'s up before each draw' },
+      { icon: '🔄', text: 'Players rotate automatically each round' },
+      { icon: '✏️', text: 'Add or swap players mid-game anytime' }
+    ]
+  },
+  {
+    icon: '🔥',
+    bg: 'linear-gradient(135deg,#1f0d0d,#2e1a1a)',
+    title: 'Heat builds as you play.',
+    desc: 'Cards get spicier the further you go. The heat bar tracks how deep you\'ve gone.',
+    visual: [
+      { icon: '🌱', text: '<strong>Warm up</strong> — easy icebreakers to start' },
+      { icon: '🌶️', text: '<strong>Spicy</strong> — things get real in the middle' },
+      { icon: '☠️', text: '<strong>No going back</strong> — the last stretch is unhinged' }
+    ]
   }
-  document.getElementById('pinInput').value='';
+];
+let htpStep = 0;
+
+function showHowToPlay() {
+  if (localStorage.getItem('dd_htp_seen')) return false;
+  htpStep = 0;
+  renderHtpStep();
+  document.getElementById('howToPlay').classList.add('show');
+  return true;
 }
 
+function renderHtpStep() {
+  const s = HTP_STEPS[htpStep];
+  const dots = document.getElementById('htpDots');
+  dots.innerHTML = HTP_STEPS.map((_,i) => `<div class="htp-dot${i===htpStep?' on':''}"></div>`).join('');
+  const panel = document.getElementById('htpPanel');
+  panel.style.background = s.bg;
+  panel.innerHTML = `
+    <div class="htp-icon-ring" style="background:rgba(255,255,255,.06);">${s.icon}</div>
+    <div class="htp-title">${s.title}</div>
+    <div class="htp-desc">${s.desc}</div>
+    <div class="htp-visual">
+      ${s.visual.map(v=>`<div class="htp-visual-row"><span class="htp-vi">${v.icon}</span><span class="htp-vt">${v.text}</span></div>`).join('')}
+    </div>`;
+  const btn = document.getElementById('htpNextBtn');
+  btn.textContent = htpStep < HTP_STEPS.length - 1 ? 'Next →' : 'Let\'s play →';
+}
 
+function htpNext() {
+  if (htpStep < HTP_STEPS.length - 1) {
+    htpStep++;
+    renderHtpStep();
+  } else {
+    htpSkip();
+  }
+}
+
+function htpSkip() {
+  localStorage.setItem('dd_htp_seen', '1');
+  document.getElementById('howToPlay').classList.remove('show');
+  setTimeout(() => document.getElementById('howToPlay').style.display = 'none', 350);
+  openPlayerModal();
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// IMPROVEMENT 2: INLINE CONFIRM SHEET
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let _csCallback = null;
+
+function showConfirm({ icon = '⚠️', title, msg, confirmLabel = 'Confirm', confirmColor = '#E8294A', onConfirm }) {
+  _csCallback = onConfirm;
+  document.getElementById('csIcon').textContent = icon;
+  document.getElementById('csTitle').textContent = title;
+  document.getElementById('csMsg').textContent = msg;
+  const btn = document.getElementById('csConfirmBtn');
+  btn.textContent = confirmLabel;
+  btn.style.background = confirmColor;
+  btn.style.color = '#fff';
+  document.getElementById('confirmSheet').classList.add('show');
+}
+
+function csConfirm() {
+  document.getElementById('confirmSheet').classList.remove('show');
+  if (_csCallback) { _csCallback(); _csCallback = null; }
+}
+
+function csCancel() {
+  document.getElementById('confirmSheet').classList.remove('show');
+  _csCallback = null;
+}
+
+function confirmReshuffle() {
+  if (!deckType) return;
+  if (drawn === 0) { reshuffleDeck(); return; }
+  showConfirm({
+    icon: '🔀',
+    title: 'Reshuffle deck?',
+    msg: 'This resets all card progress for this round. Players stay.',
+    confirmLabel: 'Reshuffle',
+    confirmColor: '#27C07A',
+    onConfirm: reshuffleDeck
+  });
+}
+
+function confirmSwitchDeck() {
+  showConfirm({
+    icon: '🃏',
+    title: 'Switch deck?',
+    msg: 'Card progress resets but your players stay in the game.',
+    confirmLabel: 'Switch Deck',
+    confirmColor: '#27C07A',
+    onConfirm: doSwitchDeck
+  });
+}
+
+function confirmEndGame() {
+  showConfirm({
+    icon: '🏁',
+    title: 'End this game?',
+    msg: 'All progress will be lost. This cannot be undone.',
+    confirmLabel: 'End Game',
+    confirmColor: '#E8294A',
+    onConfirm: () => {
+      paused = false;
+      document.getElementById('pauseOverlay').classList.remove('show');
+      fullReset();
+    }
+  });
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// IMPROVEMENT 3: FIRST-RUN HOTSPOT TOOLTIPS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function getDismissed() {
+  try { return JSON.parse(localStorage.getItem('dd_dismissed_tips') || '[]'); } catch(e) { return []; }
+}
+function isDismissed(id) { return getDismissed().includes(id); }
+function dismissHotspot(id) {
+  const d = getDismissed();
+  if (!d.includes(id)) d.push(id);
+  localStorage.setItem('dd_dismissed_tips', JSON.stringify(d));
+  const wrapId = id === 'swipe' ? 'hotspotSwipe' : 'hotspotMenu';
+  const el = document.getElementById(wrapId);
+  if (el) el.style.display = 'none';
+}
+
+function toggleHotspotTip(id) {
+  const tipId = id === 'swipe' ? 'htSwipeTip' : 'htMenuTip';
+  const tip = document.getElementById(tipId);
+  if (tip) tip.classList.toggle('show');
+}
+
+function maybeShowHotspots() {
+  if (!isDismissed('swipe')) {
+    const sw = document.getElementById('hotspotSwipe');
+    if (sw) {
+      sw.style.display = 'block';
+      setTimeout(() => {
+        const tip = document.getElementById('htSwipeTip');
+        if (tip) { tip.classList.add('show'); setTimeout(() => tip.classList.remove('show'), 4000); }
+      }, 600);
+    }
+  }
+  if (!isDismissed('menu')) {
+    const mn = document.getElementById('hotspotMenu');
+    if (mn) {
+      mn.style.display = 'block';
+      setTimeout(() => {
+        const tip = document.getElementById('htMenuTip');
+        if (tip) { tip.classList.add('show'); setTimeout(() => tip.classList.remove('show'), 4000); }
+      }, 1400);
+    }
+  }
+}
+
+let _hotspotsShown = false;
+function maybeShowHotspotsOnce() {
+  if (_hotspotsShown) return;
+  const alreadyDone = isDismissed('swipe') && isDismissed('menu');
+  if (alreadyDone) return;
+  _hotspotsShown = true;
+  maybeShowHotspots();
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// IMPROVEMENT 4: DECK PREVIEW
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function showDeckPreview(deckKey) {
+  const strip = document.getElementById('deckPreviewStrip');
+  const inner = document.getElementById('deckPreviewInner');
+  if (!strip || !inner) return;
+
+  let cards, color, label;
+  if (deckKey && deckKey.startsWith('custom_')) {
+    const cd = getCustomDeck(deckKey);
+    if (!cd) { strip.classList.remove('open'); return; }
+    cards = cd.cards;
+    color = cd.color;
+    label = cd.name;
+  } else {
+    cards = DECKS[deckKey] || [];
+    color = COLORS[deckKey] || '#555';
+    label = LABELS[deckKey] || '';
+  }
+  if (!cards.length) { strip.classList.remove('open'); return; }
+
+  const previews = cards.filter(c => !c.startsWith('DARE:'));
+  const sample = previews.length ? previews[Math.floor(Math.random() * previews.length)] : cards[0];
+  const isDare = sample.startsWith('DARE:');
+  const text = isDare ? sample.substring(5).trim() : sample;
+  const qCount = cards.filter(c => !c.startsWith('DARE:')).length;
+  const dCount = cards.filter(c => c.startsWith('DARE:')).length;
+
+  inner.innerHTML = `
+    <div class="dp-chip" style="background:${color};">${isDare ? 'Dare' : 'Q'}</div>
+    <div>
+      <div class="dp-text">${text}</div>
+      <div class="dp-meta">${qCount} questions · ${dCount} dares · ${cards.length} total</div>
+    </div>`;
+  strip.classList.add('open');
+}
+
+function hideDeckPreview() {
+  const strip = document.getElementById('deckPreviewStrip');
+  if (strip) strip.classList.remove('open');
+}
+
+function populateDeckCounts() {
+  ['romantic','platonic','girlsnight','naughty'].forEach(k => {
+    const el = document.getElementById('count' + k.charAt(0).toUpperCase() + k.slice(1));
+    if (el) el.textContent = (DECKS[k]||[]).length + ' cards';
+  });
+}
+
+// PLAYERS
+function addP(){const v=document.getElementById('pinInput').value.trim();if(v&&!players.includes(v)&&players.length<10){players.push(v);renderP();}document.getElementById('pinInput').value='';}
 window.removeP=function(n){players=players.filter(p=>p!==n);renderP();};
-function renderP(){const list=document.getElementById('pList');list.innerHTML=players.length===0?'<p style="color:rgba(255,255,255,.25);text-align:center;padding:1.2rem;font-size:.82rem;">No players yet</p>':players.map((p,i)=>`<div class="p-item${i===pIdx?' cturn':''}" draggable="true" data-i="${i}" ondragstart="dragI=${i}" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="event.preventDefault();this.classList.remove('drag-over');dropP(${i})"><span class="p-drag-grip">≡</span><span class="p-name">${p}</span>${i===pIdx?'<span class="p-now">Now</span>':''}<button class="p-rm" onclick="removeP('${p}')">✕</button></div>`).join('');document.getElementById('pCount').textContent=players.length;const capLbl=document.getElementById('pCapLabel');if(capLbl)capLbl.textContent=guestPlayerCap();document.getElementById('startBtn').disabled=players.length<2;attachTD();}
+function renderP(){const list=document.getElementById('pList');list.innerHTML=players.length===0?'<p style="color:rgba(255,255,255,.25);text-align:center;padding:1.2rem;font-size:.82rem;">No players yet</p>':players.map((p,i)=>`<div class="p-item${i===pIdx?' cturn':''}" draggable="true" data-i="${i}" ondragstart="dragI=${i}" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="event.preventDefault();this.classList.remove('drag-over');dropP(${i})"><span class="p-drag-grip">≡</span><span class="p-name">${p}</span>${i===pIdx?'<span class="p-now">Now</span>':''}<button class="p-rm" onclick="removeP('${p}')">✕</button></div>`).join('');document.getElementById('pCount').textContent=players.length;document.getElementById('startBtn').disabled=players.length<2;attachTD();}
 function dropP(to){if(dragI===null||dragI===to)return;const p=players.splice(dragI,1)[0];players.splice(to,0,p);dragI=null;renderP();}
 
 let _tdi=null,_tdG=null,_tdItems=[],_tdOY=0,_tdSY=0;
@@ -1424,24 +1697,87 @@ function _tS(e){if(e.target.classList.contains('p-rm'))return;const el=e.current
 function _tM(e){if(_tdi===null||!_tdG)return;e.preventDefault();_tdG.style.top=(_tdOY+(e.touches[0].clientY-_tdSY))+'px';const ty=e.touches[0].clientY;_tdItems.forEach(el=>{const r=el.getBoundingClientRect();el.classList.toggle('drag-over',ty>=r.top&&ty<=r.bottom);});}
 function _tE(e){if(_tdi===null)return;const ty=e.changedTouches[0].clientY;let ti=_tdi;_tdItems.forEach(el=>{el.classList.remove('drag-over');el.style.opacity='';const r=el.getBoundingClientRect();if(ty>=r.top&&ty<=r.bottom)ti=parseInt(el.dataset.i);});if(_tdG){_tdG.remove();_tdG=null;}if(ti!==_tdi){const p=players.splice(_tdi,1)[0];players.splice(ti,0,p);}renderP();_tdi=null;_tdItems=[];}
 
-// DECK SELECTION
+// DECK SELECTION — game-aware
 let selDeck='';
-function pickDeck(el){document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));el.classList.add('on');selDeck=el.dataset.deck;const gameActive=!!deckType;document.getElementById('confirmDeck').style.display=gameActive?'none':'';document.getElementById('confirmDeck').disabled=false;document.getElementById('switchDeckBtn').style.display=gameActive?'':'none';document.getElementById('switchDeckBtn').disabled=false;}
+function pickDeck(el){
+  document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));
+  el.classList.add('on');
+  selDeck=el.dataset.deck;
+  const gameActive = !!deckType;
+  document.getElementById('confirmDeck').style.display = gameActive ? 'none' : '';
+  document.getElementById('confirmDeck').disabled = false;
+  document.getElementById('switchDeckBtn').style.display = gameActive ? '' : 'none';
+  document.getElementById('switchDeckBtn').disabled = false;
+  showDeckPreview(selDeck);
+}
+
 function toDeck(){closeM('playerModal');openM('deckModal');}
 
-function openPlayerModal(){const gameActive=!!deckType;document.getElementById('playerModalSub').textContent=gameActive?'Add, remove or reorder players — game continues':'Add players · drag to reorder';const startBtn=document.getElementById('startBtn');startBtn.textContent=gameActive?'Done ✓':'Choose a Deck →';startBtn.disabled=players.length<2;document.getElementById('backToGameBtn').style.display=gameActive?'':'none';openM('playerModal');}
-function playerModalConfirm(){if(deckType){closeM('playerModal');}else{toDeck();}}
-function playerModalBgClick(e){if(e.target!==document.getElementById('playerModal'))return;if(deckType)closeM('playerModal');}
+function openPlayerModal() {
+  const gameActive = !!deckType;
+  document.getElementById('playerModalSub').textContent = gameActive
+    ? 'Add, remove or reorder players — game continues'
+    : 'Add players · drag to reorder';
+  const startBtn = document.getElementById('startBtn');
+  startBtn.textContent = gameActive ? 'Done ✓' : 'Choose a Deck →';
+  startBtn.disabled = players.length < 2;
+  document.getElementById('backToGameBtn').style.display = gameActive ? '' : 'none';
+  openM('playerModal');
+}
 
-function openDeckModal(){const gameActive=!!deckType;document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));selDeck='';document.getElementById('confirmDeck').disabled=true;document.getElementById('confirmDeck').style.display=gameActive?'none':'';document.getElementById('switchDeckBtn').disabled=true;document.getElementById('switchDeckBtn').style.display=gameActive?'':'none';document.getElementById('deckModalBackBtn').style.display=gameActive?'none':'';document.getElementById('deckModalBackGameBtn').style.display=gameActive?'':'none';openM('deckModal');}
-function deckModalBgClick(e){if(e.target!==document.getElementById('deckModal'))return;if(deckType)closeM('deckModal');}
+function playerModalConfirm() {
+  if (deckType) {
+    closeM('playerModal');
+  } else {
+    toDeck();
+  }
+}
+
+function playerModalBgClick(e) {
+  if (e.target !== document.getElementById('playerModal')) return;
+  if (deckType) closeM('playerModal');
+}
+
+function openDeckModal() {
+  const gameActive = !!deckType;
+  document.querySelectorAll('.d-opt').forEach(d => d.classList.remove('on'));
+  selDeck = '';
+  hideDeckPreview();
+  document.getElementById('confirmDeck').disabled = true;
+  document.getElementById('confirmDeck').style.display = gameActive ? 'none' : '';
+  document.getElementById('switchDeckBtn').disabled = true;
+  document.getElementById('switchDeckBtn').style.display = gameActive ? '' : 'none';
+  document.getElementById('deckModalBackBtn').style.display = gameActive ? 'none' : '';
+  document.getElementById('deckModalBackGameBtn').style.display = gameActive ? '' : 'none';
+  populateDeckCounts();
+  openM('deckModal');
+}
+
+function deckModalBgClick(e) {
+  if (e.target !== document.getElementById('deckModal')) return;
+  if (deckType) closeM('deckModal');
+}
+
 function startDeck(){if(!selDeck)return;initDeck(selDeck);closeM('deckModal');document.getElementById('app').classList.add('visible');}
 
-function switchDeckOnly(){if(!selDeck)return;deckType=selDeck;pool=buildPool();drawn=0;skipped=0;hist=[];pIdx=0;updateBadge();syncStats();updateHeat();renderP();stopTimer();closeM('deckModal');sfx('shuffle');clearSlotAndShow(()=>renderWelcome());}
+function switchDeckOnly() {
+  if (!selDeck) return;
+  confirmSwitchDeck();
+}
+
+function doSwitchDeck() {
+  deckType = selDeck;
+  pool = buildPool();
+  drawn = 0; skipped = 0; hist = []; pIdx = 0;
+  updateBadge(); syncStats(); updateHeat(); renderP(); stopTimer();
+  clearSlotAndShow(() => renderWelcome());
+  closeM('deckModal');
+  sfx('shuffle');
+}
 
 // DECK INIT
 function buildPool(){let qs;if(deckType.startsWith('custom_')){const cd=getCustomDeck(deckType);qs=cd?cd.cards.map(q=>q):[];}else{qs=DECKS[deckType]||[];}let p=qs.map((q,i)=>({q,i,isDare:q.startsWith('DARE:')}));if(cardFilter==='questions')p=p.filter(c=>!c.isDare);else if(cardFilter==='dares')p=p.filter(c=>c.isDare);return shuffle(p);}
-function initDeck(type){if(isGuest())startGuestTimer();deckType=type;pool=buildPool();drawn=0;skipped=0;hist=[];pIdx=0;if(!code)code=genCode();updateBadge();syncStats();updateHeat();renderP();sfx('shuffle');bumpStat('games');clearSlotAndShow(()=>renderWelcome());}
+function initDeck(type){deckType=type;pool=buildPool();drawn=0;skipped=0;hist=[];pIdx=0;if(!code)code=genCode();updateBadge();syncStats();updateHeat();renderP();sfx('shuffle');bumpStat('games');clearSlotAndShow(()=>renderWelcome());}
 function clearSlotAndShow(cb,direction='right'){const slot=document.getElementById('cardSlot');const old=slot.querySelector('.card');stopTimer();if(!old){slot.innerHTML='';cb();return;}old.classList.add(direction==='left'?'card-exit-left':'card-exit-right');setTimeout(()=>{slot.innerHTML='';cb();},360);}
 
 function getDeckLabel(){if(deckType.startsWith('custom_')){const cd=getCustomDeck(deckType);return cd?cd.name:'Custom Deck';}return LABELS[deckType]||'';}
@@ -1455,10 +1791,38 @@ function renderWelcome(){const slot=document.getElementById('cardSlot');const co
 function renderCard(card){const slot=document.getElementById('cardSlot');const isDare=card.isDare;const text=isDare?card.q.substring(5).trim():card.q;const color=getDeckColor();const label=getDeckLabel();const total=getDeckTotal();const num=total-pool.length;const player=players.length?players[(pIdx-1+players.length)%players.length]:'';slot.innerHTML=`<div class="card-shadow-el"></div><div class="card card-enter" id="activeCard">${cardBackHTML(color,label)}<div class="card-front-face"><div class="card-header">${chipHTML(isDare,color)}<span class="card-num">#${num} / ${total}</span></div>${player?`<div class="card-player" style="background:${color};">${svgInline('person')} ${player}</div>`:''}<div class="card-body"><p class="card-question">${text}</p></div><div class="card-footer-line">Deeper-Decks™</div></div></div>`;addSwipeZone();}
 function renderEmpty(){const slot=document.getElementById('cardSlot');slot.innerHTML=`<div class="card-shadow-el"></div><div class="card" id="activeCard"><div class="card-front-face" style="align-items:center;justify-content:center;text-align:center;gap:.75rem;"><div style="font-size:2.8rem;">🔄</div><p class="card-question">Deck Complete!</p><p style="font-size:.82rem;color:var(--muted);margin-top:.25rem;">Reshuffle for another round</p></div></div>`;addSwipeZone();}
 
-// DRAW / SKIP
-function drawCard(){if(paused||!deckType)return;if(!pool.length){showEndScreen();return;}if(!ackd&&document.getElementById('passTog').checked&&drawn>0){const name=players[pIdx%Math.max(players.length,1)]||'Next Player';document.getElementById('passName').textContent=name;document.getElementById('passOverlay').classList.add('show');return;}ackd=false;stopTimer();const card=pool.pop();drawn++;bumpStat('cards');hist.unshift({...card,player:players[(pIdx)%Math.max(players.length,1)]||'',at:Date.now()});if(hist.length>50)hist.pop();clearSlotAndShow(()=>{renderCard(card);syncStats();updateHeat();sfx(card.isDare?'dare':'draw');},'left');pIdx=(pIdx+1)%Math.max(players.length,1);renderP();saveSession();if(timerOn)startTimer();}
+// DRAW / SKIP (FIXED: auto-dismiss swipe hotspot)
+function drawCard(){
+  if(paused||!deckType)return;
+  if(!pool.length){showEndScreen();return;}
+  if(!ackd&&document.getElementById('passTog').checked&&drawn>0){
+    const name=players[pIdx%Math.max(players.length,1)]||'Next Player';
+    document.getElementById('passName').textContent=name;
+    document.getElementById('passOverlay').classList.add('show');
+    return;
+  }
+  ackd=false;stopTimer();
+  const card=pool.pop();
+  drawn++;bumpStat('cards');
+  hist.unshift({...card,player:players[(pIdx)%Math.max(players.length,1)]||'',at:Date.now()});
+  if(hist.length>50)hist.pop();
+  clearSlotAndShow(()=>{renderCard(card);syncStats();updateHeat();sfx(card.isDare?'dare':'draw');},'left');
+  pIdx=(pIdx+1)%Math.max(players.length,1);
+  renderP();saveSession();
+  if(timerOn)startTimer();
+  // Show hotspots after first draw
+  if(drawn===1) setTimeout(maybeShowHotspotsOnce, 800);
+  // AUTO-DISMISS SWIPE HOTSPOT ON FIRST DRAW
+  if(drawn===1 && !isDismissed('swipe')) dismissHotspot('swipe');
+  if(currentUser?.guest) checkGuestGate();
+}
+
 function skipCard(){if(!deckType||!pool.length)return;sfx('skip');skipped++;const card=pool.pop();pool.unshift(card);if(document.getElementById('consecTog').checked)showConsequence();syncStats();stopTimer();}
-function reshuffleDeck(){if(!deckType)return;if(drawn>0&&!confirm('Reshuffle the deck? This resets all card progress for this round.'))return;sfx('shuffle');pool=buildPool();drawn=0;skipped=0;hist=[];pIdx=0;syncStats();updateHeat();renderP();stopTimer();clearSlotAndShow(()=>renderWelcome());}
+
+function reshuffleDeck(){
+  sfx('shuffle');pool=buildPool();drawn=0;skipped=0;hist=[];pIdx=0;syncStats();updateHeat();renderP();stopTimer();clearSlotAndShow(()=>renderWelcome());
+}
+
 function ackTurn(){document.getElementById('passOverlay').classList.remove('show');ackd=true;drawCard();}
 
 // FILTER
@@ -1479,7 +1843,8 @@ function stopTimer(){clearInterval(timerInt);timerInt=null;document.getElementBy
 // PAUSE / END
 function pauseGame(){paused=true;saveSession();document.getElementById('pauseCode').textContent=code||'──────';document.getElementById('pauseOverlay').classList.add('show');}
 function resumeGame(){paused=false;document.getElementById('pauseOverlay').classList.remove('show');}
-function endGame(){if(!confirm('End this game? All progress will be lost.'))return;paused=false;document.getElementById('pauseOverlay').classList.remove('show');fullReset();}
+function endGame() { confirmEndGame(); }
+
 function showEndScreen(){clearSlotAndShow(()=>renderEmpty(),'right');document.getElementById('endDrawn').textContent=drawn;document.getElementById('endSkipped').textContent=skipped;document.getElementById('endPlayers').textContent=players.length;setTimeout(()=>document.getElementById('endScreen').classList.add('show'),400);}
 function restartRound(){document.getElementById('endScreen').classList.remove('show');if(deckType)reshuffleDeck();}
 function fullReset(){document.getElementById('endScreen').classList.remove('show');deckType='';pool=[];drawn=0;skipped=0;hist=[];code='';pIdx=0;stopTimer();updateBadge();document.getElementById('app').classList.remove('visible');document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));document.getElementById('confirmDeck').disabled=true;selDeck='';openPlayerModal();}
@@ -1501,8 +1866,15 @@ function closeHist(){document.getElementById('histDrawer').classList.remove('ope
 // SWIPE ZONE
 function addSwipeZone(){const slot=document.getElementById('cardSlot');slot.querySelector('.swipe-zone')?.remove();const card=slot.querySelector('.card');if(!card)return;const zone=document.createElement('div');zone.className='swipe-zone';let tSX=0,tSY=0,tMoving=false,tIsH=null;zone.addEventListener('touchstart',e=>{tSX=e.touches[0].clientX;tSY=e.touches[0].clientY;tMoving=true;tIsH=null;},{passive:true});zone.addEventListener('touchmove',e=>{if(!tMoving)return;const dx=e.touches[0].clientX-tSX,dy=e.touches[0].clientY-tSY;if(tIsH===null&&(Math.abs(dx)>6||Math.abs(dy)>6))tIsH=Math.abs(dx)>Math.abs(dy);if(tIsH){e.preventDefault();card.style.transform=`translateX(${dx*.52}px) rotate(${dx*.038}deg)`;}},{passive:false});zone.addEventListener('touchend',e=>{if(!tMoving)return;tMoving=false;card.style.transform='';if(tIsH){const dx=e.changedTouches[0].clientX-tSX;if(Math.abs(dx)>THRESH){if(dx<0)drawCard();else reshuffleDeck();}}else{if(Math.abs(e.changedTouches[0].clientY-tSY)<12)drawCard();}tIsH=null;},{passive:true});let mDown=false,mSX=0,mSY=0;zone.addEventListener('mousedown',e=>{mDown=true;mSX=e.clientX;mSY=e.clientY;e.preventDefault();});zone.addEventListener('mousemove',e=>{if(!mDown)return;const dx=e.clientX-mSX;if(Math.abs(dx)>7)card.style.transform=`translateX(${dx*.52}px) rotate(${dx*.038}deg)`;});zone.addEventListener('mouseup',e=>{if(!mDown)return;mDown=false;card.style.transform='';const dx=e.clientX-mSX,dy=e.clientY-mSY;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>THRESH){if(dx<0)drawCard();else reshuffleDeck();}else if(Math.abs(dx)<8&&Math.abs(dy)<8)drawCard();});zone.addEventListener('mouseleave',()=>{if(mDown){mDown=false;card.style.transform='';}});slot.appendChild(zone);}
 
-// 3-DOT MENU
-function toggleDots(e){e.stopPropagation();document.getElementById('dotsMenu').classList.toggle('open');}
+// 3-DOT MENU (FIXED: auto-dismiss menu hotspot)
+function toggleDots(e){
+  e.stopPropagation();
+  const menu = document.getElementById('dotsMenu');
+  const wasOpen = menu.classList.contains('open');
+  menu.classList.toggle('open');
+  // AUTO-DISMISS MENU HOTSPOT WHEN MENU IS OPENED
+  if (!wasOpen && !isDismissed('menu')) dismissHotspot('menu');
+}
 function closeDots(){document.getElementById('dotsMenu').classList.remove('open');}
 document.addEventListener('click',function(e){const wrap=document.getElementById('dotsWrap');if(wrap&&!wrap.contains(e.target))closeDots();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDots();});
@@ -1527,391 +1899,442 @@ function cdAddCard(){const input=document.getElementById('cdCardInput');const va
 function cdDeleteCard(i){cdCards.splice(i,1);renderCdCards();}
 function renderCdCards(){const list=document.getElementById('cdCardList');document.getElementById('cdCardCount').textContent=cdCards.length;document.getElementById('cdSaveBtn').disabled=cdCards.length<1;if(!cdCards.length){list.innerHTML='<p style="color:rgba(255,255,255,.22);font-size:.78rem;text-align:center;padding:.75rem 0;">No cards yet — add some above</p>';return;}const qCount=cdCards.filter(c=>!c.startsWith('DARE:')).length;const dCount=cdCards.filter(c=>c.startsWith('DARE:')).length;list.innerHTML=`<div style="display:flex;gap:8px;margin-bottom:8px;"><span style="font-size:.65rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#60A5FA;background:rgba(59,130,246,.12);padding:3px 9px;border-radius:99px;">${qCount} Question${qCount!==1?'s':''}</span><span style="font-size:.65rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#F87171;background:rgba(239,68,68,.12);padding:3px 9px;border-radius:99px;">${dCount} Dare${dCount!==1?'s':''}</span></div>`+cdCards.map((c,i)=>{const isDare=c.startsWith('DARE:');const text=isDare?c.substring(5).trim():c;const typeLabel=isDare?`<span style="font-size:.58rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#F87171;flex-shrink:0;padding-top:1px;">DARE</span>`:`<span style="font-size:.58rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#60A5FA;flex-shrink:0;padding-top:1px;">Q</span>`;return `<div class="cd-card-item">${typeLabel}<span style="flex:1;line-height:1.45;">${text}</span><button class="cd-card-del" onclick="cdDeleteCard(${i})">Remove</button></div>`;}).join('');}
 function cdSaveDeck(){const name=document.getElementById('cdName').value.trim();if(!name||cdCards.length<1)return;const decks=loadCustomDecks();if(cdEditId){const idx=decks.findIndex(d=>d.id===cdEditId);if(idx>-1){decks[idx]={...decks[idx],name,color:cdColor,icon:cdIcon,cards:[...cdCards]};}}else{decks.push({id:'custom_'+Date.now(),name,color:cdColor,icon:cdIcon,cards:[...cdCards],created:Date.now()});bumpStat('decks');}saveCustomDecks(decks);closeM('deckBuilderModal');renderMyDecksList();renderDeckModalCustom();openM('myDecksModal');}
+
 function renderIconPicker(){const grid=document.getElementById('cdIconGrid');if(!grid)return;grid.innerHTML=ICON_SET.map(([id,paths])=>`<button class="icon-pick-btn${cdIcon===id?' on':''}" data-icon="${id}" onclick="pickCdIcon(this)" title="${id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${paths}</svg></button>`).join('');}
 function pickCdIcon(el){document.querySelectorAll('.icon-pick-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on');cdIcon=el.dataset.icon;}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// IMPROVEMENT 5: GUEST SOFT GATE
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const GUEST_GATE_THRESHOLD = 15;
+let _guestGateShown = false;
+
+function checkGuestGate() {
+  if (!currentUser?.guest) return;
+  if (_guestGateShown) return;
+  if (drawn < GUEST_GATE_THRESHOLD) return;
+  _guestGateShown = true;
+  document.getElementById('ggRoundsPlayed').textContent = drawn;
+  document.getElementById('guestGate').classList.add('show');
+}
+
+function ggSignUp() {
+  document.getElementById('guestGate').classList.remove('show');
+  showAuthScreen();
+  switchAuthTab('signup');
+}
+
+function ggDismiss() {
+  document.getElementById('guestGate').classList.remove('show');
+}
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SUPABASE CONFIG
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const SUPABASE_URL  = 'https://vvnjdjxectuiwllgtozd.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2bmpkanhlY3R1aXdsbGd0b3pkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5MjE3ODIsImV4cCI6MjA4OTQ5Nzc4Mn0.z1-YMdD_osN4exb5apL38qgMfCj_ebJR14_F5Kh1z5M';
-let _sb=null,_sbInitError=null;
-function getSB(){if(_sb)return _sb;if(_sbInitError)return null;if(!window.supabase)return null;try{_sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'dd_auth'}});return _sb;}catch(e){_sbInitError=e.message;return null;}}
 
-let currentUser=null;
-const AVATAR_COLORS=['#E8294A','#27C07A','#7C3AED','#F05A8E','#F59E0B','#3B82F6','#EF4444','#10B981'];
-function avatarColor(str){let h=0;for(let i=0;i<(str||'').length;i++)h=(h*31+str.charCodeAt(i))&0xffff;return AVATAR_COLORS[h%AVATAR_COLORS.length];}
-function initials(name){return(name||'G').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();}
+let _sb = null;
+let _sbInitError = null;
 
-function getLocalStats(){try{return JSON.parse(localStorage.getItem('dd_stats')||'{}');}catch(e){return{};}}
-function bumpStat(key,n=1){try{const s=getLocalStats();s[key]=(s[key]||0)+n;localStorage.setItem('dd_stats',JSON.stringify(s));}catch(e){}}
-
-function showAuthScreen(){document.getElementById('authScreen').classList.add('show');if(!getSB()){const err=document.getElementById('siErr');err.style.color='rgba(255,200,80,.8)';err.textContent=_sbInitError?'⚠️ Auth service error: '+_sbInitError:'';}}
-function hideAuthScreen(){document.getElementById('authScreen').classList.remove('show');}
-function switchAuthTab(tab){const isSignIn=tab==='signin';document.getElementById('tabSignIn').classList.toggle('on',isSignIn);document.getElementById('tabSignUp').classList.toggle('on',!isSignIn);document.getElementById('panelSignIn').style.display=isSignIn?'':'none';document.getElementById('panelSignUp').style.display=isSignIn?'none':'';document.getElementById('siErr').textContent='';document.getElementById('suErr').textContent='';}
-function setAuthBusy(busy){const siBtn=document.getElementById('siBtn'),suBtn=document.getElementById('suBtn');siBtn.disabled=busy;suBtn.disabled=busy;['siEmail','siPass','suName','suEmail','suPass'].forEach(id=>{const el=document.getElementById(id);if(el)el.disabled=busy;});siBtn.innerHTML=busy?'<span class="auth-spinner"></span>Signing in…':'Sign In';suBtn.innerHTML=busy?'<span class="auth-spinner"></span>Creating…':'Create Account';}
-async function doSignIn(){const email=document.getElementById('siEmail').value.trim(),pass=document.getElementById('siPass').value,err=document.getElementById('siErr');err.style.color='#FF7085';if(!email||!pass){err.textContent='Please fill in all fields.';return;}const sb=getSB();if(!sb){err.textContent='Auth service unavailable.';return;}setAuthBusy(true);err.textContent='';try{const{data,error}=await sb.auth.signInWithPassword({email,password:pass});setAuthBusy(false);if(error){err.textContent=friendlyAuthError(error);return;}await onAuthSuccess(data.user,false);}catch(e){setAuthBusy(false);err.textContent=networkOrError(e);}}
-async function doSignUp(){const name=document.getElementById('suName').value.trim(),email=document.getElementById('suEmail').value.trim(),pass=document.getElementById('suPass').value,err=document.getElementById('suErr');err.style.color='#FF7085';if(!name||!email||!pass){err.textContent='Please fill in all fields.';return;}if(pass.length<6){err.textContent='Password must be at least 6 characters.';return;}const sb=getSB();if(!sb){err.textContent='Auth service unavailable.';return;}setAuthBusy(true);err.textContent='';try{const{data,error}=await sb.auth.signUp({email,password:pass,options:{data:{display_name:name},emailRedirectTo:window.location.href}});setAuthBusy(false);if(error){err.textContent=friendlyAuthError(error);return;}if(data.session&&data.user){await onAuthSuccess(data.user,true);return;}if(data.user&&!data.session){const{data:siData,error:siErr}=await sb.auth.signInWithPassword({email,password:pass});if(!siErr&&siData.session){await onAuthSuccess(siData.user,true);return;}switchAuthTab('signin');const siErrEl=document.getElementById('siErr');siErrEl.style.color='#27C07A';siErrEl.textContent='✓ Account created! Check your email to confirm, then sign in here.';document.getElementById('siEmail').value=email;}}catch(e){setAuthBusy(false);err.textContent=networkOrError(e);}}
-async function onAuthSuccess(user,isNewSignup=false){stopGuestTimer();document.getElementById("guestExpiredOverlay").style.display="none";paused=false;const wasGuest=currentUser?.guest;currentUser={id:user.id,email:user.email,name:user.user_metadata?.display_name||user.email.split('@')[0],color:avatarColor(user.id),guest:false};if(wasGuest||isNewSignup)migrateGuestDecks(user.id);hideAuthScreen();closeForgotPassword();updateProfileBtn();openPlayerModal();renderP();}
-function migrateGuestDecks(userId){try{const decks=loadCustomDecks();let changed=false;decks.forEach(d=>{if(!d.userId){d.userId=userId;changed=true;}});if(changed)saveCustomDecks(decks);}catch(e){}}
-function continueAsGuest(){currentUser={id:null,name:'Guest',email:'',color:'#555',guest:true};hideAuthScreen();updateProfileBtn();renderP();openPlayerModal();}
-
-function openForgotPassword(){document.getElementById('forgotModal').style.display='flex';document.getElementById('forgotEmail').value=document.getElementById('siEmail').value||'';document.getElementById('forgotErr').textContent='';document.getElementById('forgotSuccess').style.display='none';document.getElementById('forgotForm').style.display='';const sheet=document.getElementById('forgotSheet');sheet.classList.remove('animating');void sheet.offsetWidth;sheet.classList.add('animating');}
-function closeForgotPassword(){document.getElementById('forgotModal').style.display='none';}
-async function doForgotPassword(){const email=document.getElementById('forgotEmail').value.trim(),err=document.getElementById('forgotErr');err.style.color='#FF7085';if(!email){err.textContent='Please enter your email address.';return;}const sb=getSB();if(!sb){err.textContent='Auth service unavailable.';return;}const btn=document.getElementById('forgotBtn');btn.disabled=true;btn.innerHTML='<span class="auth-spinner"></span>Sending…';err.textContent='';try{const{error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:window.location.href});btn.disabled=false;btn.textContent='Send Reset Link';if(error){err.textContent=friendlyAuthError(error);return;}document.getElementById('forgotForm').style.display='none';document.getElementById('forgotSuccess').style.display='';}catch(e){btn.disabled=false;btn.textContent='Send Reset Link';err.textContent=networkOrError(e);}}
-
-function friendlyAuthError(error){const msg=(error.message||'').toLowerCase();if(msg.includes('invalid login')||msg.includes('invalid credentials'))return 'Incorrect email or password. Try again.';if(msg.includes('email not confirmed'))return 'Please confirm your email first, then sign in.';if(msg.includes('user already registered')||msg.includes('already been registered'))return 'An account with this email already exists. Try signing in.';if(msg.includes('password'))return 'Password must be at least 6 characters.';if(msg.includes('rate limit'))return 'Too many attempts. Please wait a minute and try again.';return error.message||'Something went wrong. Please try again.';}
-function networkOrError(e){if(e.message?.toLowerCase().includes('fetch')||e.message?.toLowerCase().includes('network'))return 'Connection failed. Check your internet and try again.';return e.message||'Something went wrong.';}
-
-function updateProfileBtn(){const btn=document.getElementById('profileBtn');if(!currentUser){btn.style.display='none';return;}btn.style.display='flex';const photo=getProfilePhoto();if(photo){btn.style.background='none';btn.innerHTML=`<img src="${photo}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;display:block;">`;}else{btn.style.background=currentUser.color;btn.innerHTML=initials(currentUser.name);btn.style.fontSize='.75rem';}}
-function openProfile(){const u=currentUser||{name:'Guest',email:'',color:'#555',guest:true};const stats=getLocalStats();renderProfileAvatar();document.getElementById('profileNameLbl').textContent=u.name;document.getElementById('profileEmailLbl').textContent=u.guest?'Playing as guest':u.email;document.getElementById('profileStats').innerHTML=`<div class="pstat"><div class="pstat-n">${stats.games||0}</div><div class="pstat-l">Games</div></div><div class="pstat"><div class="pstat-n">${stats.cards||0}</div><div class="pstat-l">Cards</div></div><div class="pstat"><div class="pstat-n">${stats.decks||0}</div><div class="pstat-l">Decks</div></div>`;const lbl=document.getElementById('profileAuthLabel');lbl.textContent=u.guest?'Sign In / Create Account':'Sign Out';document.getElementById('profileAuthAction').classList.toggle('danger',!u.guest);document.getElementById('profileBg').classList.add('show');document.getElementById('profileDrawer').classList.add('open');}
-function closeProfile(){document.getElementById('profileBg').classList.remove('show');document.getElementById('profileDrawer').classList.remove('open');}
-async function profileAuthAction(){if(currentUser&&!currentUser.guest){const sb=getSB();if(sb)await sb.auth.signOut();currentUser=null;closeProfile();updateProfileBtn();showAuthScreen();}else{closeProfile();showAuthScreen();}}
-
-function getProfilePhoto(){try{return localStorage.getItem('dd_profile_photo')||null;}catch(e){return null;}}
-function saveProfilePhoto(b64){try{if(b64.length>150000)return;localStorage.setItem('dd_profile_photo',b64);}catch(e){}}
-function handlePhotoUpload(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{const img=new Image();img.onload=()=>{const canvas=document.createElement('canvas');canvas.width=120;canvas.height=120;const ctx=canvas.getContext('2d');const s=Math.min(img.width,img.height);ctx.drawImage(img,(img.width-s)/2,(img.height-s)/2,s,s,0,0,120,120);const b64=canvas.toDataURL('image/jpeg',.82);saveProfilePhoto(b64);renderProfileAvatar();updateProfileBtn();};img.src=ev.target.result;};reader.readAsDataURL(file);e.target.value='';}
-function renderProfileAvatar(){const u=currentUser||{name:'Guest',color:'#555'};const photo=getProfilePhoto();const av=document.getElementById('profileAvatarLg');if(!av)return;if(photo){av.innerHTML='';av.style.background='none';const img=document.createElement('img');img.src=photo;img.style.cssText='width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;';av.appendChild(img);}else{av.innerHTML=initials(u.name);av.style.background=u.color;}}
-
-async function initAuth(){const sb=getSB();if(!sb){showAuthScreen();return;}sb.auth.onAuthStateChange(async(event,session)=>{if((event==='SIGNED_IN'||event==='TOKEN_REFRESHED')&&session?.user){if(window.location.hash)history.replaceState(null,'',window.location.pathname);if(!currentUser||currentUser.guest)await onAuthSuccess(session.user,false);}if(event==='SIGNED_OUT'){currentUser=null;updateProfileBtn();}if(event==='PASSWORD_RECOVERY')showPasswordUpdateModal();});try{const{data}=await sb.auth.getSession();if(data.session?.user){await onAuthSuccess(data.session.user,false);return;}}catch(e){}showAuthScreen();}
-
-function showPasswordUpdateModal(){document.getElementById('pwUpdateModal').style.display='flex';const sheet=document.getElementById('pwUpdateSheet');sheet.classList.remove('animating');void sheet.offsetWidth;sheet.classList.add('animating');}
-function closePwUpdate(){document.getElementById('pwUpdateModal').style.display='none';}
-async function doUpdatePassword(){const newPass=document.getElementById('pwUpdateInput').value,err=document.getElementById('pwUpdateErr');err.style.color='#FF7085';if(!newPass||newPass.length<6){err.textContent='Password must be at least 6 characters.';return;}const sb=getSB();if(!sb)return;const btn=document.getElementById('pwUpdateBtn');btn.disabled=true;btn.innerHTML='<span class="auth-spinner"></span>Updating…';try{const{error}=await sb.auth.updateUser({password:newPass});btn.disabled=false;btn.textContent='Update Password';if(error){err.textContent=friendlyAuthError(error);return;}err.style.color='#27C07A';err.textContent='✓ Password updated! You can now sign in.';setTimeout(()=>closePwUpdate(),2000);}catch(e){btn.disabled=false;btn.textContent='Update Password';err.textContent=networkOrError(e);}}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// GUEST MODE RESTRICTIONS
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const GUEST_MAX_PLAYERS = 5;
-const GUEST_SESSION_MS  = 15 * 60 * 1000; // 15 minutes
-let guestTimerInt = null;
-let guestSessionStart = null;
-
-function isGuest(){ return currentUser && currentUser.guest; }
-
-// Called when guest starts playing — kicks off the 15-min countdown
-function startGuestTimer(){
-  if(!isGuest()) return;
-  clearInterval(guestTimerInt);
-  guestSessionStart = Date.now();
-  renderGuestBanner();
-  guestTimerInt = setInterval(()=>{
-    if(!isGuest()){ stopGuestTimer(); return; }
-    const elapsed = Date.now() - guestSessionStart;
-    const remaining = GUEST_SESSION_MS - elapsed;
-    if(remaining <= 0){ clearInterval(guestTimerInt); triggerGuestExpiry(); return; }
-    renderGuestBanner(remaining);
-  }, 1000);
-}
-
-function stopGuestTimer(){
-  clearInterval(guestTimerInt);
-  guestTimerInt = null;
-  const b = document.getElementById('guestBanner');
-  if(b) b.style.display = 'none';
-}
-
-function renderGuestBanner(msLeft){
-  const b = document.getElementById('guestBanner');
-  if(!b) return;
-  if(!isGuest()){ b.style.display='none'; return; }
-  b.style.display = 'flex';
-  if(msLeft === undefined){
-    document.getElementById('guestBannerTime').textContent = '15:00';
-    return;
+function getSB() {
+  if (_sb) return _sb;
+  if (_sbInitError) return null;
+  if (!window.supabase) return null;
+  try {
+    _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
+      auth: { persistSession: true, autoRefreshToken: true, storageKey: 'dd_auth' }
+    });
+    return _sb;
+  } catch(e) {
+    _sbInitError = e.message;
+    return null;
   }
-  const m = Math.floor(msLeft/60000);
-  const s = Math.floor((msLeft%60000)/1000);
-  document.getElementById('guestBannerTime').textContent = m+':'+(s<10?'0':'')+s;
-  const urgent = msLeft < 120000;
-  b.style.background = urgent ? 'rgba(180,20,40,.95)' : 'rgba(14,14,14,.96)';
-  b.style.borderColor  = urgent ? 'rgba(232,41,74,.6)'  : 'rgba(255,255,255,.12)';
-  document.getElementById('guestBannerTime').style.color = urgent ? '#FFD0D8' : '#fff';
 }
 
-function triggerGuestExpiry(){
-  paused = true;
-  stopTimer();
-  const el = document.getElementById('guestExpiredOverlay');
-  el.style.display = 'flex';
+let currentUser = null;
+
+const AVATAR_COLORS = ['#E8294A','#27C07A','#7C3AED','#F05A8E','#F59E0B','#3B82F6','#EF4444','#10B981'];
+function avatarColor(str) {
+  let h = 0;
+  for (let i = 0; i < (str||'').length; i++) h = (h * 31 + str.charCodeAt(i)) & 0xffff;
+  return AVATAR_COLORS[h % AVATAR_COLORS.length];
 }
-function hideExpired(){
-  document.getElementById('guestExpiredOverlay').style.display = 'none';
+function initials(name) {
+  return (name||'G').trim().split(/\s+/).map(w => w[0]).slice(0,2).join('').toUpperCase();
 }
 
-// Enforce guest player cap
-function guestPlayerCap(){
-  return isGuest() ? GUEST_MAX_PLAYERS : 20;
+function getLocalStats() {
+  try { return JSON.parse(localStorage.getItem('dd_stats') || '{}'); } catch(e) { return {}; }
+}
+function bumpStat(key, n = 1) {
+  try {
+    const s = getLocalStats();
+    s[key] = (s[key] || 0) + n;
+    localStorage.setItem('dd_stats', JSON.stringify(s));
+  } catch(e) {}
+}
+
+function showAuthScreen() {
+  document.getElementById('authScreen').classList.add('show');
+  if (!getSB()) {
+    const err = document.getElementById('siErr');
+    err.style.color = 'rgba(255,200,80,.8)';
+    err.textContent = _sbInitError ? '⚠️ Auth service error: ' + _sbInitError : '';
+  }
+}
+function hideAuthScreen() {
+  document.getElementById('authScreen').classList.remove('show');
+}
+
+function switchAuthTab(tab) {
+  const isSignIn = tab === 'signin';
+  document.getElementById('tabSignIn').classList.toggle('on', isSignIn);
+  document.getElementById('tabSignUp').classList.toggle('on', !isSignIn);
+  document.getElementById('panelSignIn').style.display = isSignIn ? '' : 'none';
+  document.getElementById('panelSignUp').style.display = isSignIn ? 'none' : '';
+  document.getElementById('siErr').textContent = '';
+  document.getElementById('suErr').textContent = '';
+}
+
+function setAuthBusy(busy) {
+  const siBtn = document.getElementById('siBtn');
+  const suBtn = document.getElementById('suBtn');
+  siBtn.disabled = busy;
+  suBtn.disabled = busy;
+  ['siEmail','siPass','suName','suEmail','suPass'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = busy;
+  });
+  siBtn.innerHTML = busy ? '<span class="auth-spinner"></span>Signing in…' : 'Sign In';
+  suBtn.innerHTML = busy ? '<span class="auth-spinner"></span>Creating…' : 'Create Account';
+}
+
+async function doSignIn() {
+  const email = document.getElementById('siEmail').value.trim();
+  const pass  = document.getElementById('siPass').value;
+  const err   = document.getElementById('siErr');
+  err.style.color = '#FF7085';
+  if (!email || !pass) { err.textContent = 'Please fill in all fields.'; return; }
+  const sb = getSB();
+  if (!sb) { err.textContent = 'Auth service unavailable. Check your Supabase config.'; return; }
+  setAuthBusy(true); err.textContent = '';
+  try {
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+    setAuthBusy(false);
+    if (error) { err.textContent = friendlyAuthError(error); return; }
+    await onAuthSuccess(data.user, false);
+  } catch(e) {
+    setAuthBusy(false);
+    err.textContent = networkOrError(e);
+  }
+}
+
+async function doSignUp() {
+  const name  = document.getElementById('suName').value.trim();
+  const email = document.getElementById('suEmail').value.trim();
+  const pass  = document.getElementById('suPass').value;
+  const err   = document.getElementById('suErr');
+  err.style.color = '#FF7085';
+  if (!name || !email || !pass) { err.textContent = 'Please fill in all fields.'; return; }
+  if (pass.length < 6) { err.textContent = 'Password must be at least 6 characters.'; return; }
+  const sb = getSB();
+  if (!sb) { err.textContent = 'Auth service unavailable. Check your Supabase config.'; return; }
+  setAuthBusy(true); err.textContent = '';
+  try {
+    const { data, error } = await sb.auth.signUp({
+      email, password: pass,
+      options: { data: { display_name: name }, emailRedirectTo: window.location.href }
+    });
+    setAuthBusy(false);
+    if (error) { err.textContent = friendlyAuthError(error); return; }
+    if (data.session && data.user) { await onAuthSuccess(data.user, true); return; }
+    if (data.user && !data.session) {
+      const { data: siData, error: siErr } = await sb.auth.signInWithPassword({ email, password: pass });
+      if (!siErr && siData.session) { await onAuthSuccess(siData.user, true); return; }
+      switchAuthTab('signin');
+      const siErrEl = document.getElementById('siErr');
+      siErrEl.style.color = '#27C07A';
+      siErrEl.textContent = '✓ Account created! Check your email to confirm, then sign in here.';
+      document.getElementById('siEmail').value = email;
+      return;
+    }
+  } catch(e) {
+    setAuthBusy(false);
+    err.textContent = networkOrError(e);
+  }
+}
+
+async function onAuthSuccess(user, isNewSignup = false) {
+  const wasGuest = currentUser?.guest;
+  currentUser = {
+    id:    user.id,
+    email: user.email,
+    name:  user.user_metadata?.display_name || user.email.split('@')[0],
+    color: avatarColor(user.id),
+    guest: false
+  };
+  if (wasGuest || isNewSignup) migrateGuestDecks(user.id);
+  hideAuthScreen();
+  closeForgotPassword();
+  updateProfileBtn();
+  if (!deckType) openPlayerModal();
+}
+
+function migrateGuestDecks(userId) {
+  try {
+    const decks = loadCustomDecks();
+    let changed = false;
+    decks.forEach(d => { if (!d.userId) { d.userId = userId; changed = true; } });
+    if (changed) saveCustomDecks(decks);
+  } catch(e) {}
+}
+
+function continueAsGuest() {
+  currentUser = { id: null, name: 'Guest', email: '', color: '#555', guest: true };
+  hideAuthScreen();
+  updateProfileBtn();
+  const shown = showHowToPlay();
+  if (!shown) openPlayerModal();
+}
+
+function openForgotPassword() {
+  document.getElementById('forgotModal').style.display = 'flex';
+  document.getElementById('forgotEmail').value = document.getElementById('siEmail').value || '';
+  document.getElementById('forgotErr').textContent = '';
+  document.getElementById('forgotSuccess').style.display = 'none';
+  document.getElementById('forgotForm').style.display = '';
+  const sheet = document.getElementById('forgotSheet');
+  sheet.classList.remove('animating'); void sheet.offsetWidth; sheet.classList.add('animating');
+}
+
+function closeForgotPassword() {
+  document.getElementById('forgotModal').style.display = 'none';
+}
+
+async function doForgotPassword() {
+  const email = document.getElementById('forgotEmail').value.trim();
+  const err   = document.getElementById('forgotErr');
+  err.style.color = '#FF7085';
+  if (!email) { err.textContent = 'Please enter your email address.'; return; }
+  const sb = getSB();
+  if (!sb) { err.textContent = 'Auth service unavailable.'; return; }
+  const btn = document.getElementById('forgotBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="auth-spinner"></span>Sending…';
+  err.textContent = '';
+  try {
+    const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.href });
+    btn.disabled = false; btn.textContent = 'Send Reset Link';
+    if (error) { err.textContent = friendlyAuthError(error); return; }
+    document.getElementById('forgotForm').style.display = 'none';
+    document.getElementById('forgotSuccess').style.display = '';
+  } catch(e) {
+    btn.disabled = false; btn.textContent = 'Send Reset Link';
+    err.textContent = networkOrError(e);
+  }
+}
+
+function friendlyAuthError(error) {
+  const msg = (error.message || '').toLowerCase();
+  if (msg.includes('invalid login') || msg.includes('invalid credentials')) return 'Incorrect email or password. Try again.';
+  if (msg.includes('email not confirmed')) return 'Please confirm your email first, then sign in.';
+  if (msg.includes('user already registered') || msg.includes('already been registered')) return 'An account with this email already exists. Try signing in.';
+  if (msg.includes('password')) return 'Password must be at least 6 characters.';
+  if (msg.includes('rate limit')) return 'Too many attempts. Please wait a minute and try again.';
+  return error.message || 'Something went wrong. Please try again.';
+}
+
+function networkOrError(e) {
+  if (e.message?.toLowerCase().includes('fetch') || e.message?.toLowerCase().includes('network')) return 'Connection failed. Check your internet and try again.';
+  return e.message || 'Something went wrong.';
+}
+
+// PROFILE
+function updateProfileBtn() {
+  const btn = document.getElementById('profileBtn');
+  if (!currentUser) { btn.style.display = 'none'; return; }
+  btn.style.display = 'flex';
+  const photo = getProfilePhoto();
+  if (photo) {
+    btn.style.background = 'none';
+    btn.innerHTML = `<img src="${photo}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;display:block;">`;
+  } else {
+    btn.style.background = currentUser.color;
+    btn.innerHTML = initials(currentUser.name);
+    btn.style.fontSize = '.75rem';
+  }
+}
+
+function openProfile() {
+  const u = currentUser || { name: 'Guest', email: '', color: '#555', guest: true };
+  const stats = getLocalStats();
+  renderProfileAvatar();
+  document.getElementById('profileNameLbl').textContent = u.name;
+  document.getElementById('profileEmailLbl').textContent = u.guest ? 'Playing as guest' : u.email;
+  document.getElementById('profileStats').innerHTML = `
+    <div class="pstat"><div class="pstat-n">${stats.games||0}</div><div class="pstat-l">Games</div></div>
+    <div class="pstat"><div class="pstat-n">${stats.cards||0}</div><div class="pstat-l">Cards</div></div>
+    <div class="pstat"><div class="pstat-n">${stats.decks||0}</div><div class="pstat-l">Decks</div></div>`;
+  const lbl = document.getElementById('profileAuthLabel');
+  lbl.textContent = u.guest ? 'Sign In / Create Account' : 'Sign Out';
+  document.getElementById('profileAuthAction').classList.toggle('danger', !u.guest);
+  document.getElementById('profileBg').classList.add('show');
+  document.getElementById('profileDrawer').classList.add('open');
+}
+
+function closeProfile() {
+  document.getElementById('profileBg').classList.remove('show');
+  document.getElementById('profileDrawer').classList.remove('open');
+}
+
+async function profileAuthAction() {
+  if (currentUser && !currentUser.guest) {
+    const sb = getSB();
+    if (sb) await sb.auth.signOut();
+    currentUser = null;
+    closeProfile();
+    updateProfileBtn();
+    showAuthScreen();
+  } else {
+    closeProfile();
+    showAuthScreen();
+  }
+}
+
+function getProfilePhoto() {
+  try { return localStorage.getItem('dd_profile_photo') || null; } catch(e) { return null; }
+}
+function saveProfilePhoto(b64) {
+  try { if (b64.length > 150000) return; localStorage.setItem('dd_profile_photo', b64); } catch(e) {}
+}
+function handlePhotoUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 120; canvas.height = 120;
+      const ctx = canvas.getContext('2d');
+      const s = Math.min(img.width, img.height);
+      ctx.drawImage(img, (img.width-s)/2, (img.height-s)/2, s, s, 0, 0, 120, 120);
+      const b64 = canvas.toDataURL('image/jpeg', 0.82);
+      saveProfilePhoto(b64); renderProfileAvatar(); updateProfileBtn();
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+}
+function renderProfileAvatar() {
+  const u = currentUser || { name: 'Guest', color: '#555' };
+  const photo = getProfilePhoto();
+  const av = document.getElementById('profileAvatarLg');
+  if (!av) return;
+  if (photo) {
+    av.innerHTML = '';
+    av.style.background = 'none';
+    const img = document.createElement('img');
+    img.src = photo;
+    img.style.cssText = 'width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;';
+    av.appendChild(img);
+  } else {
+    av.innerHTML = initials(u.name);
+    av.style.background = u.color;
+  }
+}
+
+// PASSWORD UPDATE
+function showPasswordUpdateModal() {
+  document.getElementById('pwUpdateModal').style.display = 'flex';
+  const sheet = document.getElementById('pwUpdateSheet');
+  sheet.classList.remove('animating'); void sheet.offsetWidth; sheet.classList.add('animating');
+}
+function closePwUpdate() { document.getElementById('pwUpdateModal').style.display = 'none'; }
+async function doUpdatePassword() {
+  const newPass = document.getElementById('pwUpdateInput').value;
+  const err = document.getElementById('pwUpdateErr');
+  err.style.color = '#FF7085';
+  if (!newPass || newPass.length < 6) { err.textContent = 'Password must be at least 6 characters.'; return; }
+  const sb = getSB();
+  if (!sb) return;
+  const btn = document.getElementById('pwUpdateBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="auth-spinner"></span>Updating…';
+  try {
+    const { error } = await sb.auth.updateUser({ password: newPass });
+    btn.disabled = false; btn.textContent = 'Update Password';
+    if (error) { err.textContent = friendlyAuthError(error); return; }
+    err.style.color = '#27C07A';
+    err.textContent = '✓ Password updated! You can now sign in.';
+    setTimeout(() => closePwUpdate(), 2000);
+  } catch(e) {
+    btn.disabled = false; btn.textContent = 'Update Password';
+    err.textContent = networkOrError(e);
+  }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// BOOT AUTH
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+async function initAuth() {
+  const sb = getSB();
+  if (!sb) { showAuthScreen(); return; }
+
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user) {
+      if (window.location.hash) history.replaceState(null, '', window.location.pathname);
+      if (!currentUser || currentUser.guest) await onAuthSuccess(session.user, false);
+    }
+    if (event === 'SIGNED_OUT') { currentUser = null; updateProfileBtn(); }
+    if (event === 'PASSWORD_RECOVERY') showPasswordUpdateModal();
+  });
+
+  try {
+    const { data } = await sb.auth.getSession();
+    if (data.session?.user) { await onAuthSuccess(data.session.user, false); return; }
+  } catch(e) {}
+
+  showAuthScreen();
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // BOOT
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-document.addEventListener('DOMContentLoaded',()=>{
-  setTimeout(()=>{ document.getElementById('introProg').style.width='100%'; },180);
-  initAuth();
-  setTimeout(()=>{
-    const intro=document.getElementById('intro');
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => { document.getElementById('introProg').style.width = '100%'; }, 180);
+
+  const authPromise = initAuth();
+
+  setTimeout(() => {
+    const intro = document.getElementById('intro');
     intro.classList.add('out');
-    setTimeout(()=>{ intro.style.display='none'; },680);
-  },2400);
+    setTimeout(() => { intro.style.display = 'none'; }, 680);
+  }, 2400);
 
-  initEndSponsor();
+  document.getElementById('pinInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') addP();
+  });
 
-  document.getElementById('pinInput').addEventListener('keypress',e=>{if(e.key==='Enter')addP();});
-  document.addEventListener('keypress',e=>{if(e.key==='Enter'&&document.activeElement?.id==='cdCardInput'){e.preventDefault();cdAddCard();}});
-  document.getElementById('siEmail').addEventListener('keypress',e=>{if(e.key==='Enter')document.getElementById('siPass').focus();});
-  document.getElementById('siPass').addEventListener('keypress',e=>{if(e.key==='Enter')doSignIn();});
-  document.getElementById('suName').addEventListener('keypress',e=>{if(e.key==='Enter')document.getElementById('suEmail').focus();});
-  document.getElementById('suEmail').addEventListener('keypress',e=>{if(e.key==='Enter')document.getElementById('suPass').focus();});
-  document.getElementById('suPass').addEventListener('keypress',e=>{if(e.key==='Enter')doSignUp();});
-  document.getElementById('forgotEmail')?.addEventListener('keypress',e=>{if(e.key==='Enter')doForgotPassword();});
-  document.getElementById('pwUpdateInput')?.addEventListener('keypress',e=>{if(e.key==='Enter')doUpdatePassword();});
+  document.addEventListener('keypress', e => {
+    if (e.key === 'Enter' && document.activeElement?.id === 'cdCardInput') {
+      e.preventDefault(); cdAddCard();
+    }
+  });
 
-  players=['Player 1','Player 2'];
+  document.getElementById('siEmail').addEventListener('keypress', e => { if(e.key==='Enter') document.getElementById('siPass').focus(); });
+  document.getElementById('siPass').addEventListener('keypress', e => { if(e.key==='Enter') doSignIn(); });
+  document.getElementById('suName').addEventListener('keypress', e => { if(e.key==='Enter') document.getElementById('suEmail').focus(); });
+  document.getElementById('suEmail').addEventListener('keypress', e => { if(e.key==='Enter') document.getElementById('suPass').focus(); });
+  document.getElementById('suPass').addEventListener('keypress', e => { if(e.key==='Enter') doSignUp(); });
+  document.getElementById('forgotEmail')?.addEventListener('keypress', e => { if(e.key==='Enter') doForgotPassword(); });
+  document.getElementById('pwUpdateInput')?.addEventListener('keypress', e => { if(e.key==='Enter') doUpdatePassword(); });
+
+  players = ['Player 1', 'Player 2'];
   renderP();
   renderIconPicker();
 });
 </script>
-<script>
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// TUTORIAL SYSTEM
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const TUT_KEY = 'dd_tutorial_done';
-let tutStep = 0;
-let tutActive = false;
-
-const TUT_STEPS = [
-  {
-    icon:'\uD83C\uDF89',
-    title:'Welcome to Deeper-Decks\u2122',
-    body:'Quick 30-second tour so you and your crew can get straight into it.',
-    target: null,
-    placement: 'centre',
-    nextLabel: "Let\u2019s go \u2192"
-  },
-  {
-    icon:'\uD83C\uDCCF',
-    title:'Your deck card',
-    body:'This shows your active deck and cards remaining. Tap it to flip and draw \u2014 or use the Draw button below.',
-    target: '#cardSlot',
-    placement: 'below',
-    nextLabel: 'Got it \u2192'
-  },
-  {
-    icon:'\uD83D\uDC46',
-    title:'Swipe to play',
-    body:'Swipe LEFT on the card to draw the next one. Swipe RIGHT to reshuffle the whole deck from scratch.',
-    target: '#cardSlot',
-    placement: 'below',
-    swipe: true,
-    nextLabel: 'Got it \u2192'
-  },
-  {
-    icon:'\uD83C\uDFAF',
-    title:'Draw & Skip',
-    body:'"Draw Card" pulls the next card. The \u23ED button skips it \u2014 but skipping triggers a punishment if Skip Consequences is on!',
-    target: '.action-row',
-    placement: 'above',
-    nextLabel: 'Got it \u2192'
-  },
-  {
-    icon:'\uD83C\uDF36\uFE0F',
-    title:'Heat meter',
-    body:'Tracks how deep into the deck you are. Green = warm up. Red = on fire. Purple = no going back. Gets spicier naturally.',
-    target: '.heat-wrap',
-    placement: 'above',
-    nextLabel: 'Got it \u2192'
-  },
-  {
-    icon:'\uD83D\uDDC2\uFE0F',
-    title:'Filter cards',
-    body:'Tap "Questions" for question cards only, "Dares" for dare cards only, or keep "All" for the full mix.',
-    target: '#filterRow',
-    placement: 'below',
-    nextLabel: 'Got it \u2192'
-  },
-  {
-    icon:'\u22EF',
-    title:'Everything else lives here',
-    body:'Tap the three dots to access Card History, Manage Players, Change Deck, Pause & Resume, Settings and more.',
-    target: '#dotsWrap',
-    placement: 'below',
-    nextLabel: 'Start playing! \uD83D\uDD25'
-  }
-];
-
-function tutShouldShow(isNewSignup){
-  if(isNewSignup) return true;
-  try{ return !localStorage.getItem(TUT_KEY); }catch(e){ return false; }
-}
-
-function tutStart(){
-  tutStep = 0;
-  tutActive = true;
-  const ol = document.getElementById('tutOverlay');
-  ol.style.display = 'block';
-  setTimeout(function(){
-    ol.classList.add('active');
-    tutRender();
-  }, 450);
-}
-
-function tutFinish(){
-  tutActive = false;
-  const ol = document.getElementById('tutOverlay');
-  ol.classList.remove('active');
-  setTimeout(function(){ ol.style.display='none'; }, 350);
-  try{ localStorage.setItem(TUT_KEY,'1'); }catch(e){}
-  closeDots();
-}
-
-function tutNext(){
-  tutStep++;
-  if(tutStep >= TUT_STEPS.length){ tutFinish(); return; }
-  tutRender();
-}
-
-function tutBackdropClick(){ tutNext(); }
-
-function tutRender(){
-  const step = TUT_STEPS[tutStep];
-  const total = TUT_STEPS.length;
-
-  document.getElementById('tutLabel').textContent = 'Step '+(tutStep+1)+' of '+total;
-  document.getElementById('tutIcon').textContent = step.icon;
-  document.getElementById('tutTitle').textContent = step.title;
-  document.getElementById('tutBody').textContent = step.body;
-  document.getElementById('tutNextBtn').textContent = step.nextLabel || 'Got it \u2192';
-  document.getElementById('tutSwipeDemo').style.display = step.swipe ? 'flex' : 'none';
-
-  const dotsEl = document.getElementById('tutDots');
-  dotsEl.innerHTML = TUT_STEPS.map(function(_,i){
-    return '<div class="tut-dot'+(i===tutStep?' on':'')+'"></div>';
-  }).join('');
-
-  if(step.target === '#dotsWrap'){
-    document.getElementById('dotsMenu').classList.add('open');
-  } else {
-    closeDots();
-  }
-
-  positionTutorial(step);
-}
-
-function positionTutorial(step){
-  const spot  = document.getElementById('tutSpot');
-  const tip   = document.getElementById('tutTip');
-  const caret = document.getElementById('tutCaret');
-  const pad   = 10;
-  const vw    = window.innerWidth;
-  const vh    = window.innerHeight;
-
-  if(!step.target){
-    spot.style.cssText = 'width:0;height:0;top:50%;left:50%;border-radius:0;box-shadow:none;';
-    caret.style.display = 'none';
-    const tipW = Math.min(300, vw - 40);
-    tip.style.width  = tipW + 'px';
-    tip.style.left   = Math.round((vw - tipW)/2) + 'px';
-    tip.style.top    = Math.round((vh - 340)/2) + 'px';
-    return;
-  }
-
-  caret.style.display = 'block';
-
-  const el = document.querySelector(step.target);
-  if(!el){ positionTutorial(Object.assign({},step,{target:null})); return; }
-
-  const r   = el.getBoundingClientRect();
-  const sx  = r.left - pad;
-  const sy  = r.top  - pad;
-  const sw  = r.width  + pad*2;
-  const sh  = r.height + pad*2;
-
-  spot.style.left         = sx + 'px';
-  spot.style.top          = sy + 'px';
-  spot.style.width        = sw + 'px';
-  spot.style.height       = sh + 'px';
-  spot.style.borderRadius = sh < 60 ? '99px' : '16px';
-  spot.classList.add('pulse');
-
-  const tipW = Math.min(300, vw - 40);
-  tip.style.width = tipW + 'px';
-
-  var tipTop, tipLeft, caretTop, caretLeft;
-  const spaceBelow = vh - (sy + sh);
-  const placement  = step.placement || (spaceBelow > 220 ? 'below' : 'above');
-
-  tipLeft = Math.round(sx + sw/2 - tipW/2);
-  tipLeft = Math.max(12, Math.min(vw - tipW - 12, tipLeft));
-
-  var caretCX = Math.round(sx + sw/2);
-
-  if(placement === 'below'){
-    tipTop    = Math.round(sy + sh + 16);
-    caretTop  = tipTop - 9;
-    caretLeft = Math.max(tipLeft+16, Math.min(tipLeft+tipW-30, caretCX-7));
-    caret.style.cssText += ';border-top:none;border-left:none;border-bottom:1px solid rgba(255,255,255,.13);border-right:1px solid rgba(255,255,255,.13);transform:rotate(-135deg);';
-  } else {
-    var tipH  = 220;
-    tipTop    = Math.max(12, Math.round(sy - tipH - 16));
-    caretTop  = tipTop + tipH - 2;
-    caretLeft = Math.max(tipLeft+16, Math.min(tipLeft+tipW-30, caretCX-7));
-    caret.style.cssText += ';border-bottom:none;border-right:none;border-top:1px solid rgba(255,255,255,.13);border-left:1px solid rgba(255,255,255,.13);transform:rotate(-135deg);';
-  }
-
-  tip.style.top    = tipTop   + 'px';
-  tip.style.left   = tipLeft  + 'px';
-  caret.style.top  = caretTop  + 'px';
-  caret.style.left = caretLeft + 'px';
-}
-
-// Wrap onAuthSuccess to trigger tutorial for new signups
-var _origOnAuth = onAuthSuccess;
-onAuthSuccess = async function(user, isNewSignup){
-  await _origOnAuth(user, isNewSignup);
-  if(tutShouldShow(isNewSignup)){
-    setTimeout(function(){
-      if(document.getElementById('app').classList.contains('visible')) tutStart();
-    }, 900);
-  }
-};
-
-// Wrap continueAsGuest to trigger tutorial for first-time guests
-var _origGuest = continueAsGuest;
-continueAsGuest = function(){
-  _origGuest();
-  if(tutShouldShow(false)){
-    setTimeout(tutStart, 900);
-  }
-};
-
-window.addEventListener('resize', function(){
-  if(tutActive) positionTutorial(TUT_STEPS[tutStep]);
-});
-
-</script>
-<!-- ━━━ TUTORIAL OVERLAY ━━━ -->
-<div id="tutOverlay" style="display:none;">
-  <div id="tutBackdrop" onclick="tutBackdropClick()"></div>
-  <div id="tutSpot"></div>
-  <div id="tutCaret"></div>
-  <div id="tutTip">
-    <div class="tut-step-label" id="tutLabel">Step 1 of 7</div>
-    <span class="tut-icon" id="tutIcon">👋</span>
-    <div class="tut-title" id="tutTitle">Welcome!</div>
-    <div class="tut-body" id="tutBody">Let's get you up to speed.</div>
-    <div class="tut-swipe-demo" id="tutSwipeDemo" style="display:none;">
-      <span class="tut-swipe-arrow left">←</span>
-      <div class="tut-swipe-card"></div>
-      <span class="tut-swipe-arrow right">→</span>
-    </div>
-    <div class="tut-dots" id="tutDots"></div>
-    <div class="tut-btns">
-      <button class="tut-next" id="tutNextBtn" onclick="tutNext()">Got it →</button>
-      <button class="tut-skip" onclick="tutFinish()">Skip tour</button>
-    </div>
-  </div>
-</div>
-</body></html>
+</body>
+</html>
