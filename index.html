@@ -330,12 +330,12 @@ input:checked+.tog-track:before{transform:translateX(17px);}
 /* AUTH SCREEN */
 #authScreen{position:fixed;inset:0;background:#000;z-index:8500;display:none;flex-direction:column;justify-content:center;align-items:center;padding:2rem 1.5rem;overflow-y:auto;}
 #authScreen.show{display:flex;animation:fadeUp .4s ease;}
-.auth-logo{font-family:'Figtree',sans-serif;font-weight:900;font-size:clamp(2rem,8vw,2.8rem);letter-spacing:-0.04em;line-height:1;margin-bottom:.25rem;background:linear-gradient(to right,#fff 0%,#fff 8%,#0ff 14%,#00f 22%,#800080 30%,#ffb6c1 38%,#f00 46%,#ff0 54%,#90ee90 62%,#0ff 70%,#fff 80%,#fff 100%) no-repeat 100% 0%/900%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbowLoop 4s ease-in-out infinite;display:block;}
-.auth-tagline{font-size:.72rem;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase;font-weight:600;margin-bottom:2rem;}
-.auth-card{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:24px 22px 28px;width:100%;max-width:380px;}
-.auth-tabs{display:flex;background:rgba(255,255,255,.06);border-radius:10px;padding:3px;margin-bottom:1.4rem;}
-.auth-tab{flex:1;padding:8px;border:none;border-radius:8px;background:transparent;color:rgba(255,255,255,.4);font-family:'Figtree',sans-serif;font-weight:800;font-size:.82rem;cursor:pointer;transition:all .18s;}
-.auth-tab.on{background:var(--white);color:var(--ink);}
+.auth-logo{font-family:'Figtree',sans-serif;font-weight:900;font-size:clamp(2.4rem,9vw,3.2rem);letter-spacing:-0.04em;line-height:1;margin-bottom:.4rem;background:linear-gradient(to right,#fff 0%,#fff 8%,#0ff 14%,#00f 22%,#800080 30%,#ffb6c1 38%,#f00 46%,#ff0 54%,#90ee90 62%,#0ff 70%,#fff 80%,#fff 100%) no-repeat 100% 0%/900%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbowLoop 4s ease-in-out infinite;display:block;}
+.auth-tagline{font-size:.8rem;color:rgba(255,255,255,.55);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:2.2rem;}
+.auth-card{background:#111;border:1px solid rgba(255,255,255,.09);border-radius:24px;padding:24px 20px 28px;width:100%;max-width:400px;}
+.auth-tabs{display:flex;background:rgba(255,255,255,.06);border-radius:11px;padding:3px;margin-bottom:1.5rem;gap:3px;}
+.auth-tab{flex:1;padding:9px;border:none;border-radius:9px;background:transparent;color:rgba(255,255,255,.4);font-family:'Figtree',sans-serif;font-weight:800;font-size:.84rem;cursor:pointer;transition:all .18s;}
+.auth-tab.on{background:var(--white);color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.3);}
 .auth-field{margin-bottom:.75rem;}
 .auth-label{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:5px;display:block;}
 .auth-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:12px 14px;color:var(--white);font-family:'Figtree',sans-serif;font-size:.92rem;font-weight:500;outline:none;transition:border-color .2s;}
@@ -343,15 +343,16 @@ input:checked+.tog-track:before{transform:translateX(17px);}
 .auth-input::placeholder{color:rgba(255,255,255,.2);}
 .auth-input:disabled{opacity:.5;cursor:not-allowed;}
 .auth-err{font-size:.76rem;min-height:1rem;margin:.1rem 0 .5rem;text-align:center;font-weight:500;line-height:1.4;}
-.auth-btn{width:100%;padding:14px;background:var(--white);color:var(--ink);border:none;border-radius:12px;font-family:'Figtree',sans-serif;font-weight:900;font-size:.95rem;cursor:pointer;transition:all .15s;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:8px;}
-.auth-btn:hover:not(:disabled){transform:translateY(-1px);}
+.auth-btn{width:100%;padding:15px;background:var(--white);color:var(--ink);border:none;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;transition:all .15s;margin-top:.6rem;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 3px 0 rgba(0,0,0,.35);letter-spacing:-.01em;}
+.auth-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 5px 0 rgba(0,0,0,.35);}
+.auth-btn:active:not(:disabled){transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.2);}
 .auth-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
 .auth-divider{display:flex;align-items:center;gap:10px;margin:1rem 0;color:rgba(255,255,255,.18);font-size:.72rem;font-weight:600;}
 .auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1);}
 /* ── IMPROVEMENT: Guest button now prominent, not ghost ── */
-.auth-guest{width:100%;padding:14px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.18);border-radius:12px;color:rgba(255,255,255,.88);font-family:'Figtree',sans-serif;font-weight:800;font-size:.92rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
-.auth-guest:hover{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.32);}
-.auth-guest-note{text-align:center;font-size:.63rem;color:rgba(255,255,255,.2);margin-top:.5rem;letter-spacing:.04em;}
+.auth-guest{width:100%;padding:14px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.14);border-radius:13px;color:rgba(255,255,255,.78);font-family:'Figtree',sans-serif;font-weight:800;font-size:.95rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:-.01em;}
+.auth-guest:hover{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.28);}
+.auth-guest-note{text-align:center;font-size:.65rem;color:rgba(255,255,255,.2);margin-top:.55rem;letter-spacing:.04em;}
 .auth-forgot{background:none;border:none;color:rgba(255,255,255,.3);font-family:'Figtree',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;padding:4px 0;transition:color .15s;text-decoration:underline;text-align:center;display:block;margin:.5rem auto 0;}
 .auth-forgot:hover{color:rgba(255,255,255,.65);}
 
@@ -389,13 +390,14 @@ input:checked+.tog-track:before{transform:translateX(17px);}
 /* END SCREEN */
 #endScreen{position:fixed;inset:0;z-index:8200;background:var(--ink);display:none;flex-direction:column;justify-content:center;align-items:center;padding:2rem;gap:1.2rem;}
 #endScreen.show{display:flex;animation:fadeUp .4s ease;}
-.end-icon{font-size:3.5rem;animation:floatIcon 2.8s ease-in-out infinite;}
-.end-h{font-family:'Figtree',sans-serif;font-weight:900;font-size:2.8rem;letter-spacing:-0.05em;color:var(--white);text-align:center;}
-.end-stats{display:flex;gap:28px;}
-.end-stat{text-align:center;}
-.end-stat-n{font-family:'Figtree',sans-serif;font-weight:900;font-size:2.2rem;color:var(--white);}
-.end-stat-l{font-size:.62rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.07em;margin-top:1px;}
-.end-note{color:rgba(255,255,255,.3);font-size:.8rem;text-align:center;max-width:240px;line-height:1.6;}
+.end-icon{animation:floatIcon 2.8s ease-in-out infinite;}
+.end-h{font-family:'Figtree',sans-serif;font-weight:900;font-size:2.4rem;letter-spacing:-0.05em;color:var(--white);text-align:center;line-height:1.1;}
+.end-sub{font-size:.75rem;color:rgba(255,255,255,.35);text-align:center;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:.1rem;}
+.end-stats{display:flex;gap:16px;}
+.end-stat{text-align:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;}
+.end-stat-n{font-family:'Figtree',sans-serif;font-weight:900;font-size:2rem;color:var(--white);}
+.end-stat-l{font-size:.62rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.07em;margin-top:3px;}
+.end-note{color:rgba(255,255,255,.3);font-size:.82rem;text-align:center;max-width:260px;line-height:1.6;}
 
 /* CUSTOM DECK BUILDER */
 .cd-step{display:none;}
@@ -537,6 +539,83 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
 .gn-btn svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .gn-btn:hover{transform:translateY(-2px);box-shadow:0 7px 24px rgba(124,58,237,.42);}
 .gn-later{width:100%;padding:9px;background:none;border:none;color:rgba(255,255,255,.2);font-family:'Figtree',sans-serif;font-weight:600;font-size:.76rem;cursor:pointer;margin-top:.3rem;}
+
+.game-mode-selector{display:none;position:fixed;inset:0;z-index:8400;background:rgba(0,0,0,.65);justify-content:center;align-items:flex-end;backdrop-filter:blur(8px);}
+.game-mode-selector.show{display:flex;}
+.gms-sheet{background:#141414;border:1px solid rgba(255,255,255,.08);border-bottom:none;border-radius:24px 24px 0 0;padding:28px 22px 42px;width:100%;max-width:500px;animation:sheetUp .32s cubic-bezier(.16,1,.3,1);}
+.gms-pip{width:34px;height:3px;background:rgba(255,255,255,.18);border-radius:99px;margin:0 auto 20px;}
+.gms-h{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.8rem;letter-spacing:-0.04em;color:#fff;margin-bottom:.4rem;line-height:1.1;}
+.gms-sub{font-size:.84rem;color:rgba(255,255,255,.42);margin-bottom:1.8rem;line-height:1.7;}
+.gms-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:1.2rem;}
+.gms-btn{padding:16px 14px;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);border-radius:13px;color:rgba(255,255,255,.7);font-family:'Figtree',sans-serif;font-weight:800;font-size:.98rem;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:12px;letter-spacing:-.01em;}
+.gms-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.88);}
+.gms-btn.selected{background:var(--c-platonic);border-color:var(--c-platonic);color:var(--ink);box-shadow:0 4px 12px rgba(39,192,122,.3);}
+.gms-btn-icon{width:22px;height:22px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.gms-btn-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
+.gms-continue{width:100%;padding:15px;background:var(--white);color:var(--ink);border:none;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1.05rem;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:.6rem;box-shadow:0 4px 0 rgba(0,0,0,.4);letter-spacing:-.01em;}
+.gms-continue:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.4);}
+.gms-continue:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.2);}
+
+/* Song Roulette main screen */
+#songRouletteScreen{position:fixed;inset:0;background:#141414;display:none;flex-direction:column;z-index:100;overflow:hidden;color:#fff;}
+#songRouletteScreen.visible{display:flex;}
+.sr-topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;flex-shrink:0;gap:8px;z-index:110;border-bottom:1px solid rgba(255,255,255,.08);}
+.sr-logo{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.25rem;letter-spacing:-0.04em;color:#fff;}
+.sr-back-btn{width:40px;height:40px;border-radius:11px;border:none;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;}
+.sr-back-btn:hover{background:rgba(255,255,255,.14);}
+.sr-back-btn svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* Spinner area — flex center with proper spacing */
+.sr-spinner-wrap{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;padding:20px 16px;min-height:0;}
+.sr-spinner{display:flex;flex-direction:column;align-items:center;gap:2rem;animation:none;width:100%;max-width:380px;}
+.sr-spinner.spinning{animation:spinnerBlur 0.8s cubic-bezier(.25,.46,.45,.94) forwards;}
+@keyframes spinnerBlur{0%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.02);filter:blur(2px)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.sr-album{width:160px;height:160px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.6);flex-shrink:0;}
+.sr-album img{width:100%;height:100%;object-fit:cover;display:block;}
+.sr-album-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(232,41,74,.1));}
+
+.sr-song-info{text-align:center;display:flex;flex-direction:column;gap:.6rem;min-height:80px;justify-content:center;width:100%;}
+.sr-song-title{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:-0.03em;color:#fff;line-height:1.2;word-wrap:break-word;}
+.sr-song-artist{font-size:.95rem;color:rgba(255,255,255,.55);font-weight:600;letter-spacing:.01em;}
+
+.sr-player-tag{display:inline-block;padding:8px 16px;background:var(--c-platonic);border-radius:99px;color:var(--ink);font-family:'Figtree',sans-serif;font-weight:800;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;margin-top:.5rem;box-shadow:0 4px 12px rgba(39,192,122,.3);}
+
+/* Action buttons — full width, proper spacing */
+.sr-actions{display:flex;gap:8px;justify-content:center;padding:16px;flex-shrink:0;width:100%;max-width:480px;margin:0 auto;}
+.sr-btn{flex:1;min-height:48px;border:none;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 3px 12px rgba(0,0,0,.3);}
+.sr-btn:active{transform:scale(.97);}
+.sr-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sr-pass{background:#27C07A;color:#fff;box-shadow:0 4px 0 rgba(39,192,122,.4);}
+.sr-pass:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(39,192,122,.4);}
+.sr-pass:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(39,192,122,.3);}
+.sr-drink{background:#E8294A;color:#fff;box-shadow:0 4px 0 rgba(232,41,74,.4);}
+.sr-drink:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(232,41,74,.4);}
+.sr-drink:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(232,41,74,.3);}
+
+.sr-spin-btn{background:var(--white);color:var(--ink);width:100%;box-shadow:0 4px 0 rgba(0,0,0,.4);}
+.sr-spin-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.4);}
+.sr-spin-btn:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.2);}
+.sr-spin-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+
+/* Guest bar on Song Roulette — positioned above topbar */
+#srGuestBar{position:fixed;top:0;left:0;right:0;z-index:105;background:linear-gradient(90deg,rgba(124,58,237,.18),rgba(232,41,74,.18));border-bottom:1px solid rgba(255,255,255,.1);padding:6px 14px;display:none;align-items:center;gap:10px;justify-content:space-between;}
+#srGuestBar.show{display:flex;}
+#songRouletteScreen .sr-topbar{margin-top:28px;}
+.sr-gb-left{display:flex;align-items:center;gap:8px;font-size:.7rem;color:rgba(255,255,255,.6);font-weight:700;letter-spacing:.02em;}
+.sr-gb-spins{font-family:'Figtree',sans-serif;font-weight:900;font-size:.8rem;color:rgba(255,255,255,.85);min-width:52px;}
+.sr-gb-spins.urgent{color:#FF7085;animation:timerPulse .7s ease infinite;}
+.sr-gb-signup{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:4px 11px;color:#fff;font-family:'Figtree',sans-serif;font-weight:800;font-size:.65rem;cursor:pointer;white-space:nowrap;letter-spacing:.02em;transition:all .15s;flex-shrink:0;}
+.sr-gb-signup:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.3);}
+
+/* Song Roulette in player modal tabs */
+.app-mode-toggle{display:flex;gap:3px;background:rgba(255,255,255,.06);border-radius:9px;padding:3px;border:1px solid rgba(255,255,255,.1);}
+.amt-btn{padding:8px 14px;border:none;border-radius:9px;background:transparent;color:rgba(255,255,255,.4);font-family:'Figtree',sans-serif;font-weight:700;font-size:.76rem;cursor:pointer;transition:all .18s;letter-spacing:.02em;white-space:nowrap;display:flex;align-items:center;gap:6px;flex:1;justify-content:center;}
+.amt-btn.on{background:#fff;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.3);}
+.amt-btn:not(.on):hover{color:rgba(255,255,255,.7);background:rgba(255,255,255,.06);}
+
+/* ── SONG ROULETTE (NEW GAME MODE) ── */
 </style>
 </head>
 <body>
@@ -554,6 +633,8 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
     <div class="ob-dot on" id="obDot0"></div>
     <div class="ob-dot" id="obDot1"></div>
     <div class="ob-dot" id="obDot2"></div>
+    <div class="ob-dot" id="obDot3"></div>
+    <div class="ob-dot" id="obDot4"></div>
   </div>
   <div class="ob-slide" id="obSlide"></div>
   <button class="ob-next" id="obNext" onclick="obAdvance()">Next →</button>
@@ -587,7 +668,7 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
       </div>
       <!-- Email verification success state — shown after sign-up when Supabase sends a confirm email -->
       <div id="signUpVerify" style="display:none;text-align:center;padding:.4rem 0 .2rem;">
-        <div style="font-size:2.6rem;margin-bottom:.75rem;">📬</div>
+        <div style="margin-bottom:.75rem;display:flex;justify-content:center;"><svg viewBox="0 0 24 24" style="width:42px;height:42px;stroke:rgba(255,255,255,.6);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
         <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.3rem;letter-spacing:-0.03em;color:#fff;margin-bottom:.4rem;">Check your email</div>
         <div style="font-size:.82rem;color:rgba(255,255,255,.42);line-height:1.65;margin-bottom:1.1rem;">We sent a confirmation link to <strong id="suVerifyEmail" style="color:rgba(255,255,255,.75);"></strong>.<br>Click the link in that email to activate your account, then come back here and sign in.</div>
         <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:11px 14px;margin-bottom:1rem;font-size:.78rem;color:rgba(255,255,255,.38);line-height:1.6;text-align:left;">
@@ -621,7 +702,7 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
       <button class="btn-ghost" onclick="closeForgotPassword()">Cancel</button>
     </div>
     <div id="forgotSuccess" style="display:none;text-align:center;padding:.5rem 0;">
-      <div class="forgot-success-icon">📬</div>
+      <div class="forgot-success-icon"><svg viewBox="0 0 24 24" style="width:36px;height:36px;stroke:rgba(255,255,255,.6);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
       <div class="forgot-success-title">Check your inbox!</div>
       <div class="forgot-success-msg">We've sent a password reset link to your email. Click it to choose a new password, then sign back in here.</div>
       <button class="btn-full" onclick="closeForgotPassword();switchAuthTab('signin')">Back to Sign In</button>
@@ -662,16 +743,16 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
 
 <!-- PASS PHONE -->
 <div id="passOverlay">
-  <div class="pass-icon-big">📱</div>
+  <div class="pass-icon-big"><svg viewBox="0 0 24 24" style="width:42px;height:42px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.7;"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
   <div class="pass-label">Pass the phone to</div>
   <div class="pass-name" id="passName">Player</div>
-  <button class="btn-got-it" onclick="ackTurn()">I've Got It ✓</button>
+  <button class="btn-got-it" onclick="ackTurn()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:5px;"><polyline points="20 6 9 17 4 12"/></svg>I've Got It</button>
 </div>
 
 <!-- PAUSE — End Game now uses confirmEndGame() -->
 <div id="pauseOverlay">
   <div style="text-align:center;">
-    <div class="pause-h">⏸ Paused</div>
+    <div class="pause-h"><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:6px;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>Paused</div>
     <div style="color:rgba(255,255,255,.28);font-size:.8rem;margin-top:.2rem;">Your progress is saved.</div>
   </div>
   <div class="pause-code-box">
@@ -680,7 +761,7 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
     <div class="pcb-hint">Enter in Resume Game to continue</div>
   </div>
   <div class="pause-btns">
-    <button class="pbtn w" onclick="resumeGame()">▶ Resume</button>
+    <button class="pbtn w" onclick="resumeGame()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:5px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>Resume</button>
     <button class="pbtn r" onclick="confirmEndGame()">End Game</button>
   </div>
 </div>
@@ -691,36 +772,67 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
   <div class="hist-pip"></div>
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.9rem;">
     <div class="hist-h">History</div>
-    <button onclick="closeHist()" style="background:rgba(255,255,255,.09);border:none;color:#fff;border-radius:7px;width:28px;height:28px;cursor:pointer;font-size:.9rem;">✕</button>
+    <button onclick="closeHist()" style="background:rgba(255,255,255,.09);border:none;color:#fff;border-radius:7px;width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div id="histList"><p style="color:rgba(255,255,255,.22);text-align:center;padding:1.5rem;font-size:.82rem;">No cards drawn yet.</p></div>
 </div>
 
 <!-- END SCREEN -->
 <div id="endScreen">
-  <div class="end-icon">🎉</div>
+  <div class="end-icon"><svg viewBox="0 0 24 24" style="width:44px;height:44px;stroke:#E8294A;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
   <div class="end-h">Deck Complete!</div>
+  <div class="end-sub" id="endDeckName"></div>
   <div class="end-stats">
-    <div class="end-stat"><div class="end-stat-n" id="endDrawn">0</div><div class="end-stat-l">Drawn</div></div>
+    <div class="end-stat"><div class="end-stat-n" id="endDrawn">0</div><div class="end-stat-l">Cards</div></div>
     <div class="end-stat"><div class="end-stat-n" id="endSkipped">0</div><div class="end-stat-l">Skipped</div></div>
     <div class="end-stat"><div class="end-stat-n" id="endPlayers">0</div><div class="end-stat-l">Players</div></div>
   </div>
-  <div class="end-note">Hope it got interesting in there. Play again?</div>
-  <button class="pbtn w" style="min-width:190px;" onclick="restartRound()">Another Round</button>
-  <button class="pbtn g" style="min-width:190px;" onclick="fullReset()">New Game</button>
+  <div class="end-note">Hope things got real in there.</div>
+  <button class="pbtn w" style="min-width:220px;" onclick="restartRound()">
+    <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+    Play Again
+  </button>
+  <button class="pbtn" style="min-width:220px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.14);" onclick="endScreenSwitchToSong()">
+    <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    Try Song Roulette
+  </button>
+  <button class="pbtn g" style="min-width:220px;" onclick="fullReset()">New Game</button>
 </div>
 
 <!-- PLAYER MODAL -->
 <div id="playerModal" class="modal-overlay" style="display:none;" onclick="playerModalBgClick(event)">
   <div class="modal-sheet" id="playerSheet">
     <div class="modal-pip"></div>
-    <div class="modal-h"><span class="rainbow-text">Deeper-Decks™</span></div>
+    <div style="display:flex;gap:5px;margin-bottom:1.2rem;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:1.2rem;background:rgba(255,255,255,.05);border-radius:12px;padding:4px;border:1px solid rgba(255,255,255,.08);">
+      <button class="amt-btn on" id="amtCard" onclick="switchGameModeTab('card')">
+        <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Card Game
+      </button>
+      <button class="amt-btn" id="amtSong" onclick="switchGameModeTab('song')">
+        <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        Song Roulette
+      </button>
+    </div>
+    <!-- CARD GAME TAB -->
+    <div id="cardGameTab">
+      <div class="modal-h"><span class="rainbow-text">Deeper-Decks™</span></div>
     <div class="modal-sub" id="playerModalSub">Add players · drag to reorder</div>
     <div class="pin-row"><input type="text" id="pinInput" class="pin-input" placeholder="Player name" maxlength="20"><button class="btn-add-p" onclick="addP()">Add</button></div>
     <div id="pList"></div>
     <div class="p-count"><span id="pCount">0</span> players · minimum 2 to start</div>
     <button id="startBtn" class="btn-full" onclick="playerModalConfirm()" disabled>Choose a Deck →</button>
     <button id="backToGameBtn" class="btn-ghost" onclick="closeM('playerModal')" style="display:none;">← Back to Game</button>
+    </div>
+    <!-- SONG ROULETTE TAB -->
+    <div id="songRouletteTab" style="display:none;">
+      <div class="modal-h">Song Roulette</div>
+      <div class="modal-sub">Players will sing or drink</div>
+      <div class="pin-row"><input type="text" id="srPinInput" class="pin-input" placeholder="Player name" maxlength="20"><button class="btn-add-p" onclick="addSRPlayer()">Add</button></div>
+      <div id="srPList"></div>
+      <div class="p-count"><span id="srPCount">0</span> players · minimum 2 to start</div>
+      <button id="srStartBtn" class="btn-full" onclick="startSongRoulette()" disabled>Start Song Roulette →</button>
+      <button id="srBackBtn" class="btn-ghost" onclick="closeM('playerModal')">← Back</button>
+    </div>
   </div>
 </div>
 
@@ -1014,7 +1126,77 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
   <span class="glb-label" id="glbLabel"></span>
 </div>
 
-<!-- APP -->
+<!-- ── SONG ROULETTE SCREEN ── -->
+<div id="songRouletteScreen">
+  <div id="srGuestBar" class="sr-guest-bar">
+    <div class="sr-gb-left">
+      <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:rgba(255,255,255,.6);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      <span class="sr-gb-spins" id="srSpinsLeft">3/3 spins</span>
+    </div>
+    <button class="sr-gb-signup" onclick="showPaywall('song_spins')">Sign up free →</button>
+  </div>
+  
+  <div class="sr-topbar">
+    <div class="sr-logo">Song Roulette</div>
+    <button class="sr-back-btn" onclick="exitSongRoulette()">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+  </div>
+
+  <div class="sr-spinner-wrap">
+    <div class="sr-spinner" id="srSpinner">
+      <div class="sr-album">
+        <div class="sr-album-placeholder" id="srAlbumContent">
+          <svg viewBox="0 0 24 24" style="width:56px;height:56px;stroke:rgba(255,255,255,.2);fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+      </div>
+      <div class="sr-song-info">
+        <div class="sr-song-title" id="srSongTitle">Pick a Player</div>
+        <div class="sr-song-artist" id="srSongArtist">Start spinning to begin</div>
+        <div class="sr-player-tag" id="srPlayerTag" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sr-actions" id="srActions">
+    <button class="sr-btn sr-spin-btn" id="srSpinBtn" onclick="spinSong()">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      Spin Song
+    </button>
+  </div>
+</div>
+
+<div id="songRouletteEnd" style="display:none;position:fixed;inset:0;z-index:101;background:#141414;flex-direction:column;justify-content:center;align-items:center;padding:2rem;gap:1.1rem;animation:fadeUp .4s ease;">
+  <div style="width:52px;height:52px;border-radius:14px;background:rgba(39,192,122,.15);border:1px solid rgba(39,192,122,.3);display:flex;align-items:center;justify-content:center;margin-bottom:.3rem;">
+    <svg viewBox="0 0 24 24" style="width:26px;height:26px;stroke:#27C07A;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+  </div>
+  <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.9rem;letter-spacing:-0.04em;color:#fff;text-align:center;line-height:1.1;">Song Roulette<br>Complete!</div>
+  <div style="display:flex;gap:12px;margin:.2rem 0;">
+    <div style="text-align:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;">
+      <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.8rem;color:#fff;" id="srEndSongs">0</div>
+      <div style="font-size:.65rem;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:3px;">Songs</div>
+    </div>
+    <div style="text-align:center;background:rgba(39,192,122,.1);border:1px solid rgba(39,192,122,.2);border-radius:12px;padding:14px 18px;">
+      <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.8rem;color:#27C07A;" id="srEndPasses">0</div>
+      <div style="font-size:.65rem;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:3px;">Passed</div>
+    </div>
+    <div style="text-align:center;background:rgba(232,41,74,.1);border:1px solid rgba(232,41,74,.2);border-radius:12px;padding:14px 18px;">
+      <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.8rem;color:#E8294A;" id="srEndDrinks">0</div>
+      <div style="font-size:.65rem;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:3px;">Drinks</div>
+    </div>
+  </div>
+  <div style="font-size:.82rem;color:rgba(255,255,255,.35);text-align:center;line-height:1.6;" id="srEndNote"></div>
+  <button class="pbtn w" style="min-width:220px;" onclick="srPlayAgain()">
+    <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+    Spin Again
+  </button>
+  <button class="pbtn" style="min-width:220px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.14);" onclick="srSwitchToCards()">
+    <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+    Play Card Game
+  </button>
+  <button class="pbtn g" style="min-width:220px;" onclick="srFullReset()">New Game</button>
+</div>
+
 <div id="app">
   <div class="topbar">
     <div class="topbar-logo"><span class="rainbow-text">Deeper-Decks™</span></div>
@@ -1050,13 +1232,9 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
       <div class="card-aspect-box"><div class="card-slot" id="cardSlot"></div></div>
     </div>
     <div class="swipe-hint">← swipe to draw &nbsp;·&nbsp; → to reshuffle</div>
-    <div class="guest-limit-bar" id="guestLimitBarInner">
-      <div class="glb-dots" id="glbDotsInner"></div>
-      <span class="glb-label" id="glbLabelInner"></span>
-    </div>
     <div class="heat-wrap">
       <div class="heat-track"><div class="heat-fill" id="heatFill" style="width:3%;background:var(--c-platonic);"></div></div>
-      <div class="heat-meta"><span id="heatLabel">🌱 Warm up</span><span id="heatPct">0%</span></div>
+      <div class="heat-meta"><span id="heatLabel"><svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:3px;"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg> Warm up</span><span id="heatPct">0%</span></div>
     </div>
     <div class="timer-row" id="timerRow">
       <div class="timer-track"><div class="timer-fill" id="timerFill"></div></div>
@@ -1064,7 +1242,7 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
     </div>
     <div class="action-row">
       <button class="btn-draw" id="drawBtn" onclick="drawCard()">Draw Card</button>
-      <button class="btn-skip" id="skipBtn" onclick="skipCard()" title="Skip card">⏭</button>
+      <button class="btn-skip" id="skipBtn" onclick="skipCard()" title="Skip card"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
     </div>
   </div>
 </div>
@@ -1084,7 +1262,13 @@ const ICON_SET=[['star',`<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18
 
 function deckIconSVG(id,s=20){const e=ICON_SET.find(([i])=>i===id);return e?`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${e[1]}</svg>`:'';}
 function builtinIconSVG(k,s=20){const p=DECK_ICONS[k]||'';return p?`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`:'';}
-const HEAT_TIERS=[{max:20,color:'#27C07A',label:'🌱 Warm up'},{max:40,color:'#FFD60A',label:'Getting interesting'},{max:60,color:'#FF9F0A',label:'🌶 Spicy'},{max:80,color:'#FF453A',label:'🔥 On fire'},{max:100,color:'#7C3AED',label:'☠️ No going back'}];
+const HEAT_TIERS=[
+  {max:20, color:'#27C07A', label:'<svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:3px;"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg> Warm up'},
+  {max:40, color:'#FFD60A', label:'<svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:3px;"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg> Getting interesting'},
+  {max:60, color:'#FF9F0A', label:'<svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:3px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> Spicy'},
+  {max:80, color:'#FF453A', label:'<svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:3px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> On fire'},
+  {max:100,color:'#7C3AED', label:'<svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:3px;"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><line x1="18" y1="8" x2="22" y2="8"/><line x1="20" y1="6" x2="20" y2="10"/></svg> No going back'}
+];
 const SVGS={person:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;vertical-align:middle;margin-right:3px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`};
 function svgInline(t){return SVGS[t]||'';}
 // ── USER-SCOPED DECK STORAGE ──
@@ -1185,34 +1369,53 @@ function confirmSwitchDeck(){
 const OB_SLIDES=[
   {
     color:'rgba(232,41,74,.22)',
-    svg:`<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>`,
-    title:'Cards that go deeper',
-    body:'A party card game where questions and dares get more intense as you play. No boring small talk — only real conversations.'
+    svg:`<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>`,
+    title:'Welcome to Deeper-Decks™',
+    body:'Two games in one. Draw cards that spark real conversations — or spin a song and see who has to sing.',
+    extra:''
+  },
+  {
+    color:'rgba(124,58,237,.22)',
+    svg:`<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>`,
+    title:'The Card Game',
+    body:'Pick a deck, add your crew, and draw cards. Questions get deeper and dares get bolder as the heat bar rises.',
+    extra:`<div style="margin-top:1.2rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;text-align:left;max-width:280px;"><div style="font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:700;margin-bottom:.5rem;">Sample Card</div><div style="font-family:'Figtree',sans-serif;font-weight:800;font-size:.95rem;color:#fff;line-height:1.4;">What's something you've never told anyone in this room?</div></div>`
   },
   {
     color:'rgba(245,158,11,.2)',
     svg:`<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>`,
     title:'The heat system',
-    body:'Cards start warm and escalate naturally. The heat bar tracks how far into the deck you are — things get spicier as it fills.'
+    body:'Cards start warm and escalate naturally. Watch the bar fill — the further you get, the more intense things become.',
+    extra:''
   },
   {
     color:'rgba(39,192,122,.18)',
-    svg:`<polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/>`,
-    title:'Swipe to play',
-    body:'Swipe left to draw the next card. Swipe right to reshuffle. Tap the card or press Draw — whatever feels right.'
+    svg:`<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>`,
+    title:'Song Roulette',
+    body:'Spin the wheel and land on a song. The chosen player has to sing it — or take a drink. 352 songs, zero mercy.',
+    extra:`<div style="margin-top:1.2rem;display:flex;gap:8px;max-width:280px;"><div style="flex:1;background:rgba(39,192,122,.15);border:1px solid rgba(39,192,122,.3);border-radius:12px;padding:10px;text-align:center;"><div style="font-size:1.3rem;margin-bottom:4px;"><svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:#27C07A;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><polyline points="20 6 9 17 4 12"/></svg></div><div style="font-size:.7rem;color:#27C07A;font-weight:800;">Pass</div><div style="font-size:.62rem;color:rgba(255,255,255,.35);margin-top:2px;">Nailed it</div></div><div style="flex:1;background:rgba(232,41,74,.15);border:1px solid rgba(232,41,74,.3);border-radius:12px;padding:10px;text-align:center;"><div style="font-size:1.3rem;margin-bottom:4px;"><svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:#E8294A;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/></svg></div><div style="font-size:.7rem;color:#E8294A;font-weight:800;">Drink</div><div style="font-size:.62rem;color:rgba(255,255,255,.35);margin-top:2px;">Missed</div></div></div>`
+  },
+  {
+    color:'rgba(59,130,246,.18)',
+    svg:`<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
+    title:'Add your crew',
+    body:"Add players, pick your game, and go. Create a free account to save progress, build custom decks, and play unlimited.",
+    extra:''
   }
 ];
 let obStep=0;
 function renderObSlide(){
   const s=OB_SLIDES[obStep];
+  const isLast=obStep===OB_SLIDES.length-1;
   document.getElementById('obSlide').innerHTML=`
     <div class="ob-icon" style="background:${s.color};">
       <svg viewBox="0 0 24 24">${s.svg}</svg>
     </div>
     <div class="ob-title">${s.title}</div>
-    <div class="ob-body">${s.body}</div>`;
+    <div class="ob-body">${s.body}</div>
+    ${s.extra}`;
   document.querySelectorAll('.ob-dot').forEach((d,i)=>d.classList.toggle('on',i===obStep));
-  document.getElementById('obNext').textContent=obStep===OB_SLIDES.length-1?"Let's Play →":'Next →';
+  document.getElementById('obNext').textContent=isLast?"Let's Play →":'Next →';
 }
 function obAdvance(){obStep++;if(obStep>=OB_SLIDES.length){obSkip();return;}renderObSlide();}
 function obSkip(){
@@ -1425,23 +1628,6 @@ function _updateGuestBar() {
 }
 
 // ── GUEST CARD LIMIT PIPS ──
-function renderGuestLimitBar() {
-  if (!isGuest() || !deckType) {
-    document.getElementById('guestLimitBarInner').classList.remove('show');
-    return;
-  }
-  const bar = document.getElementById('guestLimitBarInner');
-  const dots = document.getElementById('glbDotsInner');
-  const label = document.getElementById('glbLabelInner');
-  bar.classList.add('show');
-  const remaining = GUEST_CARD_LIMIT - drawn;
-  dots.innerHTML = Array.from({length: GUEST_CARD_LIMIT}, (_, i) =>
-    `<div class="glb-dot ${i < drawn ? 'used' : 'remaining'}"></div>`
-  ).join('');
-  label.textContent = `${remaining} free card${remaining !== 1 ? 's' : ''} left`;
-}
-
-// ── GUEST ENFORCEMENT: DECK LOCK ──
 function applyGuestDeckLocks() {
   const LOCK_BADGE = `<span class="lock-badge"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>`;
   if (!isGuest()) {
@@ -1499,6 +1685,766 @@ function cleanupGuestMode() {
   applyGuestDeckLocks(); // re-run to remove all locks
 }
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SONG ROULETTE SYSTEM
+// iTunes API + slots spinner + pass/drink voting
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let _gameMode = 'card'; // 'card' or 'song'
+let _selectedGameMode = 'card';
+let _gameModeSelected = false; // Flag to skip selector after user picks
+let _srPlayers = [];
+let _srSongs = [];
+let _srCurrentSong = null;
+let _srCurrentPlayer = null;
+let _srGuestSpinsUsed = 0;
+let _srSpinning = false;
+
+// Pre-cached popular songs to avoid API rate limits
+const SONG_CACHE = [
+  // ── KANYE WEST ──
+  {title:"NI**AS IN PARIS",artist:"Jay-Z & Kanye West",album:"Watch the Throne"},
+  {title:"Gold Digger",artist:"Kanye West",album:"Late Registration"},
+  {title:"Stronger",artist:"Kanye West",album:"Graduation"},
+  {title:"Heartless",artist:"Kanye West",album:"808s & Heartbreak"},
+  {title:"POWER",artist:"Kanye West",album:"My Beautiful Dark Twisted Fantasy"},
+  {title:"All Falls Down",artist:"Kanye West",album:"The College Dropout"},
+  {title:"Runaway",artist:"Kanye West",album:"My Beautiful Dark Twisted Fantasy"},
+  {title:"Bound 2",artist:"Kanye West",album:"Yeezus"},
+  {title:"Black Skinhead",artist:"Kanye West",album:"Yeezus"},
+  // ── KATY PERRY ──
+  {title:"Dark Horse",artist:"Katy Perry",album:"Prism"},
+  {title:"Roar",artist:"Katy Perry",album:"Prism"},
+  {title:"Firework",artist:"Katy Perry",album:"Teenage Dream"},
+  {title:"Teenage Dream",artist:"Katy Perry",album:"Teenage Dream"},
+  {title:"California Gurls",artist:"Katy Perry",album:"Teenage Dream"},
+  {title:"I Kissed a Girl",artist:"Katy Perry",album:"One of the Boys"},
+  {title:"ET",artist:"Katy Perry",album:"Teenage Dream"},
+  // ── REMA ──
+  {title:"Calm Down",artist:"Rema",album:"Rave & Roses"},
+  {title:"Calm Down (Remix)",artist:"Rema & Selena Gomez",album:"Rave & Roses Ultra"},
+  {title:"Dumebi",artist:"Rema",album:"Rema"},
+  {title:"Holiday",artist:"Rema",album:"Rave & Roses"},
+  {title:"Divine",artist:"Rema",album:"Rema"},
+  // ── BURNA BOY ──
+  {title:"Ye",artist:"Burna Boy",album:"African Giant"},
+  {title:"Anybody",artist:"Burna Boy",album:"African Giant"},
+  {title:"On the Low",artist:"Burna Boy",album:"African Giant"},
+  {title:"Last Last",artist:"Burna Boy",album:"Love, Damini"},
+  {title:"Kilometre",artist:"Burna Boy",album:"Twice as Tall"},
+  {title:"Essence (feat. Tems)",artist:"Wizkid",album:"Made in Lagos"},
+  {title:"jerusalema",artist:"Master KG",album:"Jerusalema"},
+  {title:"Sungba",artist:"Asake",album:"Mr Money With The Vibe"},
+  {title:"Terminator",artist:"Asake",album:"Mr Money With The Vibe"},
+  // ── BILLIE EILISH ──
+  {title:"Bad Guy",artist:"Billie Eilish",album:"When We All Fall Asleep"},
+  {title:"Happier Than Ever",artist:"Billie Eilish",album:"Happier Than Ever"},
+  {title:"Ocean Eyes",artist:"Billie Eilish",album:"Dont Smile at Me"},
+  {title:"Therefore I Am",artist:"Billie Eilish",album:"Therefore I Am"},
+  {title:"lovely",artist:"Billie Eilish & Khalid",album:"lovely"},
+  {title:"when the party's over",artist:"Billie Eilish",album:"When We All Fall Asleep"},
+  {title:"What Was I Made For?",artist:"Billie Eilish",album:"Barbie The Album"},
+  // ── TAYLOR SWIFT ──
+  {title:"Anti-Hero",artist:"Taylor Swift",album:"Midnights"},
+  {title:"Cruel Summer",artist:"Taylor Swift",album:"Lover"},
+  {title:"Shake It Off",artist:"Taylor Swift",album:"1989"},
+  {title:"Blank Space",artist:"Taylor Swift",album:"1989"},
+  {title:"Love Story",artist:"Taylor Swift",album:"Fearless"},
+  {title:"All Too Well (10 Min)",artist:"Taylor Swift",album:"Red (Taylor's Version)"},
+  {title:"You Belong With Me",artist:"Taylor Swift",album:"Fearless"},
+  {title:"Lavender Haze",artist:"Taylor Swift",album:"Midnights"},
+  {title:"cardigan",artist:"Taylor Swift",album:"folklore"},
+  {title:"Bejeweled",artist:"Taylor Swift",album:"Midnights"},
+  // ── DRAKE ──
+  {title:"One Dance",artist:"Drake",album:"Views"},
+  {title:"God's Plan",artist:"Drake",album:"Scorpion"},
+  {title:"Hotline Bling",artist:"Drake",album:"Views"},
+  {title:"Started From the Bottom",artist:"Drake",album:"Nothing Was the Same"},
+  {title:"In My Feelings",artist:"Drake",album:"Scorpion"},
+  {title:"Passionfruit",artist:"Drake",album:"More Life"},
+  {title:"Forever",artist:"Drake, Kanye, Lil Wayne & Eminem",album:"More Than a Game"},
+  {title:"Controlla",artist:"Drake",album:"Views"},
+  // ── BEYONCÉ ──
+  {title:"Crazy in Love",artist:"Beyoncé",album:"Dangerously in Love"},
+  {title:"Single Ladies",artist:"Beyoncé",album:"I Am... Sasha Fierce"},
+  {title:"Halo",artist:"Beyoncé",album:"I Am... Sasha Fierce"},
+  {title:"Lemonade",artist:"Beyoncé",album:"Lemonade"},
+  {title:"Break My Soul",artist:"Beyoncé",album:"Renaissance"},
+  {title:"Formation",artist:"Beyoncé",album:"Lemonade"},
+  {title:"CUFF IT",artist:"Beyoncé",album:"Renaissance"},
+  {title:"Run the World (Girls)",artist:"Beyoncé",album:"4"},
+  // ── RIHANNA ──
+  {title:"Umbrella",artist:"Rihanna",album:"Good Girl Gone Bad"},
+  {title:"We Found Love",artist:"Rihanna",album:"Talk That Talk"},
+  {title:"Work",artist:"Rihanna",album:"Anti"},
+  {title:"Diamonds",artist:"Rihanna",album:"Unapologetic"},
+  {title:"Stay",artist:"Rihanna",album:"Unapologetic"},
+  {title:"Needed Me",artist:"Rihanna",album:"Anti"},
+  {title:"Love on the Brain",artist:"Rihanna",album:"Anti"},
+  // ── THE WEEKND ──
+  {title:"Blinding Lights",artist:"The Weeknd",album:"After Hours"},
+  {title:"Starboy",artist:"The Weeknd",album:"Starboy"},
+  {title:"Can't Feel My Face",artist:"The Weeknd",album:"Beauty Behind the Madness"},
+  {title:"The Hills",artist:"The Weeknd",album:"Beauty Behind the Madness"},
+  {title:"Save Your Tears",artist:"The Weeknd",album:"After Hours"},
+  {title:"Die For You",artist:"The Weeknd",album:"Starboy"},
+  {title:"Earned It",artist:"The Weeknd",album:"Beauty Behind the Madness"},
+  // ── DUA LIPA ──
+  {title:"Levitating",artist:"Dua Lipa",album:"Future Nostalgia"},
+  {title:"Don't Start Now",artist:"Dua Lipa",album:"Future Nostalgia"},
+  {title:"Physical",artist:"Dua Lipa",album:"Future Nostalgia"},
+  {title:"New Rules",artist:"Dua Lipa",album:"Dua Lipa"},
+  {title:"Dance The Night",artist:"Dua Lipa",album:"Barbie The Album"},
+  {title:"Houdini",artist:"Dua Lipa",album:"Radical Optimism"},
+  {title:"IDGAF",artist:"Dua Lipa",album:"Dua Lipa"},
+  // ── OLIVIA RODRIGO ──
+  {title:"drivers license",artist:"Olivia Rodrigo",album:"SOUR"},
+  {title:"good 4 u",artist:"Olivia Rodrigo",album:"SOUR"},
+  {title:"Vampire",artist:"Olivia Rodrigo",album:"GUTS"},
+  {title:"brutal",artist:"Olivia Rodrigo",album:"SOUR"},
+  {title:"bad idea right?",artist:"Olivia Rodrigo",album:"GUTS"},
+  {title:"traitor",artist:"Olivia Rodrigo",album:"SOUR"},
+  // ── HARRY STYLES ──
+  {title:"As It Was",artist:"Harry Styles",album:"Harry's House"},
+  {title:"Watermelon Sugar",artist:"Harry Styles",album:"Fine Line"},
+  {title:"Adore You",artist:"Harry Styles",album:"Fine Line"},
+  {title:"Treat People With Kindness",artist:"Harry Styles",album:"Fine Line"},
+  {title:"Music For a Sushi Restaurant",artist:"Harry Styles",album:"Harry's House"},
+  // ── DOJA CAT ──
+  {title:"Say So",artist:"Doja Cat",album:"Hot Pink"},
+  {title:"Kiss Me More",artist:"Doja Cat ft. SZA",album:"Planet Her"},
+  {title:"Need to Know",artist:"Doja Cat",album:"Planet Her"},
+  {title:"Woman",artist:"Doja Cat",album:"Planet Her"},
+  {title:"Paint The Town Red",artist:"Doja Cat",album:"Scarlet"},
+  {title:"Streets",artist:"Doja Cat",album:"Hot Pink"},
+  // ── BAD BUNNY ──
+  {title:"Tití Me Preguntó",artist:"Bad Bunny",album:"Un Verano Sin Ti"},
+  {title:"Me Porto Bonito",artist:"Bad Bunny",album:"Un Verano Sin Ti"},
+  {title:"Ojitos Lindos",artist:"Bad Bunny",album:"Un Verano Sin Ti"},
+  {title:"Dakiti",artist:"Bad Bunny & Jhay Cortez",album:"EL ÚLTIMO TOUR DEL MUNDO"},
+  {title:"Efecto",artist:"Bad Bunny",album:"Un Verano Sin Ti"},
+  // ── KENDRICK LAMAR ──
+  {title:"HUMBLE.",artist:"Kendrick Lamar",album:"DAMN."},
+  {title:"Swimming Pools",artist:"Kendrick Lamar",album:"good kid, m.A.A.d city"},
+  {title:"Alright",artist:"Kendrick Lamar",album:"To Pimp a Butterfly"},
+  {title:"Money Trees",artist:"Kendrick Lamar",album:"good kid, m.A.A.d city"},
+  {title:"Not Like Us",artist:"Kendrick Lamar",album:"GNX"},
+  {title:"DNA.",artist:"Kendrick Lamar",album:"DAMN."},
+  // ── J. COLE ──
+  {title:"No Role Modelz",artist:"J. Cole",album:"2014 Forest Hills Drive"},
+  {title:"Middle Child",artist:"J. Cole",album:"Middle Child"},
+  {title:"Love Yourz",artist:"J. Cole",album:"2014 Forest Hills Drive"},
+  {title:"Work Out",artist:"J. Cole",album:"Cole World"},
+  // ── CARDI B ──
+  {title:"Bodak Yellow",artist:"Cardi B",album:"Invasion of Privacy"},
+  {title:"WAP",artist:"Cardi B ft. Megan Thee Stallion",album:"WAP"},
+  {title:"I Like It",artist:"Cardi B",album:"Invasion of Privacy"},
+  {title:"Up",artist:"Cardi B",album:"Up"},
+  // ── MEGAN THEE STALLION ──
+  {title:"Savage",artist:"Megan Thee Stallion",album:"Good News"},
+  {title:"Hot Girl Summer",artist:"Megan Thee Stallion",album:"Fever"},
+  {title:"Body",artist:"Megan Thee Stallion",album:"Good News"},
+  // ── SZA ──
+  {title:"Kill Bill",artist:"SZA",album:"SOS"},
+  {title:"Good Days",artist:"SZA",album:"Good Days"},
+  {title:"Snooze",artist:"SZA",album:"SOS"},
+  {title:"Love Galore",artist:"SZA",album:"CTRL"},
+  {title:"I Hate U",artist:"SZA",album:"I Hate U"},
+  // ── LIZZO ──
+  {title:"Good as Hell",artist:"Lizzo",album:"Cuz I Love You"},
+  {title:"Juice",artist:"Lizzo",album:"Cuz I Love You"},
+  {title:"About Damn Time",artist:"Lizzo",album:"Special"},
+  {title:"Truth Hurts",artist:"Lizzo",album:"Cuz I Love You"},
+  // ── ARIANA GRANDE ──
+  {title:"7 rings",artist:"Ariana Grande",album:"thank u, next"},
+  {title:"thank u, next",artist:"Ariana Grande",album:"thank u, next"},
+  {title:"God is a woman",artist:"Ariana Grande",album:"Sweetener"},
+  {title:"Into You",artist:"Ariana Grande",album:"Dangerous Woman"},
+  {title:"Problem",artist:"Ariana Grande",album:"My Everything"},
+  {title:"positions",artist:"Ariana Grande",album:"positions"},
+  {title:"Break Free",artist:"Ariana Grande",album:"My Everything"},
+  // ── ED SHEERAN ──
+  {title:"Shape of You",artist:"Ed Sheeran",album:"÷"},
+  {title:"Thinking Out Loud",artist:"Ed Sheeran",album:"x"},
+  {title:"Perfect",artist:"Ed Sheeran",album:"÷"},
+  {title:"Bad Habits",artist:"Ed Sheeran",album:"="},
+  {title:"Shivers",artist:"Ed Sheeran",album:"="},
+  {title:"Photograph",artist:"Ed Sheeran",album:"x"},
+  // ── POST MALONE ──
+  {title:"Sunflower",artist:"Post Malone & Swae Lee",album:"Spider-Man: Into the Spider-Verse"},
+  {title:"Rockstar",artist:"Post Malone",album:"Beerbongs & Bentleys"},
+  {title:"Congratulations",artist:"Post Malone",album:"Stoney"},
+  {title:"Better Now",artist:"Post Malone",album:"Beerbongs & Bentleys"},
+  {title:"circles",artist:"Post Malone",album:"Hollywood's Bleeding"},
+  // ── JUICE WRLD ──
+  {title:"Lucid Dreams",artist:"Juice WRLD",album:"Goodbye & Good Riddance"},
+  {title:"All Girls Are the Same",artist:"Juice WRLD",album:"Goodbye & Good Riddance"},
+  {title:"Legends",artist:"Juice WRLD & XXXTentacion",album:"Goodbye & Good Riddance"},
+  {title:"Robbery",artist:"Juice WRLD",album:"Death Race for Love"},
+  // ── LIL NAS X ──
+  {title:"Old Town Road",artist:"Lil Nas X",album:"7 EP"},
+  {title:"MONTERO",artist:"Lil Nas X",album:"MONTERO"},
+  {title:"INDUSTRY BABY",artist:"Lil Nas X",album:"MONTERO"},
+  {title:"Panini",artist:"Lil Nas X",album:"7 EP"},
+  // ── EMINEM ──
+  {title:"Lose Yourself",artist:"Eminem",album:"8 Mile Soundtrack"},
+  {title:"Without Me",artist:"Eminem",album:"The Eminem Show"},
+  {title:"Slim Shady",artist:"Eminem",album:"The Slim Shady LP"},
+  {title:"Love The Way You Lie",artist:"Eminem ft. Rihanna",album:"Recovery"},
+  {title:"Not Afraid",artist:"Eminem",album:"Recovery"},
+  {title:"Rap God",artist:"Eminem",album:"The Marshall Mathers LP 2"},
+  // ── LIL WAYNE ──
+  {title:"Lollipop",artist:"Lil Wayne",album:"Tha Carter III"},
+  {title:"A Milli",artist:"Lil Wayne",album:"Tha Carter III"},
+  {title:"6 Foot 7 Foot",artist:"Lil Wayne",album:"Tha Carter IV"},
+  // ── NICKI MINAJ ──
+  {title:"Super Bass",artist:"Nicki Minaj",album:"Pink Friday"},
+  {title:"Anaconda",artist:"Nicki Minaj",album:"The Pinkprint"},
+  {title:"Moment 4 Life",artist:"Nicki Minaj",album:"Pink Friday"},
+  {title:"Starships",artist:"Nicki Minaj",album:"Pink Friday: Roman Reloaded"},
+  // ── LADY GAGA ──
+  {title:"Bad Romance",artist:"Lady Gaga",album:"The Fame Monster"},
+  {title:"Poker Face",artist:"Lady Gaga",album:"The Fame"},
+  {title:"Telephone",artist:"Lady Gaga",album:"The Fame Monster"},
+  {title:"Born This Way",artist:"Lady Gaga",album:"Born This Way"},
+  {title:"Shallow",artist:"Lady Gaga & Bradley Cooper",album:"A Star Is Born Soundtrack"},
+  {title:"Just Dance",artist:"Lady Gaga",album:"The Fame"},
+  // ── ADELE ──
+  {title:"Rolling in the Deep",artist:"Adele",album:"21"},
+  {title:"Someone Like You",artist:"Adele",album:"21"},
+  {title:"Hello",artist:"Adele",album:"25"},
+  {title:"Easy On Me",artist:"Adele",album:"30"},
+  {title:"Set Fire to the Rain",artist:"Adele",album:"21"},
+  // ── SAM SMITH ──
+  {title:"Stay With Me",artist:"Sam Smith",album:"In the Lonely Hour"},
+  {title:"Unholy",artist:"Sam Smith & Kim Petras",album:"Gloria"},
+  {title:"I'm Not the Only One",artist:"Sam Smith",album:"In the Lonely Hour"},
+  // ── CHARLIE XCX ──
+  {title:"360",artist:"Charli XCX",album:"BRAT"},
+  {title:"Boom Clap",artist:"Charli XCX",album:"Sucker"},
+  {title:"Break the Rules",artist:"Charli XCX",album:"Sucker"},
+  {title:"Apple",artist:"Charli XCX",album:"BRAT"},
+  // ── SABRINA CARPENTER ──
+  {title:"Espresso",artist:"Sabrina Carpenter",album:"Short n' Sweet"},
+  {title:"Please Please Please",artist:"Sabrina Carpenter",album:"Short n' Sweet"},
+  {title:"Feather",artist:"Sabrina Carpenter",album:"emails i can't send"},
+  // ── TYLER THE CREATOR ──
+  {title:"EARFQUAKE",artist:"Tyler, the Creator",album:"IGOR"},
+  {title:"See You Again",artist:"Tyler, the Creator",album:"Flower Boy"},
+  {title:"Are We Still Friends?",artist:"Tyler, the Creator",album:"IGOR"},
+  {title:"NEW MAGIC WAND",artist:"Tyler, the Creator",album:"IGOR"},
+  // ── FRANK OCEAN ──
+  {title:"Thinkin Bout You",artist:"Frank Ocean",album:"Channel Orange"},
+  {title:"Nights",artist:"Frank Ocean",album:"Blonde"},
+  {title:"Lost",artist:"Frank Ocean",album:"Channel Orange"},
+  {title:"Super Rich Kids",artist:"Frank Ocean",album:"Channel Orange"},
+  // ── MICHAEL JACKSON ──
+  {title:"Thriller",artist:"Michael Jackson",album:"Thriller"},
+  {title:"Billie Jean",artist:"Michael Jackson",album:"Thriller"},
+  {title:"Beat It",artist:"Michael Jackson",album:"Thriller"},
+  {title:"Black or White",artist:"Michael Jackson",album:"Dangerous"},
+  {title:"Smooth Criminal",artist:"Michael Jackson",album:"Bad"},
+  {title:"Don't Stop Til You Get Enough",artist:"Michael Jackson",album:"Off the Wall"},
+  // ── PRINCE ──
+  {title:"Purple Rain",artist:"Prince",album:"Purple Rain"},
+  {title:"Kiss",artist:"Prince",album:"Parade"},
+  {title:"When Doves Cry",artist:"Prince",album:"Purple Rain"},
+  // ── MADONNA ──
+  {title:"Like a Prayer",artist:"Madonna",album:"Like a Prayer"},
+  {title:"Material Girl",artist:"Madonna",album:"Like a Virgin"},
+  {title:"Vogue",artist:"Madonna",album:"I'm Breathless"},
+  // ── COLDPLAY ──
+  {title:"Yellow",artist:"Coldplay",album:"Parachutes"},
+  {title:"The Scientist",artist:"Coldplay",album:"A Rush of Blood to the Head"},
+  {title:"Viva la Vida",artist:"Coldplay",album:"Viva la Vida"},
+  {title:"A Sky Full of Stars",artist:"Coldplay",album:"Ghost Stories"},
+  {title:"Fix You",artist:"Coldplay",album:"X&Y"},
+  {title:"Hymn for the Weekend",artist:"Coldplay",album:"A Head Full of Dreams"},
+  // ── BRUNO MARS ──
+  {title:"Uptown Funk",artist:"Mark Ronson ft. Bruno Mars",album:"Uptown Special"},
+  {title:"That's What I Like",artist:"Bruno Mars",album:"24K Magic"},
+  {title:"Grenade",artist:"Bruno Mars",album:"Doo-Wops & Hooligans"},
+  {title:"Just the Way You Are",artist:"Bruno Mars",album:"Doo-Wops & Hooligans"},
+  {title:"Locked Out of Heaven",artist:"Bruno Mars",album:"Unorthodox Jukebox"},
+  {title:"Talking to the Moon",artist:"Bruno Mars",album:"Doo-Wops & Hooligans"},
+  {title:"Finesse",artist:"Bruno Mars & Cardi B",album:"24K Magic"},
+  // ── JUSTIN TIMBERLAKE ──
+  {title:"Mirrors",artist:"Justin Timberlake",album:"The 20/20 Experience"},
+  {title:"Can't Stop the Feeling",artist:"Justin Timberlake",album:"Trolls Soundtrack"},
+  {title:"SexyBack",artist:"Justin Timberlake",album:"FutureSex/LoveSounds"},
+  {title:"What Goes Around",artist:"Justin Timberlake",album:"FutureSex/LoveSounds"},
+  {title:"Suit & Tie",artist:"Justin Timberlake",album:"The 20/20 Experience"},
+  // ── USHER ──
+  {title:"Yeah!",artist:"Usher ft. Lil Jon & Ludacris",album:"Confessions"},
+  {title:"Burn",artist:"Usher",album:"Confessions"},
+  {title:"DJ Got Us Fallin' In Love",artist:"Usher",album:"Raymond v Raymond"},
+  {title:"Love In This Club",artist:"Usher",album:"Here I Stand"},
+  // ── CHRIS BROWN ──
+  {title:"With You",artist:"Chris Brown",album:"Exclusive"},
+  {title:"No Guidance",artist:"Chris Brown ft. Drake",album:"Indigo"},
+  {title:"Beautiful People",artist:"Chris Brown",album:"Graffiti"},
+  // ── PHARRELL / N*E*R*D ──
+  {title:"Happy",artist:"Pharrell Williams",album:"G I R L"},
+  {title:"Get Lucky",artist:"Daft Punk ft. Pharrell",album:"Random Access Memories"},
+  {title:"Blurred Lines",artist:"Robin Thicke ft. Pharrell",album:"Blurred Lines"},
+  // ── TEMS ──
+  {title:"Free Mind",artist:"Tems",album:"If Orange Was a Place"},
+  {title:"Me & U",artist:"Tems",album:"Born in the Wild"},
+  {title:"Higher",artist:"Burna Boy ft. Tems",album:"Love, Damini"},
+  // ── AFROBEATS / AFRICAN ──
+  {title:"Ojuelegba",artist:"Wizkid",album:"Superstar"},
+  {title:"Come Closer",artist:"Wizkid ft. Drake",album:"Sounds From the Other Side"},
+  {title:"Don Jazzy",artist:"Fireboy DML",album:"Apollo"},
+  {title:"Peru",artist:"Fireboy DML",album:"Peru"},
+  {title:"Monalisa",artist:"Lojay",album:"LV N ATTN"},
+  {title:"Finesse (Remix)",artist:"Pheelz ft. BNXN",album:"Finesse"},
+  {title:"Available",artist:"Davido ft. Mayorkun",album:"A Good Time"},
+  {title:"Fall",artist:"Davido",album:"BADDEST"},
+  {title:"IF",artist:"Davido",album:"Son of Mercy"},
+  {title:"Joro",artist:"Wizkid",album:"Made in Lagos"},
+  {title:"Dimensions",artist:"Burna Boy",album:"Twice as Tall"},
+  {title:"Overdue",artist:"Rema & Chris Brown",album:"Rave & Roses"},
+  // ── AMAPIANO / SA ──
+  {title:"Mnike",artist:"Tyler ICU & Tumelo za",album:"Mnike"},
+  {title:"iSpani",artist:"Kabza De Small",album:"I Am the King of Amapiano"},
+  {title:"Stimela",artist:"Kabza De Small",album:"I Am the King of Amapiano"},
+  {title:"Sbindi Sami",artist:"DJ Maphorisa & Kabza De Small",album:"Scorpion Kings"},
+  {title:"Banyana",artist:"DJ Maphorisa & Kabza De Small",album:"Scorpion Kings"},
+  {title:"Piano Hub",artist:"Kelvin Momo",album:"Private School"},
+  {title:"Nomvula",artist:"MFR Souls",album:"Nomvula"},
+  {title:"Abo Mvelo",artist:"Mas Musiq",album:"Abo Mvelo"},
+  {title:"Love You Tonight",artist:"Ami Faku",album:"Love You Tonight"},
+  {title:"Into Ingawe",artist:"Ami Faku & Yuppe",album:"Imali"},
+  // ── AFROPOP / GLOBAL ──
+  {title:"Nkulunkulu",artist:"Sun-El Musician",album:"Africa To The World"},
+  {title:"Inkabi",artist:"Inkabi Nation & Big Zulu",album:"Inkabi Records"},
+  {title:"Uwrongo",artist:"DJ Maphorisa",album:"Uwrongo"},
+  {title:"Ke Star",artist:"Focalistic ft. Vigro Deep",album:"Ke Star"},
+  {title:"John Vuli Gate",artist:"Mapara A Jazz",album:"John Vuli Gate"},
+  // ── SHAKIRA ──
+  {title:"Hips Don't Lie",artist:"Shakira",album:"Oral Fixation Vol. 2"},
+  {title:"Waka Waka",artist:"Shakira",album:"Sale el Sol"},
+  {title:"Beautiful Liar",artist:"Beyoncé & Shakira",album:"B'Day Deluxe"},
+  // ── J BALVIN / REGGAETON ──
+  {title:"Mi Gente",artist:"J Balvin & Willy William",album:"Vibras"},
+  {title:"Con Calma",artist:"Daddy Yankee & Snow",album:"Con Calma"},
+  {title:"Despacito",artist:"Luis Fonsi ft. Daddy Yankee",album:"Vida"},
+  {title:"Lean On",artist:"Major Lazer ft. MO",album:"Peace Is the Mission"},
+  // ── POP CLASSICS ──
+  {title:"Somebody That I Used to Know",artist:"Gotye ft. Kimbra",album:"Making Mirrors"},
+  {title:"We Are Young",artist:"fun. ft. Janelle Monáe",album:"Aim and Ignite"},
+  {title:"Royals",artist:"Lorde",album:"Pure Heroine"},
+  {title:"Team",artist:"Lorde",album:"Pure Heroine"},
+  {title:"Solar Power",artist:"Lorde",album:"Solar Power"},
+  {title:"Closer",artist:"The Chainsmokers ft. Halsey",album:"Collage"},
+  {title:"Something Just Like This",artist:"The Chainsmokers & Coldplay",album:"Memories...Do Not Open"},
+  {title:"Riptide",artist:"Vance Joy",album:"Dream Your Life Away"},
+  {title:"Budapest",artist:"George Ezra",album:"Wanted on Voyage"},
+  {title:"Barcelona",artist:"George Ezra",album:"Staying at Tamara's"},
+  // ── ALTERNATIVE / INDIE ──
+  {title:"Mr. Brightside",artist:"The Killers",album:"Hot Fuss"},
+  {title:"Human",artist:"The Killers",album:"Day & Age"},
+  {title:"Seven Nation Army",artist:"The White Stripes",album:"Elephant"},
+  {title:"Bohemian Rhapsody",artist:"Queen",album:"A Night at the Opera"},
+  {title:"Don't Stop Me Now",artist:"Queen",album:"Jazz"},
+  {title:"Sweet Child O' Mine",artist:"Guns N' Roses",album:"Appetite for Destruction"},
+  {title:"Eye of the Tiger",artist:"Survivor",album:"Eye of the Tiger"},
+  // ── R&B / SOUL ──
+  {title:"Redbone",artist:"Childish Gambino",album:"Awaken, My Love!"},
+  {title:"This is America",artist:"Childish Gambino",album:"This is America"},
+  {title:"Stay With Me",artist:"Sam Smith",album:"In the Lonely Hour"},
+  {title:"Leave the Door Open",artist:"Bruno Mars & Anderson .Paak",album:"An Evening with Silk Sonic"},
+  {title:"Smokin Out the Window",artist:"Silk Sonic",album:"An Evening with Silk Sonic"},
+  {title:"Pick Up Your Feelings",artist:"Jazmine Sullivan",album:"Heaux Tales"},
+  {title:"Hrs & Hrs",artist:"Muni Long",album:"Public Displays of Affection"},
+  {title:"Victoria's Secret",artist:"Jax",album:"Victoria's Secret"},
+  // ── STRICTLY POP 2020s ──
+  {title:"Heat Waves",artist:"Glass Animals",album:"Dreamland"},
+  {title:"Sunroof",artist:"Nicky Youre & dazy",album:"Sunroof"},
+  {title:"As It Was",artist:"Harry Styles",album:"Harry's House"},
+  {title:"Running Up That Hill",artist:"Kate Bush",album:"Hounds of Love"},
+  {title:"Flowers",artist:"Miley Cyrus",album:"Endless Summer Vacation"},
+  {title:"Unholy",artist:"Sam Smith & Kim Petras",album:"Gloria"},
+  {title:"STAY",artist:"The Kid LAROI & Justin Bieber",album:"STAY"},
+  {title:"Peaches",artist:"Justin Bieber ft. Daniel Caesar & Giveon",album:"Justice"},
+  {title:"Butter",artist:"BTS",album:"Butter"},
+  {title:"Dynamite",artist:"BTS",album:"BE"},
+  {title:"Ice Spice - Munch",artist:"Ice Spice",album:"Like..?"},
+  {title:"Creepin'",artist:"Metro Boomin ft. The Weeknd",album:"Heroes & Villains"},
+  {title:"Rich Flex",artist:"Drake & 21 Savage",album:"Her Loss"},
+  {title:"Escapism.",artist:"RAYE ft. 070 Shake",album:"My 21st Century Blues"},
+  {title:"Midnight Rain",artist:"Taylor Swift",album:"Midnights"},
+  {title:"Wish You The Best",artist:"Lewis Capaldi",album:"Broken By Desire to Be Heavenly Sent"},
+  {title:"Someone You Loved",artist:"Lewis Capaldi",album:"Divinely Uninspired"},
+  {title:"Lose You to Love Me",artist:"Selena Gomez",album:"Rare"},
+  {title:"Rare",artist:"Selena Gomez",album:"Rare"},
+  {title:"Slow Down",artist:"Selena Gomez",album:"Stars Dance"},
+  {title:"I Like It",artist:"Cardi B ft. Bad Bunny & J Balvin",album:"Invasion of Privacy"},
+  {title:"Rockstar",artist:"DaBaby ft. Roddy Ricch",album:"Blame It on Baby"},
+  {title:"Mood",artist:"24kGoldn ft. iann dior",album:"El Dorado"},
+  {title:"SICKO MODE",artist:"Travis Scott",album:"ASTROWORLD"},
+  {title:"Goosebumps",artist:"Travis Scott",album:"Birds in the Trap Sing McKnight"},
+  {title:"Highest in the Room",artist:"Travis Scott",album:"Highest in the Room"},
+  {title:"Mamushi",artist:"Megan Thee Stallion ft. Yuki Chiba",album:"Megan"},
+  {title:"Fukumean",artist:"Gunna",album:"a Gift & a Curse"},
+  {title:"Rich Baby Daddy",artist:"Drake ft. Sexyy Red & SZA",album:"For All the Dogs Scary Hours Edition"},
+  {title:"Snooze",artist:"SZA",album:"SOS"},
+  {title:"Nobody Gets Me",artist:"SZA",album:"SOS"},
+  {title:"Shirt",artist:"SZA",album:"SOS"},
+  {title:"Saturn",artist:"SZA",album:"SOS"},
+  {title:"Karma",artist:"Taylor Swift ft. Ice Spice",album:"Midnights (The Til Dawn Edition)"},
+  {title:"Sparks Fly",artist:"Taylor Swift",album:"Speak Now"},
+  {title:"Wildest Dreams",artist:"Taylor Swift",album:"1989"},
+  {title:"Shake It Off",artist:"Taylor Swift",album:"1989"},
+  {title:"Espresso",artist:"Sabrina Carpenter",album:"Short n' Sweet"},
+  {title:"Please Please Please",artist:"Sabrina Carpenter",album:"Short n' Sweet"},
+  {title:"360",artist:"Charli XCX",album:"BRAT"},
+  {title:"Von Dutch",artist:"Charli XCX",album:"BRAT"},
+  {title:"Girl, so confusing",artist:"Charli XCX ft. Lorde",album:"BRAT"},
+  {title:"LUNCH",artist:"Billie Eilish",album:"HIT ME HARD AND SOFT"},
+  {title:"Birds of a Feather",artist:"Billie Eilish",album:"HIT ME HARD AND SOFT"},
+  {title:"APT.",artist:"ROSÉ & Bruno Mars",album:"APT."},
+  {title:"Magnetic",artist:"ILLIT",album:"SUPER REAL ME"},
+  {title:"Supernatural",artist:"NewJeans",album:"Get Up"},
+  {title:"Hype Boy",artist:"NewJeans",album:"NewJeans"},
+  {title:"Super",artist:"SEVENTEEN",album:"SPILL THE FEELS"},
+  {title:"Ditto",artist:"NewJeans",album:"OMG"},
+];
+
+
+function selectGameMode(mode) {
+  _selectedGameMode = mode;
+  document.getElementById('gmCard').classList.toggle('selected', mode === 'card');
+  document.getElementById('gmSong').classList.toggle('selected', mode === 'song');
+}
+
+function confirmGameMode() {
+  _gameModeSelected = true; // Flag to skip selector on next open
+  if (_selectedGameMode === 'card') {
+    closeM('gameModeSelector');
+    _gameMode = 'card';
+    // Reset card game UI
+    players = [];
+    deckType = null;
+    code = null;
+    renderP();
+    // Show card game player modal
+    document.getElementById('cardGameTab').style.display = '';
+    document.getElementById('songRouletteTab').style.display = 'none';
+    document.getElementById('playerModalSub').textContent = 'Add players · drag to reorder';
+    document.getElementById('startBtn').textContent = 'Choose a Deck →';
+    document.getElementById('startBtn').disabled = true;
+    document.getElementById('backToGameBtn').style.display = 'none';
+    openM('playerModal');
+  } else {
+    closeM('gameModeSelector');
+    _gameMode = 'song';
+    // Reset song game UI
+    _srGuestSpinsUsed = 0;
+    // Show Song Roulette player modal
+    document.getElementById('cardGameTab').style.display = 'none';
+    document.getElementById('songRouletteTab').style.display = '';
+    document.getElementById('srPinInput').value = '';
+    document.getElementById('srPCount').textContent = '0';
+    document.getElementById('srPList').innerHTML = '';
+    document.getElementById('srStartBtn').disabled = true;
+    openM('playerModal');
+  }
+}
+
+function switchGameModeTab(tab) {
+  const isCard = tab === 'card';
+  _gameMode = tab;
+  document.getElementById('amtCard').classList.toggle('on', isCard);
+  document.getElementById('amtSong').classList.toggle('on', !isCard);
+  document.getElementById('cardGameTab').style.display = isCard ? '' : 'none';
+  document.getElementById('songRouletteTab').style.display = isCard ? 'none' : '';
+  // Sync whichever list is now visible
+  if (isCard) renderP(); else renderSRPlayerList();
+}
+
+function addSRPlayer() {
+  const input = document.getElementById('srPinInput');
+  const name = input.value.trim();
+  if (!name) return;
+  if (players.includes(name)) { input.value = ''; return; } // shared array
+  if (!checkGuestPlayerLimit()) return;
+  players.push(name); // use shared players array
+  input.value = '';
+  renderSRPlayerList();
+  renderP(); // also update card game list
+}
+
+function renderSRPlayerList() {
+  const X='<svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  const GRIP='<svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+  const list = document.getElementById('srPList');
+  if (!list) return;
+  list.innerHTML = players.length === 0
+    ? '<p style="color:rgba(255,255,255,.25);text-align:center;padding:1.2rem;font-size:.82rem;">No players yet · add names above</p>'
+    : players.map(p => `<div class="p-item"><span class="p-drag-grip">${GRIP}</span><span class="p-name">${p}</span><button class="p-rm" onclick="removeSRPlayer('${p}')">${X}</button></div>`).join('');
+  const cnt = document.getElementById('srPCount');
+  if (cnt) cnt.textContent = players.length;
+  const btn = document.getElementById('srStartBtn');
+  if (btn) btn.disabled = players.length < 2;
+}
+
+function removeSRPlayer(name) {
+  players = players.filter(p => p !== name); // shared array
+  renderSRPlayerList();
+  renderP(); // sync card game list too
+}
+
+function startSongRoulette() {
+  if (players.length < 2) return; // shared players array
+  _srSongs = [...SONG_CACHE].sort(() => Math.random() - 0.5);
+  closeM('playerModal');
+  document.getElementById('songRouletteScreen').classList.add('visible');
+  // Reset UI to idle state
+  const spinIcon = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
+  document.getElementById('srAlbumContent').innerHTML = `<svg viewBox="0 0 24 24" style="width:56px;height:56px;stroke:rgba(255,255,255,.2);fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
+  document.getElementById('srSongTitle').textContent = 'Ready to spin?';
+  document.getElementById('srSongArtist').textContent = `${players.length} player${players.length!==1?'s':''} · tap spin to begin`;
+  document.getElementById('srPlayerTag').style.display = 'none';
+  document.getElementById('srActions').innerHTML = `<button class="sr-btn sr-spin-btn" onclick="spinSong()">${spinIcon} Spin Song</button>`;
+  // Show guest bar if guest
+  if (isGuest()) {
+    document.getElementById('srGuestBar').classList.add('show');
+    updateSRGuestBar();
+  }
+}
+
+function spinSong() {
+  // Guest spin limit check
+  if (isGuest()) {
+    if (_srGuestSpinsUsed >= 3) {
+      showPaywall('song_spins', false);
+      return;
+    }
+    _srGuestSpinsUsed++;
+    updateSRGuestBar();
+  }
+
+  if (_srSpinning) return;
+  _srSpinning = true;
+
+  // Reset album art to placeholder while spinning
+  document.getElementById('srAlbumContent').innerHTML = `<svg viewBox="0 0 24 24" style="width:52px;height:52px;stroke:rgba(255,255,255,.2);fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;animation:spin 0.4s linear infinite;"><circle cx="12" cy="12" r="10"/><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
+
+  // Disable spin button
+  const actionsEl = document.getElementById('srActions');
+  actionsEl.innerHTML = `<button class="sr-btn sr-spin-btn" disabled style="opacity:.5;cursor:not-allowed;"><svg viewBox=\"0 0 24 24\" style=\"width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:spin .8s linear infinite;flex-shrink:0;\"><path d=\"M21 12a9 9 0 1 1-6.219-8.56\"/></svg> Spinning...</button>`;
+
+  // Hide player tag while spinning
+  document.getElementById('srPlayerTag').style.display = 'none';
+
+  // Shuffle song list for this spin
+  const pool = [..._srSongs].sort(() => Math.random() - 0.5);
+  let idx = 0;
+
+  // Slots-style timing: fast then slow
+  const timings = [
+    40,40,40,40,50,50,60,60,
+    75,75,90,90,110,130,150,
+    180,220,270,330,400
+  ];
+
+  function tick(i) {
+    if (i >= timings.length) {
+      // Land on final song
+      const final = pool[i % pool.length];
+      _srCurrentSong = final;
+      _srCurrentPlayer = players[Math.floor(Math.random() * players.length)];
+
+      // Update display
+      document.getElementById('srSongTitle').textContent = final.title;
+      document.getElementById('srSongArtist').textContent = final.artist;
+      const tag = document.getElementById('srPlayerTag');
+      tag.textContent = `🎤 ${_srCurrentPlayer}`;
+      tag.style.display = 'inline-block';
+
+      // Fetch album art
+      fetchAlbumArt(final.title, final.artist);
+
+      // Swap to pass/drink buttons
+      actionsEl.innerHTML = `
+        <button class="sr-btn sr-pass" onclick="rateSong('pass')">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          Pass
+        </button>
+        <button class="sr-btn sr-drink" onclick="rateSong('drink')">
+          <svg viewBox="0 0 24 24"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/></svg>
+          Drink
+        </button>`;
+
+      sfx && sfx('shuffle');
+      _srSpinning = false;
+      return;
+    }
+
+    const song = pool[idx % pool.length];
+    document.getElementById('srSongTitle').textContent = song.title;
+    document.getElementById('srSongArtist').textContent = song.artist;
+    idx++;
+    setTimeout(() => tick(i + 1), timings[i]);
+  }
+
+  tick(0);
+}
+
+function fetchAlbumArt(title, artist) {
+  // iTunes requires JSONP for browser calls — use script tag injection
+  const query = encodeURIComponent(`${title} ${artist}`);
+  const cbName = `_itunes_${Date.now()}`;
+  const script = document.createElement('script');
+
+  window[cbName] = (data) => {
+    delete window[cbName];
+    script.remove();
+    try {
+      if (data.results && data.results[0]) {
+        // Get highest quality art: replace 100x100bb with 600x600bb
+        const art = data.results[0].artworkUrl100
+          .replace('100x100bb', '600x600bb')
+          .replace('100x100', '600x600');
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          const el = document.getElementById('srAlbumContent');
+          if (el) el.innerHTML = `<img src="${art}" style="width:100%;height:100%;object-fit:cover;border-radius:18px;">`;
+        };
+        img.onerror = () => {}; // keep placeholder on error
+        img.src = art;
+      }
+    } catch(e) {}
+  };
+
+  // Timeout fallback if API doesn't respond
+  const timeout = setTimeout(() => {
+    if (window[cbName]) {
+      delete window[cbName];
+      script.remove();
+    }
+  }, 5000);
+
+  script.src = `https://itunes.apple.com/search?term=${query}&entity=song&limit=1&callback=${cbName}`;
+  script.onerror = () => { clearTimeout(timeout); delete window[cbName]; };
+  document.head.appendChild(script);
+}
+
+function rateSong(verdict) {
+  bumpStat('sr_songs');
+  if (verdict === 'pass') bumpStat('sr_passes');
+  else bumpStat('sr_drinks');
+
+  const actionsEl = document.getElementById('srActions');
+  const isPass = verdict === 'pass';
+
+  // Show brief result feedback
+  actionsEl.innerHTML = `
+    <div style="text-align:center;width:100%;padding:8px 0;">
+      <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.5rem;color:${isPass ? '#27C07A' : '#E8294A'};margin-bottom:.3rem;">
+        ${isPass ? '✓ Passed!' : '✗ Drink!'}
+      </div>
+      <div style="font-size:.8rem;color:rgba(255,255,255,.4);">
+        ${isPass ? _srCurrentPlayer + ' nailed it 🎤' : _srCurrentPlayer + ' takes a sip 🍺'}
+      </div>
+    </div>`;
+
+  setTimeout(() => {
+    // Reset album art to music note SVG
+    document.getElementById('srAlbumContent').innerHTML = `<svg viewBox="0 0 24 24" style="width:56px;height:56px;stroke:rgba(255,255,255,.2);fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
+    document.getElementById('srSongTitle').textContent = 'Ready for another?';
+    document.getElementById('srSongArtist').textContent = `${_srCurrentPlayer} just ${isPass ? 'passed ✓' : 'drank ✗'}`;
+    document.getElementById('srPlayerTag').style.display = 'none';
+
+    const remaining = isGuest() ? 3 - _srGuestSpinsUsed : null;
+    const noSpins = remaining !== null && remaining <= 0;
+    const spinIcon = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
+    const lockIcon = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`;
+    actionsEl.innerHTML = `<button class="sr-btn sr-spin-btn" onclick="${noSpins ? "showPaywall('song_spins')" : 'spinSong()'}">
+      ${noSpins ? lockIcon + ' No spins left — Sign up free' : spinIcon + ' Spin Again'}
+    </button>`;
+    _srSpinning = false;
+  }, 1800);
+}
+
+function updateSRGuestBar() {
+  const used = _srGuestSpinsUsed;
+  const remaining = 3 - used;
+  const el = document.getElementById('srSpinsLeft');
+  if (!el) return;
+  el.textContent = remaining > 0 ? `${remaining} spin${remaining !== 1 ? 's' : ''} left` : 'No spins left';
+  el.classList.toggle('urgent', remaining <= 1);
+}
+
+function showSREndScreen(){
+  // Count session stats
+  const stats = getLocalStats();
+  const songs  = stats.sr_songs  || 0;
+  const passes = stats.sr_passes || 0;
+  const drinks = stats.sr_drinks || 0;
+  document.getElementById('srEndSongs').textContent  = songs;
+  document.getElementById('srEndPasses').textContent = passes;
+  document.getElementById('srEndDrinks').textContent = drinks;
+  // Fun note
+  const notes = [
+    'Someone definitely owes someone an apology.',
+    'Whoever drank the most — respect.',
+    'Not all heroes wear capes. Some just sing off-key.',
+    `${players[0] || 'Someone'} carried the whole session.`,
+    'The group that sings together, stays together.',
+  ];
+  const el = document.getElementById('srEndNote');
+  if(el) el.textContent = notes[Math.floor(Math.random()*notes.length)];
+  document.getElementById('songRouletteScreen').classList.remove('visible');
+  document.getElementById('srGuestBar').classList.remove('show');
+  const end = document.getElementById('songRouletteEnd');
+  end.style.display = 'flex';
+}
+
+function srPlayAgain(){
+  document.getElementById('songRouletteEnd').style.display = 'none';
+  startSongRoulette();
+}
+
+function srSwitchToCards(){
+  document.getElementById('songRouletteEnd').style.display = 'none';
+  _gameMode = 'card';
+  _gameModeSelected = true;
+  switchGameModeTab('card');
+  openM('playerModal');
+}
+
+function srFullReset(){
+  document.getElementById('songRouletteEnd').style.display = 'none';
+  _srGuestSpinsUsed = 0;
+  _gameModeSelected = false;
+  _gameMode = 'card';
+  openPlayerModal();
+}
+
+function exitSongRoulette(){
+  // Show end screen instead of going straight back
+  showSREndScreen();
+  stopGuestTimer();
+}
+
+// Update paywall to handle song_spins reason
+const originalShowPaywall = window.showPaywall;
+window.showPaywall = function(reason, dismissable = false) {
+  if (reason === 'song_spins') {
+    reason = 'song_spins_custom';
+    const icons = {song_spins_custom: '🎵'};
+    const titles = {song_spins_custom: 'Unlimited spins unlock'};
+    const subs = {song_spins_custom: 'You\'ve used your 3 free spins this session. Sign up free to spin unlimited songs.'};
+    document.getElementById('pwTitle').textContent = titles[reason] || 'Unlock the full game';
+    document.getElementById('pwSub').textContent = subs[reason] || 'Create a free account to keep playing.';
+    document.getElementById('paywallModal').classList.add('show');
+  } else {
+    originalShowPaywall.call(this, reason, dismissable);
+  }
+};
+
 // IMPROVEMENT #5 — GUEST CONVERSION NUDGE
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let _nudgeShown=false;
@@ -1512,7 +2458,17 @@ function guestNudgeSignUp(){dismissGuestNudge();showAuthScreen();switchAuthTab('
 // ── PLAYERS ──
 function addP(){const v=document.getElementById('pinInput').value.trim();if(!v)return;if(!checkGuestPlayerLimit())return;if(!players.includes(v)&&players.length<10){players.push(v);renderP();}document.getElementById('pinInput').value='';}
 window.removeP=function(n){players=players.filter(p=>p!==n);renderP();};
-function renderP(){const list=document.getElementById('pList');list.innerHTML=players.length===0?'<p style="color:rgba(255,255,255,.25);text-align:center;padding:1.2rem;font-size:.82rem;">No players yet</p>':players.map((p,i)=>`<div class="p-item${i===pIdx?' cturn':''}" draggable="true" data-i="${i}" ondragstart="dragI=${i}" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="event.preventDefault();this.classList.remove('drag-over');dropP(${i})"><span class="p-drag-grip">≡</span><span class="p-name">${p}</span>${i===pIdx?'<span class="p-now">Now</span>':''}<button class="p-rm" onclick="removeP('${p}')">✕</button></div>`).join('');document.getElementById('pCount').textContent=players.length;document.getElementById('startBtn').disabled=players.length<2;attachTD();}
+function renderP(){
+  const X='<svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  const GRIP='<svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+  const list=document.getElementById('pList');
+  list.innerHTML=players.length===0
+    ?'<p style="color:rgba(255,255,255,.25);text-align:center;padding:1.2rem;font-size:.82rem;">No players yet</p>'
+    :players.map((p,i)=>`<div class="p-item${i===pIdx?' cturn':''}" draggable="true" data-i="${i}" ondragstart="dragI=${i}" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="event.preventDefault();this.classList.remove('drag-over');dropP(${i})"><span class="p-drag-grip">${GRIP}</span><span class="p-name">${p}</span>${i===pIdx?'<span class="p-now">Now</span>':''}<button class="p-rm" onclick="removeP('${p}')">${X}</button></div>`).join('');
+  document.getElementById('pCount').textContent=players.length;
+  document.getElementById('startBtn').disabled=players.length<2;
+  attachTD();
+}
 function dropP(to){if(dragI===null||dragI===to)return;const p=players.splice(dragI,1)[0];players.splice(to,0,p);dragI=null;renderP();}
 let _tdi=null,_tdG=null,_tdItems=[],_tdOY=0,_tdSY=0;
 function attachTD(){document.querySelectorAll('#pList .p-item').forEach(el=>{el.addEventListener('touchstart',_tS,{passive:false});el.addEventListener('touchmove',_tM,{passive:false});el.addEventListener('touchend',_tE,{passive:true});});}
@@ -1535,9 +2491,27 @@ function pickDeck(el){
 function toDeck(){closeM('playerModal');openM('deckModal');}
 function openPlayerModal(){
   const ga=!!deckType;
-  document.getElementById('playerModalSub').textContent=ga?'Add, remove or reorder players — game continues':'Add players · drag to reorder';
-  const sb=document.getElementById('startBtn');sb.textContent=ga?'Done ✓':'Choose a Deck →';sb.disabled=players.length<2;
-  document.getElementById('backToGameBtn').style.display=ga?'':'none';
+  // Always go straight to modal — tabs handle game mode selection
+  const showSong = !ga && _gameMode === 'song';
+  document.getElementById('cardGameTab').style.display = showSong ? 'none' : '';
+  document.getElementById('songRouletteTab').style.display = showSong ? '' : 'none';
+  document.getElementById('amtCard').classList.toggle('on', !showSong);
+  document.getElementById('amtSong').classList.toggle('on', showSong);
+  if (showSong) renderSRPlayerList(); else renderP();
+  if (!showSong) {
+    const sb = document.getElementById('startBtn');
+    if (ga) {
+      document.getElementById('playerModalSub').textContent = 'Add, remove or reorder players — game continues';
+      sb.innerHTML = '<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Done';
+      sb.disabled = players.length < 2;
+      document.getElementById('backToGameBtn').style.display = '';
+    } else {
+      document.getElementById('playerModalSub').textContent = 'Add players · drag to reorder';
+      sb.textContent = 'Choose a Deck →';
+      sb.disabled = players.length < 2;
+      document.getElementById('backToGameBtn').style.display = 'none';
+    }
+  }
   openM('playerModal');
 }
 function playerModalConfirm(){if(deckType)closeM('playerModal');else toDeck();}
@@ -1600,14 +2574,14 @@ function drawCard(){
   if(timerOn)startTimer();
   maybeShowSwipeTip();
   maybeShowGuestNudge();
-  // ── GUEST: update session bar + pips ──
-  if(isGuest()){_updateGuestBar();renderGuestLimitBar();}
+  // ── GUEST: update session bar ──
+  if(isGuest())_updateGuestBar();
 }
 function skipCard(){if(!deckType||!pool.length)return;sfx('skip');skipped++;const card=pool.pop();pool.unshift(card);if(document.getElementById('consecTog').checked)showConsequence();syncStats();stopTimer();}
 function reshuffleDeck(){sfx('shuffle');pool=buildPool();drawn=0;skipped=0;hist=[];pIdx=0;syncStats();updateHeat();renderP();stopTimer();clearSlotAndShow(()=>renderWelcome());}
 function ackTurn(){document.getElementById('passOverlay').classList.remove('show');ackd=true;drawCard();}
 function setFilter(btn){document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');cardFilter=btn.dataset.f;if(deckType){pool=buildPool();drawn=0;skipped=0;hist=[];pIdx=0;syncStats();updateHeat();renderP();stopTimer();clearSlotAndShow(()=>renderWelcome());}}
-function updateHeat(){const total=(DECKS[deckType]||[]).length;const pct=total?(drawn/total)*100:0;let tier=HEAT_TIERS[HEAT_TIERS.length-1];for(const t of HEAT_TIERS){if(pct<=t.max){tier=t;break;}}document.getElementById('heatFill').style.width=Math.min(pct,100)+'%';document.getElementById('heatFill').style.background=tier.color;document.getElementById('heatLabel').textContent=tier.label;document.getElementById('heatPct').textContent=Math.round(pct)+'%';}
+function updateHeat(){const total=(DECKS[deckType]||[]).length;const pct=total?(drawn/total)*100:0;let tier=HEAT_TIERS[HEAT_TIERS.length-1];for(const t of HEAT_TIERS){if(pct<=t.max){tier=t;break;}}document.getElementById('heatFill').style.width=Math.min(pct,100)+'%';document.getElementById('heatFill').style.background=tier.color;document.getElementById('heatLabel').innerHTML=tier.label;document.getElementById('heatPct').textContent=Math.round(pct)+'%';}
 function syncStats(){document.getElementById('drawBtn').disabled=!pool.length;document.getElementById('skipBtn').disabled=!pool.length;}
 function updateBadge(){const b=document.getElementById('deckBadge');if(!deckType){b.innerHTML='';return;}b.innerHTML=`<div class="deck-badge" style="background:${getDeckColor()};">${getDeckLabel()}</div>`;}
 
@@ -1620,9 +2594,26 @@ function stopTimer(){clearInterval(timerInt);timerInt=null;document.getElementBy
 function pauseGame(){paused=true;saveSession();document.getElementById('pauseCode').textContent=code||'──────';document.getElementById('pauseOverlay').classList.add('show');}
 function resumeGame(){paused=false;document.getElementById('pauseOverlay').classList.remove('show');}
 function endGame(){paused=false;document.getElementById('pauseOverlay').classList.remove('show');fullReset();}
-function showEndScreen(){clearSlotAndShow(()=>renderEmpty(),'right');document.getElementById('endDrawn').textContent=drawn;document.getElementById('endSkipped').textContent=skipped;document.getElementById('endPlayers').textContent=players.length;setTimeout(()=>document.getElementById('endScreen').classList.add('show'),400);}
+function showEndScreen(){
+  clearSlotAndShow(()=>renderEmpty(),'right');
+  document.getElementById('endDrawn').textContent=drawn;
+  document.getElementById('endSkipped').textContent=skipped;
+  document.getElementById('endPlayers').textContent=players.length;
+  // Show deck name
+  const deckNames={romantic:'Romantic',platonic:'Platonic',girlsnight:"Girls' Night",naughty:'Naughty'};
+  const el=document.getElementById('endDeckName');
+  if(el)el.textContent=deckNames[deckType]||'Custom Deck';
+  setTimeout(()=>document.getElementById('endScreen').classList.add('show'),400);
+}
+function endScreenSwitchToSong(){
+  document.getElementById('endScreen').classList.remove('show');
+  _gameMode='song';
+  _gameModeSelected=true;
+  switchGameModeTab('song');
+  openM('playerModal');
+}
 function restartRound(){document.getElementById('endScreen').classList.remove('show');if(deckType)reshuffleDeck();}
-function fullReset(){document.getElementById('endScreen').classList.remove('show');deckType='';pool=[];drawn=0;skipped=0;hist=[];code='';pIdx=0;stopTimer();updateBadge();document.getElementById('app').classList.remove('visible');document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));document.getElementById('confirmDeck').disabled=true;selDeck='';_nudgeShown=false;openPlayerModal();}
+function fullReset(){document.getElementById('endScreen').classList.remove('show');deckType='';pool=[];drawn=0;skipped=0;hist=[];code='';pIdx=0;stopTimer();updateBadge();document.getElementById('app').classList.remove('visible');document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));document.getElementById('confirmDeck').disabled=true;selDeck='';_nudgeShown=false;_gameModeSelected=false;openPlayerModal();}
 function saveSession(){if(!code)return;try{localStorage.setItem('dd_'+code,JSON.stringify({players,deckType,pIdx,drawn,skipped,pool:pool.map(c=>c.i),hist:hist.slice(0,30),code}));}catch(e){}}
 function tryResume(){const c=document.getElementById('resumeInput').value.trim().toUpperCase();const err=document.getElementById('resumeErr');if(c.length<6){err.textContent='Enter a valid 6-character code.';return;}let data;try{data=JSON.parse(localStorage.getItem('dd_'+c)||'null');}catch(e){}if(!data){err.textContent='No saved game found. Check the code.';return;}err.textContent='';players=data.players||[];deckType=data.deckType||'';pIdx=data.pIdx||0;drawn=data.drawn||0;skipped=data.skipped||0;hist=data.hist||[];code=c;const allQ=DECKS[deckType]||[];pool=(data.pool||[]).map(i=>({q:allQ[i]||'',i,isDare:(allQ[i]||'').startsWith('DARE:')}));closeM('resumeModal');document.getElementById('app').classList.add('visible');updateBadge();syncStats();clearSlotAndShow(()=>renderWelcome());updateHeat();renderP();}
 
@@ -1785,6 +2776,7 @@ async function onAuthSuccess(user,isNew=false){
   if(wasGuest||isNew)migrateGuestDecks(user.id);
   // Remove all guest restrictions and restore UI
   if(wasGuest){cleanupGuestMode();syncGuestUI();}
+  document.getElementById('app').classList.add('visible'); // Make app visible
   hideAuthScreen();closeForgotPassword();updateProfileBtn();openPlayerModal();
 }
 function migrateGuestDecks(uid){
@@ -1804,6 +2796,7 @@ function migrateGuestDecks(uid){
 function continueAsGuest(){
   currentUser={id:null,name:'Guest',email:'',color:'#555',guest:true};
   hideAuthScreen();
+  document.getElementById('app').classList.add('visible'); // Make app visible
   updateProfileBtn();
   openPlayerModal();
   // Start guest restrictions
