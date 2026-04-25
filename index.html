@@ -540,76 +540,49 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
 .gn-btn:hover{transform:translateY(-2px);box-shadow:0 7px 24px rgba(124,58,237,.42);}
 .gn-later{width:100%;padding:9px;background:none;border:none;color:rgba(255,255,255,.2);font-family:'Figtree',sans-serif;font-weight:600;font-size:.76rem;cursor:pointer;margin-top:.3rem;}
 
-.game-mode-selector{display:none;position:fixed;inset:0;z-index:8400;background:rgba(0,0,0,.65);justify-content:center;align-items:flex-end;backdrop-filter:blur(8px);}
-.game-mode-selector.show{display:flex;}
-.gms-sheet{background:#141414;border:1px solid rgba(255,255,255,.08);border-bottom:none;border-radius:24px 24px 0 0;padding:28px 22px 42px;width:100%;max-width:500px;animation:sheetUp .32s cubic-bezier(.16,1,.3,1);}
-.gms-pip{width:34px;height:3px;background:rgba(255,255,255,.18);border-radius:99px;margin:0 auto 20px;}
-.gms-h{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.8rem;letter-spacing:-0.04em;color:#fff;margin-bottom:.4rem;line-height:1.1;}
-.gms-sub{font-size:.84rem;color:rgba(255,255,255,.42);margin-bottom:1.8rem;line-height:1.7;}
-.gms-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:1.2rem;}
-.gms-btn{padding:16px 14px;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);border-radius:13px;color:rgba(255,255,255,.7);font-family:'Figtree',sans-serif;font-weight:800;font-size:.98rem;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:12px;letter-spacing:-.01em;}
-.gms-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.88);}
-.gms-btn.selected{background:var(--c-platonic);border-color:var(--c-platonic);color:var(--ink);box-shadow:0 4px 12px rgba(39,192,122,.3);}
-.gms-btn-icon{width:22px;height:22px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-.gms-btn-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;}
-.gms-continue{width:100%;padding:15px;background:var(--white);color:var(--ink);border:none;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1.05rem;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:.6rem;box-shadow:0 4px 0 rgba(0,0,0,.4);letter-spacing:-.01em;}
-.gms-continue:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.4);}
-.gms-continue:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.2);}
 
 /* Song Roulette main screen */
-#songRouletteScreen{position:fixed;inset:0;background:#141414;display:none;flex-direction:column;z-index:100;overflow:hidden;color:#fff;}
+#songRouletteScreen{position:fixed;inset:0;background:var(--paper);display:none;flex-direction:column;z-index:100;overflow:hidden;color:#fff;}
 #songRouletteScreen.visible{display:flex;}
-.sr-topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;flex-shrink:0;gap:8px;z-index:110;border-bottom:1px solid rgba(255,255,255,.08);}
-.sr-logo{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.25rem;letter-spacing:-0.04em;color:#fff;}
+.sr-topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;flex-shrink:0;gap:8px;z-index:110;border-bottom:1px solid rgba(255,255,255,.07);}
+.sr-logo{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.25rem;letter-spacing:-0.04em;}
 .sr-back-btn{width:40px;height:40px;border-radius:11px;border:none;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;}
 .sr-back-btn:hover{background:rgba(255,255,255,.14);}
 .sr-back-btn svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-
-/* Spinner area — flex center with proper spacing */
-.sr-spinner-wrap{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;padding:20px 16px;min-height:0;}
-.sr-spinner{display:flex;flex-direction:column;align-items:center;gap:2rem;animation:none;width:100%;max-width:380px;}
+.sr-spinner-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative;padding:24px 20px 16px;min-height:0;gap:1.6rem;}
+.sr-spinner{display:flex;flex-direction:column;align-items:center;gap:1.4rem;animation:none;width:100%;max-width:340px;}
 .sr-spinner.spinning{animation:spinnerBlur 0.8s cubic-bezier(.25,.46,.45,.94) forwards;}
 @keyframes spinnerBlur{0%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.02);filter:blur(2px)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-
-.sr-album{width:160px;height:160px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.6);flex-shrink:0;}
-.sr-album img{width:100%;height:100%;object-fit:cover;display:block;}
-.sr-album-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(232,41,74,.1));}
-
-.sr-song-info{text-align:center;display:flex;flex-direction:column;gap:.6rem;min-height:80px;justify-content:center;width:100%;}
-.sr-song-title{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:-0.03em;color:#fff;line-height:1.2;word-wrap:break-word;}
-.sr-song-artist{font-size:.95rem;color:rgba(255,255,255,.55);font-weight:600;letter-spacing:.01em;}
-
-.sr-player-tag{display:inline-block;padding:8px 16px;background:var(--c-platonic);border-radius:99px;color:var(--ink);font-family:'Figtree',sans-serif;font-weight:800;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;margin-top:.5rem;box-shadow:0 4px 12px rgba(39,192,122,.3);}
-
-/* Action buttons — full width, proper spacing */
-.sr-actions{display:flex;gap:8px;justify-content:center;padding:16px;flex-shrink:0;width:100%;max-width:480px;margin:0 auto;}
-.sr-btn{flex:1;min-height:48px;border:none;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 3px 12px rgba(0,0,0,.3);}
-.sr-btn:active{transform:scale(.97);}
+.sr-album{width:160px;height:160px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);flex-shrink:0;}
+.sr-album img{width:100%;height:100%;object-fit:cover;display:block;border-radius:20px;}
+.sr-album-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,rgba(124,58,237,.08),rgba(232,41,74,.06));}
+.sr-song-info{text-align:center;display:flex;flex-direction:column;gap:.5rem;min-height:72px;justify-content:center;width:100%;}
+.sr-song-title{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.45rem;letter-spacing:-0.03em;color:#fff;line-height:1.2;word-wrap:break-word;}
+.sr-song-artist{font-size:.9rem;color:rgba(255,255,255,.45);font-weight:600;}
+.sr-player-tag{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;background:rgba(39,192,122,.18);border:1px solid rgba(39,192,122,.35);border-radius:99px;color:#27C07A;font-family:'Figtree',sans-serif;font-weight:800;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;}
+.sr-player-tag svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sr-actions{display:flex;gap:8px;padding:12px 16px 24px;flex-shrink:0;width:100%;max-width:480px;margin:0 auto;align-self:center;}
+.sr-btn{flex:1;min-height:52px;border:none;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 0 rgba(0,0,0,.3);}
+.sr-btn:active{transform:scale(.97);box-shadow:0 1px 0 rgba(0,0,0,.2);}
 .sr-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.sr-pass{background:#27C07A;color:#fff;box-shadow:0 4px 0 rgba(39,192,122,.4);}
-.sr-pass:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(39,192,122,.4);}
-.sr-pass:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(39,192,122,.3);}
-.sr-drink{background:#E8294A;color:#fff;box-shadow:0 4px 0 rgba(232,41,74,.4);}
-.sr-drink:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(232,41,74,.4);}
-.sr-drink:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(232,41,74,.3);}
-
+.sr-pass{background:#27C07A;color:#fff;box-shadow:0 4px 0 rgba(27,110,68,.6);}
+.sr-pass:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(27,110,68,.6);}
+.sr-drink{background:#E8294A;color:#fff;box-shadow:0 4px 0 rgba(140,20,34,.6);}
+.sr-drink:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(140,20,34,.6);}
 .sr-spin-btn{background:var(--white);color:var(--ink);width:100%;box-shadow:0 4px 0 rgba(0,0,0,.4);}
 .sr-spin-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.4);}
 .sr-spin-btn:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.2);}
-.sr-spin-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
-
-/* Guest bar on Song Roulette — positioned above topbar */
+.sr-spin-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
 #srGuestBar{position:fixed;top:0;left:0;right:0;z-index:105;background:linear-gradient(90deg,rgba(124,58,237,.18),rgba(232,41,74,.18));border-bottom:1px solid rgba(255,255,255,.1);padding:6px 14px;display:none;align-items:center;gap:10px;justify-content:space-between;}
 #srGuestBar.show{display:flex;}
-#songRouletteScreen .sr-topbar{margin-top:28px;}
+#songRouletteScreen .sr-topbar{margin-top:0;}
+#srGuestBar.show ~ #songRouletteScreen .sr-topbar{margin-top:32px;}
 .sr-gb-left{display:flex;align-items:center;gap:8px;font-size:.7rem;color:rgba(255,255,255,.6);font-weight:700;letter-spacing:.02em;}
-.sr-gb-spins{font-family:'Figtree',sans-serif;font-weight:900;font-size:.8rem;color:rgba(255,255,255,.85);min-width:52px;}
+.sr-gb-spins{font-family:'Figtree',sans-serif;font-weight:900;font-size:.8rem;color:rgba(255,255,255,.85);}
 .sr-gb-spins.urgent{color:#FF7085;animation:timerPulse .7s ease infinite;}
 .sr-gb-signup{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:4px 11px;color:#fff;font-family:'Figtree',sans-serif;font-weight:800;font-size:.65rem;cursor:pointer;white-space:nowrap;letter-spacing:.02em;transition:all .15s;flex-shrink:0;}
-.sr-gb-signup:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.3);}
-
-/* Song Roulette in player modal tabs */
+.sr-gb-signup:hover{background:rgba(255,255,255,.18);}
 .app-mode-toggle{display:flex;gap:3px;background:rgba(255,255,255,.06);border-radius:9px;padding:3px;border:1px solid rgba(255,255,255,.1);}
 .amt-btn{padding:8px 14px;border:none;border-radius:9px;background:transparent;color:rgba(255,255,255,.4);font-family:'Figtree',sans-serif;font-weight:700;font-size:.76rem;cursor:pointer;transition:all .18s;letter-spacing:.02em;white-space:nowrap;display:flex;align-items:center;gap:6px;flex:1;justify-content:center;}
 .amt-btn.on{background:#fff;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.3);}
@@ -1137,8 +1110,8 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
   </div>
   
   <div class="sr-topbar">
-    <div class="sr-logo">Song Roulette</div>
-    <button class="sr-back-btn" onclick="exitSongRoulette()">
+    <div class="sr-logo" style="background:linear-gradient(to right,#fff 0%,#fff 8%,#0ff 14%,#00f 22%,#800080 30%,#ffb6c1 38%,#f00 46%,#ff0 54%,#90ee90 62%,#0ff 70%,#fff 80%,#fff 100%) no-repeat 100% 0%/900%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbowLoop 4s ease-in-out infinite;">Song Roulette</div>
+    <button class="sr-back-btn" onclick="exitSongRoulette()" aria-label="Exit">
       <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
   </div>
@@ -1166,35 +1139,45 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
   </div>
 </div>
 
-<div id="songRouletteEnd" style="display:none;position:fixed;inset:0;z-index:101;background:#141414;flex-direction:column;justify-content:center;align-items:center;padding:2rem;gap:1.1rem;animation:fadeUp .4s ease;">
-  <div style="width:52px;height:52px;border-radius:14px;background:rgba(39,192,122,.15);border:1px solid rgba(39,192,122,.3);display:flex;align-items:center;justify-content:center;margin-bottom:.3rem;">
-    <svg viewBox="0 0 24 24" style="width:26px;height:26px;stroke:#27C07A;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+<div id="songRouletteEnd" style="display:none;position:fixed;inset:0;z-index:101;background:#141414;flex-direction:column;align-items:center;padding:0;overflow-y:auto;">
+  <!-- Scrollable inner -->
+  <div style="width:100%;max-width:480px;padding:2.5rem 1.4rem 3rem;display:flex;flex-direction:column;align-items:center;gap:1rem;min-height:100%;">
+    <div style="width:52px;height:52px;border-radius:14px;background:rgba(39,192,122,.15);border:1px solid rgba(39,192,122,.3);display:flex;align-items:center;justify-content:center;margin-top:.5rem;flex-shrink:0;">
+      <svg viewBox="0 0 24 24" style="width:26px;height:26px;stroke:#27C07A;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    </div>
+    <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.9rem;letter-spacing:-0.04em;color:#fff;text-align:center;line-height:1.1;">Session Over!</div>
+    <!-- Session totals -->
+    <div style="display:flex;gap:10px;width:100%;">
+      <div style="flex:1;text-align:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 8px;">
+        <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.8rem;color:#fff;" id="srEndSongs">0</div>
+        <div style="font-size:.6rem;color:rgba(255,255,255,.35);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:3px;">Songs</div>
+      </div>
+      <div style="flex:1;text-align:center;background:rgba(39,192,122,.1);border:1px solid rgba(39,192,122,.2);border-radius:12px;padding:14px 8px;">
+        <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.8rem;color:#27C07A;" id="srEndPasses">0</div>
+        <div style="font-size:.6rem;color:rgba(255,255,255,.35);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:3px;">Passed</div>
+      </div>
+      <div style="flex:1;text-align:center;background:rgba(232,41,74,.1);border:1px solid rgba(232,41,74,.2);border-radius:12px;padding:14px 8px;">
+        <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.8rem;color:#E8294A;" id="srEndDrinks">0</div>
+        <div style="font-size:.6rem;color:rgba(255,255,255,.35);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:3px;">Drinks</div>
+      </div>
+    </div>
+    <!-- Per-player leaderboard -->
+    <div id="srLeaderboard" style="display:none;flex-direction:column;gap:6px;width:100%;"></div>
+    <!-- Closing note -->
+    <div style="font-size:.82rem;color:rgba(255,255,255,.3);text-align:center;line-height:1.6;max-width:280px;" id="srEndNote"></div>
+    <!-- CTAs -->
+    <div style="display:flex;flex-direction:column;gap:8px;width:100%;margin-top:.5rem;">
+      <button class="pbtn w" onclick="srPlayAgain()" style="width:100%;display:flex;align-items:center;justify-content:center;gap:7px;">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Spin Again
+      </button>
+      <button class="pbtn" onclick="srSwitchToCards()" style="width:100%;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;gap:7px;">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Play Card Game
+      </button>
+      <button class="pbtn g" onclick="srFullReset()" style="width:100%;">New Game</button>
+    </div>
   </div>
-  <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.9rem;letter-spacing:-0.04em;color:#fff;text-align:center;line-height:1.1;">Song Roulette<br>Complete!</div>
-  <div style="display:flex;gap:12px;margin:.2rem 0;">
-    <div style="text-align:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 18px;">
-      <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.8rem;color:#fff;" id="srEndSongs">0</div>
-      <div style="font-size:.65rem;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:3px;">Songs</div>
-    </div>
-    <div style="text-align:center;background:rgba(39,192,122,.1);border:1px solid rgba(39,192,122,.2);border-radius:12px;padding:14px 18px;">
-      <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.8rem;color:#27C07A;" id="srEndPasses">0</div>
-      <div style="font-size:.65rem;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:3px;">Passed</div>
-    </div>
-    <div style="text-align:center;background:rgba(232,41,74,.1);border:1px solid rgba(232,41,74,.2);border-radius:12px;padding:14px 18px;">
-      <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.8rem;color:#E8294A;" id="srEndDrinks">0</div>
-      <div style="font-size:.65rem;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:3px;">Drinks</div>
-    </div>
-  </div>
-  <div style="font-size:.82rem;color:rgba(255,255,255,.35);text-align:center;line-height:1.6;" id="srEndNote"></div>
-  <button class="pbtn w" style="min-width:220px;" onclick="srPlayAgain()">
-    <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-    Spin Again
-  </button>
-  <button class="pbtn" style="min-width:220px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.14);" onclick="srSwitchToCards()">
-    <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-    Play Card Game
-  </button>
-  <button class="pbtn g" style="min-width:220px;" onclick="srFullReset()">New Game</button>
 </div>
 
 <div id="app">
@@ -1690,14 +1673,17 @@ function cleanupGuestMode() {
 // iTunes API + slots spinner + pass/drink voting
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 let _gameMode = 'card'; // 'card' or 'song'
-let _selectedGameMode = 'card';
-let _gameModeSelected = false; // Flag to skip selector after user picks
 let _srPlayers = [];
 let _srSongs = [];
 let _srCurrentSong = null;
 let _srCurrentPlayer = null;
 let _srGuestSpinsUsed = 0;
 let _srSpinning = false;
+// Per-session stats (reset each startSongRoulette call)
+let _srSessionSongs = 0;
+let _srSessionPasses = 0;
+let _srSessionDrinks = 0;
+let _srPlayerStats = {}; // { playerName: { songs:0, passes:0, drinks:0 } }
 
 // Pre-cached popular songs to avoid API rate limits
 const SONG_CACHE = [
@@ -2111,46 +2097,6 @@ const SONG_CACHE = [
 ];
 
 
-function selectGameMode(mode) {
-  _selectedGameMode = mode;
-  document.getElementById('gmCard').classList.toggle('selected', mode === 'card');
-  document.getElementById('gmSong').classList.toggle('selected', mode === 'song');
-}
-
-function confirmGameMode() {
-  _gameModeSelected = true; // Flag to skip selector on next open
-  if (_selectedGameMode === 'card') {
-    closeM('gameModeSelector');
-    _gameMode = 'card';
-    // Reset card game UI
-    players = [];
-    deckType = null;
-    code = null;
-    renderP();
-    // Show card game player modal
-    document.getElementById('cardGameTab').style.display = '';
-    document.getElementById('songRouletteTab').style.display = 'none';
-    document.getElementById('playerModalSub').textContent = 'Add players · drag to reorder';
-    document.getElementById('startBtn').textContent = 'Choose a Deck →';
-    document.getElementById('startBtn').disabled = true;
-    document.getElementById('backToGameBtn').style.display = 'none';
-    openM('playerModal');
-  } else {
-    closeM('gameModeSelector');
-    _gameMode = 'song';
-    // Reset song game UI
-    _srGuestSpinsUsed = 0;
-    // Show Song Roulette player modal
-    document.getElementById('cardGameTab').style.display = 'none';
-    document.getElementById('songRouletteTab').style.display = '';
-    document.getElementById('srPinInput').value = '';
-    document.getElementById('srPCount').textContent = '0';
-    document.getElementById('srPList').innerHTML = '';
-    document.getElementById('srStartBtn').disabled = true;
-    openM('playerModal');
-  }
-}
-
 function switchGameModeTab(tab) {
   const isCard = tab === 'card';
   _gameMode = tab;
@@ -2195,8 +2141,14 @@ function removeSRPlayer(name) {
 }
 
 function startSongRoulette() {
-  if (players.length < 2) return; // shared players array
+  if (players.length < 2) return;
   _srSongs = [...SONG_CACHE].sort(() => Math.random() - 0.5);
+  // Reset session counters
+  _srSessionSongs = 0;
+  _srSessionPasses = 0;
+  _srSessionDrinks = 0;
+  _srPlayerStats = {};
+  players.forEach(p => { _srPlayerStats[p] = { songs: 0, passes: 0, drinks: 0 }; });
   closeM('playerModal');
   document.getElementById('songRouletteScreen').classList.add('visible');
   // Reset UI to idle state
@@ -2332,29 +2284,38 @@ function fetchAlbumArt(title, artist) {
 }
 
 function rateSong(verdict) {
-  bumpStat('sr_songs');
-  if (verdict === 'pass') bumpStat('sr_passes');
-  else bumpStat('sr_drinks');
-
-  const actionsEl = document.getElementById('srActions');
   const isPass = verdict === 'pass';
 
-  // Show brief result feedback
+  // Session counters (this play session only)
+  _srSessionSongs++;
+  if (isPass) _srSessionPasses++; else _srSessionDrinks++;
+
+  // Per-player tracking
+  if (_srCurrentPlayer && _srPlayerStats[_srCurrentPlayer]) {
+    _srPlayerStats[_srCurrentPlayer].songs++;
+    if (isPass) _srPlayerStats[_srCurrentPlayer].passes++;
+    else _srPlayerStats[_srCurrentPlayer].drinks++;
+  }
+
+  const actionsEl = document.getElementById('srActions');
+  const MIC_SVG = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`;
+  const CUP_SVG = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/></svg>`;
+
   actionsEl.innerHTML = `
     <div style="text-align:center;width:100%;padding:8px 0;">
-      <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.5rem;color:${isPass ? '#27C07A' : '#E8294A'};margin-bottom:.3rem;">
-        ${isPass ? '✓ Passed!' : '✗ Drink!'}
+      <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.5rem;color:${isPass ? '#27C07A' : '#E8294A'};margin-bottom:.35rem;display:flex;align-items:center;justify-content:center;gap:6px;">
+        ${isPass ? '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#27C07A;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;"><polyline points="20 6 9 17 4 12"/></svg> Passed!' : '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#E8294A;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/></svg> Drink!'}
       </div>
-      <div style="font-size:.8rem;color:rgba(255,255,255,.4);">
-        ${isPass ? _srCurrentPlayer + ' nailed it 🎤' : _srCurrentPlayer + ' takes a sip 🍺'}
+      <div style="font-size:.82rem;color:rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;gap:4px;">
+        ${isPass ? MIC_SVG : CUP_SVG}
+        ${_srCurrentPlayer} ${isPass ? 'nailed it' : 'takes a sip'}
       </div>
     </div>`;
 
   setTimeout(() => {
-    // Reset album art to music note SVG
     document.getElementById('srAlbumContent').innerHTML = `<svg viewBox="0 0 24 24" style="width:56px;height:56px;stroke:rgba(255,255,255,.2);fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
     document.getElementById('srSongTitle').textContent = 'Ready for another?';
-    document.getElementById('srSongArtist').textContent = `${_srCurrentPlayer} just ${isPass ? 'passed ✓' : 'drank ✗'}`;
+    document.getElementById('srSongArtist').textContent = `${_srCurrentPlayer} just ${isPass ? 'passed' : 'drank'}`;
     document.getElementById('srPlayerTag').style.display = 'none';
 
     const remaining = isGuest() ? 3 - _srGuestSpinsUsed : null;
@@ -2378,24 +2339,59 @@ function updateSRGuestBar() {
 }
 
 function showSREndScreen(){
-  // Count session stats
-  const stats = getLocalStats();
-  const songs  = stats.sr_songs  || 0;
-  const passes = stats.sr_passes || 0;
-  const drinks = stats.sr_drinks || 0;
-  document.getElementById('srEndSongs').textContent  = songs;
-  document.getElementById('srEndPasses').textContent = passes;
-  document.getElementById('srEndDrinks').textContent = drinks;
-  // Fun note
+  // Use session-only counters, not localStorage
+  document.getElementById('srEndSongs').textContent  = _srSessionSongs;
+  document.getElementById('srEndPasses').textContent = _srSessionPasses;
+  document.getElementById('srEndDrinks').textContent = _srSessionDrinks;
+
+  // Build per-player leaderboard
+  const leaderboard = document.getElementById('srLeaderboard');
+  if (leaderboard && Object.keys(_srPlayerStats).length > 0) {
+    // Find MVPs
+    const allPlayers = Object.entries(_srPlayerStats);
+    const topDrinker = allPlayers.sort((a,b) => b[1].drinks - a[1].drinks)[0];
+    const topSinger  = allPlayers.sort((a,b) => b[1].passes - a[1].passes)[0];
+
+    const DRINK_SVG = `<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/></svg>`;
+    const MIC_SVG   = `<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`;
+
+    // Player rows sorted by songs sung
+    const rows = Object.entries(_srPlayerStats)
+      .sort((a,b) => b[1].songs - a[1].songs)
+      .map(([name, s]) => {
+        const badges = [];
+        if (name === topDrinker[0] && s.drinks > 0) badges.push(`<span style="background:rgba(232,41,74,.18);color:#E8294A;border:1px solid rgba(232,41,74,.3);border-radius:6px;padding:2px 7px;font-size:.6rem;font-weight:800;letter-spacing:.04em;display:inline-flex;align-items:center;gap:3px;">${DRINK_SVG} TOP DRINKER</span>`);
+        if (name === topSinger[0] && s.passes > 0)  badges.push(`<span style="background:rgba(39,192,122,.15);color:#27C07A;border:1px solid rgba(39,192,122,.28);border-radius:6px;padding:2px 7px;font-size:.6rem;font-weight:800;letter-spacing:.04em;display:inline-flex;align-items:center;gap:3px;">${MIC_SVG} TOP SINGER</span>`);
+        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;gap:8px;">
+          <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0;">
+            <div style="font-family:'Figtree',sans-serif;font-weight:800;font-size:.9rem;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name}</div>
+            ${badges.join('')}
+          </div>
+          <div style="display:flex;gap:10px;flex-shrink:0;">
+            <div style="text-align:center;"><div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;color:#27C07A;">${s.passes}</div><div style="font-size:.55rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.05em;">Pass</div></div>
+            <div style="text-align:center;"><div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;color:#E8294A;">${s.drinks}</div><div style="font-size:.55rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.05em;">Drank</div></div>
+          </div>
+        </div>`;
+      }).join('');
+    leaderboard.innerHTML = rows;
+    leaderboard.style.display = 'flex';
+  } else if (leaderboard) {
+    leaderboard.style.display = 'none';
+  }
+
+  // Fun closing note based on session
+  const mostDrinks = Object.values(_srPlayerStats).reduce((m,s)=>Math.max(m,s.drinks),0);
+  const topD = Object.entries(_srPlayerStats).find(([,s])=>s.drinks===mostDrinks);
   const notes = [
-    'Someone definitely owes someone an apology.',
-    'Whoever drank the most — respect.',
-    'Not all heroes wear capes. Some just sing off-key.',
-    `${players[0] || 'Someone'} carried the whole session.`,
+    mostDrinks > 0 && topD ? `${topD[0]} drank the most. Respect.` : null,
+    _srSessionPasses > _srSessionDrinks ? 'This group can actually sing. Impressive.' : null,
+    _srSessionDrinks > _srSessionPasses ? 'Someone needs water. Lots of it.' : null,
     'The group that sings together, stays together.',
-  ];
+    'Not all heroes wear capes. Some just sing off-key.',
+  ].filter(Boolean);
   const el = document.getElementById('srEndNote');
-  if(el) el.textContent = notes[Math.floor(Math.random()*notes.length)];
+  if (el) el.textContent = notes[0] || notes[Math.floor(Math.random()*notes.length)];
+
   document.getElementById('songRouletteScreen').classList.remove('visible');
   document.getElementById('srGuestBar').classList.remove('show');
   const end = document.getElementById('songRouletteEnd');
@@ -2410,7 +2406,6 @@ function srPlayAgain(){
 function srSwitchToCards(){
   document.getElementById('songRouletteEnd').style.display = 'none';
   _gameMode = 'card';
-  _gameModeSelected = true;
   switchGameModeTab('card');
   openM('playerModal');
 }
@@ -2418,7 +2413,6 @@ function srSwitchToCards(){
 function srFullReset(){
   document.getElementById('songRouletteEnd').style.display = 'none';
   _srGuestSpinsUsed = 0;
-  _gameModeSelected = false;
   _gameMode = 'card';
   openPlayerModal();
 }
@@ -2608,12 +2602,12 @@ function showEndScreen(){
 function endScreenSwitchToSong(){
   document.getElementById('endScreen').classList.remove('show');
   _gameMode='song';
-  _gameModeSelected=true;
+  
   switchGameModeTab('song');
   openM('playerModal');
 }
 function restartRound(){document.getElementById('endScreen').classList.remove('show');if(deckType)reshuffleDeck();}
-function fullReset(){document.getElementById('endScreen').classList.remove('show');deckType='';pool=[];drawn=0;skipped=0;hist=[];code='';pIdx=0;stopTimer();updateBadge();document.getElementById('app').classList.remove('visible');document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));document.getElementById('confirmDeck').disabled=true;selDeck='';_nudgeShown=false;_gameModeSelected=false;openPlayerModal();}
+function fullReset(){document.getElementById('endScreen').classList.remove('show');deckType='';pool=[];drawn=0;skipped=0;hist=[];code='';pIdx=0;stopTimer();updateBadge();document.getElementById('app').classList.remove('visible');document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));document.getElementById('confirmDeck').disabled=true;selDeck='';_nudgeShown=false;openPlayerModal();}
 function saveSession(){if(!code)return;try{localStorage.setItem('dd_'+code,JSON.stringify({players,deckType,pIdx,drawn,skipped,pool:pool.map(c=>c.i),hist:hist.slice(0,30),code}));}catch(e){}}
 function tryResume(){const c=document.getElementById('resumeInput').value.trim().toUpperCase();const err=document.getElementById('resumeErr');if(c.length<6){err.textContent='Enter a valid 6-character code.';return;}let data;try{data=JSON.parse(localStorage.getItem('dd_'+c)||'null');}catch(e){}if(!data){err.textContent='No saved game found. Check the code.';return;}err.textContent='';players=data.players||[];deckType=data.deckType||'';pIdx=data.pIdx||0;drawn=data.drawn||0;skipped=data.skipped||0;hist=data.hist||[];code=c;const allQ=DECKS[deckType]||[];pool=(data.pool||[]).map(i=>({q:allQ[i]||'',i,isDare:(allQ[i]||'').startsWith('DARE:')}));closeM('resumeModal');document.getElementById('app').classList.add('visible');updateBadge();syncStats();clearSlotAndShow(()=>renderWelcome());updateHeat();renderP();}
 
