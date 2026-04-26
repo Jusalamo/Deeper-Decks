@@ -60,6 +60,7 @@ body.dark .dots-btn:hover{background:rgba(255,255,255,.17);}
 .dot{width:4px;height:4px;border-radius:50%;background:var(--ink);display:block;flex-shrink:0;}
 body.dark .dot{background:var(--white);}
 .dots-menu{position:absolute;top:calc(100% + 8px);right:0;background:var(--white);border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:6px;min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.07);z-index:6900;opacity:0;transform:translateY(-6px) scale(.97);transform-origin:top right;pointer-events:none;transition:opacity .18s ease,transform .18s cubic-bezier(.16,1,.3,1);}
+.dots-menu.show{opacity:1;transform:none;pointer-events:auto;}
 .dots-menu.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
 body.dark .dots-menu{background:#1E1E1E;border-color:rgba(255,255,255,.09);box-shadow:0 8px 32px rgba(0,0,0,.45),0 2px 8px rgba(0,0,0,.3);}
 .dots-item{width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;border:none;background:transparent;border-radius:10px;cursor:pointer;font-family:'Figtree',sans-serif;font-weight:700;font-size:.88rem;color:var(--ink);text-align:left;transition:background .12s;white-space:nowrap;}
@@ -74,7 +75,7 @@ body.dark .dots-divider{background:rgba(255,255,255,.08);}
 .deck-badge{height:28px;padding:0 10px;border-radius:99px;border:none;font-family:'Figtree',sans-serif;font-size:.7rem;font-weight:800;letter-spacing:.02em;cursor:pointer;display:flex;align-items:center;gap:4px;white-space:nowrap;color:#fff;flex-shrink:0;}
 
 /* SCROLL */
-.scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;align-items:center;padding:0 16px 24px;gap:0;}
+.scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;align-items:center;padding:0 16px 12px;gap:0;min-height:0;}
 
 /* CARD CONTAINER */
 .card-container-wrap{width:100%;max-width:320px;margin:0 auto;flex-shrink:0;}
@@ -274,10 +275,11 @@ input:checked+.tog-track:before{transform:translateX(17px);}
 .sel-inp{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 9px;color:var(--white);font-family:'Figtree',sans-serif;font-size:.82rem;outline:none;cursor:pointer;}
 
 /* BUTTONS */
-.btn-full{width:100%;padding:14px;background:var(--white);color:var(--ink);border:none;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-0.01em;cursor:pointer;transition:all .15s;margin-top:.9rem;display:flex;align-items:center;justify-content:center;gap:8px;}
-.btn-full:hover:not(:disabled){transform:translateY(-1px);}
-.btn-full:disabled{opacity:.28;cursor:not-allowed;}
-.btn-ghost{width:100%;padding:12px;background:rgba(255,255,255,.07);color:var(--white);border:1px solid rgba(255,255,255,.1);border-radius:13px;font-family:'Figtree',sans-serif;font-weight:800;font-size:.88rem;letter-spacing:-0.01em;cursor:pointer;transition:all .15s;margin-top:.45rem;}
+.btn-full{width:100%;padding:14px;min-height:50px;background:var(--white);color:var(--ink);border:none;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-0.01em;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:.9rem;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 3px 0 rgba(0,0,0,.3);}
+.btn-full:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 5px 0 rgba(0,0,0,.3);}
+.btn-full:active:not(:disabled){transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.2);}
+.btn-full:disabled{opacity:.28;cursor:not-allowed;transform:none;box-shadow:none;}
+.btn-ghost{width:100%;padding:13px;min-height:50px;background:rgba(255,255,255,.07);color:var(--white);border:1px solid rgba(255,255,255,.1);border-radius:13px;font-family:'Figtree',sans-serif;font-weight:800;font-size:.88rem;letter-spacing:-0.01em;cursor:pointer;transition:all .15s;margin-top:.45rem;display:flex;align-items:center;justify-content:center;}
 .btn-ghost:hover{background:rgba(255,255,255,.12);}
 /* ── IMPROVEMENT #1: danger ghost for confirm sheet ── */
 .btn-danger-ghost{width:100%;padding:13px;background:rgba(232,41,74,.1);color:#FF7085;border:1px solid rgba(232,41,74,.22);border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:.95rem;cursor:pointer;transition:all .15s;margin-top:.45rem;}
@@ -305,7 +307,8 @@ input:checked+.tog-track:before{transform:translateX(17px);}
 .ob-icon svg{width:32px;height:32px;stroke:#fff;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
 @keyframes floatIcon{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .ob-title{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.9rem;letter-spacing:-0.04em;color:var(--white);line-height:1.1;margin-bottom:.6rem;}
-.ob-body{font-size:.9rem;color:rgba(255,255,255,.42);line-height:1.7;margin-bottom:2.5rem;max-width:300px;margin-left:auto;margin-right:auto;}
+.ob-body{font-size:.88rem;color:rgba(255,255,255,.42);line-height:1.7;margin-bottom:1.4rem;max-width:300px;margin-left:auto;margin-right:auto;}
+.ob-extra{margin-bottom:1.4rem;width:100%;max-width:300px;margin-left:auto;margin-right:auto;display:flex;flex-direction:column;gap:8px;}
 .ob-next{width:100%;max-width:340px;padding:15px;background:var(--white);color:var(--ink);border:none;border-radius:14px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 0 rgba(0,0,0,.3);}
 .ob-next:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.3);}
 .ob-next:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.3);}
@@ -541,52 +544,53 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
 .gn-later{width:100%;padding:9px;background:none;border:none;color:rgba(255,255,255,.2);font-family:'Figtree',sans-serif;font-weight:600;font-size:.76rem;cursor:pointer;margin-top:.3rem;}
 
 
-/* Song Roulette main screen */
-#songRouletteScreen{position:fixed;inset:0;background:var(--paper);display:none;flex-direction:column;z-index:100;overflow:hidden;color:#fff;}
+/* ── SONG ROULETTE — mirrors card game layout ── */
+#songRouletteScreen{position:fixed;inset:0;background:#0E0E0E;display:none;flex-direction:column;z-index:100;overflow:hidden;}
 #songRouletteScreen.visible{display:flex;}
-.sr-topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;flex-shrink:0;gap:8px;z-index:110;border-bottom:1px solid rgba(255,255,255,.07);}
-.sr-logo{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.25rem;letter-spacing:-0.04em;}
-.sr-back-btn{width:40px;height:40px;border-radius:11px;border:none;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;}
-.sr-back-btn:hover{background:rgba(255,255,255,.14);}
-.sr-back-btn svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.sr-spinner-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative;padding:24px 20px 16px;min-height:0;gap:1.6rem;}
-.sr-spinner{display:flex;flex-direction:column;align-items:center;gap:1.4rem;animation:none;width:100%;max-width:340px;}
-.sr-spinner.spinning{animation:spinnerBlur 0.8s cubic-bezier(.25,.46,.45,.94) forwards;}
-@keyframes spinnerBlur{0%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.02);filter:blur(2px)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.sr-album{width:160px;height:160px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);flex-shrink:0;}
-.sr-album img{width:100%;height:100%;object-fit:cover;display:block;border-radius:20px;}
-.sr-album-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,rgba(124,58,237,.08),rgba(232,41,74,.06));}
-.sr-song-info{text-align:center;display:flex;flex-direction:column;gap:.5rem;min-height:72px;justify-content:center;width:100%;}
-.sr-song-title{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.45rem;letter-spacing:-0.03em;color:#fff;line-height:1.2;word-wrap:break-word;}
-.sr-song-artist{font-size:.9rem;color:rgba(255,255,255,.45);font-weight:600;}
-.sr-player-tag{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;background:rgba(39,192,122,.18);border:1px solid rgba(39,192,122,.35);border-radius:99px;color:#27C07A;font-family:'Figtree',sans-serif;font-weight:800;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;}
-.sr-player-tag svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.sr-actions{display:flex;gap:8px;padding:12px 16px 24px;flex-shrink:0;width:100%;max-width:480px;margin:0 auto;align-self:center;}
-.sr-btn{flex:1;min-height:52px;border:none;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 0 rgba(0,0,0,.3);}
-.sr-btn:active{transform:scale(.97);box-shadow:0 1px 0 rgba(0,0,0,.2);}
-.sr-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.sr-pass{background:#27C07A;color:#fff;box-shadow:0 4px 0 rgba(27,110,68,.6);}
-.sr-pass:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(27,110,68,.6);}
-.sr-drink{background:#E8294A;color:#fff;box-shadow:0 4px 0 rgba(140,20,34,.6);}
-.sr-drink:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(140,20,34,.6);}
-.sr-spin-btn{background:var(--white);color:var(--ink);width:100%;box-shadow:0 4px 0 rgba(0,0,0,.4);}
-.sr-spin-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.4);}
-.sr-spin-btn:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.2);}
-.sr-spin-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+/* SR topbar forces dark mode always */
+#songRouletteScreen .topbar{background:#0E0E0E;border-bottom:1px solid rgba(255,255,255,.08);}
+#songRouletteScreen .topbar-logo span{color:#fff !important;-webkit-text-fill-color:transparent;}
+#songRouletteScreen .dot{background:#fff;}
+#songRouletteScreen .dots-btn{background:rgba(255,255,255,.1);}
+#songRouletteScreen .dots-btn:hover{background:rgba(255,255,255,.18);}
+#songRouletteScreen .scroll-area{background:#0E0E0E;}
+/* SR text colors */
+.sr-song-title{color:#fff;}
+.sr-song-artist{color:rgba(255,255,255,.5);}
+.sr-album-box{position:absolute;inset:0;border-radius:18px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 8px 32px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08);}
+body.dark .sr-album-box{background:rgba(255,255,255,.04);}
+.sr-album-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,rgba(124,58,237,.18),rgba(232,41,74,.12));}
+.sr-song-info{text-align:center;display:flex;flex-direction:column;align-items:center;gap:.35rem;padding:0 16px;width:100%;}
+.sr-song-title{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.25rem;letter-spacing:-0.03em;color:var(--white);line-height:1.2;word-wrap:break-word;}
+.sr-song-artist{font-size:.82rem;color:var(--muted);font-weight:600;}
+.sr-player-tag{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(39,192,122,.15);border:1px solid rgba(39,192,122,.28);border-radius:99px;color:#27C07A;font-family:'Figtree',sans-serif;font-weight:800;font-size:.67rem;letter-spacing:.08em;text-transform:uppercase;margin-top:.15rem;}
+.sr-player-tag svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sr-spin-main{flex:1;background:var(--white);color:var(--ink);min-height:50px;font-family:'Figtree',sans-serif;font-weight:900;font-size:.95rem;border:none;border-radius:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 0 rgba(0,0,0,.4);letter-spacing:-.01em;transition:transform .15s,box-shadow .15s;}
+.sr-spin-main:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.4);}
+.sr-spin-main:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.2);}
+.sr-spin-main:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+#songRouletteScreen .draw-row{padding:8px 16px 20px;width:100%;max-width:480px;align-self:center;}
+
+body.dark .sr-spin-main{background:var(--white);color:var(--ink);}
+.sr-pass-btn{width:50px;height:50px;border-radius:12px;background:#27C07A;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;transition:all .15s;box-shadow:0 3px 0 rgba(27,110,68,.5);}
+.sr-pass-btn:hover{transform:translateY(-2px);}
+.sr-pass-btn:active{transform:translateY(1px);}
+.sr-drink{background:#E8294A;color:#fff;border:none;cursor:pointer;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:.95rem;min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;box-shadow:0 3px 0 rgba(140,20,34,.5);transition:all .15s;}
+.sr-drink:hover{transform:translateY(-2px);}
+.sr-drink:active{transform:translateY(1px);}
+.sr-drink svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 #srGuestBar{position:fixed;top:0;left:0;right:0;z-index:105;background:linear-gradient(90deg,rgba(124,58,237,.18),rgba(232,41,74,.18));border-bottom:1px solid rgba(255,255,255,.1);padding:6px 14px;display:none;align-items:center;gap:10px;justify-content:space-between;}
 #srGuestBar.show{display:flex;}
-#songRouletteScreen .sr-topbar{margin-top:0;}
-#srGuestBar.show ~ #songRouletteScreen .sr-topbar{margin-top:32px;}
-.sr-gb-left{display:flex;align-items:center;gap:8px;font-size:.7rem;color:rgba(255,255,255,.6);font-weight:700;letter-spacing:.02em;}
+.sr-gb-left{display:flex;align-items:center;gap:8px;font-size:.7rem;color:rgba(255,255,255,.6);font-weight:700;}
 .sr-gb-spins{font-family:'Figtree',sans-serif;font-weight:900;font-size:.8rem;color:rgba(255,255,255,.85);}
 .sr-gb-spins.urgent{color:#FF7085;animation:timerPulse .7s ease infinite;}
 .sr-gb-signup{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:4px 11px;color:#fff;font-family:'Figtree',sans-serif;font-weight:800;font-size:.65rem;cursor:pointer;white-space:nowrap;letter-spacing:.02em;transition:all .15s;flex-shrink:0;}
 .sr-gb-signup:hover{background:rgba(255,255,255,.18);}
-.app-mode-toggle{display:flex;gap:3px;background:rgba(255,255,255,.06);border-radius:9px;padding:3px;border:1px solid rgba(255,255,255,.1);}
-.amt-btn{padding:8px 14px;border:none;border-radius:9px;background:transparent;color:rgba(255,255,255,.4);font-family:'Figtree',sans-serif;font-weight:700;font-size:.76rem;cursor:pointer;transition:all .18s;letter-spacing:.02em;white-space:nowrap;display:flex;align-items:center;gap:6px;flex:1;justify-content:center;}
+.amt-btn{padding:8px 14px;border:none;border-radius:9px;background:transparent;color:rgba(255,255,255,.4);font-family:'Figtree',sans-serif;font-weight:700;font-size:.76rem;cursor:pointer;transition:all .18s;white-space:nowrap;display:flex;align-items:center;gap:6px;flex:1;justify-content:center;}
 .amt-btn.on{background:#fff;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.3);}
 .amt-btn:not(.on):hover{color:rgba(255,255,255,.7);background:rgba(255,255,255,.06);}
+@keyframes spinnerBlur{0%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.02);filter:blur(2px)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
 /* ── SONG ROULETTE (NEW GAME MODE) ── */
 </style>
@@ -1101,41 +1105,90 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
 
 <!-- ── SONG ROULETTE SCREEN ── -->
 <div id="songRouletteScreen">
-  <div id="srGuestBar" class="sr-guest-bar">
+  <!-- Guest spin bar (mirrors guestBar) -->
+  <div id="srGuestBar">
     <div class="sr-gb-left">
       <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:rgba(255,255,255,.6);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-      <span class="sr-gb-spins" id="srSpinsLeft">3/3 spins</span>
+      <span class="sr-gb-spins" id="srSpinsLeft">3 spins left</span>
     </div>
     <button class="sr-gb-signup" onclick="showPaywall('song_spins')">Sign up free →</button>
   </div>
-  
-  <div class="sr-topbar">
-    <div class="sr-logo" style="background:linear-gradient(to right,#fff 0%,#fff 8%,#0ff 14%,#00f 22%,#800080 30%,#ffb6c1 38%,#f00 46%,#ff0 54%,#90ee90 62%,#0ff 70%,#fff 80%,#fff 100%) no-repeat 100% 0%/900%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbowLoop 4s ease-in-out infinite;">Song Roulette</div>
-    <button class="sr-back-btn" onclick="exitSongRoulette()" aria-label="Exit">
-      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-  </div>
 
-  <div class="sr-spinner-wrap">
-    <div class="sr-spinner" id="srSpinner">
-      <div class="sr-album">
-        <div class="sr-album-placeholder" id="srAlbumContent">
-          <svg viewBox="0 0 24 24" style="width:56px;height:56px;stroke:rgba(255,255,255,.2);fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+  <!-- Topbar (mirrors card game topbar exactly) -->
+  <div class="topbar">
+    <div class="topbar-logo">
+      <span style="background:linear-gradient(to right,#fff 0%,#fff 8%,#0ff 14%,#00f 22%,#800080 30%,#ffb6c1 38%,#f00 46%,#ff0 54%,#90ee90 62%,#0ff 70%,#fff 80%,#fff 100%) no-repeat 100% 0%/900%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbowLoop 4s ease-in-out infinite;font-family:'Figtree',sans-serif;font-weight:900;letter-spacing:-0.04em;">Song Roulette</span>
+    </div>
+    <div class="topbar-right">
+      <!-- Player count badge (mirrors deckBadge) -->
+      <div id="srPlayerBadge" style="display:none;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:4px 10px;font-family:'Figtree',sans-serif;font-weight:800;font-size:.72rem;color:rgba(255,255,255,.8);white-space:nowrap;letter-spacing:-.01em;"></div>
+      <!-- Dots menu (mirrors card game dots) -->
+      <div class="dots-wrap" id="srDotsWrap">
+        <button class="dots-btn" onclick="toggleSRDots(event)" aria-label="Song Roulette Menu">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </button>
+        <div class="dots-menu" id="srDotsMenu">
+          <button class="dots-item" onclick="event.stopPropagation();closeSRDots();openSRPlayers()"><span class="di-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Players</span></button>
+          <button class="dots-item" onclick="event.stopPropagation();closeSRDots();srReshuffleQueue()"><span class="di-icon"><svg viewBox="0 0 24 24"><path d="M4 4v5h5M20 20v-5h-5M20 9A9 9 0 0 0 7.2 4.2M4 15a9 9 0 0 0 12.8 4.8"/></svg></span><span>Reshuffle Songs</span></button>
+          <button class="dots-item" onclick="event.stopPropagation();closeSRDots();srViewHistory()"><span class="di-icon"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span>Song History</span></button>
+          <div class="dots-divider"></div>
+          <button class="dots-item" onclick="event.stopPropagation();closeSRDots();switchGameModeTab('card');openM('playerModal')"><span class="di-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span><span>Switch to Card Game</span></button>
+          <button class="dots-item" onclick="event.stopPropagation();closeSRDots();showSREndScreen()"><span class="di-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span>End Session</span></button>
         </div>
-      </div>
-      <div class="sr-song-info">
-        <div class="sr-song-title" id="srSongTitle">Pick a Player</div>
-        <div class="sr-song-artist" id="srSongArtist">Start spinning to begin</div>
-        <div class="sr-player-tag" id="srPlayerTag" style="display:none;"></div>
       </div>
     </div>
   </div>
 
-  <div class="sr-actions" id="srActions">
-    <button class="sr-btn sr-spin-btn" id="srSpinBtn" onclick="spinSong()">
-      <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+  <!-- Main content area (mirrors scroll-area) -->
+  <div class="scroll-area" style="gap:12px;">
+    <!-- Album art — same aspect ratio & position as card-aspect-box -->
+    <div class="card-container-wrap">
+      <div class="card-aspect-box">
+        <div class="sr-album-box" id="srAlbumBox">
+          <div id="srAlbumContent" class="sr-album-placeholder">
+            <svg viewBox="0 0 24 24" style="width:64px;height:64px;stroke:rgba(255,255,255,.18);fill:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Song info below card (mirrors swipe-hint position) -->
+    <div class="sr-song-info">
+      <div class="sr-song-title" id="srSongTitle">Ready to spin?</div>
+      <div class="sr-song-artist" id="srSongArtist">Tap Spin Song to begin</div>
+      <div class="sr-player-tag" id="srPlayerTag" style="display:none;"></div>
+    </div>
+    <!-- Heat-style spin progress (mirrors heat-wrap) -->
+    <div class="heat-wrap" id="srSpinTrack" style="display:none;">
+      <div class="heat-track"><div class="heat-fill" id="srSpinFill" style="width:0%;background:#27C07A;"></div></div>
+      <div class="heat-meta"><span id="srSpinLabel">Session progress</span><span id="srSpinPct">0 songs</span></div>
+    </div>
+  </div>
+
+  <!-- Draw row (mirrors card game draw-row exactly) -->
+  <div id="srActions" class="draw-row">
+    <button class="btn-draw sr-spin-main" id="srSpinBtn" onclick="spinSong()">
+      <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
       Spin Song
     </button>
+    <button class="btn-skip sr-pass-btn" id="srPassBtn" onclick="rateSong('pass')" style="display:none;" title="Pass">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+  </div>
+  <!-- Drink button (below draw row, shown after spin) -->
+  <div id="srDrinkRow" style="display:none;padding:0 16px 16px;width:100%;max-width:480px;margin:0 auto;align-self:center;">
+    <button class="sr-btn sr-drink" onclick="rateSong('drink')" style="width:100%;min-height:48px;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:.95rem;display:flex;align-items:center;justify-content:center;gap:8px;">
+      <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/></svg>
+      Drink
+    </button>
+  </div>
+
+  <!-- Song History drawer (mirrors histDrawer) -->
+  <div class="hist-drawer" id="srHistDrawer" style="transform:translateX(100%);">
+    <div class="hist-header">
+      <div style="font-family:'Figtree',sans-serif;font-weight:800;font-size:.95rem;">Song History</div>
+      <button onclick="closeSRHist()" style="background:rgba(255,255,255,.09);border:none;color:var(--ink);border-radius:7px;width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div id="srHistList" style="overflow-y:auto;flex:1;padding:8px 0;"></div>
   </div>
 </div>
 
@@ -1409,6 +1462,7 @@ function obSkip(){
   initAuth();
 }
 function maybeShowOnboarding(){
+  // Skip for return visitors — go straight to auth
   if(localStorage.getItem('dd_ob_seen'))return false;
   obStep=0;renderObSlide();
   document.getElementById('onboardingTour').style.display='flex';
@@ -2143,103 +2197,134 @@ function removeSRPlayer(name) {
 function startSongRoulette() {
   if (players.length < 2) return;
   _srSongs = [...SONG_CACHE].sort(() => Math.random() - 0.5);
+  _srHistList = [];
   // Reset session counters
   _srSessionSongs = 0;
   _srSessionPasses = 0;
   _srSessionDrinks = 0;
   _srPlayerStats = {};
   players.forEach(p => { _srPlayerStats[p] = { songs: 0, passes: 0, drinks: 0 }; });
+
   closeM('playerModal');
   document.getElementById('songRouletteScreen').classList.add('visible');
-  // Reset UI to idle state
-  const spinIcon = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
-  document.getElementById('srAlbumContent').innerHTML = `<svg viewBox="0 0 24 24" style="width:56px;height:56px;stroke:rgba(255,255,255,.2);fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
-  document.getElementById('srSongTitle').textContent = 'Ready to spin?';
-  document.getElementById('srSongArtist').textContent = `${players.length} player${players.length!==1?'s':''} · tap spin to begin`;
-  document.getElementById('srPlayerTag').style.display = 'none';
-  document.getElementById('srActions').innerHTML = `<button class="sr-btn sr-spin-btn" onclick="spinSong()">${spinIcon} Spin Song</button>`;
+
+  // Reset to idle state using new layout IDs
+  _srResetToIdle();
+
+  // Player badge in topbar
+  const badge = document.getElementById('srPlayerBadge');
+  if (badge) {
+    badge.textContent = `${players.length} players`;
+    badge.style.display = '';
+  }
+
   // Show guest bar if guest
   if (isGuest()) {
     document.getElementById('srGuestBar').classList.add('show');
     updateSRGuestBar();
   }
+
+  // Show progress track
+  const track = document.getElementById('srSpinTrack');
+  if (track) track.style.display = '';
+  _srUpdateProgress();
+}
+
+function _srResetToIdle() {
+  // Album back to placeholder
+  const ac = document.getElementById('srAlbumContent');
+  if (ac) ac.innerHTML = `<svg viewBox="0 0 24 24" style="width:64px;height:64px;stroke:rgba(255,255,255,.18);fill:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
+  document.getElementById('srSongTitle').textContent = 'Ready to spin?';
+  document.getElementById('srSongArtist').textContent = `${players.length} player${players.length!==1?'s':''} · tap to begin`;
+  document.getElementById('srPlayerTag').style.display = 'none';
+  // Show spin btn, hide pass + drink
+  const spinBtn = document.getElementById('srSpinBtn');
+  const passBtn = document.getElementById('srPassBtn');
+  const drinkRow = document.getElementById('srDrinkRow');
+  if (spinBtn) { spinBtn.disabled = false; spinBtn.style.display = ''; }
+  if (passBtn) passBtn.style.display = 'none';
+  if (drinkRow) drinkRow.style.display = 'none';
+}
+
+function _srUpdateProgress() {
+  const pct = document.getElementById('srSpinPct');
+  const label = document.getElementById('srSpinLabel');
+  if (pct) pct.textContent = `${_srSessionSongs} song${_srSessionSongs !== 1 ? 's' : ''}`;
+  if (label) label.textContent = 'This session';
+  const fill = document.getElementById('srSpinFill');
+  if (fill) {
+    const progress = Math.min((_srSessionSongs / 15) * 100, 100);
+    fill.style.width = progress + '%';
+    fill.style.background = progress > 66 ? '#E8294A' : progress > 33 ? '#FFD60A' : '#27C07A';
+  }
 }
 
 function spinSong() {
-  // Guest spin limit check
+  if (_srSpinning) return;
+
+  // Guest spin limit
   if (isGuest()) {
-    if (_srGuestSpinsUsed >= 3) {
-      showPaywall('song_spins', false);
-      return;
-    }
+    if (_srGuestSpinsUsed >= 3) { showPaywall('song_spins', false); return; }
     _srGuestSpinsUsed++;
     updateSRGuestBar();
   }
 
-  if (_srSpinning) return;
   _srSpinning = true;
 
-  // Reset album art to placeholder while spinning
-  document.getElementById('srAlbumContent').innerHTML = `<svg viewBox="0 0 24 24" style="width:52px;height:52px;stroke:rgba(255,255,255,.2);fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;animation:spin 0.4s linear infinite;"><circle cx="12" cy="12" r="10"/><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
-
-  // Disable spin button
-  const actionsEl = document.getElementById('srActions');
-  actionsEl.innerHTML = `<button class="sr-btn sr-spin-btn" disabled style="opacity:.5;cursor:not-allowed;"><svg viewBox=\"0 0 24 24\" style=\"width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:spin .8s linear infinite;flex-shrink:0;\"><path d=\"M21 12a9 9 0 1 1-6.219-8.56\"/></svg> Spinning...</button>`;
-
-  // Hide player tag while spinning
+  // Disable spin btn, hide pass+drink
+  const spinBtn = document.getElementById('srSpinBtn');
+  const passBtn = document.getElementById('srPassBtn');
+  const drinkRow = document.getElementById('srDrinkRow');
+  if (spinBtn) spinBtn.disabled = true;
+  if (passBtn) passBtn.style.display = 'none';
+  if (drinkRow) drinkRow.style.display = 'none';
   document.getElementById('srPlayerTag').style.display = 'none';
 
-  // Shuffle song list for this spin
+  // Spinning album placeholder
+  const ac = document.getElementById('srAlbumContent');
+  if (ac) ac.innerHTML = `<svg viewBox="0 0 24 24" style="width:52px;height:52px;stroke:rgba(255,255,255,.18);fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;animation:spin .6s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`;
+
+  // Slots timing
   const pool = [..._srSongs].sort(() => Math.random() - 0.5);
   let idx = 0;
-
-  // Slots-style timing: fast then slow
-  const timings = [
-    40,40,40,40,50,50,60,60,
-    75,75,90,90,110,130,150,
-    180,220,270,330,400
-  ];
+  const timings = [40,40,40,50,50,60,70,80,95,110,130,155,185,220,270,330,400];
 
   function tick(i) {
     if (i >= timings.length) {
-      // Land on final song
+      // Land
       const final = pool[i % pool.length];
       _srCurrentSong = final;
       _srCurrentPlayer = players[Math.floor(Math.random() * players.length)];
 
-      // Update display
       document.getElementById('srSongTitle').textContent = final.title;
       document.getElementById('srSongArtist').textContent = final.artist;
+
       const tag = document.getElementById('srPlayerTag');
-      tag.textContent = `🎤 ${_srCurrentPlayer}`;
-      tag.style.display = 'inline-block';
+      tag.innerHTML = `<svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>${_srCurrentPlayer}`;
+      tag.style.display = 'inline-flex';
 
       // Fetch album art
       fetchAlbumArt(final.title, final.artist);
 
-      // Swap to pass/drink buttons
-      actionsEl.innerHTML = `
-        <button class="sr-btn sr-pass" onclick="rateSong('pass')">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          Pass
-        </button>
-        <button class="sr-btn sr-drink" onclick="rateSong('drink')">
-          <svg viewBox="0 0 24 24"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/></svg>
-          Drink
-        </button>`;
+      // Show pass btn (skip-style) + drink row
+      if (spinBtn) { spinBtn.disabled = false; spinBtn.style.display = 'none'; }
+      if (passBtn) passBtn.style.display = '';
+      if (drinkRow) drinkRow.style.display = '';
 
-      sfx && sfx('shuffle');
+      // Show spin btn as "Next song" placeholder in draw row
+      spinBtn.innerHTML = `<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> Spin Song`;
+      spinBtn.style.display = '';
+
+      sfx && sfx('draw');
       _srSpinning = false;
       return;
     }
-
     const song = pool[idx % pool.length];
     document.getElementById('srSongTitle').textContent = song.title;
     document.getElementById('srSongArtist').textContent = song.artist;
     idx++;
     setTimeout(() => tick(i + 1), timings[i]);
   }
-
   tick(0);
 }
 
@@ -2286,48 +2371,104 @@ function fetchAlbumArt(title, artist) {
 function rateSong(verdict) {
   const isPass = verdict === 'pass';
 
-  // Session counters (this play session only)
+  // Session counters
   _srSessionSongs++;
   if (isPass) _srSessionPasses++; else _srSessionDrinks++;
 
   // Per-player tracking
   if (_srCurrentPlayer && _srPlayerStats[_srCurrentPlayer]) {
     _srPlayerStats[_srCurrentPlayer].songs++;
-    if (isPass) _srPlayerStats[_srCurrentPlayer].passes++;
-    else _srPlayerStats[_srCurrentPlayer].drinks++;
+    if (isPass) _srPlayerStats[_srCurrentPlayer].passes++; else _srPlayerStats[_srCurrentPlayer].drinks++;
   }
 
-  const actionsEl = document.getElementById('srActions');
-  const MIC_SVG = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`;
-  const CUP_SVG = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/></svg>`;
+  // Add to history
+  if (_srCurrentSong) {
+    _srHistList.unshift({ title: _srCurrentSong.title, artist: _srCurrentSong.artist, player: _srCurrentPlayer, verdict });
+    if (_srHistList.length > 50) _srHistList.pop();
+  }
 
-  actionsEl.innerHTML = `
-    <div style="text-align:center;width:100%;padding:8px 0;">
-      <div style="font-family:'Figtree',sans-serif;font-weight:900;font-size:1.5rem;color:${isPass ? '#27C07A' : '#E8294A'};margin-bottom:.35rem;display:flex;align-items:center;justify-content:center;gap:6px;">
-        ${isPass ? '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#27C07A;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;"><polyline points="20 6 9 17 4 12"/></svg> Passed!' : '<svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#E8294A;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/></svg> Drink!'}
-      </div>
-      <div style="font-size:.82rem;color:rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;gap:4px;">
-        ${isPass ? MIC_SVG : CUP_SVG}
-        ${_srCurrentPlayer} ${isPass ? 'nailed it' : 'takes a sip'}
-      </div>
+  // Show verdict on album art (overlaid card-style)
+  const ac = document.getElementById('srAlbumContent');
+  if (ac) ac.innerHTML = `
+    <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:${isPass?'rgba(39,192,122,.15)':'rgba(232,41,74,.12)'};border-radius:18px;">
+      <svg viewBox="0 0 24 24" style="width:40px;height:40px;stroke:${isPass?'#27C07A':'#E8294A'};fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;">${isPass?'<polyline points="20 6 9 17 4 12"/>':'<path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/>'}</svg>
+      <div style="font-family:\'Figtree\',sans-serif;font-weight:900;font-size:1.4rem;color:${isPass?'#27C07A':'#E8294A'};">${isPass?'Passed!':'Drink!'}</div>
+      <div style="font-size:.78rem;color:rgba(255,255,255,.45);">${_srCurrentPlayer} ${isPass?'nailed it':'takes a sip'}</div>
     </div>`;
 
-  setTimeout(() => {
-    document.getElementById('srAlbumContent').innerHTML = `<svg viewBox="0 0 24 24" style="width:56px;height:56px;stroke:rgba(255,255,255,.2);fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
-    document.getElementById('srSongTitle').textContent = 'Ready for another?';
-    document.getElementById('srSongArtist').textContent = `${_srCurrentPlayer} just ${isPass ? 'passed' : 'drank'}`;
-    document.getElementById('srPlayerTag').style.display = 'none';
+  // Update progress
+  _srUpdateProgress();
+  sfx && sfx(isPass ? 'draw' : 'dare');
 
+  // Hide pass+drink while showing verdict
+  const passBtn = document.getElementById('srPassBtn');
+  const drinkRow = document.getElementById('srDrinkRow');
+  const spinBtn = document.getElementById('srSpinBtn');
+  if (passBtn) passBtn.style.display = 'none';
+  if (drinkRow) drinkRow.style.display = 'none';
+  if (spinBtn) { spinBtn.disabled = true; }
+
+  setTimeout(() => {
     const remaining = isGuest() ? 3 - _srGuestSpinsUsed : null;
     const noSpins = remaining !== null && remaining <= 0;
-    const spinIcon = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
-    const lockIcon = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`;
-    actionsEl.innerHTML = `<button class="sr-btn sr-spin-btn" onclick="${noSpins ? "showPaywall('song_spins')" : 'spinSong()'}">
-      ${noSpins ? lockIcon + ' No spins left — Sign up free' : spinIcon + ' Spin Again'}
-    </button>`;
-    _srSpinning = false;
-  }, 1800);
+    if (noSpins) {
+      showPaywall('song_spins', false);
+    } else {
+      _srResetToIdle();
+    }
+  }, 1600);
 }
+
+// ── SONG ROULETTE DOTS MENU ──
+let _srHistList = [];
+
+function toggleSRDots(e){
+  e.stopPropagation();
+  const m = document.getElementById('srDotsMenu');
+  const open = m.classList.contains('show');
+  document.querySelectorAll('.dots-menu.show').forEach(x=>x.classList.remove('show'));
+  if (!open) m.classList.add('show');
+}
+function closeSRDots(){
+  const m = document.getElementById('srDotsMenu');
+  if(m) m.classList.remove('show');
+}
+function openSRPlayers(){
+  switchGameModeTab('song');
+  openM('playerModal');
+}
+function srReshuffleQueue(){
+  _srSongs = [...SONG_CACHE].sort(()=>Math.random()-0.5);
+  // Brief feedback
+  const title = document.getElementById('srSongTitle');
+  const prev = title.textContent;
+  title.textContent = 'Shuffled!';
+  setTimeout(()=>{ title.textContent = prev; }, 1000);
+}
+function srViewHistory(){
+  const list = document.getElementById('srHistList');
+  if (!list) return;
+  if (_srHistList.length === 0) {
+    list.innerHTML = '<p style="text-align:center;color:var(--muted);padding:2rem;font-size:.82rem;">No songs played yet</p>';
+  } else {
+    list.innerHTML = _srHistList.map((h,i) => `
+      <div class="hist-item">
+        <div class="hi-meta">${h.player}</div>
+        <div class="hi-text">${h.title}</div>
+        <div class="hi-sub">${h.artist}</div>
+        <div class="hi-badge ${h.verdict === 'pass' ? 'dare' : ''}" style="background:${h.verdict==='pass'?'rgba(39,192,122,.15)':'rgba(232,41,74,.15)'};color:${h.verdict==='pass'?'#27C07A':'#E8294A'};border-color:${h.verdict==='pass'?'rgba(39,192,122,.3)':'rgba(232,41,74,.3)'};">${h.verdict === 'pass' ? 'Passed' : 'Drank'}</div>
+      </div>`).join('');
+  }
+  const drawer = document.getElementById('srHistDrawer');
+  if(drawer) drawer.style.transform = 'translateX(0)';
+}
+function closeSRHist(){
+  const drawer = document.getElementById('srHistDrawer');
+  if(drawer) drawer.style.transform = 'translateX(100%)';
+}
+
+// Close SR dots on outside click
+document.addEventListener('click', () => closeSRDots());
 
 function updateSRGuestBar() {
   const used = _srGuestSpinsUsed;
@@ -2564,7 +2705,7 @@ function drawCard(){
   if(hist.length>50)hist.pop();
   clearSlotAndShow(()=>{renderCard(card);syncStats();updateHeat();sfx(card.isDare?'dare':'draw');},'left');
   pIdx=(pIdx+1)%Math.max(players.length,1);
-  renderP();saveSession();
+  renderP();saveSession();saveSessionState();
   if(timerOn)startTimer();
   maybeShowSwipeTip();
   maybeShowGuestNudge();
@@ -2815,6 +2956,34 @@ function showPasswordUpdateModal(){document.getElementById('pwUpdateModal').styl
 function closePwUpdate(){document.getElementById('pwUpdateModal').style.display='none';}
 async function doUpdatePassword(){const newPass=document.getElementById('pwUpdateInput').value,err=document.getElementById('pwUpdateErr');err.style.color='#FF7085';if(!newPass||newPass.length<6){err.textContent='Password must be at least 6 characters.';return;}const sb=getSB();if(!sb)return;const btn=document.getElementById('pwUpdateBtn');btn.disabled=true;btn.innerHTML='<span class="auth-spinner"></span>Updating…';try{const{error}=await sb.auth.updateUser({password:newPass});btn.disabled=false;btn.textContent='Update Password';if(error){err.textContent=friendlyAuthError(error);return;}err.style.color='#27C07A';err.textContent='✓ Password updated! You can now sign in.';setTimeout(()=>closePwUpdate(),2000);}catch(e){btn.disabled=false;btn.textContent='Update Password';err.textContent=networkOrError(e);}}
 
+
+// ── SESSION PERSISTENCE (survive page refresh) ──
+function saveSessionState(){
+  if(!deckType)return;
+  try{
+    sessionStorage.setItem('dd_sess',JSON.stringify({
+      deckType,players,drawn,skipped,pIdx,code,
+      pool:pool.slice(0,30),// save current queue (trimmed)
+      hist:hist.slice(0,20)
+    }));
+  }catch(e){}
+}
+function restoreSessionState(){
+  try{
+    const raw=sessionStorage.getItem('dd_sess');
+    if(!raw)return false;
+    const s=JSON.parse(raw);
+    if(!s.deckType||!s.players?.length)return false;
+    deckType=s.deckType;players=s.players;drawn=s.drawn||0;
+    skipped=s.skipped||0;pIdx=s.pIdx||0;code=s.code||'';
+    pool=s.pool||buildPool();hist=s.hist||[];
+    currentUser=currentUser||{id:null,name:'Guest',email:'',color:'#555',guest:true};
+    document.getElementById('app').classList.add('visible');
+    updateBadge();syncStats();updateHeat();renderP();renderCard(pool[pool.length-1]||hist[0]||null);
+    return true;
+  }catch(e){return false;}
+}
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // BOOT
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -2825,7 +2994,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     intro.classList.add('out');
     setTimeout(()=>{
       intro.style.display='none';
-      // ← IMPROVEMENT #2: show tour on first visit; otherwise go straight to auth
+      // Try to restore from a refresh first
+      if(restoreSessionState())return;
+      // Show onboarding only on first visit; skip for return users
       if(!maybeShowOnboarding())initAuth();
     },680);
   },2400);
