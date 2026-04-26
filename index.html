@@ -130,6 +130,9 @@ body.dark .heat-track{background:rgba(255,255,255,.1);}
 .heat-fill{height:100%;border-radius:99px;transition:width .9s ease,background .9s ease;min-width:3%;}
 .heat-meta{display:flex;justify-content:space-between;margin-top:4px;font-size:.62rem;font-weight:600;color:var(--muted);letter-spacing:.04em;}
 body.dark .heat-meta{color:rgba(255,255,255,.28);}
+#songRouletteScreen .heat-meta{color:rgba(255,255,255,.35);}
+#songRouletteScreen .heat-track{background:rgba(255,255,255,.1);}
+#songRouletteScreen .heat-wrap{padding:0 16px;width:100%;max-width:480px;align-self:center;}
 
 /* FILTER */
 .filter-row{width:100%;max-width:320px;display:flex;gap:5px;margin:8px 0 6px;}
@@ -547,12 +550,38 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
 /* ── SONG ROULETTE — mirrors card game layout ── */
 #songRouletteScreen{position:fixed;inset:0;background:#0E0E0E;display:none;flex-direction:column;z-index:100;overflow:hidden;}
 #songRouletteScreen.visible{display:flex;}
-/* SR topbar forces dark mode always */
+/* ── SR ACTION BAR — fixed bottom, 3 clean states ── */
+.sr-action-bar{flex-shrink:0;padding:8px 16px 24px;background:#0E0E0E;border-top:1px solid rgba(255,255,255,.08);}
+.sr-bar-state{display:flex;gap:10px;width:100%;max-width:480px;margin:0 auto;}
+.sr-spin-btn{flex:1;min-height:52px;background:#fff;color:#0E0E0E;border:none;border-radius:14px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 0 rgba(0,0,0,.5);transition:transform .15s,box-shadow .15s;}
+.sr-spin-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.sr-spin-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.5);}
+.sr-spin-btn:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.3);}
+.sr-spin-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;}
+.sr-verdict-pass{flex:1;min-height:52px;background:#27C07A;color:#fff;border:none;border-radius:14px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 0 rgba(27,110,68,.6);transition:transform .15s,box-shadow .15s;}
+.sr-verdict-pass svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.sr-verdict-pass:hover{transform:translateY(-2px);}
+.sr-verdict-pass:active{transform:translateY(1px);}
+.sr-verdict-drink{flex:1;min-height:52px;background:#E8294A;color:#fff;border:none;border-radius:14px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;letter-spacing:-.01em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 0 rgba(140,20,34,.6);transition:transform .15s,box-shadow .15s;}
+.sr-verdict-drink svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.sr-verdict-drink:hover{transform:translateY(-2px);}
+.sr-verdict-drink:active{transform:translateY(1px);}
+
+/* Light mode overrides for SR — ensure it stays dark regardless */
+@media (prefers-color-scheme: light) {
+  #songRouletteScreen, #songRouletteScreen .topbar,
+  #songRouletteScreen .scroll-area, .sr-action-bar { background:#0E0E0E; }
+}
 #songRouletteScreen .topbar{background:#0E0E0E;border-bottom:1px solid rgba(255,255,255,.08);}
 #songRouletteScreen .topbar-logo span{color:#fff !important;-webkit-text-fill-color:transparent;}
 #songRouletteScreen .dot{background:#fff;}
 #songRouletteScreen .dots-btn{background:rgba(255,255,255,.1);}
 #songRouletteScreen .dots-btn:hover{background:rgba(255,255,255,.18);}
+#songRouletteScreen .dots-wrap{position:relative;}
+#songRouletteScreen .dots-menu{background:#1A1A1A;border-color:rgba(255,255,255,.1);box-shadow:0 8px 32px rgba(0,0,0,.7);}
+#songRouletteScreen .dots-item{color:#fff;}
+#songRouletteScreen .dots-item:hover{background:rgba(255,255,255,.08);}
+#songRouletteScreen .di-icon svg{stroke:#fff;}
 #songRouletteScreen .scroll-area{background:#0E0E0E;}
 /* SR text colors */
 .sr-song-title{color:#fff;}
@@ -565,20 +594,7 @@ body.dark .sr-album-box{background:rgba(255,255,255,.04);}
 .sr-song-artist{font-size:.82rem;color:var(--muted);font-weight:600;}
 .sr-player-tag{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(39,192,122,.15);border:1px solid rgba(39,192,122,.28);border-radius:99px;color:#27C07A;font-family:'Figtree',sans-serif;font-weight:800;font-size:.67rem;letter-spacing:.08em;text-transform:uppercase;margin-top:.15rem;}
 .sr-player-tag svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.sr-spin-main{flex:1;background:var(--white);color:var(--ink);min-height:50px;font-family:'Figtree',sans-serif;font-weight:900;font-size:.95rem;border:none;border-radius:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 0 rgba(0,0,0,.4);letter-spacing:-.01em;transition:transform .15s,box-shadow .15s;}
-.sr-spin-main:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.4);}
-.sr-spin-main:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.2);}
-.sr-spin-main:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
-#songRouletteScreen .draw-row{padding:8px 16px 20px;width:100%;max-width:480px;align-self:center;}
 
-body.dark .sr-spin-main{background:var(--white);color:var(--ink);}
-.sr-pass-btn{width:50px;height:50px;border-radius:12px;background:#27C07A;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;transition:all .15s;box-shadow:0 3px 0 rgba(27,110,68,.5);}
-.sr-pass-btn:hover{transform:translateY(-2px);}
-.sr-pass-btn:active{transform:translateY(1px);}
-.sr-drink{background:#E8294A;color:#fff;border:none;cursor:pointer;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:.95rem;min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;box-shadow:0 3px 0 rgba(140,20,34,.5);transition:all .15s;}
-.sr-drink:hover{transform:translateY(-2px);}
-.sr-drink:active{transform:translateY(1px);}
-.sr-drink svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 #srGuestBar{position:fixed;top:0;left:0;right:0;z-index:105;background:linear-gradient(90deg,rgba(124,58,237,.18),rgba(232,41,74,.18));border-bottom:1px solid rgba(255,255,255,.1);padding:6px 14px;display:none;align-items:center;gap:10px;justify-content:space-between;}
 #srGuestBar.show{display:flex;}
 .sr-gb-left{display:flex;align-items:center;gap:8px;font-size:.7rem;color:rgba(255,255,255,.6);font-weight:700;}
@@ -1117,7 +1133,7 @@ body.dark .sr-spin-main{background:var(--white);color:var(--ink);}
   <!-- Topbar (mirrors card game topbar exactly) -->
   <div class="topbar">
     <div class="topbar-logo">
-      <span style="background:linear-gradient(to right,#fff 0%,#fff 8%,#0ff 14%,#00f 22%,#800080 30%,#ffb6c1 38%,#f00 46%,#ff0 54%,#90ee90 62%,#0ff 70%,#fff 80%,#fff 100%) no-repeat 100% 0%/900%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbowLoop 4s ease-in-out infinite;font-family:'Figtree',sans-serif;font-weight:900;letter-spacing:-0.04em;">Song Roulette</span>
+      <span style="font-size:1.35rem;background:linear-gradient(to right,#fff 0%,#fff 8%,#0ff 14%,#00f 22%,#800080 30%,#ffb6c1 38%,#f00 46%,#ff0 54%,#90ee90 62%,#0ff 70%,#fff 80%,#fff 100%) no-repeat 100% 0%/900%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbowLoop 4s ease-in-out infinite;font-family:'Figtree',sans-serif;font-weight:900;letter-spacing:-0.04em;">Song Roulette</span>
     </div>
     <div class="topbar-right">
       <!-- Player count badge (mirrors deckBadge) -->
@@ -1132,7 +1148,7 @@ body.dark .sr-spin-main{background:var(--white);color:var(--ink);}
           <button class="dots-item" onclick="event.stopPropagation();closeSRDots();srReshuffleQueue()"><span class="di-icon"><svg viewBox="0 0 24 24"><path d="M4 4v5h5M20 20v-5h-5M20 9A9 9 0 0 0 7.2 4.2M4 15a9 9 0 0 0 12.8 4.8"/></svg></span><span>Reshuffle Songs</span></button>
           <button class="dots-item" onclick="event.stopPropagation();closeSRDots();srViewHistory()"><span class="di-icon"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span>Song History</span></button>
           <div class="dots-divider"></div>
-          <button class="dots-item" onclick="event.stopPropagation();closeSRDots();switchGameModeTab('card');openM('playerModal')"><span class="di-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span><span>Switch to Card Game</span></button>
+          <button class="dots-item" onclick="event.stopPropagation();closeSRDots();_gameMode='card';openPlayerModal()"><span class="di-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span><span>Switch to Card Game</span></button>
           <button class="dots-item" onclick="event.stopPropagation();closeSRDots();showSREndScreen()"><span class="di-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span>End Session</span></button>
         </div>
       </div>
@@ -1140,7 +1156,7 @@ body.dark .sr-spin-main{background:var(--white);color:var(--ink);}
   </div>
 
   <!-- Main content area (mirrors scroll-area) -->
-  <div class="scroll-area" style="gap:12px;">
+  <div class="scroll-area" id="srScrollArea" style="gap:16px;padding-top:8px;">
     <!-- Album art — same aspect ratio & position as card-aspect-box -->
     <div class="card-container-wrap">
       <div class="card-aspect-box">
@@ -1164,22 +1180,33 @@ body.dark .sr-spin-main{background:var(--white);color:var(--ink);}
     </div>
   </div>
 
-  <!-- Draw row (mirrors card game draw-row exactly) -->
-  <div id="srActions" class="draw-row">
-    <button class="btn-draw sr-spin-main" id="srSpinBtn" onclick="spinSong()">
-      <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-      Spin Song
-    </button>
-    <button class="btn-skip sr-pass-btn" id="srPassBtn" onclick="rateSong('pass')" style="display:none;" title="Pass">
-      <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;"><polyline points="20 6 9 17 4 12"/></svg>
-    </button>
-  </div>
-  <!-- Drink button (below draw row, shown after spin) -->
-  <div id="srDrinkRow" style="display:none;padding:0 16px 16px;width:100%;max-width:480px;margin:0 auto;align-self:center;">
-    <button class="sr-btn sr-drink" onclick="rateSong('drink')" style="width:100%;min-height:48px;border-radius:13px;font-family:'Figtree',sans-serif;font-weight:900;font-size:.95rem;display:flex;align-items:center;justify-content:center;gap:8px;">
-      <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/></svg>
-      Drink
-    </button>
+  <!-- SR Action Bar — fixed bottom, always visible -->
+  <div id="srActionBar" class="sr-action-bar">
+    <!-- STATE 1: Idle — just Spin Song -->
+    <div id="srIdleBar" class="sr-bar-state">
+      <button class="sr-spin-btn" id="srSpinBtn" onclick="spinSong()">
+        <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        Spin Song
+      </button>
+    </div>
+    <!-- STATE 2: Spinning — disabled loading state -->
+    <div id="srSpinningBar" class="sr-bar-state" style="display:none;">
+      <button class="sr-spin-btn" disabled style="opacity:.5;cursor:not-allowed;">
+        <svg viewBox="0 0 24 24" style="animation:spin .7s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+        Spinning…
+      </button>
+    </div>
+    <!-- STATE 3: Song landed — Pass + Drink -->
+    <div id="srVerdictBar" class="sr-bar-state" style="display:none;">
+      <button class="sr-verdict-pass" onclick="rateSong('pass')">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Pass
+      </button>
+      <button class="sr-verdict-drink" onclick="rateSong('drink')">
+        <svg viewBox="0 0 24 24"><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M17 10c0 4-5 5-5 5s-5-1-5-5V3l2-1h6l2 1z"/></svg>
+        Drink
+      </button>
+    </div>
   </div>
 
   <!-- Song History drawer (mirrors histDrawer) -->
@@ -1415,7 +1442,7 @@ const OB_SLIDES=[
     svg:`<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>`,
     title:'The Card Game',
     body:'Pick a deck, add your crew, and draw cards. Questions get deeper and dares get bolder as the heat bar rises.',
-    extra:`<div style="margin-top:1.2rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;text-align:left;max-width:280px;"><div style="font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:700;margin-bottom:.5rem;">Sample Card</div><div style="font-family:'Figtree',sans-serif;font-weight:800;font-size:.95rem;color:#fff;line-height:1.4;">What's something you've never told anyone in this room?</div></div>`
+    extra:``
   },
   {
     color:'rgba(245,158,11,.2)',
@@ -2230,20 +2257,20 @@ function startSongRoulette() {
   _srUpdateProgress();
 }
 
+function _srSetBarState(state) {
+  // state: 'idle' | 'spinning' | 'verdict'
+  document.getElementById('srIdleBar').style.display     = state === 'idle'     ? '' : 'none';
+  document.getElementById('srSpinningBar').style.display = state === 'spinning' ? '' : 'none';
+  document.getElementById('srVerdictBar').style.display  = state === 'verdict'  ? '' : 'none';
+}
+
 function _srResetToIdle() {
-  // Album back to placeholder
   const ac = document.getElementById('srAlbumContent');
   if (ac) ac.innerHTML = `<svg viewBox="0 0 24 24" style="width:64px;height:64px;stroke:rgba(255,255,255,.18);fill:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`;
   document.getElementById('srSongTitle').textContent = 'Ready to spin?';
   document.getElementById('srSongArtist').textContent = `${players.length} player${players.length!==1?'s':''} · tap to begin`;
   document.getElementById('srPlayerTag').style.display = 'none';
-  // Show spin btn, hide pass + drink
-  const spinBtn = document.getElementById('srSpinBtn');
-  const passBtn = document.getElementById('srPassBtn');
-  const drinkRow = document.getElementById('srDrinkRow');
-  if (spinBtn) { spinBtn.disabled = false; spinBtn.style.display = ''; }
-  if (passBtn) passBtn.style.display = 'none';
-  if (drinkRow) drinkRow.style.display = 'none';
+  _srSetBarState('idle');
 }
 
 function _srUpdateProgress() {
@@ -2270,15 +2297,7 @@ function spinSong() {
   }
 
   _srSpinning = true;
-
-  // Disable spin btn, hide pass+drink
-  const spinBtn = document.getElementById('srSpinBtn');
-  const passBtn = document.getElementById('srPassBtn');
-  const drinkRow = document.getElementById('srDrinkRow');
-  if (spinBtn) spinBtn.disabled = true;
-  if (passBtn) passBtn.style.display = 'none';
-  if (drinkRow) drinkRow.style.display = 'none';
-  document.getElementById('srPlayerTag').style.display = 'none';
+  _srSetBarState('spinning');
 
   // Spinning album placeholder
   const ac = document.getElementById('srAlbumContent');
@@ -2291,7 +2310,7 @@ function spinSong() {
 
   function tick(i) {
     if (i >= timings.length) {
-      // Land
+      // Land on final song
       const final = pool[i % pool.length];
       _srCurrentSong = final;
       _srCurrentPlayer = players[Math.floor(Math.random() * players.length)];
@@ -2303,18 +2322,8 @@ function spinSong() {
       tag.innerHTML = `<svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>${_srCurrentPlayer}`;
       tag.style.display = 'inline-flex';
 
-      // Fetch album art
       fetchAlbumArt(final.title, final.artist);
-
-      // Show pass btn (skip-style) + drink row
-      if (spinBtn) { spinBtn.disabled = false; spinBtn.style.display = 'none'; }
-      if (passBtn) passBtn.style.display = '';
-      if (drinkRow) drinkRow.style.display = '';
-
-      // Show spin btn as "Next song" placeholder in draw row
-      spinBtn.innerHTML = `<svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> Spin Song`;
-      spinBtn.style.display = '';
-
+      _srSetBarState('verdict');
       sfx && sfx('draw');
       _srSpinning = false;
       return;
@@ -2396,17 +2405,11 @@ function rateSong(verdict) {
       <div style="font-size:.78rem;color:rgba(255,255,255,.45);">${_srCurrentPlayer} ${isPass?'nailed it':'takes a sip'}</div>
     </div>`;
 
-  // Update progress
   _srUpdateProgress();
   sfx && sfx(isPass ? 'draw' : 'dare');
 
-  // Hide pass+drink while showing verdict
-  const passBtn = document.getElementById('srPassBtn');
-  const drinkRow = document.getElementById('srDrinkRow');
-  const spinBtn = document.getElementById('srSpinBtn');
-  if (passBtn) passBtn.style.display = 'none';
-  if (drinkRow) drinkRow.style.display = 'none';
-  if (spinBtn) { spinBtn.disabled = true; }
+  // Show spinning bar as neutral state while verdict displays
+  _srSetBarState('spinning');
 
   setTimeout(() => {
     const remaining = isGuest() ? 3 - _srGuestSpinsUsed : null;
@@ -2425,17 +2428,19 @@ let _srHistList = [];
 function toggleSRDots(e){
   e.stopPropagation();
   const m = document.getElementById('srDotsMenu');
-  const open = m.classList.contains('show');
-  document.querySelectorAll('.dots-menu.show').forEach(x=>x.classList.remove('show'));
-  if (!open) m.classList.add('show');
+  if (!m) return;
+  const isOpen = m.classList.contains('show');
+  // Close all open menus first
+  document.querySelectorAll('.dots-menu.show').forEach(x => x.classList.remove('show'));
+  if (!isOpen) m.classList.add('show');
 }
 function closeSRDots(){
   const m = document.getElementById('srDotsMenu');
-  if(m) m.classList.remove('show');
+  if (m) m.classList.remove('show');
 }
 function openSRPlayers(){
-  switchGameModeTab('song');
-  openM('playerModal');
+  _gameMode = 'song';
+  openPlayerModal();
 }
 function srReshuffleQueue(){
   _srSongs = [...SONG_CACHE].sort(()=>Math.random()-0.5);
@@ -2547,8 +2552,7 @@ function srPlayAgain(){
 function srSwitchToCards(){
   document.getElementById('songRouletteEnd').style.display = 'none';
   _gameMode = 'card';
-  switchGameModeTab('card');
-  openM('playerModal');
+  openPlayerModal();
 }
 
 function srFullReset(){
