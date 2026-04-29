@@ -223,11 +223,7 @@ body.dark .btn-skip:hover{background:rgba(255,255,255,.16);}
 .d-desc{font-size:.68rem;color:rgba(255,255,255,.38);line-height:1.4;}
 
 /* ── IMPROVEMENT #4: DECK PREVIEW BAR ── */
-.deck-preview-bar{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:13px 15px;margin-bottom:.9rem;display:none;animation:fadeUp .22s ease;}
-.deck-preview-bar.show{display:block;}
-.dpb-label{font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:6px;}
-.dpb-sample{font-family:'Figtree',sans-serif;font-weight:600;font-size:.84rem;color:rgba(255,255,255,.72);line-height:1.55;font-style:italic;}
-.dpb-meta{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap;}
+
 .dpb-chip{font-size:.6rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:99px;}
 
 /* ICON PICKER */
@@ -311,7 +307,7 @@ input:checked+.tog-track:before{transform:translateX(17px);}
 @keyframes floatIcon{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .ob-title{font-family:'Figtree',sans-serif;font-weight:900;font-size:1.9rem;letter-spacing:-0.04em;color:var(--white);line-height:1.1;margin-bottom:.6rem;}
 .ob-body{font-size:.88rem;color:rgba(255,255,255,.42);line-height:1.7;margin-bottom:1.4rem;max-width:300px;margin-left:auto;margin-right:auto;}
-.ob-extra{margin-bottom:1.4rem;width:100%;max-width:300px;margin-left:auto;margin-right:auto;display:flex;flex-direction:column;gap:8px;}
+
 .ob-next{width:100%;max-width:340px;padding:15px;background:var(--white);color:var(--ink);border:none;border-radius:14px;font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 0 rgba(0,0,0,.3);}
 .ob-next:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(0,0,0,.3);}
 .ob-next:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(0,0,0,.3);}
@@ -573,10 +569,8 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
 .sr-song-artist{font-size:.8rem;color:rgba(255,255,255,.42);font-weight:600;}
 .sr-player-tag{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(39,192,122,.15);border:1px solid rgba(39,192,122,.28);border-radius:99px;color:#27C07A;font-family:'Figtree',sans-serif;font-weight:800;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;margin-top:.3rem;}
 .sr-player-tag svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.sr-progress-row{width:100%;padding:0 0 6px;flex-shrink:0;}
-.sr-prog-track{height:3px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;margin-bottom:5px;}
-.sr-prog-fill{height:100%;background:#27C07A;border-radius:99px;transition:width .4s ease,background .4s ease;width:0%;}
-.sr-prog-meta{display:flex;justify-content:space-between;font-size:.58rem;font-weight:700;color:rgba(255,255,255,.28);letter-spacing:.05em;text-transform:uppercase;}
+.sr-counter{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:4px 0 6px;flex-shrink:0;}
+.sr-counter span{font-family:'Figtree',sans-serif;font-weight:900;font-size:1rem;color:rgba(255,255,255,.7);margin-right:4px;}
 .sr-action-bar{flex-shrink:0;padding:8px 20px 20px;background:#0E0E0E;}
 .sr-bar-state{display:flex;gap:10px;width:100%;max-width:460px;margin:0 auto;}
 .sr-spin-btn{flex:1;min-height:50px;background:#fff;color:#0E0E0E;border:none;border-radius:14px;font-family:'Figtree',sans-serif;font-weight:900;font-size:.95rem;letter-spacing:-.01em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 0 rgba(0,0,0,.5);transition:transform .15s,box-shadow .15s;}
@@ -851,11 +845,7 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
       </div>
     </div>
     <!-- IMPROVEMENT #4: deck preview bar injected here on tap -->
-    <div class="deck-preview-bar" id="deckPreviewBar">
-      <div class="dpb-label">Sample card</div>
-      <div class="dpb-sample" id="dpbSample"></div>
-      <div class="dpb-meta" id="dpbMeta"></div>
-    </div>
+
     <div id="deckModalCustom"></div>
     <button id="confirmDeck" class="btn-full" onclick="startDeck()" disabled>Start Playing</button>
     <button id="switchDeckBtn" class="btn-full" onclick="switchDeckOnly()" disabled style="display:none;background:#27C07A;">Switch Deck →</button>
@@ -1164,14 +1154,8 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
       <div class="sr-player-tag" id="srPlayerTag" style="display:none;"></div>
     </div>
 
-    <!-- Progress bar -->
-    <div class="sr-progress-row" id="srSpinTrack">
-      <div class="sr-prog-track"><div class="sr-prog-fill" id="srSpinFill"></div></div>
-      <div class="sr-prog-meta">
-        <span id="srSpinLabel">Session</span>
-        <span id="srSpinPct">0 songs</span>
-      </div>
-    </div>
+    <!-- Song counter -->
+    <div class="sr-counter" id="srCounter"><span id="srCountNum">0</span>songs this session</div>
 
   </div>
 
@@ -1513,23 +1497,7 @@ function dismissSwipeTip(){
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // IMPROVEMENT #4 — DECK PREVIEW BAR
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function showDeckPreview(key){
-  const bar=document.getElementById('deckPreviewBar');
-  let cards=key.startsWith('custom_')?(getCustomDeck(key)||{cards:[]}).cards:(DECKS[key]||[]);
-  if(!cards.length){bar.classList.remove('show');return;}
-  const qs=cards.filter(c=>!c.startsWith('DARE:'));
-  const pick=qs.length?qs[Math.floor(Math.random()*Math.min(qs.length,10))]:cards[0];
-  const qn=qs.length,dn=cards.length-qn;
-  const col=key.startsWith('custom_')?(getCustomDeck(key)||{}).color||'#555':(COLORS[key]||'#555');
-  document.getElementById('dpbSample').textContent='"'+pick+'"';
-  document.getElementById('dpbMeta').innerHTML=
-    `<span class="dpb-chip" style="background:rgba(59,130,246,.15);color:#60A5FA;">${qn} Questions</span>`+
-    `<span class="dpb-chip" style="background:rgba(239,68,68,.12);color:#F87171;">${dn} Dares</span>`+
-    `<span class="dpb-chip" style="background:rgba(255,255,255,.06);color:rgba(255,255,255,.38);">${cards.length} total</span>`;
-  bar.classList.add('show');
-}
-
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━).cards:(DECKS[key]||[]);
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // GUEST RESTRICTIONS SYSTEM
@@ -2180,14 +2148,24 @@ const SONG_CACHE = [
 
 
 function switchGameModeTab(tab) {
-  const isCard = tab === 'card';
   _gameMode = tab;
+  const isCard = tab === 'card';
   document.getElementById('amtCard').classList.toggle('on', isCard);
   document.getElementById('amtSong').classList.toggle('on', !isCard);
   document.getElementById('cardGameTab').style.display = isCard ? '' : 'none';
   document.getElementById('songRouletteTab').style.display = isCard ? 'none' : '';
-  // Sync whichever list is now visible
-  if (isCard) renderP(); else renderSRPlayerList();
+  // Sync player lists
+  if (isCard) {
+    renderP();
+    const sb = document.getElementById('startBtn');
+    if (sb) { sb.textContent = 'Choose a Deck →'; sb.disabled = players.length < 2; }
+    const sub = document.getElementById('playerModalSub');
+    if (sub) sub.textContent = 'Add players · drag to reorder';
+    const btg = document.getElementById('backToGameBtn');
+    if (btg) btg.style.display = 'none';
+  } else {
+    renderSRPlayerList();
+  }
 }
 
 function addSRPlayer() {
@@ -2277,16 +2255,8 @@ function _srResetToIdle() {
 }
 
 function _srUpdateProgress() {
-  const pct = document.getElementById('srSpinPct');
-  const label = document.getElementById('srSpinLabel');
-  if (pct) pct.textContent = `${_srSessionSongs} song${_srSessionSongs !== 1 ? 's' : ''}`;
-  if (label) label.textContent = 'This session';
-  const fill = document.getElementById('srSpinFill');
-  if (fill) {
-    const progress = Math.min((_srSessionSongs / 15) * 100, 100);
-    fill.style.width = progress + '%';
-    fill.style.background = progress > 66 ? '#E8294A' : progress > 33 ? '#FFD60A' : '#27C07A';
-  }
+  const el = document.getElementById('srCountNum');
+  if (el) el.textContent = _srSessionSongs + ' ';
 }
 
 function spinSong() {
@@ -2307,7 +2277,15 @@ function spinSong() {
   if (ac) ac.innerHTML = `<svg viewBox="0 0 24 24" style="width:52px;height:52px;stroke:rgba(255,255,255,.18);fill:none;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;animation:spin .6s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`;
 
   // Slots timing
-  const pool = [..._srSongs].sort(() => Math.random() - 0.5);
+  // Exclude already-played songs this session
+  const playedTitles = new Set(_srHistList.map(h => h.title));
+  let available = SONG_CACHE.filter(s => !playedTitles.has(s.title));
+  if (available.length < 5) {
+    // All songs played — start fresh
+    _srHistList = [];
+    available = [...SONG_CACHE];
+  }
+  const pool = [...available].sort(() => Math.random() - 0.5);
   let idx = 0;
   const timings = [40,40,40,50,50,60,70,80,95,110,130,155,185,220,270,330,400];
 
@@ -2589,12 +2567,14 @@ function showSREndScreen(){
 
 function srPlayAgain(){
   document.getElementById('songRouletteEnd').style.display = 'none';
+  _srGuestSpinsUsed = 0;
   startSongRoulette();
 }
 
 function srSwitchToCards(){
   document.getElementById('songRouletteEnd').style.display = 'none';
   _gameMode = 'card';
+  deckType = null;
   openPlayerModal();
 }
 
@@ -2602,13 +2582,14 @@ function srFullReset(){
   document.getElementById('songRouletteEnd').style.display = 'none';
   _srGuestSpinsUsed = 0;
   _gameMode = 'card';
+  deckType = null;
+  players = [];
   openPlayerModal();
 }
 
 function exitSongRoulette(){
-  // Show end screen instead of going straight back
   showSREndScreen();
-  stopGuestTimer();
+  if (isGuest()) stopGuestTimer();
 }
 
 // Update paywall to handle song_spins reason
@@ -2663,7 +2644,6 @@ let selDeck='';
 function pickDeck(el){
   document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));
   el.classList.add('on');selDeck=el.dataset.deck;
-  showDeckPreview(selDeck); // ← improvement #4
   const ga=!!deckType;
   document.getElementById('confirmDeck').style.display=ga?'none':'';
   document.getElementById('confirmDeck').disabled=false;
@@ -2672,22 +2652,30 @@ function pickDeck(el){
 }
 function toDeck(){closeM('playerModal');openM('deckModal');}
 function openPlayerModal(){
-  const ga=!!deckType;
-  // Always go straight to modal — tabs handle game mode selection
-  const showSong = !ga && _gameMode === 'song';
-  document.getElementById('cardGameTab').style.display = showSong ? 'none' : '';
-  document.getElementById('songRouletteTab').style.display = showSong ? '' : 'none';
-  document.getElementById('amtCard').classList.toggle('on', !showSong);
-  document.getElementById('amtSong').classList.toggle('on', showSong);
-  if (showSong) renderSRPlayerList(); else renderP();
-  if (!showSong) {
+  const ga = !!deckType; // mid card-game
+  const isSong = _gameMode === 'song';
+
+  // Tab visibility
+  document.getElementById('cardGameTab').style.display  = isSong ? 'none' : '';
+  document.getElementById('songRouletteTab').style.display = isSong ? '' : 'none';
+  document.getElementById('amtCard').classList.toggle('on', !isSong);
+  document.getElementById('amtSong').classList.toggle('on', isSong);
+
+  if (isSong) {
+    // Song Roulette tab — sync player list, enable start if 2+
+    renderSRPlayerList();
+  } else {
+    // Card Game tab
+    renderP();
     const sb = document.getElementById('startBtn');
     if (ga) {
-      document.getElementById('playerModalSub').textContent = 'Add, remove or reorder players — game continues';
-      sb.innerHTML = '<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg> Done';
+      // Mid-game: editing players
+      document.getElementById('playerModalSub').textContent = 'Add, remove or reorder players';
+      sb.innerHTML = '<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:3px;"><polyline points="20 6 9 17 4 12"/></svg> Done';
       sb.disabled = players.length < 2;
       document.getElementById('backToGameBtn').style.display = '';
     } else {
+      // Fresh start
       document.getElementById('playerModalSub').textContent = 'Add players · drag to reorder';
       sb.textContent = 'Choose a Deck →';
       sb.disabled = players.length < 2;
@@ -2696,12 +2684,18 @@ function openPlayerModal(){
   }
   openM('playerModal');
 }
-function playerModalConfirm(){if(deckType)closeM('playerModal');else toDeck();}
+function playerModalConfirm(){
+  if (_gameMode === 'song') {
+    startSongRoulette();
+    return;
+  }
+  if (deckType) closeM('playerModal'); else toDeck();
+}
 function playerModalBgClick(e){if(e.target!==document.getElementById('playerModal'))return;if(deckType)closeM('playerModal');}
 function openDeckModal(){
   const ga=!!deckType;
   document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));
-  selDeck='';document.getElementById('deckPreviewBar').classList.remove('show');
+  selDeck='';
   document.getElementById('confirmDeck').disabled=true;document.getElementById('confirmDeck').style.display=ga?'none':'';
   document.getElementById('switchDeckBtn').disabled=true;document.getElementById('switchDeckBtn').style.display=ga?'':'none';
   document.getElementById('deckModalBackBtn').style.display=ga?'none':'';
@@ -2722,7 +2716,7 @@ function initDeck(type){
   updateBadge();syncStats();updateHeat();renderP();sfx('shuffle');bumpStat('games');
   clearSlotAndShow(()=>renderWelcome());
   // Start guest timer on first game (restarts each new game)
-  if(isGuest()){startGuestTimer();renderGuestLimitBar();}
+  if(isGuest()){startGuestTimer();}
 }
 function clearSlotAndShow(cb,dir='right'){const slot=document.getElementById('cardSlot');const old=slot.querySelector('.card');stopTimer();if(!old){slot.innerHTML='';cb();return;}old.classList.add(dir==='left'?'card-exit-left':'card-exit-right');setTimeout(()=>{slot.innerHTML='';cb();},360);}
 function getDeckLabel(){if(deckType.startsWith('custom_')){const cd=getCustomDeck(deckType);return cd?cd.name:'Custom Deck';}return LABELS[deckType]||'';}
@@ -2789,13 +2783,24 @@ function showEndScreen(){
 }
 function endScreenSwitchToSong(){
   document.getElementById('endScreen').classList.remove('show');
+  document.getElementById('app').classList.remove('visible');
   _gameMode='song';
-  
-  switchGameModeTab('song');
-  openM('playerModal');
+  deckType='';
+  openPlayerModal();
 }
+
 function restartRound(){document.getElementById('endScreen').classList.remove('show');if(deckType)reshuffleDeck();}
-function fullReset(){document.getElementById('endScreen').classList.remove('show');deckType='';pool=[];drawn=0;skipped=0;hist=[];code='';pIdx=0;stopTimer();updateBadge();document.getElementById('app').classList.remove('visible');document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));document.getElementById('confirmDeck').disabled=true;selDeck='';_nudgeShown=false;openPlayerModal();}
+function fullReset(){
+  document.getElementById('endScreen').classList.remove('show');
+  deckType='';pool=[];drawn=0;skipped=0;hist=[];code='';pIdx=0;
+  stopTimer();updateBadge();
+  document.getElementById('app').classList.remove('visible');
+  document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));
+  document.getElementById('confirmDeck').disabled=true;
+  selDeck='';_nudgeShown=false;_gameMode='card';
+  openPlayerModal();
+}
+
 function saveSession(){if(!code)return;try{localStorage.setItem('dd_'+code,JSON.stringify({players,deckType,pIdx,drawn,skipped,pool:pool.map(c=>c.i),hist:hist.slice(0,30),code}));}catch(e){}}
 function tryResume(){const c=document.getElementById('resumeInput').value.trim().toUpperCase();const err=document.getElementById('resumeErr');if(c.length<6){err.textContent='Enter a valid 6-character code.';return;}let data;try{data=JSON.parse(localStorage.getItem('dd_'+c)||'null');}catch(e){}if(!data){err.textContent='No saved game found. Check the code.';return;}err.textContent='';players=data.players||[];deckType=data.deckType||'';pIdx=data.pIdx||0;drawn=data.drawn||0;skipped=data.skipped||0;hist=data.hist||[];code=c;const allQ=DECKS[deckType]||[];pool=(data.pool||[]).map(i=>({q:allQ[i]||'',i,isDare:(allQ[i]||'').startsWith('DARE:')}));closeM('resumeModal');document.getElementById('app').classList.add('visible');updateBadge();syncStats();clearSlotAndShow(()=>renderWelcome());updateHeat();renderP();}
 
