@@ -1121,7 +1121,7 @@ body.dark .glb-label{color:rgba(255,255,255,.28);}
           <button class="dots-item" onclick="event.stopPropagation();closeSRDots();srReshuffleQueue()"><span class="di-icon"><svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg></span><span>Reshuffle Songs</span></button>
           <button class="dots-item" onclick="event.stopPropagation();closeSRDots();srViewHistory()"><span class="di-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span>Song History</span></button>
           <div class="dots-divider"></div>
-          <button class="dots-item" onclick="event.stopPropagation();closeSRDots();_gameMode='card';openPlayerModal()"><span class="di-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span><span>Switch to Cards</span></button>
+          <button class="dots-item" onclick="event.stopPropagation();closeSRDots();_gameMode='card';document.getElementById('songRouletteScreen').classList.remove('visible');openPlayerModal()"><span class="di-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span><span>Switch to Cards</span></button>
           <button class="dots-item" onclick="event.stopPropagation();closeSRDots();showSREndScreen()"><span class="di-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/></svg></span><span>End Session</span></button>
           <div class="dots-divider"></div>
           <button class="dots-item" onclick="event.stopPropagation();closeSRDots();openM('settingsModal')"><span class="di-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><span>Settings</span></button>
@@ -2251,6 +2251,7 @@ function _srResetToIdle() {
   document.getElementById('srPlayerTag').style.display = 'none';
   const hint = document.getElementById('srSwipeHint');
   if (hint) hint.classList.remove('hidden');
+  _srSpinning = false;
   _srSetBarState('idle');
 }
 
@@ -2302,7 +2303,6 @@ function spinSong() {
       const tag = document.getElementById('srPlayerTag');
       tag.innerHTML = `<svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>${_srCurrentPlayer}`;
       tag.style.display = 'inline-flex';
-
       fetchAlbumArt(final.title, final.artist);
       _srSetBarState('verdict');
       sfx && sfx('draw');
@@ -2389,8 +2389,10 @@ function rateSong(verdict) {
   _srUpdateProgress();
   sfx && sfx(isPass ? 'draw' : 'dare');
 
-  // Show spinning bar as neutral state while verdict displays
-  _srSetBarState('spinning');
+  // Hide all action bar states while verdict shows in album box
+  document.getElementById('srIdleBar').style.display = 'none';
+  document.getElementById('srSpinningBar').style.display = 'none';
+  document.getElementById('srVerdictBar').style.display = 'none';
 
   setTimeout(() => {
     const remaining = isGuest() ? 3 - _srGuestSpinsUsed : null;
@@ -2573,6 +2575,7 @@ function srPlayAgain(){
 
 function srSwitchToCards(){
   document.getElementById('songRouletteEnd').style.display = 'none';
+  document.getElementById('songRouletteScreen').classList.remove('visible');
   _gameMode = 'card';
   deckType = null;
   openPlayerModal();
@@ -2654,6 +2657,8 @@ function toDeck(){closeM('playerModal');openM('deckModal');}
 function openPlayerModal(){
   const ga = !!deckType; // mid card-game
   const isSong = _gameMode === 'song';
+  // Ensure SR screen doesn't show through modal backdrop
+  if (!isSong) document.getElementById('songRouletteScreen').classList.remove('visible');
 
   // Tab visibility
   document.getElementById('cardGameTab').style.display  = isSong ? 'none' : '';
@@ -2705,12 +2710,13 @@ function openDeckModal(){
   setTimeout(applyGuestDeckLocks, 50);
 }
 function deckModalBgClick(e){if(e.target!==document.getElementById('deckModal'))return;if(deckType)closeM('deckModal');}
-function startDeck(){if(!selDeck)return;initDeck(selDeck);closeM('deckModal');document.getElementById('app').classList.add('visible');}
+function startDeck(){if(!selDeck)return;initDeck(selDeck);closeM('deckModal');document.getElementById('songRouletteScreen').classList.remove('visible');document.getElementById('app').classList.add('visible');}
 function switchDeckOnly(){if(!selDeck)return;confirmSwitchDeck();}  // ← uses confirm sheet now
 
 // ── DECK INIT ──
 function buildPool(){let qs;if(deckType.startsWith('custom_')){const cd=getCustomDeck(deckType);qs=cd?cd.cards.map(q=>q):[];}else{qs=DECKS[deckType]||[];}let p=qs.map((q,i)=>({q,i,isDare:q.startsWith('DARE:')}));if(cardFilter==='questions')p=p.filter(c=>!c.isDare);else if(cardFilter==='dares')p=p.filter(c=>c.isDare);return shuffle(p);}
 function initDeck(type){
+  document.getElementById('songRouletteScreen').classList.remove('visible');
   deckType=type;pool=buildPool();drawn=0;skipped=0;hist=[];pIdx=0;
   if(!code)code=genCode();
   updateBadge();syncStats();updateHeat();renderP();sfx('shuffle');bumpStat('games');
@@ -2785,7 +2791,7 @@ function endScreenSwitchToSong(){
   document.getElementById('endScreen').classList.remove('show');
   document.getElementById('app').classList.remove('visible');
   _gameMode='song';
-  deckType='';
+  deckType=null;
   openPlayerModal();
 }
 
@@ -2795,6 +2801,8 @@ function fullReset(){
   deckType='';pool=[];drawn=0;skipped=0;hist=[];code='';pIdx=0;
   stopTimer();updateBadge();
   document.getElementById('app').classList.remove('visible');
+  document.getElementById('songRouletteScreen').classList.remove('visible');
+  document.getElementById('songRouletteEnd').style.display='none';
   document.querySelectorAll('.d-opt').forEach(d=>d.classList.remove('on'));
   document.getElementById('confirmDeck').disabled=true;
   selDeck='';_nudgeShown=false;_gameMode='card';
